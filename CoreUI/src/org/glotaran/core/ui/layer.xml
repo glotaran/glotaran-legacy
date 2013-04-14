@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>    
+    <!-- Hides stuff -->
+    <folder name="Templates">
+        <file name="AWTForms_hidden"/>
+        <file name="Beans_hidden"/>
+        <file name="Classes_hidden"/>
+            <file name="GUIForms_hidden"/>
+        <file name="Hibernate_hidden"/>
+        <file name="JUnit_hidden"/>
+            <file name="JWS_hidden"/>
+        <file name="Licenses_hidden"/>
+        <file name="OSGI_hidden"/>
+        <file name="Persistence_hidden"/>
+        <file name="Privileged_hidden"/>
+        <file name="SaaSServices_hidden"/>
+        <file name="Services_hidden"/>
+        <file name="SpringFramework_hidden"/>
+            <file name="XML_hidden"/>
+    </folder>
+    <folder name="Toolbars">
+        <file name="Build_hidden"/>
+        <file name="Debug_hidden"/>
+        <file name="Debugging.xml_hidden"/>
+        <folder name="Memory">
+            <file name="org-netbeans-modules-profiler-actions-SelfSamplerAction.shadow_hidden"/>
+        </folder>
+            <file name="UndoRedo_hidden"/>
+    </folder>
+    <folder name="Menu">        
+        <file name="BuildProject_hidden"/>
+        <folder name="File">
+            <file name="org-glotaran-core-main-nodes-actions-OpenDatasetFile.shadow_hidden"/>
+            <file name="org-openide-actions-SaveAsAction.shadow_hidden"/>
+        </folder>        
+        <file name="GoTo_hidden"/>
+        <file name="Refactoring_hidden"/>
+        <file name="RunProject_hidden"/>
+        <file name="Source_hidden"/>
+        <folder name="Tools">
+            <file name="LibrariesCustomizerAction.instance_hidden"/>
+            <file name="Separator1.instance_hidden"/>
+            <file name="Separator2.instance_hidden"/>
+            <file name="org-netbeans-modules-favorites-templates-TemplatesAction.instance_hidden"/>
+            <file name="org-netbeans-modules-xml-catalog-CatalogAction.instance_hidden"/>
+            <file name="org-openide-actions-ToolsAction.instance_hidden"/>
+        </folder>
+        <folder name="View">
+            <file name="Separator1.instance_hidden"/>
+            <file name="org-netbeans-core-actions-HTMLViewAction.shadow_hidden"/>
+            <file name="org-netbeans-core-multiview-EditorsAction.instance_hidden"/>
+            <file name="org-netbeans-modules-editor-MainMenuAction$ShowLineNumbersAction.instance_hidden"/>
+            <file name="org-netbeans-modules-editor-MainMenuAction$ShowToolBarAction.instance_hidden"/>
+            <file name="org-netbeans-modules-editor-NbCodeFoldingAction.instance_hidden"/>
+            <file name="org-netbeans-modules-editor"/>
+            <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
+        </folder>
+        <folder name="Window">
+            <file name="ProgressListAction.shadow_hidden"/>
+            <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
+            <file name="ViewRuntimeTabAction.shadow_hidden"/>
+            <file name="org-netbeans-core-actions-GlobalPropertiesAction.shadow_hidden"/>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="favorites.settings_hidden"/>
+            <file name="find-usages.settings_hidden"/>
+            <file name="output.settings_hidden"/>
+            <file name="refactoring-preview.settings_hidden"/>
+            <file name="runtime.settings_hidden"/>
+            <file name="search-results.settings_hidden"/>
+        </folder>
+    </folder>
+
+</filesystem>

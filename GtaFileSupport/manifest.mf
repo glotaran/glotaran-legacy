@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.glotaran.gtafilesupport/1
+OpenIDE-Module-Implementation-Version: 2
+OpenIDE-Module-Layer: org/glotaran/gtafilesupport/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/gtafilesupport/Bundle.properties
+

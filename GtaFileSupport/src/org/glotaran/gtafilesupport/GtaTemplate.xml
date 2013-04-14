@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns0:GtaProjectScheme  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+                       xmlns:ns0='http://glotaran.org/schema/GlobalAndTargetAnalysisSchema'
+                       xsi:schemaLocation='http://glotaran.org/schema/GlobalAndTargetAnalysisSchema GlobalAndTargetAnalysisSchema.xsd'>
+    <ns0:description></ns0:description>
+    <ns0:name></ns0:name>
+    <ns0:version></ns0:version>
+    <ns0:nodeCounter></ns0:nodeCounter>
+    <ns0:edgeCounter></ns0:edgeCounter>
+</ns0:GtaProjectScheme>

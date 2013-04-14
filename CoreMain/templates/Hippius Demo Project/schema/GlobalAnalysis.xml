@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GtaProjectScheme xmlns="http://glotaran.org/schema/GlobalAndTargetAnalysisSchema">
+    <datasetContainer>
+        <layout>
+            <height>0.0</height>
+            <width>0.0</width>
+            <xposition>260.0</xposition>
+            <yposition>17.0</yposition>
+        </layout>
+        <datasets>
+            <filename>dataset1</filename>
+            <path>cache/demo_data_Hippius_etal_JPCC2007_111_13988_Figs5_9.xml_1259249200254/dataset1.timpdataset</path>
+        </datasets>
+        <id>2</id>
+    </datasetContainer>
+    <model>
+        <layout>
+            <height>0.0</height>
+            <width>0.0</width>
+            <xposition>19.0</xposition>
+            <yposition>17.0</yposition>
+        </layout>
+        <filename>Global Analysis</filename>
+        <path>models/Global Analysis.xml</path>
+        <id>1</id>
+    </model>
+    <description></description>
+    <name></name>
+    <version></version>
+    <connection>
+        <targetID>2</targetID>
+        <sourceID>1</sourceID>
+        <name>Connection 1</name>
+        <active>true</active>
+        <modelDifferences>
+            <linkCLP>
+                <groupNumber>1</groupNumber>
+            </linkCLP>
+            <dscal>
+                <value>1.0</value>
+                <enabled>false</enabled>
+            </dscal>
+            <threshold>0.0</threshold>
+            <differences>
+                <changes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </differences>
+        </modelDifferences>
+        <id>1</id>
+        <sourceType>ModelReference</sourceType>
+        <targetType>Datasetcontainer</targetType>
+    </connection>
+    <connection>
+        <targetID>3</targetID>
+        <sourceID>2</sourceID>
+        <name>Connection 2</name>
+        <active>true</active>
+        <modelDifferences xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        <id>2</id>
+        <sourceType>Datasetcontainer</sourceType>
+        <targetType>Output</targetType>
+    </connection>
+    <nodeCounter>3</nodeCounter>
+    <output>
+        <layout>
+            <height>0.0</height>
+            <width>0.0</width>
+            <xposition>70.0</xposition>
+            <yposition>294.0</yposition>
+        </layout>
+        <id>3</id>
+        <outputPath>Global Analysis</outputPath>
+        <iterations>5</iterations>
+        <generateErrorBars>true</generateErrorBars>
+    </output>
+    <edgeCounter>2</edgeCounter>
+</GtaProjectScheme>

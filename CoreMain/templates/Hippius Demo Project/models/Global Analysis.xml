@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tgm xmlns="http://www.nat.vu.nl/~jsnel/Schema/TgmSchema">
+    <dat>
+        <kinparPanel>
+            <positivepar>true</positivepar>
+            <kinpar>
+                <start>0.5</start>
+                <fixed>false</fixed>
+                <constrained>false</constrained>
+                <max>0.0</max>
+                <min>0.0</min>
+            </kinpar>
+            <kinpar>
+                <start>0.05</start>
+                <fixed>false</fixed>
+                <constrained>false</constrained>
+                <max>0.0</max>
+                <min>0.0</min>
+            </kinpar>
+            <kinpar>
+                <start>0.01</start>
+                <fixed>false</fixed>
+                <constrained>false</constrained>
+                <max>0.0</max>
+                <min>0.0</min>
+            </kinpar>
+            <seqmod>true</seqmod>
+        </kinparPanel>
+        <modelName>SpecifyModelName</modelName>
+        <modType>kin</modType>
+        <irfparPanel>
+            <dispmufun></dispmufun>
+            <disptaufun></disptaufun>
+            <parmu>0.3,-0.1,0.01</parmu>
+            <partau></partau>
+            <parmufixed>false</parmufixed>
+            <partaufixed>false</partaufixed>
+            <lamda>530.0</lamda>
+            <irf>1.0</irf>
+            <irf>0.2</irf>
+            <fixed>false</fixed>
+            <fixed>false</fixed>
+            <backsweepEnabled>false</backsweepEnabled>
+            <backsweepPeriod xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <measuredIrf></measuredIrf>
+            <mirf>false</mirf>
+            <convalg>2</convalg>
+            <reftau xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </irfparPanel>
+        <cohspecPanel>
+            <cohspec>
+                <type>irf</type>
+                <set>true</set>
+            </cohspec>
+            <coh></coh>
+            <clp0Enabled xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <clp0Min xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <clp0Max xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </cohspecPanel>
+        <kMatrixPanel>
+            <kMatrix/>
+            <relationsMatrix/>
+            <jVector/>
+            <spectralContraints/>
+            <contrainsMatrix/>
+        </kMatrixPanel>
+        <weightParPanel>
+            <weightpar>
+                <min1 xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                <min2>280.0</min2>
+                <max1 xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                <max2>550.0</max2>
+                <weight>0.1</weight>
+            </weightpar>
+            <weightpar>
+                <min1 xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                <min2>720.0</min2>
+                <max1 xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                <max2>890.0</max2>
+                <weight>0.2</weight>
+            </weightpar>
+        </weightParPanel>
+    </dat>
+    <panelStates>false</panelStates>
+    <panelStates>false</panelStates>
+    <panelStates>false</panelStates>
+    <panelStates>false</panelStates>
+    <panelStates>true</panelStates>
+    <panelStates>false</panelStates>
+    <panelStates>false</panelStates>
+</tgm>

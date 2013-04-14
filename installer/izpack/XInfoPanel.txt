@@ -1,0 +1,11 @@
+Post installation notes:
+
+This program is still in a beta stage and, as a result, will probably
+contain some bugs and lack many features.
+
+If you encounter any bugs, or you find you are missing certain functionality
+that you would like to have implemented, please don't hesitate to contact one of
+the authors via timpgui@gmail.com
+
+Of course, as this program is open source, you are also more than welcome to
+make your own contributions!

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: false
+OpenIDE-Module: org.glotaran.simfilesupport/1
+OpenIDE-Module-Implementation-Version: 1
+OpenIDE-Module-Layer: org/glotaran/simfilesupport/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/simfilesupport/Bundle.properties
+

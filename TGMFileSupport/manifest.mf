@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: false
+OpenIDE-Module: org.glotaran.tgmfilesupport/1
+OpenIDE-Module-Implementation-Version: 2
+OpenIDE-Module-Layer: org/glotaran/tgmfilesupport/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/tgmfilesupport/Bundle.properties

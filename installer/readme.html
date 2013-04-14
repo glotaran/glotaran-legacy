@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+    <head><title>Glotaran</title></head>
+    <body>
+        <h1>Glotaran: a graphical user interface for the R-package TIMP</h1>
+
+        <h2>Introduction</h2>
+
+        <p>Glotaran stands for Global and Target Analysis. It is designed to be a graphical front end for the R-package TIMP, providing an alternative for the script language used there. However, due to the immense extensibility of the platform on top of which Glotaran was built can potentially provide a lot more functionality than TIMP of the R platform itself would allow for. This functionality includes but it not limited to: <br></p>
+
+        <ul>
+            <li>Interactive data exploration and data selection</li>
+            <li>Visual model building</li>
+            <li>Interactive data analysis</li>
+            <li>Easy extensibility for custom binary/proprietary data support.</li>
+        </ul>
+
+        <p>Glotaran consists of 2 parts: the core user interface, and the computational engine. The user interface was built using Java based technology and as a result it can potentially run on any operating system for which Java supported exists. The computational engine was built on top of the R-platform. R compiles and runs on a wide variety of UNIX platforms and similar systems (including FreeBSD and Linux), Windows and MacOS. The core user interface and the computational engine communicate via a wrapper library over the standard TCP/IP protocal. This means the engine can run on either the local machine, or on a remote machine connected to the local machine via a network (not yet supported). Detailed system requirements can be found in the next section.<br></p>
+
+        <h2>System requirements</h2>
+
+        <ul>
+            <li>1+ GHz CPU</li>
+            <li>1GB+ of RAM</li>
+            <li>250MB of disk space</li>
+            <li><a href="http://java.sun.com/">Java</a> Run Time Environment</li>
+            <li><a href="http://www.r-project.org/">R</a> Computational Platform</li>
+        </ul>
+
+        <h2>Installation</h2>
+
+        <h3>Local machine only</h3>
+
+        <h4>Glotaran</h4>
+        <p>
+            Included with this distribution is a so called jar file. In order to execute this file,
+            wether it be on Windows, Linux or Mac you need to have the Java (tm) Runtime Platform installed.<br>
+            The latest version of the Java Run Time can be downloaded from the official website for Java:<br>
+            <a href="http://www.java.com/getjava/">http://www.java.com/getjava/</a><br>
+        </p>
+        <p>
+            To install Glotaran either double click the setup.jar file and select "Run using Java" or run for the commandline: <br>
+            <b>java - jar setup.jar</b>
+        </p>
+
+        <h4>Note for Windows Vista and Windows 7 users</h4>
+        <p>
+            If the installer is not run with elevated administrator rights it is not possible to install Glotaran in the Program Files folder; one should install the program in the personal user folder.
+        </p>
+        <p> Also, in onder to interface with R, Glotaran needs full network access. Please make sure it is not blocked by the Windows Firewall, or any other personal firewall.</p>
+
+        <h4>R</h4>
+        <p>This program also requires a working installation of R on your machine, with the R-Packages TIMP and Rserve installed.<br>
+            If you don't have R and the packages TIMP and Rserve installed already, please do so before you proceed with the installation. Instructions follow below:
+        </p>
+
+
+        <h5>TIMP</h5>
+        <p>To install the R-package TIMP, please take the following steps:</p>
+        <ul>
+            <li>Start R; either from the command line or start the RGui</li>
+            <li>Execute the following command:</li>
+            <li>install.packages("TIMP")</li>
+        </ul>
+
+        <h5>Rserve</h5>
+        <p>To install the R-package Rserve, please take the following steps:</p>
+        <ul>
+            <li>Start R; either from the command line or start the RGui</li>
+            <li>Execute the following command:</li>
+            <li>install.packages("Rserve")</li>
+        </ul>
+
+        <h5>Start Rserve</h5>
+        Before you run the Glotaran program it is important that you do the following:
+        <ul>
+            <li>Start R; either from the command line or start the RGui</li>
+            <li>Execute the following commands:</li>
+            <li>library(Rserve)</li>
+            <li>Rserve() (for Windows and Linux/Unix) or Rserve(args="--no-save") (for Mac OS X)</li>
+            <li>Start Glotaran from your application menu. Alternatively you can start Glotaran using the glotaran executable in the bin folder of the installation folder.</li>
+        </ul>
+        <p>Please note that Glotaran communicates with Rserve via TCP/IP, this means that you need to 'unblock' Glotaran and Rserve in your firewall settings. Under Windows your are usually presented with a dialog window the first time your start Glotaran, make sure to select 'unblock' here.</p>
+
+        <h3>Using a remote computational server</h3>
+        <p>This functionality is not yet implemented but will be available in the final release.</p>
+
+        <h2>Quick start</h2>
+        <p>Additional documentation, examples and screencasts are available from the website <a href="http://www.timpgui.org">timpgui.org</a>.</p>
+        <p>In addition, included with the program is a sample project for which a quick start tuorial is available on the documentation page of the website.</p>
+
+        <h2>Acknowledgments</h2>
+        <p>Catharina Hippius, Ren&eacute; Williams, and Frank W&uuml;rthner generously provided the sample dataset.<br>
+            The global and target analysis of these demo data are described in Figures 5-9 of:<br>
+            C. Hippius, I.H.M. van Stokkum, E. Zangrando, R.M. Williams, and F. W&uuml;rthner.<br>
+            <a href="http://www.nat.vu.nl/~ivo/pub/2007/HippiusWilliamsWuerthnerJPCC111_13988_13996.pdf">
+                Excited state interactions in calix[4]arene-perylene bisimide dye conjugates:
+                Global and target analysis of supramolecular building blocks.</a><br>
+            Journal of Physical Chemistry C, 111(37):13988-13996, 2007.
+        </p>
+        <p>Maria Voitovich is thanked for her contribution to writing the functions for reading binary sdt Becker & Hickl files.</p>
+        <p>Ralf Seger is thanked for his contribution in developing the interface used to communicate with the R computational platform.</p>
+    </body>
+</html>

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+OpenIDE-Module: org.glotaran.auc/1
+OpenIDE-Module-Implementation-Version: 2
+OpenIDE-Module-Layer: org/glotaran/auc/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/auc/Bundle.properties
+

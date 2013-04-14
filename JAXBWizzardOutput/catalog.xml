@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/joris/NetBeansProjects/Glotaran/glotaran~trunk/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+    <system systemId="file:/home/joris/source/Glotaran/trunk/glotaran~trunk/JAXBWizzardOutput/src/org/glotaran/core/models/gta/GlobalAndTargetAnalysisSchema.xsd" uri="xml-resources/jaxb/GtaBinding/GlobalAndTargetAnalysisSchema.xsd"/>
+    <system systemId="file:/C:/Users/Ninta/Documents/NetBeansProjects/glotaran~stable/glotaran~stable/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+    <system systemId="file:/home/src/Glotaran/glotaran~trunk/factory/trunk/JAXBWizzardOutput/src/org/glotaran/core/models/gta/GlobalAndTargetAnalysisSchema.xsd" uri="xml-resources/jaxb/GtaBinding/GlobalAndTargetAnalysisSchema.xsd"/>
+    <system systemId="file:/C:/Users/Joris/Documents/NetBeansProjects/glotaran~trunk/trunk/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+    <system systemId="file:/home/src/Glotaran/glotaran~trunk/factory/trunk/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+</catalog>

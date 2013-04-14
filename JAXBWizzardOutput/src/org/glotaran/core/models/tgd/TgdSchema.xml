@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns0:tgd  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+          xmlns:ns0='http://timpgui.org/Schema/TgdSchema'
+          xsi:schemaLocation='http://timpgui.org/Schema/TgdSchema TgdSchema.xsd'>
+    <ns0:filename></ns0:filename>
+    <ns0:path></ns0:path>
+    <ns0:filetype></ns0:filetype>
+    <ns0:cacheFolderName></ns0:cacheFolderName>
+    <ns0:relativePath></ns0:relativePath>
+    <ns0:extension></ns0:extension>
+</ns0:tgd>

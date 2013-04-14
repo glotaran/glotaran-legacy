@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns0:GtaResult  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+                xmlns:ns0='http://glotaran.org/schema/AnalysisResultsSchema'
+                xsi:schemaLocation='http://glotaran.org/schema/AnalysisResultsSchema AnalysisResultsSchema.xsd'>
+    <ns0:summary>
+        <ns0:initModelCall></ns0:initModelCall>
+        <ns0:fitModelCall></ns0:fitModelCall>
+    </ns0:summary>
+    <ns0:iterations></ns0:iterations>
+    <ns0:threshold></ns0:threshold>
+    <ns0:schemafile>
+        <ns0:filename></ns0:filename>
+        <ns0:path></ns0:path>
+        <ns0:filetype></ns0:filetype>
+        <ns0:relativePath></ns0:relativePath>
+        <ns0:extension></ns0:extension>
+    </ns0:schemafile>
+</ns0:GtaResult>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tgd xmlns="http://timpgui.org/Schema/TgdSchema">
+    <filename>demo_data_Hippius_etal_JPCC2007_111_13988_Figs5_9</filename>
+    <path>resources</path>
+    <filetype>spec</filetype>
+    <cacheFolderName>demo_data_Hippius_etal_JPCC2007_111_13988_Figs5_9.xml_1259249200254</cacheFolderName>
+    <relativePath>resources/demo_data_Hippius_etal_JPCC2007_111_13988_Figs5_9.ascii</relativePath>
+    <extension>ascii</extension>
+</tgd>

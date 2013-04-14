@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GtaResult xmlns="http://glotaran.org/schema/AnalysisResultsSchema">
+    <datasets>
+        <datasetFile>
+            <filename>dataset1</filename>
+            <path>cache/demo_data_Hippius_etal_JPCC2007_111_13988_Figs5_9.xml_1259249200254/dataset1.timpdataset</path>
+            <filetype>spec</filetype>
+            <relativePath xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <extension xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        </datasetFile>
+        <resultFile>
+            <filename>Target Analysis_d1_dataset0</filename>
+            <path>results/Target Analysis</path>
+            <relativePath xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <extension xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        </resultFile>
+        <id>1</id>
+    </datasets>
+    <summary>
+        <initModelCall>gtaModel1 &lt;- initModel(mod_type = &quot;kin&quot;,kinpar = c(9.49943878184853,0.34981088325342874,0.0427195221803555,0.019998212351462565),kmat = array(c(0,1,1,0,0,0,0,2,0,0,0,3,0,0,0,4,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0), dim = c(4,4,2)), jvec = c(1.0,0.0,0.0,0.0), kinscal = c(0.087,0.913),irfpar = c(1.2,0.05),lambdac = 550.0, parmu = list(c(0.3, -0.1, 0.01)), dispmufun = &quot;poly&quot;,positivepar = c(&quot;kinpar&quot;),cohspec = list(type = &quot;irf&quot;) ,clpequspec = list(list(to=3,from=2,low=10.0,high=1000.0)),clpequ = c(1),weightpar = list(c(NA,NA,280.0,550.0,0.1),c(NA,NA,720.0,890.0,0.2)),fixed = list(kinpar=c(1), kinscal=c(1,2), jvec=c(1,2,3,4),clpequ=1:1),seqmod = TRUE)</initModelCall>
+        <fitModelCall>gtaFitResult &lt;- fitModel(data = list(gtaDataset1),modspec = list(gtaModel1),modeldiffs = list(linkclp = list(c(1))),opt = kinopt(iter = 5, stderrclp = TRUE, kinspecerr = TRUE, plot = FALSE), lprogress = TRUE)</fitModelCall>
+    </summary>
+    <nlsprogress>
+        <rss>0.006183522 :   1.200000  0.050000 -1.050363 -3.153099 -3.912112  0.300000 -0.100000  0.010000 </rss>
+    </nlsprogress>
+    <nlsprogress>
+        <rss>0.005938219 :   1.215613057  0.054607852 -0.065064547 -3.049317728 -3.959608643  0.300076160 -0.097168282  0.009127344 </rss>
+    </nlsprogress>
+    <nlsprogress>
+        <rss>0.005890691 :   1.213604254  0.056719297 -0.985928612 -3.094732353 -3.944729746  0.301407603 -0.091816884  0.007534236 </rss>
+    </nlsprogress>
+    <nlsprogress>
+        <rss>0.005880652 :   1.208007403  0.058535192 -0.064691415 -3.045498398 -3.956068543  0.305788880 -0.079689635  0.003749723 </rss>
+    </nlsprogress>
+    <nlsprogress>
+        <rss>0.005856176 :   1.210421120  0.060464731 -0.996631287 -3.093356320 -3.941986885  0.300569032 -0.080386389  0.004667545 </rss>
+    </nlsprogress>
+    <nlsprogress>
+        <rss>0.005844508 :   1.208780143  0.060845716 -0.538170804 -3.069870855 -3.948382486  0.302101816 -0.077494303  0.003759548 </rss>
+    </nlsprogress>
+    <iterations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+    <threshold xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+    <schemafile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+</GtaResult>

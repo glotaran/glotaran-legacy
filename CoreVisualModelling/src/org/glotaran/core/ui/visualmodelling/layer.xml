@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="org-glotaran-core-ui-visualmodelling-AnalysisEditorAction.instance">
+                <attr name="component" methodvalue="org.glotaran.core.ui.visualmodelling.AnalysisEditorTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="org.glotaran.core.ui.visualmodelling.Bundle#CTL_AnalysisEditorAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="AnalysisEditorAction.shadow">
+                <!-- <attr name="originalFile" stringvalue="Actions/Window/org-glotaran-core-ui-visualmodelling-AnalysisEditorAction.instance"/> -->
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="AnalysisEditorTopComponent.settings" url="AnalysisEditorTopComponentSettings.xml"/>
+            <file name="VisualModellingTopComponent.settings" url="VisualModellingTopComponentSettings.xml"/>
+            <file name="properties.settings" url="PropertiesSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="editor">
+                <file name="AnalysisEditorTopComponent.wstcref" url="AnalysisEditorTopComponentWstcref.xml"/>
+                <file name="VisualModellingTopComponent.wstcref" url="VisualModellingTopComponentWstcref.xml"/>                
+            </folder>
+            <folder name="properties">
+                <file name="properties.wstcref" url="PropertiesWstcref.xml"/>
+            </folder>
+        </folder>       
+    </folder>
+</filesystem>

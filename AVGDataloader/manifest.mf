@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.glotaran.dataloader.avg/1
+OpenIDE-Module-Implementation-Version: 1
+OpenIDE-Module-Layer: org/glotaran/dataloader/avg/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/dataloader/avg/Bundle.properties
+

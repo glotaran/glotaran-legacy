@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://glotaran.org/schema/GlobalAndTargetAnalysisSchema"
+            xmlns:tns="http://glotaran.org/schema/GlobalAndTargetAnalysisSchema"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GtaDatasetContainer">
+        <xsd:sequence>
+            <xsd:element name="layout" type="tns:GtaLayout"/>
+            <xsd:element name="datasets" type="tns:GtaDataset" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+            <xsd:element name="id" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaModelReference">
+        <xsd:sequence>
+            <xsd:element name="layout" type="tns:GtaLayout"/>
+            <xsd:element name="filename" type="xsd:string"/>
+            <xsd:element name="path" type="xsd:anyURI"/>
+            <xsd:element name="id" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaLayout">
+        <xsd:sequence>
+            <xsd:element name="height" type="xsd:double"/>
+            <xsd:element name="width" type="xsd:double"/>
+            <xsd:element name="xposition" type="xsd:double"/>
+            <xsd:element name="yposition" type="xsd:double"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaDataset">
+        <xsd:sequence>
+            <xsd:element name="filename" type="xsd:string"/>
+            <xsd:element name="path" type="xsd:anyURI"/>
+            <xsd:element name="description" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaConnection">
+        <xsd:sequence>
+            <xsd:element name="targetID" type="xsd:string"/>
+            <xsd:element name="sourceID" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="active" type="xsd:boolean"/>
+            <xsd:element name="modelDifferences" type="tns:GtaModelDifferences" nillable="true"/>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="sourceType" type="xsd:string" nillable="true"></xsd:element>
+            <xsd:element name="targetType" type="xsd:string" nillable="true"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaModelDifferences">
+        <xsd:sequence>
+            <xsd:element name="linkCLP" type="tns:GtaLinkCLP" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="dscal" type="tns:GtaDatasetScaling" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="threshold" type="xsd:double" nillable="true"/>
+            <xsd:element name="relations" type="tns:GtaRelation" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+            <xsd:element name="differences" type="tns:GtaModelDiffContainer" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaModelDiffDO">
+        <xsd:sequence>
+            <xsd:element name="what" type="xsd:string"/>
+            <xsd:element name="index" type="xsd:int"/>
+            <xsd:element name="dataset" type="xsd:int"/>
+            <xsd:element name="start" type="xsd:double"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaChangesModel">
+        <xsd:sequence>
+            <xsd:element name="filename" type="xsd:string"/>
+            <xsd:element name="path" type="xsd:string"/>
+            <xsd:element name="dataset" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaLinkCLP">
+        <xsd:sequence>
+            <xsd:element name="groupNumber" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaDatasetScaling">
+        <xsd:sequence>
+            <xsd:element name="value" type="xsd:double" nillable="true"/>
+            <xsd:element name="enabled" type="xsd:boolean" nillable="true"></xsd:element>
+            <xsd:element name="fixed" nillable="true" type="xsd:boolean"/>
+            <xsd:element name="toDataset" nillable="true" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaRelation">
+        <xsd:sequence>
+            <xsd:element name="what1" type="xsd:string"/>
+            <xsd:element name="what2" type="xsd:string"/>
+            <xsd:element name="index1" type="xsd:int"/>
+            <xsd:element name="index2" type="xsd:int"/>
+            <xsd:element name="dataset1" type="xsd:int"/>
+            <xsd:element name="dataset2" type="xsd:int"/>
+            <xsd:element name="relation" type="xsd:string" nillable="true"/>
+            <xsd:element name="start" type="xsd:double" nillable="true" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaOutput">
+        <xsd:sequence>
+            <xsd:element name="layout" type="tns:GtaLayout"></xsd:element>
+            <xsd:element name="id" type="xsd:string"></xsd:element>
+            <xsd:element name="outputPath" type="xsd:string" nillable="true"></xsd:element>
+            <xsd:element name="iterations" type="xsd:string" nillable="true"></xsd:element>
+            <xsd:element name="generateErrorBars" type="xsd:boolean" nillable="true"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaModelDiffContainer">
+        <xsd:sequence>
+            <xsd:element name="free" type="tns:GtaModelDiffDO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="remove" type="tns:GtaModelDiffDO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="add" type="tns:GtaModelDiffDO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="changes" nillable="true" minOccurs="1" maxOccurs="1" type="tns:GtaChangesModel"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaSimulationContainer">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="layout" type="tns:GtaLayout"/>
+            <xsd:element name="simulationInputRef" type="tns:GtaSimulationInputRef" minOccurs="0" nillable="true" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GtaSimulationInputRef">
+        <xsd:sequence>
+            <xsd:element name="filename" type="xsd:string"/>
+            <xsd:element name="path" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="GtaProjectScheme">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="datasetContainer" nillable="true" minOccurs="0" maxOccurs="unbounded" type="tns:GtaDatasetContainer"/>
+                <xsd:element name="model" type="tns:GtaModelReference" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="description" type="xsd:string" nillable="true"/>
+                <xsd:element name="name" nillable="true" type="xsd:string"/>
+                <xsd:element name="version" type="xsd:string" nillable="true"/>
+                <xsd:element name="connection" type="tns:GtaConnection" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="nodeCounter" type="xsd:string"/>
+                <xsd:element name="output" nillable="true" minOccurs="0" type="tns:GtaOutput" maxOccurs="unbounded"/>
+                <xsd:element name="edgeCounter" type="xsd:string"/>
+                <xsd:element name="simulationContainer" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:GtaSimulationContainer"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

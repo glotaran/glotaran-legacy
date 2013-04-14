@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://timpgui.org/Schema/TgdSchema"
+            xmlns:tns="http://timpgui.org/Schema/TgdSchema"
+            elementFormDefault="qualified" version="0.1" id="TgdSchema">
+    <xsd:element name="tgd">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="filename" type="xsd:string"/>
+                <xsd:element name="path" type="xsd:string"/>
+                <xsd:element name="filetype" type="xsd:string"/>
+                <xsd:element name="datasetNames" type="xsd:string" maxOccurs="unbounded" nillable="true" minOccurs="0"></xsd:element>
+                <xsd:element name="cacheFolderName" type="xsd:string"/>
+                <xsd:element name="relativePath" nillable="true" type="xsd:string" minOccurs="1"/>
+                <xsd:element name="dataset" nillable="true" type="tns:TgdDatasetEntry" maxOccurs="unbounded" minOccurs="0"/>
+                <xsd:element name="extension" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="TgdDatasetEntry">
+        <xsd:sequence>
+            <xsd:element name="datasetName" type="xsd:string"/>
+            <xsd:element name="thresholdMax" type="xsd:double"/>
+            <xsd:element name="thresholdMin" type="xsd:double"></xsd:element>
+            <xsd:element name="logEntries" maxOccurs="unbounded" minOccurs="0" nillable="true"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="LogEntry">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+            <xsd:element name="text" type="xsd:string" nillable="true"/>
+            <xsd:element name="comment" type="xsd:string" nillable="true"/>
+            <xsd:element name="time" type="xsd:dateTime"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
+
+
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns0:tgm  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+          xmlns:ns0='http://www.nat.vu.nl/~jsnel/Schema/TgmSchema'
+          xsi:schemaLocation='http://www.nat.vu.nl/~jsnel/Schema/TgmSchema TgmSchema.xsd'>
+    <ns0:dat>
+        <ns0:kinparPanel>
+            <ns0:positivepar>false</ns0:positivepar>
+            <ns0:seqmod>false</ns0:seqmod>
+        </ns0:kinparPanel>
+        <ns0:modelName>SpecifyModelName</ns0:modelName>
+        <ns0:modType>kin</ns0:modType>
+        <ns0:irfparPanel>
+            <ns0:dispmufun></ns0:dispmufun>
+            <ns0:disptaufun></ns0:disptaufun>
+            <ns0:parmu></ns0:parmu>
+            <ns0:partau></ns0:partau>
+            <ns0:parmufixed>false</ns0:parmufixed>
+            <ns0:partaufixed>false</ns0:partaufixed>
+            <ns0:lamda></ns0:lamda>
+            <ns0:backsweepEnabled>false</ns0:backsweepEnabled>
+            <ns0:backsweepPeriod></ns0:backsweepPeriod>
+            <ns0:measuredIrf></ns0:measuredIrf>
+            <ns0:mirf>false</ns0:mirf>
+            <ns0:convalg>2</ns0:convalg>
+            <ns0:reftau></ns0:reftau>
+        </ns0:irfparPanel>
+        <ns0:cohspecPanel>
+            <ns0:cohspec>
+                <ns0:type></ns0:type>
+                <ns0:set>false</ns0:set>
+            </ns0:cohspec>
+            <ns0:coh></ns0:coh>
+            <ns0:clp0Enabled></ns0:clp0Enabled>
+            <ns0:clp0Min></ns0:clp0Min>
+            <ns0:clp0Max></ns0:clp0Max>
+        </ns0:cohspecPanel>
+        <ns0:kMatrixPanel>
+            <ns0:kMatrix>
+            </ns0:kMatrix>
+            <ns0:relationsMatrix>
+            </ns0:relationsMatrix>
+            <ns0:jVector>
+            </ns0:jVector>
+            <ns0:spectralContraints>
+            </ns0:spectralContraints>
+            <ns0:contrainsMatrix>
+            </ns0:contrainsMatrix>
+        </ns0:kMatrixPanel>
+        <ns0:weightParPanel>
+        </ns0:weightParPanel>
+    </ns0:dat>
+
+</ns0:tgm>

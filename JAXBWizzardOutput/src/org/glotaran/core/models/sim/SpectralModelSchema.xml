@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns0:SpectralModelSpecification  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns:ns0='http://glotaran.org/schema/SpectralModelSchema'
+   xsi:schemaLocation='http://glotaran.org/schema/SpectralModelSchema SpectralModelSchema.xsd'>
+    <ns0:lambdaMin></ns0:lambdaMin>
+    <ns0:lambdaMax></ns0:lambdaMax>
+    <ns0:lamdaStep></ns0:lamdaStep>
+    <ns0:timeMin></ns0:timeMin>
+    <ns0:timeMax></ns0:timeMax>
+    <ns0:timeStep></ns0:timeStep>
+    <ns0:lowerLinearTimeBound></ns0:lowerLinearTimeBound>
+    <ns0:upperLinearTimeBound></ns0:upperLinearTimeBound>
+    <ns0:noiseType></ns0:noiseType>
+    <ns0:noiseAmplitude></ns0:noiseAmplitude>
+    <ns0:noiseSeed></ns0:noiseSeed>
+    <ns0:numberOfLogPoints></ns0:numberOfLogPoints>
+
+</ns0:SpectralModelSpecification>

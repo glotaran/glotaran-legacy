@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated/addons/jaxb' projectName='JAXBWizzardOutput' version='1.0'>
+	<schema type='-xmlschema' package='org.glotaran.core.models.tgm' name='TgmBinding'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/TgmBinding/TgmSchema.xsd' origLocation='src/org/glotaran/core/models/tgm/TgmSchema.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+	<schema type='-xmlschema' package='org.glotaran.core.models.tgd' name='TgdBinding'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/TgdBinding/TgdSchema.xsd' origLocation='src/org/glotaran/core/models/tgd/TgdSchema.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+	<schema type='-xmlschema' package='org.glotaran.core.models.gta' name='GtaBinding'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/GtaBinding/GlobalAndTargetAnalysisSchema.xsd' origLocation='src/org/glotaran/core/models/gta/GlobalAndTargetAnalysisSchema.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+	<schema type='-xmlschema' package='org.glotaran.core.model.results' name='ResultsBinding'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/ResultsBinding/AnalysisResultsSchema.xsd' origLocation='src/org/glotaran/core/models/results/AnalysisResultsSchema.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+	<schema type='-xmlschema' package='org.glotaran.core.models.sim' name='SpectralModelSpecification'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/SpectralModelSpecification/SpectralModelSchema.xsd' origLocation='src/org/glotaran/core/models/sim/SpectralModelSchema.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+</schemas>

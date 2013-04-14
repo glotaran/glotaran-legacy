@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+            *** GENERATED FROM xml_binding_cfg.xml - DO NOT EDIT  ***
+            *** Configure thru JAXB Wizard.                       ***
+        -->
+<project name="JAXBWizzardOutput_jaxb" default="default" basedir=".">
+    <target name="xjc-typedef-target" depends="-init-project">
+        <typedef classname="com.sun.tools.xjc.XJCTask" name="xjc" xmlns:s="http://xml.netbeans.org/schema/JAXBWizConfig">
+            <classpath path="${jaxbwiz.xjcdef.classpath}"/>
+        </typedef>
+    </target>
+    <target name="jaxb-clean-code-generation" depends="clean,jaxb-code-generation"/>
+    <target name="jaxb-code-generation" depends="xjc-typedef-target,-do-init,-init-macrodef-javac">
+        <mkdir dir="${build.generated.sources.dir}/jaxb" xmlns:s="http://xml.netbeans.org/schema/JAXBWizConfig"/>
+        <mkdir dir="build/generated/jaxbCache" xmlns:s="http://xml.netbeans.org/schema/JAXBWizConfig"/>
+        <mkdir dir="build/generated/jaxbCache/TgmBinding"/>
+        <xjc package="org.glotaran.core.models.tgm" destdir="build/generated/jaxbCache/TgmBinding" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+            <depends file="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+            <produces dir="build/generated/jaxbCache/TgmBinding"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/TgmBinding"/>
+        </copy>
+        <mkdir dir="build/generated/jaxbCache/TgdBinding"/>
+        <xjc package="org.glotaran.core.models.tgd" destdir="build/generated/jaxbCache/TgdBinding" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/TgdBinding/TgdSchema.xsd"/>
+            <depends file="xml-resources/jaxb/TgdBinding/TgdSchema.xsd"/>
+            <produces dir="build/generated/jaxbCache/TgdBinding"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/TgdBinding"/>
+        </copy>
+        <mkdir dir="build/generated/jaxbCache/GtaBinding"/>
+        <xjc package="org.glotaran.core.models.gta" destdir="build/generated/jaxbCache/GtaBinding" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/GtaBinding/GlobalAndTargetAnalysisSchema.xsd"/>
+            <depends file="xml-resources/jaxb/GtaBinding/GlobalAndTargetAnalysisSchema.xsd"/>
+            <produces dir="build/generated/jaxbCache/GtaBinding"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/GtaBinding"/>
+        </copy>
+        <mkdir dir="build/generated/jaxbCache/ResultsBinding"/>
+        <xjc package="org.glotaran.core.model.results" destdir="build/generated/jaxbCache/ResultsBinding" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/ResultsBinding/AnalysisResultsSchema.xsd"/>
+            <depends file="xml-resources/jaxb/ResultsBinding/AnalysisResultsSchema.xsd"/>
+            <produces dir="build/generated/jaxbCache/ResultsBinding"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/ResultsBinding"/>
+        </copy>
+        <mkdir dir="build/generated/jaxbCache/SpectralModelSpecification"/>
+        <xjc package="org.glotaran.core.models.sim" destdir="build/generated/jaxbCache/SpectralModelSpecification" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/SpectralModelSpecification/SpectralModelSchema.xsd"/>
+            <depends file="xml-resources/jaxb/SpectralModelSpecification/SpectralModelSchema.xsd"/>
+            <produces dir="build/generated/jaxbCache/SpectralModelSpecification"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/SpectralModelSpecification"/>
+        </copy>
+    </target>
+</project>

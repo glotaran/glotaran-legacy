@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.rosuda.REngine
+OpenIDE-Module-Localizing-Bundle: org/rosuda/REngine/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

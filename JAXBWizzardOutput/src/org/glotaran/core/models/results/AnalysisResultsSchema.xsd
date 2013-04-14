@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://glotaran.org/schema/AnalysisResultsSchema"
+            xmlns:tns="http://glotaran.org/schema/AnalysisResultsSchema"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Dataset">
+        <xsd:sequence>
+            <xsd:element name="datasetFile" maxOccurs="1" type="tns:OutputFile" nillable="true"/>
+            <xsd:element name="resultFile" nillable="true" type="tns:OutputFile"/>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OutputFile">
+        <xsd:sequence>
+            <xsd:element name="filename" type="xsd:string"/>
+            <xsd:element name="path" type="xsd:string"/>
+            <xsd:element name="filetype" type="xsd:string"/>
+            <xsd:element name="relativePath" nillable="true" type="xsd:string"/>
+            <xsd:element name="extension" type="xsd:string" nillable="true"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Summary">
+        <xsd:sequence>
+            <xsd:element name="initModelCall" type="xsd:string"/>
+            <xsd:element name="fitModelCall" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DatasetRelation">
+        <xsd:sequence>
+            <xsd:element name="from" type="xsd:string"/>
+            <xsd:element name="to" type="xsd:string"/>
+            <xsd:element name="values" type="xsd:double" maxOccurs="unbounded" nillable="false"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="NlsProgress">
+        <xsd:sequence>
+            <xsd:element name="rss" type="xsd:string" nillable="true"/>
+            <xsd:element name="paramValue" type="xsd:double" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Parameter">
+        <xsd:sequence>
+            <xsd:element name="value" type="xsd:double"/>
+            <xsd:element name="error" type="xsd:double" nillable="true"/>
+            <xsd:element name="type" type="xsd:string"/>
+            <xsd:element name="displayName" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="GtaResult">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="datasets" type="tns:Dataset" nillable="true" maxOccurs="unbounded"/>
+                <xsd:element name="summary" type="tns:Summary"/>
+                <xsd:element name="datasetRelations" type="tns:DatasetRelation" maxOccurs="unbounded" nillable="true" minOccurs="0"/>
+                <xsd:element name="nlsprogress" type="tns:NlsProgress" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="iterations" nillable="true" type="xsd:int"/>
+                <xsd:element name="threshold" nillable="true" type="xsd:double"/>
+                <xsd:element name="schemafile" type="tns:OutputFile" nillable="true"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
+
+
+
+
+
