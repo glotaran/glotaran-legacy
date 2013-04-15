@@ -4,5 +4,5 @@ OpenIDE-Module: org.glotaran.timpcontroller/1
 OpenIDE-Module-Install: org/glotaran/timpcontroller/Installer.class
 OpenIDE-Module-Layer: org/glotaran/timpcontroller/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/timpcontroller/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.3
+OpenIDE-Module-Specification-Version: 3.0
 

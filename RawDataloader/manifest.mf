@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 OpenIDE-Module: org.glotaran.rawdataloader/1
-OpenIDE-Module-Implementation-Version: 0
 OpenIDE-Module-Localizing-Bundle: org/glotaran/rawdataloader/Bundle.properties
+OpenIDE-Module-Specification-Version: 3.0
 

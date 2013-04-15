@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
 AutoUpdate-Essential-Module: true
 OpenIDE-Module: org.glotaran.core.models/1
-OpenIDE-Module-Implementation-Version: 0
 OpenIDE-Module-Layer: org/glotaran/core/models/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/core/models/Bundle.properties
+OpenIDE-Module-Specification-Version: 3.0
 
