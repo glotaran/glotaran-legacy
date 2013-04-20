@@ -1081,6 +1081,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             if (averagePanel.getResampleYState()) {
                 yWin = averagePanel.getResampleYNum();
             }
+            jSColum.setValue(0);
+            jSRow.setValue(0);
 
             CommonActionFunctions.resampleDataset(data, true, xWin, yWin);
             MakeImageChart(MakeXYZDataset());
@@ -1174,6 +1176,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                 NotifyDescriptor.CANCEL_OPTION);
         if (DialogDisplayer.getDefault().notify(selectDataDialog).equals(NotifyDescriptor.OK_OPTION)) {
             data = CommonActionFunctions.selectInDataset(data, selectDataDialogPanel.getDim1From(), selectDataDialogPanel.getDim1To(), selectDataDialogPanel.getDim2From(), selectDataDialogPanel.getDim2To());
+            jSColum.setValue(0);
+            jSRow.setValue(0);
             MakeImageChart(MakeXYZDataset());
             updateFileInfo();
             this.repaint();
