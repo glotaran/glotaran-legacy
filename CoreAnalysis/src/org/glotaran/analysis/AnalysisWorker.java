@@ -50,6 +50,9 @@ import org.openide.loaders.DataObjectExistsException;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import static java.lang.Math.floor;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  *
@@ -1079,13 +1082,13 @@ public class AnalysisWorker implements Runnable {
 
     private void createAnalysisResultsFile(GtaResult resultsObject, File file) {
         try {
-            javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(resultsObject.getClass().getPackage().getName());
-            javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
+            JAXBContext jaxbCtx = JAXBContext.newInstance(resultsObject.getClass().getPackage().getName());
+            Marshaller marshaller = jaxbCtx.createMarshaller();
             marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
             marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(resultsObject, file);
 
-        } catch (javax.xml.bind.JAXBException ex) {
+        } catch (JAXBException ex) {
             // XXXTODO Handle exception
             java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
         }
