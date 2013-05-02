@@ -118,7 +118,6 @@ public class DatasetContainerComponent
         jBRefreshModel.setToolTipText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBRefreshModel.toolTipText")); // NOI18N
         jBRefreshModel.setFocusable(false);
         jBRefreshModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBRefreshModel.setSize(new java.awt.Dimension(32, 28));
         jBRefreshModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBRefreshModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +137,6 @@ public class DatasetContainerComponent
         jBSaveModel.setToolTipText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBSaveModel.toolTipText")); // NOI18N
         jBSaveModel.setFocusable(false);
         jBSaveModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBSaveModel.setSize(new java.awt.Dimension(32, 28));
         jBSaveModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBSaveModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,7 +173,6 @@ public class DatasetContainerComponent
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.weightx = 1.0;
