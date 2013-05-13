@@ -98,6 +98,7 @@ public class ModelContainer
         jBRemove = new javax.swing.JButton();
         jBRefreshModel = new javax.swing.JButton();
         jBSaveModel = new javax.swing.JButton();
+        jBReorderModel = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(180, 240));
         setLayout(new java.awt.GridBagLayout());
@@ -127,6 +128,7 @@ public class ModelContainer
         jBRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBRemove.setMaximumSize(new java.awt.Dimension(26, 26));
         jBRemove.setMinimumSize(new java.awt.Dimension(26, 26));
+        jBRemove.setPreferredSize(new java.awt.Dimension(26, 26));
         jBRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,7 +136,7 @@ public class ModelContainer
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 1.0;
@@ -148,6 +150,7 @@ public class ModelContainer
         jBRefreshModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBRefreshModel.setMaximumSize(new java.awt.Dimension(26, 26));
         jBRefreshModel.setMinimumSize(new java.awt.Dimension(26, 26));
+        jBRefreshModel.setPreferredSize(new java.awt.Dimension(26, 26));
         jBRefreshModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBRefreshModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +171,7 @@ public class ModelContainer
         jBSaveModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBSaveModel.setMaximumSize(new java.awt.Dimension(26, 26));
         jBSaveModel.setMinimumSize(new java.awt.Dimension(26, 26));
+        jBSaveModel.setPreferredSize(new java.awt.Dimension(26, 26));
         jBSaveModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBSaveModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +184,22 @@ public class ModelContainer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel1.add(jBSaveModel, gridBagConstraints);
+
+        jBReorderModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/main/resources/Sort-descending-icon.png"))); // NOI18N
+        jBReorderModel.setText(org.openide.util.NbBundle.getMessage(ModelContainer.class, "ModelContainer.jBReorderModel.text")); // NOI18N
+        jBReorderModel.setToolTipText(org.openide.util.NbBundle.getMessage(ModelContainer.class, "ModelContainer.jBReorderModel.toolTipText")); // NOI18N
+        jBReorderModel.setMaximumSize(new java.awt.Dimension(26, 26));
+        jBReorderModel.setMinimumSize(new java.awt.Dimension(26, 26));
+        jBReorderModel.setPreferredSize(new java.awt.Dimension(26, 26));
+        jBReorderModel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBReorderModelActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        jPanel1.add(jBReorderModel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -212,9 +232,19 @@ public class ModelContainer
             }
         }
     }//GEN-LAST:event_jBSaveModelActionPerformed
+
+    private void jBReorderModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBReorderModelActionPerformed
+              if (!model.getTgm().getDat().getKinparPanel().getKinpar().isEmpty()) {              
+                  if(manager.getRootContext().getChildren().findChild("KinPar")!=null) {
+                  ((KineticParametersNode)manager.getRootContext().getChildren().findChild("KinPar")).sortKineticParameters();
+                  }
+                }            
+    }//GEN-LAST:event_jBReorderModelActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBRefreshModel;
     private javax.swing.JButton jBRemove;
+    private javax.swing.JButton jBReorderModel;
     private javax.swing.JButton jBSaveModel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panel;

@@ -29,16 +29,19 @@ public class PropertiesAbstractNode extends AbstractNode {
 
     public PropertiesAbstractNode(String name, Children children) {
         super(children);
+        setName(name);
         this.type = name;
     }
 
     public PropertiesAbstractNode(String name, Children children, Lookup lookup) {
         super(children, lookup);
+        setName(name);
         this.type = name;
     }
 
     public PropertiesAbstractNode(String name, Children children, Lookup lookup, PropertyChangeListener listn) {
         super(children, lookup);
+        setName(name);
         this.type = name;
         addPropertyChangeListener(WeakListeners.propertyChange(listn, this));
     }
@@ -46,7 +49,7 @@ public class PropertiesAbstractNode extends AbstractNode {
     public String getType() {
         return type;
     }
-
+      
     @Override
     public Image getOpenedIcon(int type) {
         return getIcon(type);

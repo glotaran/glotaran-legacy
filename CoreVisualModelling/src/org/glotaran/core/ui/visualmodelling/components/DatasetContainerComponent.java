@@ -98,9 +98,6 @@ public class DatasetContainerComponent
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jBRefreshModel = new javax.swing.JButton();
-        jBSaveModel = new javax.swing.JButton();
-        jBRemove = new javax.swing.JButton();
         jPDatasetsPanel = new javax.swing.JPanel();
         modelDiffsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -112,64 +109,6 @@ public class DatasetContainerComponent
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(180, 28));
         jPanel1.setLayout(new java.awt.GridBagLayout());
-
-        jBRefreshModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/main/resources/Refresh.png"))); // NOI18N
-        jBRefreshModel.setText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBRefreshModel.text")); // NOI18N
-        jBRefreshModel.setToolTipText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBRefreshModel.toolTipText")); // NOI18N
-        jBRefreshModel.setFocusable(false);
-        jBRefreshModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBRefreshModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBRefreshModel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBRefreshModelActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel1.add(jBRefreshModel, gridBagConstraints);
-
-        jBSaveModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/main/resources/Save.png"))); // NOI18N
-        jBSaveModel.setText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBSaveModel.text")); // NOI18N
-        jBSaveModel.setToolTipText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBSaveModel.toolTipText")); // NOI18N
-        jBSaveModel.setFocusable(false);
-        jBSaveModel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBSaveModel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBSaveModel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSaveModelActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel1.add(jBSaveModel, gridBagConstraints);
-
-        jBRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/main/resources/Delete-icon-16.png"))); // NOI18N
-        jBRemove.setText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBRemove.text")); // NOI18N
-        jBRemove.setToolTipText(org.openide.util.NbBundle.getMessage(DatasetContainerComponent.class, "DatasetContainerComponent.jBRemove.toolTipText")); // NOI18N
-        jBRemove.setFocusable(false);
-        jBRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBRemoveActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel1.add(jBRemove, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -223,29 +162,6 @@ public class DatasetContainerComponent
         add(modelDiffsPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBRefreshModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRefreshModelActionPerformed
-        //manager.getRootContext().removePropertyChangeListener(this);
-        //manager.getRootContext().getChildren().remove(manager.getRootContext().getChildren().getNodes());
-        //manager.getRootContext().addPropertyChangeListener(this);
-//        fillInModel();
-//        model.setModified(false);
-    }//GEN-LAST:event_jBRefreshModelActionPerformed
-
-    private void jBSaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSaveModelActionPerformed
-//        if (model.getCookie(SaveCookie.class)!=null){
-//            try {
-//                model.getCookie(SaveCookie.class).save();
-//            } catch (IOException ex) {
-//                Exceptions.printStackTrace(ex);
-//            }
-//        }
-    }//GEN-LAST:event_jBSaveModelActionPerformed
-
-    private void jBRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveActionPerformed
-//        container.remove(manager.getSelectedNodes());
-//        model.setModified(true);
-    }//GEN-LAST:event_jBRemoveActionPerformed
-
     private void jTFThreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFThreshActionPerformed
         Double thresh = null;
         if (isConnected()) {
@@ -260,9 +176,6 @@ public class DatasetContainerComponent
         }
     }//GEN-LAST:event_jTFThreshActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBRefreshModel;
-    private javax.swing.JButton jBRemove;
-    private javax.swing.JButton jBSaveModel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPDatasetsPanel;
     private javax.swing.JPanel jPanel1;

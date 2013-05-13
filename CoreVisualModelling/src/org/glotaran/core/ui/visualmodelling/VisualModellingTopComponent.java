@@ -177,10 +177,10 @@ final public class VisualModellingTopComponent extends CloneableTopComponent imp
         if(t != null) {
             t.open();
         }        
-//        t = WindowManager.getDefault().findTopComponent("CommonPalette");
-//        if(t != null) {
-//            t.open();
-//        }
+        t = WindowManager.getDefault().findTopComponent("commonpalette");
+        if(t != null) {
+            t.open();
+        }
 //        final TopComponentGroup paletteGroup = WindowManager.getDefault().findTopComponentGroup( "commonpalette" ); // NOI18N
 //        if( null != paletteGroup ) {
 //            paletteGroup.open();
@@ -194,10 +194,10 @@ final public class VisualModellingTopComponent extends CloneableTopComponent imp
         if(t != null) {
             t.close();
         }
-//        t = WindowManager.getDefault().findTopComponent("CommonPalette");
-//        if(t != null) {
-//            t.close();
-//        }
+        t = WindowManager.getDefault().findTopComponent("commonpalette");
+        if(t != null) {
+            t.close();
+        }
     }
     
     @Override

@@ -10,7 +10,7 @@ import org.glotaran.core.models.tgm.KinPar;
  *
  * @author lsp
  */
-public class NonLinearParameter extends AbstractParameterDO {
+public class NonLinearParameter extends AbstractParameterDO implements Comparable<NonLinearParameter>{
 
     private Double start;
     private Boolean fixed;
@@ -86,5 +86,12 @@ public class NonLinearParameter extends AbstractParameterDO {
 
     public void setMinimum(Double value) {
         this.minimum = value;
+    }
+
+    @Override
+    public int compareTo(NonLinearParameter nonLinearParameter) {
+        double value = nonLinearParameter.getStart();
+        //sort in descening order (from large to small)
+        return this.start > value ? -1 : this.start < value ? 1 : 0;
     }
 }

@@ -92,7 +92,7 @@ public class KineticParametersNode extends PropertiesAbstractNode {
     }
 
     public void setCompNum(Integer compNum) {
-        NonLinearParametersKeys childColection = (NonLinearParametersKeys) getChildren();
+        NonLinearParametersKeys childColection = (NonLinearParametersKeys) getChildren();        
         int currCompNum = childColection.getNodesCount();
         if (currCompNum < compNum) {
             childColection.addDefaultObj(compNum - currCompNum);
@@ -129,5 +129,10 @@ public class KineticParametersNode extends PropertiesAbstractNode {
     public void setNnlsProp(Boolean nnls) {
         this.nnls = nnls;
         firePropertyChange("NNLS", null, nnls);
+    }
+    
+    public void sortKineticParameters() {
+        NonLinearParametersKeys childColection = (NonLinearParametersKeys) getChildren(); 
+        childColection.sortParams();
     }
 }

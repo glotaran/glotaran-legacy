@@ -114,5 +114,5 @@ public class ParametersSubNode extends PropertiesAbstractNode implements Propert
         super.destroy();
         parent.updateName();
 
-    }
+    }        
 }

@@ -5,6 +5,9 @@
 package org.glotaran.core.ui.visualmodelling.nodes.dataobjects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.glotaran.core.models.tgm.KinPar;
 import org.glotaran.core.ui.visualmodelling.nodes.ParametersSubNode;
@@ -17,7 +20,7 @@ import org.openide.nodes.Node;
  */
 public class NonLinearParametersKeys extends Children.Keys {
 
-    protected List<NonLinearParameter> parameters;
+    private List<NonLinearParameter> parameters;
 
     public NonLinearParametersKeys(int paramNum) {
         parameters = new ArrayList<NonLinearParameter>();
@@ -96,5 +99,14 @@ public class NonLinearParametersKeys extends Children.Keys {
 
     protected void backToParams() {
         setKeys(parameters);
+    }    
+    
+    public void sortParams() {
+        Collections.sort(parameters);                   
+        setKeys(parameters);
+        for (NonLinearParameter nlp : parameters) {            
+            nlp.fire("start", null, nlp.getStart());
+            nlp.fire("fixed", null, nlp.isFixed());            
+        }
     }
 }
