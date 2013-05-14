@@ -247,4 +247,12 @@ public class CoreErrorMessages {
                 NotifyDescriptor.ERROR_MESSAGE);
         DialogDisplayer.getDefault().notify(errorMessage);
     }
+
+    public static void datasetContainsNaNs(int counter, int numberOfNaNs) {
+        NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
+                NbBundle.getBundle("org/glotaran/core/messages/Bundle").getString("datasetContainsNaNs") +
+                " (Dataset " + counter++ + " contains " + numberOfNaNs + " NaN values).",
+                NotifyDescriptor.ERROR_MESSAGE);
+        DialogDisplayer.getDefault().notify(errorMessage);
+    }
 }

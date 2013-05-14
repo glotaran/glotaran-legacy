@@ -908,9 +908,16 @@ public class AnalysisWorker implements Runnable {
         String feedback = null;
 
         boolean run = true;
+        int counter = 0;
         for (DatasetTimp dataset : datasets) {
+            counter++;
             if (dataset == null) {
                 run = false;
+            }
+            int numberOfNaNs = checkDatasetForNaNs(dataset);
+            if (numberOfNaNs > 0) {
+                run = false;
+                CoreErrorMessages.datasetContainsNaNs(counter,numberOfNaNs);
             }
         }
 
@@ -1159,5 +1166,16 @@ public class AnalysisWorker implements Runnable {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
+    }
+
+    private int checkDatasetForNaNs(DatasetTimp dataset) {
+        int numberOfNaNs = 0;
+        for (int i = 0; i < dataset.getPsisim().length; i++) {
+            if(Double.isNaN(dataset.getPsisim()[i])) {
+                numberOfNaNs+=1;
+            }
+            
+        }
+        return numberOfNaNs;
     }
 }
