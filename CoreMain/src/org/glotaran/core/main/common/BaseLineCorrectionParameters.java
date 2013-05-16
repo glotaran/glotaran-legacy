@@ -38,19 +38,37 @@ public class BaseLineCorrectionParameters {
     }
 
     public double[] getBgRegConstD1() {
-        return bgRegConstD1;
+        return bgRegConstD1.clone();
     }
 
-    public void setBgRegConstD1(double[] bgRegConstD1) {
-        this.bgRegConstD1 = bgRegConstD1;
+//    public void setBgRegConstD1(double[] bgRegConstD1) {
+//        this.bgRegConstD1 = bgRegConstD1;
+//    }
+    
+    public void setBgRegConstD1(int ind, double value) {
+        if (bgRegConstD1==null){
+            bgRegConstD1 = new double[2];
+        }
+        if (ind < 2){
+            bgRegConstD1[ind] = value;
+        }
     }
 
     public double[] getBgRegConstD2() {
-        return bgRegConstD2;
+        return bgRegConstD2.clone();
     }
 
-    public void setBgRegConstD2(double[] bgRegConstD2) {
-        this.bgRegConstD2 = bgRegConstD2;
+//    public void setBgRegConstD2(double[] bgRegConstD2) {
+//        this.bgRegConstD2 = bgRegConstD2;
+//    }
+    
+    public void setBgRegConstD2(int ind, double value) {
+        if (bgRegConstD2==null){
+            bgRegConstD2 = new double[2];
+        }
+        if (ind < 2){
+            bgRegConstD2[ind] = value;
+        }
     }
 
     public boolean isConstBG() {
