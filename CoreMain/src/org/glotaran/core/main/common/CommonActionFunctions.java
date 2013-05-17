@@ -236,16 +236,90 @@ public class CommonActionFunctions {
         return dataset;
     }
 
-//    /**
-//     * 
-//     * @param dataset
-//     * @return
-//     */
-//    public static DatasetTimp baselineCorrection(DatasetTimp dataset){
-//        
-//
-//        return null;
-//    }
+    /**
+     * BG Corrections. Corrections done on source dataset.
+     * @param dataset DatasetTimp : Source dataset;
+     * @param params BaseLineCorrectionParameters : parameters for BG corrections;
+     * @return DatasetTimp
+     */
+    public static DatasetTimp baselineCorrection(DatasetTimp dataset, BaseLineCorrectionParameters params) {
+        double[] bgSpec;
+        double bgConstant = 0;
+        if (params.isSpectralBG()) {
+            bgSpec = new double[dataset.getNl()];
+            for (int i = 0; i < params.getSelSpecNumber(); i++) {
+                for (int j = 0; j < dataset.getNl(); j++) {
+                    bgSpec[j] += dataset.getPsisim()[i + j * dataset.getNt()];
+                }
+            }
+            for (int j = 0; j < dataset.getNl(); j++) {
+                bgSpec[j] /= params.getSelSpecNumber();
+            }
+
+            for (int i = 0; i < dataset.getNt(); i++) {
+                for (int j = 0; j < dataset.getNl(); j++) {
+                    dataset.getPsisim()[i + j * dataset.getNt()] = dataset.getPsisim()[i + j * dataset.getNt()] - bgSpec[j];
+                }
+            }
+        }
+//subtract constant
+        if ((params.isConstBG()) || (params.isRegionConstBG())) {
+            if (params.isConstBG()) {
+                bgConstant = params.getBgConst();
+            } else {
+                if (params.isRegionConstBG()) {
+                    //calculate constant from data based on the filled numbers and put it to bgConstant
+                    int dim1From, dim1To, dim2From, dim2To;
+                    dim1From = CommonActionFunctions.findTimeIndex(dataset, params.getBgRegConstD1()[0]);
+                    dim1To = CommonActionFunctions.findTimeIndex(dataset, params.getBgRegConstD1()[1]);
+                    dim2From = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[0]);
+                    dim2To = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[1]);
+                    double s = 0;
+                    for (int i = dim1From; i < dim1To; i++) {
+                        for (int j = dim2From; j < dim2To; j++) {
+                            s += dataset.getPsisim()[i + j * dataset.getNt()];
+                        }
+                    }
+                    bgConstant = s / ((dim1To - dim1From) * (dim2To - dim2From));
+                }
+            }
+            //subtract  bgConstant from the dataset
+            for (int i = 0; i < dataset.getNl() * dataset.getNt(); i++) {
+                dataset.getPsisim()[i] -= bgConstant;
+            }
+        }
+//subtract time trace 
+        if (params.isTimetraceBG()) {
+            int indFrom, indTo;
+            indFrom = CommonActionFunctions.findWaveIndex(dataset, params.getTimeTrBg()[0]);
+            indTo = CommonActionFunctions.findWaveIndex(dataset, params.getTimeTrBg()[1]);
+            bgSpec = new double[dataset.getNt()];
+
+            for (int i = 0; i < dataset.getNt(); i++) {
+                for (int j = indFrom; j < indTo; j++) {
+                    bgSpec[i] += dataset.getPsisim()[i + j * dataset.getNt()];
+                }
+            }
+            for (int j = 0; j < dataset.getNt(); j++) {
+                bgSpec[j] /= (indTo - indFrom);
+            }
+
+            for (int i = 0; i < dataset.getNt(); i++) {
+                for (int j = 0; j < dataset.getNl(); j++) {
+                    dataset.getPsisim()[i + j * dataset.getNt()] = dataset.getPsisim()[i + j * dataset.getNt()] - bgSpec[i];
+                }
+            }
+        }
+//todo implement Measured IRF 
+//        if (params.isMeasuredBG()) {
+//            
+//        }
+        
+
+
+
+        return dataset;
+    }
 
     /**
      * Correct for outliers. Corrections done on the source dataset 
@@ -386,7 +460,7 @@ public class CommonActionFunctions {
     }
 
     /**
-     * Correct for total intensity, source dataset should have vector for corrections.
+     * Correct for total intensity, source dataset should have vector for corrections, corrections done on source dataset.
      * @param dataset DatasetTimp: source dataset
      * @return DatasetTimp : corrected dataset
      */
@@ -401,7 +475,7 @@ public class CommonActionFunctions {
     }
 
     /**
-     * Convert transmission data to absorption 
+     * Convert transmission data to absorption, corrections done on source dataset. 
      * @param dataset DatasetTimp : source dataset
      * @param baseLineNum int : number of spectra in the beginning of the image to use as baseline.
      * @return DatasetTimp

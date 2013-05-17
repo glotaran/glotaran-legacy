@@ -1198,73 +1198,74 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                 NotifyDescriptor.CANCEL_OPTION);
 
         if (DialogDisplayer.getDefault().notify(baselineCorrectionDialog).equals(NotifyDescriptor.OK_OPTION)) {
-//subtract spect
-            if (baselineCorrectionDialogPanel.getSubtractSpecState()) {
-                bgSpec = new double[data.getNl()];
-                for (int i = 0; i < baselineCorrectionDialogPanel.getNumSpec(); i++) {
-                    for (int j = 0; j < data.getNl(); j++) {
-                        bgSpec[j] += data.getPsisim()[i + j * data.getNt()];
-                    }
-                }
-                for (int j = 0; j < data.getNl(); j++) {
-                    bgSpec[j] /= baselineCorrectionDialogPanel.getNumSpec();
-                }
-
-                for (int i = 0; i < data.getNt(); i++) {
-                    for (int j = 0; j < data.getNl(); j++) {
-                        data.getPsisim()[i + j * data.getNt()] = data.getPsisim()[i + j * data.getNt()] - bgSpec[j];
-                    }
-                }
-            }
-//subtract constant
-            if ((baselineCorrectionDialogPanel.getSubtractConstState()) || (baselineCorrectionDialogPanel.getSubtractConstCalcState())) {
-                if (baselineCorrectionDialogPanel.getSubtractConstState()) {
-                    bgConstant = baselineCorrectionDialogPanel.getBGConstant();
-                } else {
-                    if (baselineCorrectionDialogPanel.getSubtractConstCalcState()) {
-                        //calculate constant from data based on the filled numbers and put it to bgConstant
-                        int dim1From, dim1To, dim2From, dim2To;
-                        dim1From = CommonActionFunctions.findTimeIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[0]);
-                        dim1To = CommonActionFunctions.findTimeIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[1]);
-                        dim2From = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim2()[0]);
-                        dim2To = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim2()[1]);
-                        double s = 0;
-                        for (int i = dim1From; i < dim1To; i++){
-                            for (int j = dim2From; j < dim2To; j++) {
-                                s += data.getPsisim()[i + j * data.getNt()]; 
-                            } 
-                        }
-                        bgConstant =s/((dim1To-dim1From)*(dim2To-dim2From));      
-                    }
-                }
-                //subtract  bgConstant from the data
-                for (int i = 0; i < data.getNl() * data.getNt(); i++) {
-                    data.getPsisim()[i] -= bgConstant;
-                }
-            }
-            
-            if (baselineCorrectionDialogPanel.getSubtractTimeTraceState()){
-                int indFrom, indTo;
-                indFrom = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getTimeTrBg()[0]);        
-                indTo = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getTimeTrBg()[1]);
-                bgSpec = new double[data.getNt()];
-                
-                for (int i = 0; i < data.getNt(); i++) {
-                    for (int j = indFrom; j < indTo; j++) {
-                        bgSpec[i] += data.getPsisim()[i + j * data.getNt()];
-                    }
-                }
-                for (int j = 0; j < data.getNt(); j++) {
-                    bgSpec[j] /= (indTo-indFrom);
-                }
-
-                for (int i = 0; i < data.getNt(); i++) {
-                    for (int j = 0; j < data.getNl(); j++) {
-                        data.getPsisim()[i + j * data.getNt()] = data.getPsisim()[i + j * data.getNt()] - bgSpec[i];
-                    }
-                }
-                
-            }
+            CommonActionFunctions.baselineCorrection(data, baselineCorrectionDialogPanel.getCorrParameters());
+////subtract spect
+//            if (baselineCorrectionDialogPanel.getSubtractSpecState()) {
+//                bgSpec = new double[data.getNl()];
+//                for (int i = 0; i < baselineCorrectionDialogPanel.getNumSpec(); i++) {
+//                    for (int j = 0; j < data.getNl(); j++) {
+//                        bgSpec[j] += data.getPsisim()[i + j * data.getNt()];
+//                    }
+//                }
+//                for (int j = 0; j < data.getNl(); j++) {
+//                    bgSpec[j] /= baselineCorrectionDialogPanel.getNumSpec();
+//                }
+//
+//                for (int i = 0; i < data.getNt(); i++) {
+//                    for (int j = 0; j < data.getNl(); j++) {
+//                        data.getPsisim()[i + j * data.getNt()] = data.getPsisim()[i + j * data.getNt()] - bgSpec[j];
+//                    }
+//                }
+//            }
+////subtract constant
+//            if ((baselineCorrectionDialogPanel.getSubtractConstState()) || (baselineCorrectionDialogPanel.getSubtractConstCalcState())) {
+//                if (baselineCorrectionDialogPanel.getSubtractConstState()) {
+//                    bgConstant = baselineCorrectionDialogPanel.getBGConstant();
+//                } else {
+//                    if (baselineCorrectionDialogPanel.getSubtractConstCalcState()) {
+//                        //calculate constant from data based on the filled numbers and put it to bgConstant
+//                        int dim1From, dim1To, dim2From, dim2To;
+//                        dim1From = CommonActionFunctions.findTimeIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[0]);
+//                        dim1To = CommonActionFunctions.findTimeIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[1]);
+//                        dim2From = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim2()[0]);
+//                        dim2To = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim2()[1]);
+//                        double s = 0;
+//                        for (int i = dim1From; i < dim1To; i++){
+//                            for (int j = dim2From; j < dim2To; j++) {
+//                                s += data.getPsisim()[i + j * data.getNt()]; 
+//                            } 
+//                        }
+//                        bgConstant =s/((dim1To-dim1From)*(dim2To-dim2From));      
+//                    }
+//                }
+//                //subtract  bgConstant from the data
+//                for (int i = 0; i < data.getNl() * data.getNt(); i++) {
+//                    data.getPsisim()[i] -= bgConstant;
+//                }
+//            }
+////subtract time trace 
+//            if (baselineCorrectionDialogPanel.getSubtractTimeTraceState()){
+//                int indFrom, indTo;
+//                indFrom = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getTimeTrBg()[0]);        
+//                indTo = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getTimeTrBg()[1]);
+//                bgSpec = new double[data.getNt()];
+//                
+//                for (int i = 0; i < data.getNt(); i++) {
+//                    for (int j = indFrom; j < indTo; j++) {
+//                        bgSpec[i] += data.getPsisim()[i + j * data.getNt()];
+//                    }
+//                }
+//                for (int j = 0; j < data.getNt(); j++) {
+//                    bgSpec[j] /= (indTo-indFrom);
+//                }
+//
+//                for (int i = 0; i < data.getNt(); i++) {
+//                    for (int j = 0; j < data.getNl(); j++) {
+//                        data.getPsisim()[i + j * data.getNt()] = data.getPsisim()[i + j * data.getNt()] - bgSpec[i];
+//                    }
+//                }
+//                
+//            }
 
             data.calcRangeInt();
             MakeImageChart(MakeXYZDataset());

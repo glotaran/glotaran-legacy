@@ -11,10 +11,6 @@
 
 package org.glotaran.core.main.common;
 
-import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
-import org.openide.util.NbBundle;
-
 /**
  *
  * @author sergey

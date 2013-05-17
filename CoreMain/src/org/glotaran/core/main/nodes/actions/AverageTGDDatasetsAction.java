@@ -106,7 +106,9 @@ public final class AverageTGDDatasetsAction implements ActionListener {
                 }
 
                 if (preprocessDialogPanel.getBackgroundState()) {
-                    //todo implement baseline correction
+                    for (DatasetTimp dataset : listOfTimpDatasets) {
+                        CommonActionFunctions.baselineCorrection(dataset, preprocessDialogPanel.getBaselineCorrectionPanel().getCorrParameters());
+                    }
                 }
 
                 if (preprocessDialogPanel.getSelectState()) {
@@ -146,16 +148,20 @@ public final class AverageTGDDatasetsAction implements ActionListener {
                 String datasetsfolder = preprocessDialogPanel.getFileName().getParent();
                 FileObject folderObj = FileUtil.toFileObject(new File(datasetsfolder));
                 String freeFilename = FileUtil.findFreeFileName(folderObj, preprocessDialogPanel.getFileName().getName(), "timpdataset");
+                ObjectOutputStream stream = null;
                 try {
-                    FileObject writeTo = folderObj.createData(freeFilename, "timpdataset");
-                    ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
-                    stream.writeObject(resDataset);
-                    stream.close();
-
+                    try {
+                        FileObject writeTo = folderObj.createData(freeFilename, "timpdataset");
+                        stream = new ObjectOutputStream(writeTo.getOutputStream());
+                        stream.writeObject(resDataset);
+                    } finally {
+                        if (stream != null) {
+                            stream.close();
+                        }
+                    }
                 } catch (IOException ex) {
                     CoreErrorMessages.fileSaveError(freeFilename);
                 }
-
             }
         } else {
             CoreWarningMessages.wrongSelectionWarning();

@@ -477,55 +477,36 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
     }//GEN-LAST:event_jRBSubTimeTrActionPerformed
 
     private void jTFTimeTrBGFromKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFTimeTrBGFromKeyReleased
-//        if (corrParameters.getTimeTrBg()==null){
-//            corrParameters.setTimeTrBg(new double[2]);
-//        }
         if (checkDouble(jTFTimeTrBGFrom.getText())){
             corrParameters.setTimeTrBg(0, Double.parseDouble(jTFTimeTrBGFrom.getText()));
         }
     }//GEN-LAST:event_jTFTimeTrBGFromKeyReleased
 
     private void jTFTimeTrBGToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFTimeTrBGToKeyReleased
-//        if (corrParameters.getTimeTrBg()==null){
-//            corrParameters.setTimeTrBg(new double[2]);
-//        }
         if (checkDouble(jTFTimeTrBGTo.getText())){
             corrParameters.setTimeTrBg(1, Double.parseDouble(jTFTimeTrBGTo.getText()));
         }
     }//GEN-LAST:event_jTFTimeTrBGToKeyReleased
 
     private void jTFRegBGDim1FromKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim1FromKeyReleased
-//        if (corrParameters.getBgRegConstD1()==null){
-//            corrParameters.setBgRegConstD1( new double[2]);
-//        }
         if (checkDouble(jTFRegBGDim1From.getText())){
             corrParameters.setBgRegConstD1(0, Double.parseDouble(jTFRegBGDim1From.getText()));
         }
     }//GEN-LAST:event_jTFRegBGDim1FromKeyReleased
 
     private void jTFRegBGDim1ToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim1ToKeyReleased
-//        if (corrParameters.getBgRegConstD1()==null){
-//            corrParameters.setBgRegConstD1(new double[2]);
-//        }
         if (checkDouble(jTFRegBGDim1To.getText())) {
             corrParameters.setBgRegConstD1(1, Double.parseDouble(jTFRegBGDim1To.getText()));
         }
     }//GEN-LAST:event_jTFRegBGDim1ToKeyReleased
 
     private void jTFRegBGDim2FromKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim2FromKeyReleased
-   
-//        if (corrParameters.getBgRegConstD2()==null){
-//            corrParameters.setBgRegConstD2(new double[2]);
-//        }
         if (checkDouble(jTFRegBGDim2From.getText())){
             corrParameters.setBgRegConstD2(0, Double.parseDouble(jTFRegBGDim2From.getText()));
         }
     }//GEN-LAST:event_jTFRegBGDim2FromKeyReleased
 
     private void jTFRegBGDim2ToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim2ToKeyReleased
-//        if (corrParameters.getBgRegConstD2()==null){
-//            corrParameters.setBgRegConstD2(new double[2]);
-//        }
         if (checkDouble(jTFRegBGDim2To.getText())){
             corrParameters.setBgRegConstD2(1, Double.parseDouble(jTFRegBGDim2To.getText()));
         }
@@ -681,14 +662,14 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
     public double[] getBgRegionDim2() {
         return corrParameters.getBgRegConstD2();
     }
-//
-//    /**
-//     *
-//     * @return
-//     */
-//    public BaseLineCorrectionParameters getCorrParameters() {
-//        return corrParameters;
-//    }
+
+    /**
+     * Parameters of from Baseline correction dialog
+     * @return
+     */
+    public BaseLineCorrectionParameters getCorrParameters() {
+        return corrParameters;
+    }
 //
 //    /**
 //     *
