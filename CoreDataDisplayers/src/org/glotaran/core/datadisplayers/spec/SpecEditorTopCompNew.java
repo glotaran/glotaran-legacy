@@ -1226,8 +1226,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                         int dim1From, dim1To, dim2From, dim2To;
                         dim1From = CommonActionFunctions.findTimeIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[0]);
                         dim1To = CommonActionFunctions.findTimeIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[1]);
-                        dim2From = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[0]);
-                        dim2To = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim1()[1]);
+                        dim2From = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim2()[0]);
+                        dim2To = CommonActionFunctions.findWaveIndex(data, baselineCorrectionDialogPanel.getBgRegionDim2()[1]);
                         double s = 0;
                         for (int i = dim1From; i < dim1To; i++){
                             for (int j = dim2From; j < dim2To; j++) {
