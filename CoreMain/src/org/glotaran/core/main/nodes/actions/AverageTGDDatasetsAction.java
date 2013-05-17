@@ -29,7 +29,6 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
-import org.openide.util.NbBundle;
 
 public final class AverageTGDDatasetsAction implements ActionListener {
 

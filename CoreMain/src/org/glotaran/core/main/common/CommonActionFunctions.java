@@ -15,19 +15,24 @@ import java.util.Collections;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.openide.util.Exceptions;
 import static java.lang.Math.floor;
-import static java.lang.Math.ceil;
+//import static java.lang.Math.ceil;
 import static java.lang.Math.abs;
 
 /**
- *
- * @author lsp
+ * Common functions to work with datasets
+ * @author Sergey
  */
 public class CommonActionFunctions {
 
+    /**
+     * Average several datasets 
+     * @param datasets list of the datasets (DatasetTimp) to be averaged 
+     * @return DatasetTimp - averaged dataset 
+     */
     public static DatasetTimp averageSpecDatasets(ArrayList<DatasetTimp> datasets){
-        DatasetTimp newDataset = null;
-        boolean differentX = false;
-        boolean differentX2 = false;
+        DatasetTimp newDataset;
+        boolean differentX;
+        boolean differentX2;
         for (int i = 1; i < datasets.size(); i++){
             differentX = Arrays.equals((datasets.get(0).getX()),(datasets.get(i).getX()));
             differentX2 = Arrays.equals((datasets.get(0).getX2()),(datasets.get(i).getX2()));
@@ -54,14 +59,27 @@ public class CommonActionFunctions {
         return newDataset;
     }
     
+    /**
+     * Resampling or averaging Dataset
+     * Resample just samples points (take for ex 1 out of every 4 points for instance) 
+     * thus reducing the total number of points without affecting the resolution too much, 
+     * Averaging sums them up and divides by the total number of points
+     * @param dataset DatasetTimp: to be averaged 
+     * @param average boolean: true - average / false - resample 
+     * @param xWin average/resample for X dimension (waves) 
+     * @param yWin average/resample for Y dimension (time) 
+     * @return DatasetTimp : resulted dataset
+     */
     public static DatasetTimp resampleDataset(DatasetTimp dataset, boolean average, int xWin, int yWin){
         int newHeight = dataset.getNt();
         int newWidth = dataset.getNl();
-        double[] temp = null;
+        double[] temp;
 
         if (xWin!=0){
 // work with x dimension
-            newWidth = (int)ceil(dataset.getNl()/xWin);
+//            newWidth = (int)ceil((double)dataset.getNl()/xWin);
+//because  dataset.getNl() and  xWin - integers > 0 we cn use next code and use integers without casting to double othre wise previous lin eshould be used 
+            newWidth = (dataset.getNl() + xWin - 1)/xWin;
             temp = new double[newWidth * newHeight];
 
             for (int i = 0; i < newHeight; i++) {
@@ -112,8 +130,10 @@ public class CommonActionFunctions {
 
 
         if (yWin!=0){
-// work with y dimension
-            newHeight = (int)ceil(dataset.getNt()/yWin);
+// work with y dimension      
+//            newHeight = (int)ceil((double)dataset.getNt()/yWin);
+//because  dataset.getNt() and  yWin - integers > 0 we cn use next code and use integers without casting to double othre wise previous lin eshould be used 
+            newHeight = (dataset.getNt() + yWin - 1)/yWin;
             temp = new double[newWidth * newHeight];
 
             for (int i = 0; i < newWidth; i++) {
@@ -166,8 +186,17 @@ public class CommonActionFunctions {
         return dataset;
     }
 
+    /**
+     * Select part of the dataset 
+     * @param dataset DatasetTimp source dataset 
+     * @param minX double start selecting from (in actual values) wavelengths
+     * @param maxX double end selecting at (in actual values) wavelengths
+     * @param minY double start selecting from (in actual values) time
+     * @param maxY double end selecting at (in actual values) time
+     * @return DatasetTimp sub-dataset
+     */
     public static DatasetTimp selectInDataset(DatasetTimp dataset, double minX, double maxX, double minY, double maxY){
-        double[] temp = null;
+        double[] temp;
         if (minX!=0&&maxX!=0){
             int indMixX=findWaveIndex(dataset, minX);
             int indMaxX=findWaveIndex(dataset, maxX);
@@ -207,12 +236,24 @@ public class CommonActionFunctions {
         return dataset;
     }
 
-    public static DatasetTimp baselineCorrection(DatasetTimp dataset){
-        
+//    /**
+//     * 
+//     * @param dataset
+//     * @return
+//     */
+//    public static DatasetTimp baselineCorrection(DatasetTimp dataset){
+//        
+//
+//        return null;
+//    }
 
-        return null;
-    }
-
+    /**
+     * Correct for outliers. Corrections done on the source dataset 
+     * @param dataset DatasetTimp : source dataset
+     * @param size int : size of the scanning window
+     * @param fence double : multiplication factor for acceptance fence 0.75*fence 
+     * @return int : number of outliers;
+     */
     public static int outliersCorrection(DatasetTimp dataset, int size, double fence) {
         int ywindnum = dataset.getNl() / size;
         int xwindnum = dataset.getNt() / size;
@@ -344,6 +385,11 @@ public class CommonActionFunctions {
         return outliercount;
     }
 
+    /**
+     * Correct for total intensity, source dataset should have vector for corrections.
+     * @param dataset DatasetTimp: source dataset
+     * @return DatasetTimp : corrected dataset
+     */
     public static DatasetTimp totalIntencityCorrection(DatasetTimp dataset){
         for (int j = 0; j < dataset.getNl(); j++) {
             for (int i = 0; i < dataset.getNt(); i++) {
@@ -354,8 +400,14 @@ public class CommonActionFunctions {
         return dataset;
     }
 
+    /**
+     * Convert transmission data to absorption 
+     * @param dataset DatasetTimp : source dataset
+     * @param baseLineNum int : number of spectra in the beginning of the image to use as baseline.
+     * @return DatasetTimp
+     */
     public static DatasetTimp convertToAbsorption(DatasetTimp dataset, int baseLineNum) {
-        double[] zeroSpec = null;
+        double[] zeroSpec;
         zeroSpec = new double[dataset.getNl()];
         for (int j = 0; j < dataset.getNl(); j++) {
             zeroSpec[j] = dataset.getPsisim()[j * dataset.getNt()];
@@ -378,6 +430,12 @@ public class CommonActionFunctions {
         return dataset;
     }
 
+    /**
+     * Export dataset to disc. 
+     * @param dataset DatasetTimp : dataset to be exported;
+     * @param fileName String : destination file
+     * @param format String : type of export TIMP, CSV (coma separated with labels), Plain(tab separated with labels) 
+     */
     public static void exportSpecDatasets(DatasetTimp dataset, String fileName, String format){
         if(format.equals("TIMP")) {
 
@@ -505,7 +563,12 @@ public class CommonActionFunctions {
         }
     }
 
-        public static double median(ArrayList values){
+    /**
+     * Calculate median
+     * @param values ArrayList : source data  
+     * @return double : medial value
+     */
+    public static double median(ArrayList values){
         Collections.sort(values);
         if (values.size() % 2 == 1) {
             return (Double)values.get((values.size() + 1) / 2 - 1);
@@ -516,6 +579,12 @@ public class CommonActionFunctions {
         }
     }
 
+    /**
+     * Calculate quantile 
+     * @param values ArrayList : source data  
+     * @param probability double : probability for quantile calculation 
+     * @return double
+     */
     public static double quantile(ArrayList values, double probability){
         Collections.sort(values);
         double pos;
@@ -528,6 +597,12 @@ public class CommonActionFunctions {
         }
     }
 
+    /**
+     * Find index for wave Dataset;
+     * @param dataset DatasetTimp : source dataset
+     * @param wave double : value 
+     * @return int : index of wave
+     */
     public static int findWaveIndex(DatasetTimp dataset, double wave) {
         int index = 0;
         if (dataset.getX2()[0] < dataset.getX2()[1]) {
@@ -559,6 +634,12 @@ public class CommonActionFunctions {
         }
     }
 
+    /**
+     * Find index for time step in  Dataset;
+     * @param dataset DatasetTimp : source dataset
+     * @param time double : value 
+     * @return int : index of time;
+     */
     public static int findTimeIndex(DatasetTimp dataset, double time) {
         int index = 0;
         if (time < dataset.getX()[0]) {

@@ -187,6 +187,7 @@ public class EmptyTgmProjectPanelVisual extends JPanel implements DocumentListen
     }
 
     // Implementation of DocumentListener --------------------------------------
+    @Override
     public void changedUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -194,6 +195,7 @@ public class EmptyTgmProjectPanelVisual extends JPanel implements DocumentListen
         }
     }
 
+    @Override
     public void insertUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -201,6 +203,7 @@ public class EmptyTgmProjectPanelVisual extends JPanel implements DocumentListen
         }
     }
 
+    @Override
     public void removeUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {

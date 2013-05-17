@@ -25,7 +25,7 @@ public final class ShowTimpDataset extends CookieAction {
         TimpDatasetDataObject dataObject = activatedNodes[0].getLookup().lookup(TimpDatasetDataObject.class);
         String datatype = null;
         if (!(dataObject == null)) {
-            DatasetTimp dataset = null;
+            DatasetTimp dataset;
             dataset = dataObject.getDatasetTimp();
             if (dataset != null) {
                 datatype = dataset.getType();
@@ -47,14 +47,17 @@ public final class ShowTimpDataset extends CookieAction {
 
     }
 
+    @Override
     protected int mode() {
         return CookieAction.MODE_ALL;
     }
 
+    @Override
     public String getName() {
         return NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("showDataset");
     }
 
+    @Override
     protected Class[] cookieClasses() {
         return new Class[]{DataObject.class};
     }
@@ -65,6 +68,7 @@ public final class ShowTimpDataset extends CookieAction {
         putValue("noIconInMenu", Boolean.TRUE);
     }
 
+    @Override
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }

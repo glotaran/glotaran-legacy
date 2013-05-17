@@ -74,14 +74,17 @@ public class TimpDatasetNode extends DataNode implements Transferable {
         return false;
     }
 
+    @Override
     public DataFlavor[] getTransferDataFlavors() {
         return (new DataFlavor[]{DATA_FLAVOR});
     }
 
+    @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
         return (flavor == DATA_FLAVOR);
     }
 
+    @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
         if (flavor == DATA_FLAVOR) {
             return (this);

@@ -12,6 +12,7 @@ import org.netbeans.spi.project.ui.PrivilegedTemplates;
  */
 public class TGFileTypes implements PrivilegedTemplates {
 
+    @Override
     public String[] getPrivilegedTemplates() {
         String[] trialTypes = {"Templates/Glotaran/TgmTemplate.xml"
         };

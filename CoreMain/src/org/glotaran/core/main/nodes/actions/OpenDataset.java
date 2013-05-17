@@ -124,7 +124,7 @@ public final class OpenDataset extends CookieAction {
 
     private void openDatasetFile(TGDatasetInterface service, File f) {
         FileObject projectCacheFolder = null;
-        FileObject cacheSubFolder = null;
+        FileObject cacheSubFolder;
         FileObject newFO = null;
         FileObject originalFO = FileUtil.toFileObject(f);
         String cacheFolderName = originalFO.getName() + "_" + String.valueOf(System.currentTimeMillis());

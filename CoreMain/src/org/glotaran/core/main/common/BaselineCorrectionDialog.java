@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * selectDataDialog.java
  *
  * Created on May 18, 2010, 3:44:50 PM
@@ -14,7 +9,7 @@ package org.glotaran.core.main.common;
 import org.glotaran.core.messages.CoreErrorMessages;
 
 /**
- *
+ * Dialog to select parameters for BG correction 
  * @author sergey
  */
 public class BaselineCorrectionDialog extends javax.swing.JPanel {
@@ -482,20 +477,20 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
     }//GEN-LAST:event_jRBSubTimeTrActionPerformed
 
     private void jTFTimeTrBGFromKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFTimeTrBGFromKeyReleased
-        if (corrParameters.getTimeTrBg()==null){
-            corrParameters.setTimeTrBg(new double[2]);
-        }
+//        if (corrParameters.getTimeTrBg()==null){
+//            corrParameters.setTimeTrBg(new double[2]);
+//        }
         if (checkDouble(jTFTimeTrBGFrom.getText())){
-            corrParameters.getTimeTrBg()[0] = Double.parseDouble(jTFTimeTrBGFrom.getText());
+            corrParameters.setTimeTrBg(0, Double.parseDouble(jTFTimeTrBGFrom.getText()));
         }
     }//GEN-LAST:event_jTFTimeTrBGFromKeyReleased
 
     private void jTFTimeTrBGToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFTimeTrBGToKeyReleased
-        if (corrParameters.getTimeTrBg()==null){
-            corrParameters.setTimeTrBg(new double[2]);
-        }
+//        if (corrParameters.getTimeTrBg()==null){
+//            corrParameters.setTimeTrBg(new double[2]);
+//        }
         if (checkDouble(jTFTimeTrBGTo.getText())){
-            corrParameters.getTimeTrBg()[1] = Double.parseDouble(jTFTimeTrBGTo.getText());
+            corrParameters.setTimeTrBg(1, Double.parseDouble(jTFTimeTrBGTo.getText()));
         }
     }//GEN-LAST:event_jTFTimeTrBGToKeyReleased
 
@@ -607,54 +602,102 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         corrParameters.setSpectralBG(jRBSubSpec.isSelected());
     }
 
+    /**
+     * True if region for calculation BG was selected
+     * @return boolean
+     */
     public boolean getSubtractConstCalcState() {
         return jRBSubConstCalc.isSelected();
     }
 
+    /**
+     * True if number of spectra for calculation BG was selected
+     * @return boolean
+     */
     public boolean getSubtractSpecState() {
         return jRBSubSpec.isSelected();
     }
 
+    /**
+     * True if constant BG was selected
+     * @return
+     */
     public boolean getSubtractConstState() {
         return jRBSubConst.isSelected();
     }
 
+    /**
+     * True file with saved BG was selected 
+     * @return boolean
+     */
     public boolean getSubtractFileState() {
         return jRBSubFile.isSelected();
     }
     
+    /**
+     * True if time traces for calculation BG was selected
+     * @return boolean
+     */
     public boolean getSubtractTimeTraceState(){
         return jRBSubTimeTr.isSelected();
     }
 
+    /**
+     * Number of spectra from the beginning of image for calculation BG
+     * @return int
+     */
     public int getNumSpec(){
         return corrParameters.getSelSpecNumber();
     }
 
+    /**
+     * Constant to subtract as BG 
+     * @return double
+     */
     public double getBGConstant(){
         return corrParameters.getBgConst();
     }
     
+    /**
+     * Region to calculate time trace to be used as BG 
+     * @return double[2]
+     */
     public double[] getTimeTrBg() {
         return corrParameters.getTimeTrBg();
     }
 
+    /**
+     * Region dimension 1 (time) to calculate constant to be used as BG 
+     * @return double[2]
+     */
     public double[] getBgRegionDim1() {
         return corrParameters.getBgRegConstD1();
     }
 
+    /**
+     * Region dimension 2 (waves) to calculate constant to be used as BG 
+     * @return double[2]
+     */
     public double[] getBgRegionDim2() {
         return corrParameters.getBgRegConstD2();
     }
-
-    public BaseLineCorrectionParameters getCorrParameters() {
-        return corrParameters;
-    }
-
-    public void setCorrParameters(BaseLineCorrectionParameters corrParameters) {
-        this.corrParameters = corrParameters;
-    }
-    
+//
+//    /**
+//     *
+//     * @return
+//     */
+//    public BaseLineCorrectionParameters getCorrParameters() {
+//        return corrParameters;
+//    }
+//
+//    /**
+//     *
+//     * @param corrParameters
+//     */
+//    public void setCorrParameters(BaseLineCorrectionParameters corrParameters) {
+//        this.corrParameters = corrParameters;
+//    }
+//    
     @Override
     public void setEnabled(boolean enabled) {
         if (enabled) {

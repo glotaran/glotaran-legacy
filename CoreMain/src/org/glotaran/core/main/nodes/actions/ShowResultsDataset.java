@@ -20,11 +20,12 @@ public final class ShowResultsDataset extends CookieAction {
         services = Lookup.getDefault().lookupAll(ResultsLoaderInterface.class);
     }
 
+    @Override
     protected void performAction(Node[] activatedNodes) {
         TimpResultDataObject dataObject = activatedNodes[0].getLookup().lookup(TimpResultDataObject.class);
         String datatype = null;
         if (!(dataObject == null)) {
-            TimpResultDataset dataset = null;
+            TimpResultDataset dataset;
             dataset = dataObject.getTimpResultDataset();
             if (dataset != null) {
                 datatype = dataset.getType();
@@ -41,14 +42,17 @@ public final class ShowResultsDataset extends CookieAction {
 
     }
 
+    @Override
     protected int mode() {
         return CookieAction.MODE_ALL;
     }
 
+    @Override
     public String getName() {
         return NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("showResults");
     }
 
+    @Override
     protected Class[] cookieClasses() {
         return new Class[]{DataObject.class};
     }
@@ -60,6 +64,7 @@ public final class ShowResultsDataset extends CookieAction {
         putValue("noIconInMenu", Boolean.TRUE);
     }
 
+    @Override
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }
