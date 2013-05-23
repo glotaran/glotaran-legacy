@@ -34,6 +34,9 @@ public class ASCIIImage implements TGDatasetInterface {
             loadedString = sc.nextLine();
             loadedString = sc.nextLine();
             loadedString = sc.nextLine();
+            if (loadedString.contains("\t")) { //check for tabs instead of spaces
+            loadedString = loadedString.trim().replaceAll("\t", " ");
+            }
             if (loadedString.trim().equalsIgnoreCase("Time explicit") | loadedString.trim().equalsIgnoreCase("Wavelength explicit")) {
                 return "spec";
             } else {
@@ -56,6 +59,9 @@ public class ASCIIImage implements TGDatasetInterface {
             loadedString = sc.nextLine();
             loadedString = sc.nextLine();
             loadedString = sc.nextLine();
+            if (loadedString.contains("\t")) { //check for tabs instead of spaces
+            loadedString = loadedString.trim().replaceAll("\t", " ");
+            }
             if (loadedString.trim().equalsIgnoreCase("Time explicit")
                     | loadedString.trim().equalsIgnoreCase("Wavelength explicit")
                     | loadedString.trim().equalsIgnoreCase("FLIM image")) {
@@ -89,6 +95,9 @@ public class ASCIIImage implements TGDatasetInterface {
         loadedString = sc.nextLine();
         loadedString = sc.nextLine();
         loadedString = sc.nextLine();
+        if (loadedString.contains("\t")) { //check for tabs instead of spaces
+            loadedString = loadedString.trim().replaceAll("\t", " ");
+            }
         if (loadedString.trim().equalsIgnoreCase("Time explicit")) {
             sc.skip(Pattern.compile(" *Intervalnr", Pattern.CASE_INSENSITIVE));
             nt = sc.nextInt();
