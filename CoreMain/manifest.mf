@@ -4,5 +4,5 @@ AutoUpdate-Essential-Module: true
 OpenIDE-Module: org.glotaran.core.main/1
 OpenIDE-Module-Layer: org/glotaran/core/main/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/core/main/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.1
+OpenIDE-Module-Specification-Version: 3.2
 

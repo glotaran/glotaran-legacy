@@ -154,7 +154,7 @@ public class ExportPanelForm extends javax.swing.JPanel {
             return "CSV";
         }
         if (rbPlane.isSelected()) {
-            return "Plane";
+            return "Plain";
         }
         return "TIMP";
     }

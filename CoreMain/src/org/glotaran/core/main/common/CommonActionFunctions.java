@@ -511,54 +511,124 @@ public class CommonActionFunctions {
      * @param format String : type of export TIMP, CSV (coma separated with labels), Plain(tab separated with labels) 
      */
     public static void exportSpecDatasets(DatasetTimp dataset, String fileName, String format){
-        if(format.equals("TIMP")) {
-
+        BufferedWriter f = null;
+        if (format.equals("TIMP")) {
             try {
-                BufferedWriter f = new BufferedWriter(new FileWriter(fileName));
-                f.append(fileName);
-                f.newLine();
-                f.append(dataset.getDatasetName());
-                f.newLine();
-                if (dataset.getType().equalsIgnoreCase("spec")) {
-                    f.append("Time explicit");
+                try {
+                    f = new BufferedWriter(new FileWriter(fileName));
+                    f.append(fileName);
                     f.newLine();
-                    f.append("Intervalnr ");
-                    f.append("  "); //Do not add a tab here!
-                    f.append(String.valueOf(dataset.getNt()));
+                    f.append(dataset.getDatasetName());
                     f.newLine();
-                } else {
-                    if (dataset.getType().equalsIgnoreCase("flim")) {
-                        f.append("FLIM image");
+                    if (dataset.getType().equalsIgnoreCase("spec")) {
+                        f.append("Time explicit");
                         f.newLine();
-                        f.append(String.valueOf(dataset.getOriginalWidth()));
+                        f.append("Intervalnr ");
                         f.append("  "); //Do not add a tab here!
-                        f.append(String.valueOf(dataset.getOriginalHeight()));
-                        f.newLine();
                         f.append(String.valueOf(dataset.getNt()));
                         f.newLine();
-                        f.append(String.valueOf(dataset.getNl()));
+                    } else {
+                        if (dataset.getType().equalsIgnoreCase("flim")) {
+                            f.append("FLIM image");
+                            f.newLine();
+                            f.append(String.valueOf(dataset.getOriginalWidth()));
+                            f.append("  "); //Do not add a tab here!
+                            f.append(String.valueOf(dataset.getOriginalHeight()));
+                            f.newLine();
+                            f.append(String.valueOf(dataset.getNt()));
+                            f.newLine();
+                            f.append(String.valueOf(dataset.getNl()));
+                            f.newLine();
+                        }
+                    }
+
+
+                    for (int i = 0; i < dataset.getNt(); i++) {
+                        if (dataset.getType().equalsIgnoreCase("spec")) {
+                            f.append(String.valueOf(dataset.getX()[i]));
+                        } else {
+                            if (dataset.getType().equalsIgnoreCase("flim")) {
+                                int decimalPlace = 4;
+                                BigDecimal bd = new BigDecimal(dataset.getX()[i]);
+                                bd = bd.setScale(decimalPlace, BigDecimal.ROUND_UP);
+                                f.append(String.valueOf(bd.doubleValue()));
+                            }
+                        }
+
+                        f.append("\t");
+                    }
+                    f.newLine();
+                    for (int i = 0; i < dataset.getNl(); i++) {
+                        f.append(String.valueOf(dataset.getX2()[i]));
+                        f.append("\t");
+                        for (int j = 0; j < dataset.getNt(); j++) {
+                            f.append(String.valueOf(dataset.getPsisim()[i * dataset.getNt() + j]));
+                            f.append("\t");
+                        }
                         f.newLine();
                     }
+                    if (dataset.getType().equalsIgnoreCase("flim")) {
+                        f.append("Intensity image");
+                        f.newLine();
+                        for (int i = 0; i < dataset.getIntenceIm().length; i++) {
+                            f.append(String.valueOf(dataset.getIntenceIm()[i]));
+                            f.append("\t");
+                        }
+                        f.newLine();
+                    }
+                    f.flush();
+                } finally {
+                    if (f != null) {
+                        f.close();
+                    }
                 }
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
 
-                
-                for (int i = 0; i< dataset.getNt(); i++){
-                    if (dataset.getType().equalsIgnoreCase("spec")) {
-                        f.append(String.valueOf(dataset.getX()[i]));
-                    }
-                    else {
-                       if (dataset.getType().equalsIgnoreCase("flim")) {
-                             int decimalPlace = 4;
-                             BigDecimal bd = new BigDecimal(dataset.getX()[i]);
-                             bd = bd.setScale(decimalPlace,BigDecimal.ROUND_UP);
-                             f.append(String.valueOf(bd.doubleValue()));
-                       } 
-                    }
+        }
 
+        if (format.equals("CSV")) {
+            try {
+                try {
+                f = new BufferedWriter(new FileWriter(fileName));
+                f.append("0.0");
+                f.append(",");
+                for (int i = 0; i < dataset.getNt(); i++) {
+                    f.append(String.valueOf(dataset.getX()[i]));
+                    f.append(",");
+                }
+                for (int i = 0; i < dataset.getNl(); i++) {
+                    f.append(String.valueOf(dataset.getX2()[i]));
+                    f.append(",");
+                    for (int j = 0; j < dataset.getNt(); j++) {
+                        f.append(String.valueOf(dataset.getPsisim()[i * dataset.getNt() + j]));
+                        f.append(",");
+                    }
+                    f.newLine();
+                }
+                f.flush();
+                } finally {
+                    if (f!= null) {
+                        f.close();
+                    }
+                }
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+
+        if (format.equals("Plain")) {
+            try {
+                try {
+                f = new BufferedWriter(new FileWriter(fileName));
+                f.append("0.0");
+                f.append("\t");
+                for (int i = 0; i < dataset.getNt(); i++) {
+                    f.append(String.valueOf(dataset.getX()[i]));
                     f.append("\t");
                 }
-                f.newLine();
-                for (int i=0; i < dataset.getNl(); i++){
+                for (int i = 0; i < dataset.getNl(); i++) {
                     f.append(String.valueOf(dataset.getX2()[i]));
                     f.append("\t");
                     for (int j = 0; j < dataset.getNt(); j++) {
@@ -567,70 +637,13 @@ public class CommonActionFunctions {
                     }
                     f.newLine();
                 }
-                if (dataset.getType().equalsIgnoreCase("flim")) {
-                    f.append("Intensity image");
-                    f.newLine();
-                    for (int i = 0; i < dataset.getIntenceIm().length; i++) {
-                        f.append(String.valueOf(dataset.getIntenceIm()[i]));
-                        f.append("\t");
-                    }
-                    f.newLine();
-                }
                 f.flush();
-                f.close();
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            }
-
-        }
-
-        if(format.equals("CSV")) {
-                    try {
-                BufferedWriter f = new BufferedWriter(new FileWriter(fileName));
-                f.append("0.0");
-                f.append(",");
-                for (int i = 0; i< dataset.getNt(); i++){
-                    f.append(String.valueOf(dataset.getX()[i]));
-                    f.append(",");
-                }
-                for (int i=0; i < dataset.getNl(); i++){
-                    f.append(String.valueOf(dataset.getX2()[i]));
-                    f.append(",");
-                    for (int j = 0; j < dataset.getNt(); j++) {
-                        f.append(String.valueOf(dataset.getPsisim()[i*dataset.getNt()+j]));
-                        f.append(",");
+                
+                } finally {
+                   if (f!= null) {
+                        f.close();
                     }
-                    f.newLine();
                 }
-                f.flush();
-                f.close();
-
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            }
-        }
-
-        if(format.equals("Plain")) {
-            try {
-                BufferedWriter f = new BufferedWriter(new FileWriter(fileName));
-                f.append("0.0");    
-                f.append("\t");
-                for (int i = 0; i< dataset.getNt(); i++){
-                    f.append(String.valueOf(dataset.getX()[i]));
-                    f.append("\t");
-                }
-                for (int i=0; i < dataset.getNl(); i++){
-                    f.append(String.valueOf(dataset.getX2()[i]));
-                    f.append("\t");
-                    for (int j = 0; j < dataset.getNt(); j++) {
-                        f.append(String.valueOf(dataset.getPsisim()[i*dataset.getNt()+j]));
-                        f.append("\t");
-                    }
-                    f.newLine();
-                }
-                f.flush();
-                f.close();
-
             } catch (IOException ex) {
                 Exceptions.printStackTrace(ex);
             }

@@ -67,12 +67,17 @@ public final class AverageTimpDatasetsAction implements ActionListener {
                 FileObject datasetsfolder = project.getDatasetsFolder(true);
                 String filename = datasetNameDialog.getInputText();
                 String freeFilename = FileUtil.findFreeFileName(datasetsfolder, filename, "timpdataset");
-            try {
+            try { 
+                ObjectOutputStream stream = null;
+                try {
                 FileObject writeTo = datasetsfolder.createData(freeFilename, "timpdataset");
-                ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
+                stream = new ObjectOutputStream(writeTo.getOutputStream());
                 stream.writeObject(resDataset);
-                stream.close();
-
+                } finally {
+                    if (stream !=null){
+                        stream.close();
+                    }
+                }
             } catch (IOException ex) {
                 CoreErrorMessages.fileSaveError(freeFilename);
             }
