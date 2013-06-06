@@ -349,7 +349,6 @@ public class MultiTracesPanel extends javax.swing.JPanel {
 }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
          if(scalingEnabeled) {
         jToggleButton1.setText("Off");
             scalingEnabeled =false;

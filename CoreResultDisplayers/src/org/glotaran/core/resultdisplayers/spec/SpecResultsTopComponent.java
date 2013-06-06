@@ -13,6 +13,7 @@ import org.netbeans.api.progress.ProgressHandleFactory;
 import javax.swing.SwingWorker;
 import org.ujmp.core.Matrix;
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Ellipse2D;
@@ -46,7 +47,6 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.panel.CrosshairOverlay;
-import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
@@ -86,12 +86,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private static final String PREFERRED_ID = "StreakOutTopComponent";
     private TimpResultDataset res;
     private ChartPanel chpanImage;
-    private JFreeChart subchartTimeTrace;
-    private JFreeChart subchartResidualsTime;
-    private JFreeChart subchartWaveTrace;
-    private JFreeChart subchartResidualsWave;
     ArrayList<Integer> selectedTimeTraces = new ArrayList<Integer>();
     ArrayList<Integer> selectedWaveTraces = new ArrayList<Integer>();
+    private XYSeriesCollection selectedTimeTracesColection = new XYSeriesCollection();
+    private XYSeriesCollection selectedTimeResidualsColection = new XYSeriesCollection();
+    private XYSeriesCollection selectedWaveTracesColection = new XYSeriesCollection();
+    private XYSeriesCollection selectedWaveResidualsColection = new XYSeriesCollection();;
     private Range lastXRange;
     private Range lastYRange;
     private Range wholeXRange;
@@ -186,9 +186,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             jTBShowChohSpec.setEnabled(true);
         }
         plotSpectrTrace();
-        GraphPanel conc = null;
+        GraphPanel conc;
         if (numberOfComponents < res.getConcentrations().getColumnDimension()) {
-            conc = createLinTimePlot(concentrationsMatrix, res.getX(), true);
+            conc = createLinTimePlot(concentrationsMatrix, res.getX(), true); 
         } else {
             conc = createLinTimePlot(concentrationsMatrix, res.getX());
         }
@@ -215,7 +215,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             @Override
             protected void done() {
                 makeImageChart();
-                MakeTracesChart();
                 jSColum.setMaximum(dataset.GetImageWidth() - 1);
                 jSColum.setMinimum(0);
                 jSColum.setValue(0);
@@ -326,6 +325,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar3 = new javax.swing.JToolBar();
         jBClearAllTimeTraces = new javax.swing.JButton();
         jBExportTimeTraces = new javax.swing.JButton();
+        jTBOverlayTimeTracess = new javax.swing.JToggleButton();
         jPanel18 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jPSelTimeTrCollection = new javax.swing.JPanel();
@@ -333,6 +333,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar4 = new javax.swing.JToolBar();
         jBClearAllWavelengthTraces = new javax.swing.JButton();
         jBExportWaveTraces = new javax.swing.JButton();
+        jTBOverlayWaveTracess = new javax.swing.JToggleButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jPSelWavTrCollection = new javax.swing.JPanel();
 
@@ -702,7 +703,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFCentrWave, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                        .addComponent(jTFCentrWave, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -867,6 +868,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar3.add(jBExportTimeTraces);
 
+        org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayTimeTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.text")); // NOI18N
+        jTBOverlayTimeTracess.setFocusable(false);
+        jTBOverlayTimeTracess.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTBOverlayTimeTracess.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jTBOverlayTimeTracess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBOverlayTimeTracessActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(jTBOverlayTimeTracess);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -920,6 +932,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar4.add(jBExportWaveTraces);
 
+        org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayWaveTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.text")); // NOI18N
+        jTBOverlayWaveTracess.setFocusable(false);
+        jTBOverlayWaveTracess.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTBOverlayWaveTracess.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jTBOverlayWaveTracess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBOverlayWaveTracessActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(jTBOverlayWaveTracess);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -965,8 +988,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         trace.addSeries(series1);
         trace.addSeries(series2);
-        subchartWaveTrace.getXYPlot().setDataset(trace);
-        subchartResidualsWave.getXYPlot().setDataset(new XYSeriesCollection(series3));
+        NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelength, nm");
+        GraphPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, new XYSeriesCollection(series3), xAxis, null, false);
+            jPSelectedWaveTrace.removeAll();
+            jPSelectedWaveTrace.add(linTime);
+            jPSelectedWaveTrace.validate();
 
     }//GEN-LAST:event_jSRowStateChanged
 
@@ -1082,62 +1108,57 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        double portion = Double.valueOf(jTFLinPartTraces.getText());
         selectedTimeTraces.add(jSColum.getValue());
+//create jfreechart collections with selected time trace     
+        XYSeriesCollection trace = CommonResDispTools.createFitRawTraceCollection(jSColum.getValue(), 0, res.getX().length, res, t0Curve[jSColum.getValue()], String.valueOf(res.getX2()[jSColum.getValue()]));
+        XYSeriesCollection resid = CommonResDispTools.createResidTraceCollection(jSColum.getValue(), 0, res.getX().length, res, t0Curve[jSColum.getValue()], String.valueOf(res.getX2()[jSColum.getValue()]));
+            
+// add selected trace to collection             
+            selectedTimeTracesColection.addSeries(trace.getSeries(0));
+            selectedTimeTracesColection.addSeries(trace.getSeries(1));
+// add residuals trace to collection
+            selectedTimeResidualsColection.addSeries(resid.getSeries(0));
 
-        if (!jTBLinLogTraces.isSelected()) {
+        if (jTBOverlayTimeTracess.isSelected()) {
+            
+        } 
+        else {
+            if (jTBLinLogTraces.isSelected()) {
+                ChartPanel linLogTime = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX2()[jSColum.getValue()]), false, portion);
+                linLogTime.getChart().setTitle(String.valueOf(res.getX2()[jSColum.getValue()]));
+                jPSelTimeTrCollection.add(linLogTime);
+            } else {
+                NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX(), "Time ~s");
+                ChartPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);
+                jPSelTimeTrCollection.add(linTime);
+            }
 
-            XYSeriesCollection trace = CommonResDispTools.createFitRawTraceCollection(jSColum.getValue(), 0, res.getX().length, res);
-            XYSeriesCollection resid = CommonResDispTools.createResidTraceCollection(jSColum.getValue(), 0, res.getX().length, res);
-            NumberAxis xAxis = new NumberAxis("Time");
-            xAxis.setAutoRangeIncludesZero(false);
-            xAxis.setAutoRange(false);
-            xAxis.setRange(res.getX()[0], res.getX()[res.getX().length - 1]);
-            xAxis.setUpperBound(res.getX()[res.getX().length - 1]);
-            xAxis.setLowerBound(res.getX()[0]);
-            ChartPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);
-            jPSelTimeTrCollection.add(linTime);
-        } else {
-            ChartPanel linLogTime = makeLinLogTimeTraceResidChart(jSColum.getValue());
-            linLogTime.getChart().setTitle(String.valueOf(res.getX2()[jSColum.getValue()]));
-            jPSelTimeTrCollection.add(linLogTime);
+            CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
         }
-
-        CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         selectedWaveTraces.add(jSRow.getValue());
-        NumberAxis xAxis = new NumberAxis("Wavelenth (nm)");
-        if (res.getX2()[res.getX2().length - 1] < res.getX2()[0]) {
-            xAxis.setUpperBound(res.getX2()[0]);
-            xAxis.setLowerBound(res.getX2()[res.getX2().length - 1]);
+//create jfreechart collections with selected time trace         
+        XYSeriesCollection trace = CommonResDispTools.createFitRawWaveTrCollection(jSRow.getValue(), 0, res.getX2().length, res, String.valueOf(res.getX()[jSRow.getValue()]));
+        XYSeriesCollection resid = CommonResDispTools.createResidWaveCollection(jSRow.getValue(), 0, res.getX2().length, res, String.valueOf(res.getX()[jSRow.getValue()]));
+// add selected trace to collection    
+        selectedWaveTracesColection.addSeries(trace.getSeries(0));    
+        selectedWaveTracesColection.addSeries(trace.getSeries(1));
+// add residuals trace to collection   
+        selectedWaveResidualsColection.addSeries(resid.getSeries(0));
+        
+        if (jTBOverlayWaveTracess.isSelected()){
+            
         } else {
-            xAxis.setLowerBound(res.getX2()[0]);
-            xAxis.setUpperBound(res.getX2()[res.getX2().length - 1]);
+            NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelenth (nm)");
+            ChartPanel chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);        
+            jPSelWavTrCollection.add(chpan);
+            CommonResDispTools.checkPanelSize(jPSelWavTrCollection, selectedWaveTraces.size());
         }
-        xAxis.setAutoRangeIncludesZero(false);
-        xAxis.setAutoRange(false);
-        xAxis.setLowerMargin(0.0);
-        xAxis.setUpperMargin(0.0);
-        CombinedDomainXYPlot plot = new CombinedDomainXYPlot(xAxis);
-        plot.setGap(5.0);
-        try {
-            plot.add((XYPlot) subchartWaveTrace.getXYPlot().clone(), 3);
-            plot.add((XYPlot) subchartResidualsWave.getXYPlot().clone(), 1);
-        } catch (CloneNotSupportedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-        plot.setOrientation(PlotOrientation.VERTICAL);
-        Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
-        JFreeChart tracechart = new JFreeChart(String.valueOf(res.getX()[jSRow.getValue()]), titleFont, plot, true);
-        tracechart.removeLegend();
-        ChartPanel chpan = new ChartPanel(tracechart, true);
-        chpan.setMinimumDrawHeight(0);
-        chpan.setMinimumDrawWidth(0);
-        jPSelWavTrCollection.add(chpan);
-        CommonResDispTools.checkPanelSize(jPSelWavTrCollection, selectedWaveTraces.size());
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jBClearAllWavelengthTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearAllWavelengthTracesActionPerformed
@@ -1145,6 +1166,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
         jPSelWavTrCollection.repaint();
         selectedWaveTraces.clear();
+        selectedWaveResidualsColection.removeAllSeries();
+        selectedWaveTracesColection.removeAllSeries();
 
     }//GEN-LAST:event_jBClearAllWavelengthTracesActionPerformed
 
@@ -1153,6 +1176,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
         jPSelTimeTrCollection.repaint();
         selectedTimeTraces.clear();
+        selectedTimeResidualsColection.removeAllSeries();
+        selectedTimeTracesColection.removeAllSeries();
     }//GEN-LAST:event_jBClearAllTimeTracesActionPerformed
 
     private void jCBDispCurveShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDispCurveShowActionPerformed
@@ -1374,7 +1399,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     }//GEN-LAST:event_jBExportTimeTracesActionPerformed
 
     private void jBExportWaveTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExportWaveTracesActionPerformed
-        // TODO add your handling code here:
         // export jPSelWavTrCollection
                 // Exports all current traces on the tab in the following format
         // TAB   Time1    Res1    Time2   Res2
@@ -1443,6 +1467,76 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         }
         }
     }//GEN-LAST:event_jBExportWaveTracesActionPerformed
+
+    private void jTBOverlayWaveTracessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBOverlayWaveTracessActionPerformed
+        jPSelWavTrCollection.removeAll();
+        if (jTBOverlayWaveTracess.isSelected()) {
+            NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelenth (nm)");
+            jPSelWavTrCollection.setLayout(new BorderLayout());
+            ChartPanel chpan = CommonResDispTools.makeLinTimeTraceResidChart(selectedWaveTracesColection, selectedWaveResidualsColection, xAxis, "Selected spectra", true, true);
+            jPSelWavTrCollection.add(chpan);
+        } else {
+            CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
+            NumberAxis xAxis;
+            XYSeriesCollection trace;
+            XYSeriesCollection resid;
+            ChartPanel chpan;
+            for (int i = 0; i < selectedWaveTraces.size(); i++) {
+                xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelenth (nm)");
+                resid = new XYSeriesCollection(selectedWaveResidualsColection.getSeries(i));
+                trace = new XYSeriesCollection(selectedWaveTracesColection.getSeries(2*i));
+                trace.addSeries(selectedWaveTracesColection.getSeries(2 * i + 1));
+                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);
+                jPSelWavTrCollection.add(chpan);
+                
+            }
+            CommonResDispTools.checkPanelSize(jPSelWavTrCollection, selectedWaveTraces.size());
+        }
+        
+        jPSelWavTrCollection.repaint();
+    }//GEN-LAST:event_jTBOverlayWaveTracessActionPerformed
+
+    private void jTBOverlayTimeTracessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBOverlayTimeTracessActionPerformed
+        jPSelTimeTrCollection.removeAll();
+        ChartPanel chpan;
+        if (jTBOverlayTimeTracess.isSelected()) {
+            NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX(), "Time ~s");
+            jPSelTimeTrCollection.setLayout(new BorderLayout());
+            if (jTBLinLogTraces.isSelected()){
+                double portion = Double.valueOf(jTFLinPartTraces.getText());
+                chpan = CommonResDispTools.createLinLogTimeTraceResidChart(selectedTimeTracesColection, selectedTimeResidualsColection, "Selected time traces", true, portion);
+            }
+            else {
+                chpan = CommonResDispTools.makeLinTimeTraceResidChart(selectedTimeTracesColection, selectedTimeResidualsColection, xAxis, "Selected time traces", true, true);
+            }
+            jPSelTimeTrCollection.add(chpan);
+        } else {
+            CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
+            NumberAxis xAxis;
+            XYSeriesCollection trace;
+            XYSeriesCollection resid;
+            for (int i = 0; i < selectedTimeTraces.size(); i++) {
+                xAxis = CommonResDispTools.createLinAxis(res.getX(), "Time ~s");
+                resid = new XYSeriesCollection(selectedTimeResidualsColection.getSeries(i));
+                trace = new XYSeriesCollection(selectedTimeTracesColection.getSeries(2*i));
+                trace.addSeries(selectedTimeTracesColection.getSeries(2 * i + 1));
+                
+                
+                if (jTBLinLogTraces.isSelected()){
+                double portion = Double.valueOf(jTFLinPartTraces.getText());
+                chpan = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX()[jSRow.getValue()]), false, portion);
+            }
+            else {
+                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX()[jSRow.getValue()]), false);
+            }
+                jPSelTimeTrCollection.add(chpan);
+                
+            }
+            CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
+        }
+        jPSelWavTrCollection.repaint();
+    }//GEN-LAST:event_jTBOverlayTimeTracessActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBClearAllTimeTraces;
     private javax.swing.JButton jBClearAllWavelengthTraces;
@@ -1503,6 +1597,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private javax.swing.JToggleButton jTBLinLog;
     private javax.swing.JToggleButton jTBLinLogTraces;
     private javax.swing.JToggleButton jTBNormToMax;
+    private javax.swing.JToggleButton jTBOverlayTimeTracess;
+    private javax.swing.JToggleButton jTBOverlayWaveTracess;
     private javax.swing.JToggleButton jTBShowChohSpec;
     private javax.swing.JTextField jTFCentrWave;
     private javax.swing.JTextField jTFCurvParam;
@@ -1678,14 +1774,13 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 //        }
 //        return CommonTools.makeLinLogTimeTraceChart(linCollection, logCollection, null, false);
 //    }
+    
     private GraphPanel createLinLogTimePlot(double timeZero, double linearBoundValue, Matrix data, double[] timesteps) {
         return createLinLogTimePlot(timeZero, linearBoundValue, data, timesteps, false);
     }
 
     private GraphPanel createLinLogTimePlot(double timeZero, double linearBoundValue, Matrix data, double[] timesteps, boolean conc) {
-
         XYSeries seria;
-
         int numberOfTraces = (int) (conc ? data.getColumnCount() : Math.min(data.getColumnCount(), 2));
 
         XYSeriesCollection xySeriesCollection = new XYSeriesCollection();
@@ -1732,7 +1827,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 data.setAsDouble(dataRaw.getAsDouble(j, data.getColumnCount() - 1) / maxCoh * maxComps, j, data.getColumnCount() - 1);
             }
         }
-        int numberOfTraces = 0;
+        int numberOfTraces;
         if (comps > 0) {
             numberOfTraces = (int) Math.min(data.getColumnCount(), comps);
         } else {
@@ -1755,8 +1850,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         boolean errorBars = res.getSpectraErr() != null ? true : false;
         int compNumFull = jTBShowChohSpec.isEnabled() ? numberOfComponents + 1 : numberOfComponents;
         int compNum = jTBShowChohSpec.isSelected() ? numberOfComponents + 1 : numberOfComponents;
-        double maxAmpl = 0;
-        double maxDasAmpl = 0;
+        double maxAmpl;
+        double maxDasAmpl;
 
         YIntervalSeriesCollection realSasCollection = new YIntervalSeriesCollection();
         YIntervalSeriesCollection normSasCollection = new YIntervalSeriesCollection();
@@ -1852,143 +1947,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPDASnorm.removeAll();
         jPDASnorm.add(chpan);
 
-    }
-
-    private void MakeTracesChart() {
-
-//make timetrace chart
-        XYSeriesCollection dataset1 = new XYSeriesCollection();
-        subchartResidualsTime = ChartFactory.createXYLineChart(
-                null,
-                null,
-                null,
-                dataset1,
-                PlotOrientation.VERTICAL,
-                false,
-                false,
-                false);
-        subchartTimeTrace = ChartFactory.createXYLineChart(
-                null,
-                null,
-                null,
-                dataset1,
-                PlotOrientation.VERTICAL,
-                false,
-                false,
-                false);
-        subchartTimeTrace.getXYPlot().getDomainAxis().setUpperBound(res.getX()[res.getX().length - 1]);
-        subchartTimeTrace.getXYPlot().getDomainAxis().setLowerBound(res.getX()[0]);
-        subchartResidualsTime.getXYPlot().getDomainAxis().setUpperBound(res.getX()[res.getX().length - 1]);
-        subchartResidualsTime.getXYPlot().getDomainAxis().setLowerBound(res.getX()[0]);
-
-        XYPlot plot1_1 = subchartTimeTrace.getXYPlot();
-        plot1_1.getDomainAxis().setAutoRange(false);
-        plot1_1.getDomainAxis().setLowerMargin(0.0);
-        plot1_1.getDomainAxis().setUpperMargin(0.0);
-        plot1_1.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        plot1_1.getDomainAxis().setInverted(true);
-        plot1_1.setRangeZeroBaselineVisible(true);
-
-        XYPlot plot1_2 = subchartResidualsTime.getXYPlot();
-        plot1_2.getDomainAxis().setAutoRange(false);
-        plot1_2.getDomainAxis().setLowerMargin(0.0);
-        plot1_2.getDomainAxis().setUpperMargin(0.0);
-        plot1_2.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        plot1_2.getDomainAxis().setInverted(true);
-        plot1_2.setRangeZeroBaselineVisible(true);
-
-        NumberAxis xAxis = new NumberAxis("Time");
-        xAxis.setAutoRangeIncludesZero(false);
-        xAxis.setAutoRange(false);
-        xAxis.setRange(res.getX()[0], res.getX()[res.getX().length - 1]);
-        xAxis.setUpperBound(res.getX()[res.getX().length - 1]);
-        xAxis.setLowerBound(res.getX()[0]);
-        CombinedDomainXYPlot plot = new CombinedDomainXYPlot(xAxis);
-        plot.setGap(10.0);
-        plot.add(plot1_1, 3);
-        plot.add(plot1_2, 1);
-        plot.setOrientation(PlotOrientation.VERTICAL);
-        JFreeChart tracechart = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-        tracechart.getLegend().setVisible(false);
-        ChartPanel chpan = new ChartPanel(tracechart, false);
-        chpan.setMinimumDrawHeight(0);
-        chpan.setMinimumDrawWidth(0);
-        jPSelectedTimeTrace.add(chpan);
-
-//make wave chart
-        subchartWaveTrace = ChartFactory.createXYLineChart(
-                null,
-                null,
-                null,
-                dataset1,
-                PlotOrientation.VERTICAL,
-                false,
-                false,
-                false);
-        subchartResidualsWave = ChartFactory.createXYLineChart(
-                null,
-                null,
-                null,
-                dataset1,
-                PlotOrientation.VERTICAL,
-                false,
-                false,
-                false);
-        if (res.getX2()[res.getX2().length - 1] < res.getX2()[0]) {
-            subchartWaveTrace.getXYPlot().getDomainAxis().setUpperBound(res.getX2()[0]);
-            subchartWaveTrace.getXYPlot().getDomainAxis().setLowerBound(res.getX2()[res.getX2().length - 1]);
-            subchartResidualsWave.getXYPlot().getDomainAxis().setUpperBound(res.getX2()[0]);
-            subchartResidualsWave.getXYPlot().getDomainAxis().setLowerBound(res.getX2()[res.getX2().length - 1]);
-        } else {
-            subchartWaveTrace.getXYPlot().getDomainAxis().setLowerBound(res.getX2()[0]);
-            subchartWaveTrace.getXYPlot().getDomainAxis().setUpperBound(res.getX2()[res.getX2().length - 1]);
-            subchartResidualsWave.getXYPlot().getDomainAxis().setLowerBound(res.getX2()[0]);
-            subchartResidualsWave.getXYPlot().getDomainAxis().setUpperBound(res.getX2()[res.getX2().length - 1]);
-        }
-
-        XYPlot plot2_1 = (XYPlot) subchartWaveTrace.getPlot();
-        plot2_1.getDomainAxis().setAutoRange(false);
-        plot2_1.getDomainAxis().setLowerMargin(0.0);
-        plot2_1.getDomainAxis().setUpperMargin(0.0);
-        plot2_1.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        plot2_1.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        plot2_1.setRangeZeroBaselineVisible(true);
-        plot2_1.getRenderer().setSeriesPaint(0, Color.black);
-        plot2_1.getRenderer().setSeriesPaint(1, Color.red);
-
-        XYPlot plot2_2 = (XYPlot) subchartResidualsWave.getPlot();
-        plot2_2.getDomainAxis().setAutoRange(false);
-        plot2_2.getDomainAxis().setLowerMargin(0.0);
-        plot2_2.getDomainAxis().setUpperMargin(0.0);
-        plot2_2.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        plot2_2.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        plot2_2.setRangeZeroBaselineVisible(true);
-        plot2_2.getRenderer().setSeriesPaint(0, Color.black);
-
-        NumberAxis xAxisWave = new NumberAxis("Wavelength (nm)");
-        xAxisWave.setAutoRangeIncludesZero(false);
-        xAxisWave.setAutoRange(false);
-        if (res.getX2()[res.getX2().length - 1] < res.getX2()[0]) {
-            xAxisWave.setRange(res.getX2()[res.getX2().length - 1], res.getX2()[0]);
-            xAxisWave.setUpperBound(res.getX2()[0]);
-            xAxisWave.setLowerBound(res.getX2()[res.getX2().length - 1]);
-        } else {
-            xAxisWave.setRange(res.getX2()[0], res.getX2()[res.getX2().length - 1]);
-            xAxisWave.setUpperBound(res.getX2()[res.getX2().length - 1]);
-            xAxisWave.setLowerBound(res.getX2()[0]);
-        }
-
-        CombinedDomainXYPlot plot2 = new CombinedDomainXYPlot(xAxisWave);
-        plot2.setGap(10.0);
-        plot2.add(plot2_1, 3);
-        plot2.add(plot2_2, 1);
-        plot2.setOrientation(PlotOrientation.VERTICAL);
-        JFreeChart specchart = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot2, true);
-        specchart.getLegend().setVisible(false);
-        ChartPanel subchart2Panel = new GraphPanel(specchart, false);
-        subchart2Panel.setMinimumDrawHeight(0);
-        subchart2Panel.setMinimumDrawWidth(0);
-        jPSelectedWaveTrace.add(subchart2Panel);
     }
 
     private JFreeChart createChart(XYDataset dataset1) {
@@ -2104,7 +2062,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     }
 
     private void updateSVDPlots(Matrix[] svdResult, double[] x, double[] x2, JPanel jPRSV, JPanel jPLSV, JPanel jPSV) {
-        //do SVD
+//do SVD
 
         long maxSVNumber = Math.min(MAX_NUMBER_SINGULAR_VALUES, svdResult[1].getRowCount());
         int n = 2;
@@ -2264,12 +2222,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         if (!jTBLinLogTraces.isSelected()) {
             XYSeriesCollection trace = CommonResDispTools.createFitRawTraceCollection(xIndex, 0, res.getX().length, res);
             XYSeriesCollection resid = CommonResDispTools.createResidTraceCollection(xIndex, 0, res.getX().length, res);
-            NumberAxis xAxis = new NumberAxis("Time");
-            xAxis.setAutoRangeIncludesZero(false);
-            xAxis.setAutoRange(false);
-            xAxis.setRange(res.getX()[0], res.getX()[res.getX().length - 1]);
-            xAxis.setUpperBound(res.getX()[res.getX().length - 1]);
-            xAxis.setLowerBound(res.getX()[0]);
+            NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX(), "time");
             GraphPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, null, false);
             jPSelectedTimeTrace.removeAll();
             jPSelectedTimeTrace.add(linTime);
@@ -2298,7 +2251,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 jPLeftSingVectorsPart.validate();
             }
         }
-
     }
 
     private void showDispCurve() {

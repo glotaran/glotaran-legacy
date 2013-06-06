@@ -61,7 +61,25 @@ public class CommonResDispTools {
         panelToResize.setLayout(new GridLayout(2, 2));
     }
 
+    public static NumberAxis createLinAxis(double[] waves, String name){
+        NumberAxis xAxis = new NumberAxis(name);
+        if (waves[waves.length - 1] < waves[0]) {
+            xAxis.setUpperBound(waves[0]);
+            xAxis.setLowerBound(waves[waves.length - 1]);
+        } else {
+            xAxis.setLowerBound(waves[0]);
+            xAxis.setUpperBound(waves[waves.length - 1]);
+        }
+        xAxis.setAutoRangeIncludesZero(false);
+        xAxis.setAutoRange(false);
+        return xAxis;
+    }
+    
     public static GraphPanel makeLinTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection residuals, ValueAxis xAxis, String name, boolean multy) {
+        return makeLinTimeTraceResidChart(trace,residuals,xAxis,name,multy,false);
+    }
+    
+    public static GraphPanel makeLinTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection residuals, ValueAxis xAxis, String name, boolean multy, boolean legend) {
         GlotaranDrawingSupplier drawSuplTrace = multy ? new GlotaranDrawingSupplier(multy) : new GlotaranDrawingSupplier();
         GlotaranDrawingSupplier drawSuplResid = new GlotaranDrawingSupplier();
         JFreeChart subchartResiduals = ChartFactory.createXYLineChart(
@@ -79,7 +97,7 @@ public class CommonResDispTools {
                 null,
                 trace,
                 PlotOrientation.VERTICAL,
-                false,
+                legend,
                 false,
                 false);
         XYPlot plot1_1 = subchartTrace.getXYPlot();
@@ -111,8 +129,8 @@ public class CommonResDispTools {
         plot.getDomainAxis().setLowerMargin(0.0);
         plot.getDomainAxis().setUpperMargin(0.0);
         Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
-        JFreeChart tracechart = new JFreeChart(name, titleFont, plot, true);
-        tracechart.getLegend().setVisible(false);
+        JFreeChart tracechart = new JFreeChart(name, titleFont, plot, legend);
+//        tracechart.getLegend().setVisible(legend);
         GraphPanel chpan = new GraphPanel(tracechart, false);
         chpan.setMinimumDrawHeight(0);
         chpan.setMinimumDrawWidth(0);
@@ -290,7 +308,7 @@ public class CommonResDispTools {
         XYSeries series1 = new XYSeries("Trace" + name);
         XYSeries series2 = new XYSeries("Fit" + name);
         Matrix tracesMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix)data.getTraces());
-         Matrix fittedTracesMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix)data.getFittedTraces());
+        Matrix fittedTracesMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix)data.getFittedTraces());
 
         for (int j = startInd; j < stopInd; j++) {
             series1.add(data.getX()[j] - t0, tracesMatrix.getAsDouble(j, xIndex) / scaleVal);
@@ -300,7 +318,40 @@ public class CommonResDispTools {
         trace.addSeries(series2);
         return trace;
     }
-
+    
+    public static XYSeriesCollection createFitRawWaveTrCollection(int yIndex, int startInd, int stopInd, TimpResultDataset data, String name){
+        return createFitRawWaveTrCollection(yIndex, startInd, stopInd, data, name, 1.0);
+    }
+    
+    public static XYSeriesCollection createFitRawWaveTrCollection(int yIndex, int startInd, int stopInd, TimpResultDataset data, String name, double scaleVal) {
+        XYSeriesCollection trace = new XYSeriesCollection();
+        XYSeries series1 = new XYSeries("Trace" + name);
+        XYSeries series2 = new XYSeries("Fit" + name);
+        
+        Matrix tracesMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix)data.getTraces());
+        Matrix fittedTracesMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix)data.getFittedTraces());
+        
+        for (int i = startInd; i < stopInd; i++ ){
+            series1.add(data.getX2()[i], tracesMatrix.getAsDouble(yIndex, i) / scaleVal);
+            series2.add(data.getX2()[i], fittedTracesMatrix.getAsDouble(yIndex, i) / scaleVal);
+        }   
+        trace.addSeries(series1);
+        trace.addSeries(series2);
+        return trace;
+    }
+    
+    public static XYSeriesCollection createResidWaveCollection(int xIndex, int startInd, int stopInd, TimpResultDataset data, String name) {
+        return createResidWaveCollection(xIndex, startInd, stopInd, data, name, 1.0);
+    }
+    
+    public static XYSeriesCollection createResidWaveCollection(int xIndex, int startInd, int stopInd, TimpResultDataset data, String name, double scaleVal) {
+        XYSeries series3 = new XYSeries("Residuals" + name);
+        for (int j = startInd; j < stopInd; j++) {
+            series3.add(data.getX2()[j], (data.getTraces().get(xIndex, j) - data.getFittedTraces().get(xIndex, j)) / scaleVal);
+        }
+        return new XYSeriesCollection(series3);
+    }
+    
     public static XYSeriesCollection createResidTraceCollection(int xIndex, int startInd, int stopInd, TimpResultDataset data) {
         return createResidTraceCollection(xIndex, startInd, stopInd, data, 0, "");
     }
