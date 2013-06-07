@@ -1029,11 +1029,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 XYSeriesCollection trace;
                 XYSeriesCollection resid;
                 GraphPanel linTime;
+                
                 for (int i = 0; i < numSelTraces; i++) {
                     xIndex = i * w;
-                    
-                    trace= CommonResDispTools.createFitRawTraceCollection(xIndex, 0, res.getX().length, res);    
-                    resid = CommonResDispTools.createResidTraceCollection(xIndex, 0, res.getX().length, res);
+                    trace= CommonResDispTools.createFitRawTraceCollection(xIndex, 0, res.getX().length, res,t0Curve[xIndex], String.valueOf(res.getX2()[xIndex]));    
+                    resid = CommonResDispTools.createResidTraceCollection(xIndex, 0, res.getX().length, res, t0Curve[xIndex], String.valueOf(res.getX2()[xIndex]));
+                            
                     selectedTimeTracesColection.addSeries(trace.getSeries(0));
                     selectedTimeTracesColection.addSeries(trace.getSeries(1));
                     selectedTimeResidualsColection.addSeries(resid.getSeries(0));
@@ -1041,7 +1042,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                     if (!jTBLinLogTraces.isSelected()) {
                         xAxis = CommonResDispTools.createLinAxis(res.getX(), "Time");
                         linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[xIndex]), false);
-                        linTime.getChart().setTitle(String.valueOf(res.getX2()[xIndex]));
                         jPSelTimeTrCollection.add(linTime);
                     } else {
                         linTime = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX2()[xIndex]), false, linPart);
@@ -1056,8 +1056,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             if (selTracePanel.getSelectYState()) {
                 int numSelTraces = selTracePanel.getSelectYNum();
                 int w = res.getX().length / numSelTraces;
-                XYSeriesCollection trace;
-                XYSeries series1, series2, series3;
+                XYSeriesCollection trace, resid;
                 int xIndex;
                 NumberAxis xAxis;
                 ChartPanel chpan;
@@ -1072,27 +1071,18 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
                 for (int i = 0; i < numSelTraces; i++) {
 //create common X axe for plot
-                    xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelength (nm)");
-                    
-                    trace = new XYSeriesCollection();
-                    series1 = new XYSeries("Trace");
-                    series2 = new XYSeries("Fit");
-                    series3 = new XYSeries("Residuals");
                     xIndex = i * w;
+                    xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelength (nm)");                   
+                    trace = CommonResDispTools.createFitRawWaveTrCollection(xIndex, 0, res.getX2().length, res, String.valueOf(res.getX()[xIndex]));
+                    resid = CommonResDispTools.createResidWaveCollection(xIndex, 0, res.getX2().length, res, String.valueOf(res.getX()[xIndex]));
                     selectedWaveTraces.add(xIndex);
-                    for (int j = 0; j < res.getX2().length; j++) {
-                        series1.add(res.getX2()[j], res.getTraces().get(xIndex, j));
-                        series2.add(res.getX2()[j], res.getFittedTraces().get(xIndex, j));
-                        series3.add(res.getX2()[j], res.getResiduals().get(xIndex, j));
-                    }
-                    trace.addSeries(series1);
-                    trace.addSeries(series2);
-                    selectedWaveTracesColection.addSeries(series1);
-                    selectedWaveTracesColection.addSeries(series2);
-                    selectedWaveResidualsColection.addSeries(series3);
+                    selectedWaveTracesColection.addSeries(trace.getSeries(0));
+                    selectedWaveTracesColection.addSeries(trace.getSeries(1));
+                    selectedWaveResidualsColection.addSeries(resid.getSeries(0));
+                    
                     chpan = CommonResDispTools.makeLinTimeTraceResidChart(
                             trace,
-                            new XYSeriesCollection(series3),
+                            resid,
                             xAxis,
                             String.valueOf(res.getX()[xIndex]),
                             false);
@@ -1530,7 +1520,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             }
             CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
         }
-        jPSelWavTrCollection.repaint();
+        jPSelTimeTrCollection.repaint();
     }//GEN-LAST:event_jTBOverlayTimeTracessActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

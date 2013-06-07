@@ -130,7 +130,9 @@ public class CommonResDispTools {
         plot.getDomainAxis().setUpperMargin(0.0);
         Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
         JFreeChart tracechart = new JFreeChart(name, titleFont, plot, legend);
-//        tracechart.getLegend().setVisible(legend);
+        if (legend){
+            tracechart.getLegend().setVisible(legend);
+        }
         GraphPanel chpan = new GraphPanel(tracechart, false);
         chpan.setMinimumDrawHeight(0);
         chpan.setMinimumDrawWidth(0);
