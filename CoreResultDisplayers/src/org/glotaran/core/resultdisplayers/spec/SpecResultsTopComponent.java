@@ -703,7 +703,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFCentrWave, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+                        .addComponent(jTFCentrWave, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -847,6 +847,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar3.setRollover(true);
 
         org.openide.awt.Mnemonics.setLocalizedText(jBClearAllTimeTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllTimeTraces.text")); // NOI18N
+        jBClearAllTimeTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllTimeTraces.toolTipText")); // NOI18N
         jBClearAllTimeTraces.setFocusable(false);
         jBClearAllTimeTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBClearAllTimeTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -858,6 +859,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar3.add(jBClearAllTimeTraces);
 
         org.openide.awt.Mnemonics.setLocalizedText(jBExportTimeTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.text")); // NOI18N
+        jBExportTimeTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.toolTipText")); // NOI18N
         jBExportTimeTraces.setFocusable(false);
         jBExportTimeTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBExportTimeTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -867,8 +869,10 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             }
         });
         jToolBar3.add(jBExportTimeTraces);
+        jBExportTimeTraces.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.AccessibleContext.accessibleDescription")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayTimeTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.text")); // NOI18N
+        jTBOverlayTimeTracess.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.toolTipText")); // NOI18N
         jTBOverlayTimeTracess.setFocusable(false);
         jTBOverlayTimeTracess.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jTBOverlayTimeTracess.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -911,6 +915,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar4.setRollover(true);
 
         org.openide.awt.Mnemonics.setLocalizedText(jBClearAllWavelengthTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllWavelengthTraces.text")); // NOI18N
+        jBClearAllWavelengthTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllWavelengthTraces.toolTipText")); // NOI18N
         jBClearAllWavelengthTraces.setFocusable(false);
         jBClearAllWavelengthTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBClearAllWavelengthTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -922,6 +927,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar4.add(jBClearAllWavelengthTraces);
 
         org.openide.awt.Mnemonics.setLocalizedText(jBExportWaveTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportWaveTraces.text")); // NOI18N
+        jBExportWaveTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportWaveTraces.toolTipText")); // NOI18N
         jBExportWaveTraces.setFocusable(false);
         jBExportWaveTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBExportWaveTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -933,6 +939,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar4.add(jBExportWaveTraces);
 
         org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayWaveTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.text")); // NOI18N
+        jTBOverlayWaveTracess.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.toolTipText")); // NOI18N
         jTBOverlayWaveTracess.setFocusable(false);
         jTBOverlayWaveTracess.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jTBOverlayWaveTracess.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -1472,7 +1479,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 resid = new XYSeriesCollection(selectedWaveResidualsColection.getSeries(i));
                 trace = new XYSeriesCollection(selectedWaveTracesColection.getSeries(2*i));
                 trace.addSeries(selectedWaveTracesColection.getSeries(2 * i + 1));
-                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);
+                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[i]), false);
                 jPSelWavTrCollection.add(chpan);
                 
             }
@@ -1490,7 +1497,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             jPSelTimeTrCollection.setLayout(new BorderLayout());
             if (jTBLinLogTraces.isSelected()){
                 double portion = Double.valueOf(jTFLinPartTraces.getText());
-                chpan = CommonResDispTools.createLinLogTimeTraceResidChart(selectedTimeTracesColection, selectedTimeResidualsColection, "Selected time traces", true, portion);
+                chpan = CommonResDispTools.createLinLogTimeTraceResidChart(selectedTimeTracesColection, selectedTimeResidualsColection, "Selected time traces", true, portion, true);
             }
             else {
                 chpan = CommonResDispTools.makeLinTimeTraceResidChart(selectedTimeTracesColection, selectedTimeResidualsColection, xAxis, "Selected time traces", true, true);
@@ -1504,19 +1511,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             for (int i = 0; i < selectedTimeTraces.size(); i++) {
                 xAxis = CommonResDispTools.createLinAxis(res.getX(), "Time ~s");
                 resid = new XYSeriesCollection(selectedTimeResidualsColection.getSeries(i));
-                trace = new XYSeriesCollection(selectedTimeTracesColection.getSeries(2*i));
+                trace = new XYSeriesCollection(selectedTimeTracesColection.getSeries(2 * i));
                 trace.addSeries(selectedTimeTracesColection.getSeries(2 * i + 1));
-                
-                
-                if (jTBLinLogTraces.isSelected()){
-                double portion = Double.valueOf(jTFLinPartTraces.getText());
-                chpan = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX()[jSRow.getValue()]), false, portion);
-            }
-            else {
-                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX()[jSRow.getValue()]), false);
-            }
+                if (jTBLinLogTraces.isSelected()) {
+                    double portion = Double.valueOf(jTFLinPartTraces.getText());
+                    chpan = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX()[i]), false, portion);
+                } else {
+                    chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX()[i]), false);
+                }
                 jPSelTimeTrCollection.add(chpan);
-                
+
             }
             CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
         }

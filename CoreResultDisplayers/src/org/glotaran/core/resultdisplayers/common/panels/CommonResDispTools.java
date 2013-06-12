@@ -31,6 +31,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleEdge;
 import static java.lang.Math.ceil;
 import static java.lang.Math.pow;
+import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.block.BorderArrangement;
@@ -135,10 +136,7 @@ public class CommonResDispTools {
         JFreeChart tracechart = new JFreeChart(name, titleFont, plot, showLegend);
         if (showLegend){
             LegendTitle legend;
-            legend = new LegendTitle(plot1_1);
-//            legend.getSources();
-
-
+            legend = new LegendTitle(plot1_2);
             legend.setPosition(RectangleEdge.RIGHT);
             legend.setHorizontalAlignment(HorizontalAlignment.LEFT);
             tracechart.addSubtitle(legend);
@@ -149,67 +147,18 @@ public class CommonResDispTools {
         return chpan;
     }
 
-//    public static GraphPanel createLinLogTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection resid, XYSeriesCollection traceLog, XYSeriesCollection residLog, String name, boolean multy) {
-//        NumberAxis yAxis = new NumberAxis();
-//        yAxis.setVisible(false);
-//        ChartPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, new NumberAxis("Time"), name, multy);
-//        ChartPanel logTime = CommonResDispTools.makeLinTimeTraceResidChart(traceLog, residLog, new LogAxis("log(Time)"), name, multy);
-//        CombinedDomainXYPlot linPlot = (CombinedDomainXYPlot) linTime.getChart().getPlot();
-//        CombinedDomainXYPlot logPlot = (CombinedDomainXYPlot) logTime.getChart().getPlot();
-//
-//        CombinedRangeXYPlot plot = new CombinedRangeXYPlot(yAxis);
-//        plot.setGap(-8);
-//        plot.add(linPlot);
-//        plot.add(logPlot);
-//
-//        Range residRange = Range.combine(
-//                ((XYPlot) linPlot.getSubplots().get(1)).getRangeAxis().getRange(),
-//                ((XYPlot) logPlot.getSubplots().get(1)).getRangeAxis().getRange());
-//
-//        ((XYPlot) linPlot.getSubplots().get(0)).getRangeAxis().setRange(yAxis.getRange());
-//        ((XYPlot) logPlot.getSubplots().get(0)).getRangeAxis().setRange(yAxis.getRange());
-//        ((XYPlot) linPlot.getSubplots().get(1)).getRangeAxis().setRange(residRange);
-//        ((XYPlot) logPlot.getSubplots().get(1)).getRangeAxis().setRange(residRange);
-//        ((XYPlot) logPlot.getSubplots().get(0)).getRangeAxis().setVisible(false);
-//        ((XYPlot) logPlot.getSubplots().get(1)).getRangeAxis().setVisible(false);
-//
-//        Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
-//        JFreeChart tracechart = new JFreeChart(null, titleFont, plot, true);
-//        LegendTitle legend = new LegendTitle(linPlot);
-//        legend.setPosition(RectangleEdge.BOTTOM);
-//        tracechart.removeLegend();
-//        legend.setVisible(false);
-//        tracechart.addLegend(legend);
-//
-//        return new GraphPanel(tracechart, false);
-//    }
-
     public static GraphPanel createLinLogTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection resid, String name, boolean multy, double linearBoundValue) {
+        return createLinLogTimeTraceResidChart(trace, resid, name, multy, linearBoundValue, false);
+    }
+    
+public static GraphPanel createLinLogTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection resid, String name, boolean multy, double linearBoundValue, boolean showLegend) {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setVisible(false);
         LinLogAxis xAxis = new LinLogAxis("Time",linearBoundValue,-linearBoundValue,0.4);
-        ChartPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, name, multy);
+        GraphPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, name, multy, showLegend);
         ((XYPlot)linTime.getChart().getPlot()).setDomainAxis(xAxis);
-        CombinedDomainXYPlot linPlot = (CombinedDomainXYPlot) linTime.getChart().getPlot();
- 
-//        CombinedRangeXYPlot plot = new CombinedRangeXYPlot(yAxis);
-//        plot.add(linPlot);
-
-        Range residRange = ((XYPlot) linPlot.getSubplots().get(1)).getRangeAxis().getRange();
-
-        ((XYPlot) linPlot.getSubplots().get(0)).getRangeAxis().setRange(yAxis.getRange());
-        ((XYPlot) linPlot.getSubplots().get(0)).getRangeAxis().setAutoRange(true);
-        ((XYPlot) linPlot.getSubplots().get(1)).getRangeAxis().setRange(residRange);
-
-        Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
-        JFreeChart tracechart = new JFreeChart(null, titleFont, linTime.getChart().getPlot(), true);
-        LegendTitle legend = new LegendTitle(linPlot);
-        legend.setPosition(RectangleEdge.BOTTOM);
-        tracechart.removeLegend();
-        legend.setVisible(false);
-        tracechart.addLegend(legend);
-
-        return new GraphPanel(tracechart, false);
+        
+        return linTime;
     }
 
 //    public static GraphPanel makeLinLogTimeTraceChart(XYSeriesCollection traceLin, XYSeriesCollection traceLog, String name, boolean multy) {
@@ -357,7 +306,7 @@ public class CommonResDispTools {
     }
     
     public static XYSeriesCollection createResidWaveCollection(int xIndex, int startInd, int stopInd, TimpResultDataset data, String name, double scaleVal) {
-        XYSeries series3 = new XYSeries("Residuals" + name);
+        XYSeries series3 = new XYSeries(name);
         for (int j = startInd; j < stopInd; j++) {
             series3.add(data.getX2()[j], (data.getTraces().get(xIndex, j) - data.getFittedTraces().get(xIndex, j)) / scaleVal);
         }
@@ -373,7 +322,7 @@ public class CommonResDispTools {
     }
 
     public static XYSeriesCollection createResidTraceCollection(int xIndex, int startInd, int stopInd, TimpResultDataset data, double t0, String name, double scaleVal) {
-        XYSeries series3 = new XYSeries("Residuals" + name);
+        XYSeries series3 = new XYSeries(name);
         for (int j = startInd; j < stopInd; j++) {
             series3.add(data.getX()[j] - t0, (data.getTraces().get(j, xIndex) - data.getFittedTraces().get(j, xIndex)) / scaleVal);
         }
