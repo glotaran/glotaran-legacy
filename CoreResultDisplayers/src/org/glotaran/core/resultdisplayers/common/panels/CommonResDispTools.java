@@ -18,11 +18,9 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.LinLogAxis;
-import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.chart.plot.CombinedRangeXYPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
@@ -33,6 +31,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleEdge;
 import static java.lang.Math.ceil;
 import static java.lang.Math.pow;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.block.BorderArrangement;
+import org.jfree.chart.block.LabelBlock;
+import org.jfree.ui.HorizontalAlignment;
 
 /**
  *
@@ -79,7 +82,7 @@ public class CommonResDispTools {
         return makeLinTimeTraceResidChart(trace,residuals,xAxis,name,multy,false);
     }
     
-    public static GraphPanel makeLinTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection residuals, ValueAxis xAxis, String name, boolean multy, boolean legend) {
+    public static GraphPanel makeLinTimeTraceResidChart(XYSeriesCollection trace, XYSeriesCollection residuals, ValueAxis xAxis, String name, boolean multy, boolean showLegend) {
         GlotaranDrawingSupplier drawSuplTrace = multy ? new GlotaranDrawingSupplier(multy) : new GlotaranDrawingSupplier();
         GlotaranDrawingSupplier drawSuplResid = new GlotaranDrawingSupplier();
         JFreeChart subchartResiduals = ChartFactory.createXYLineChart(
@@ -97,7 +100,7 @@ public class CommonResDispTools {
                 null,
                 trace,
                 PlotOrientation.VERTICAL,
-                legend,
+                false,
                 false,
                 false);
         XYPlot plot1_1 = subchartTrace.getXYPlot();
@@ -129,9 +132,16 @@ public class CommonResDispTools {
         plot.getDomainAxis().setLowerMargin(0.0);
         plot.getDomainAxis().setUpperMargin(0.0);
         Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
-        JFreeChart tracechart = new JFreeChart(name, titleFont, plot, legend);
-        if (legend){
-            tracechart.getLegend().setVisible(legend);
+        JFreeChart tracechart = new JFreeChart(name, titleFont, plot, showLegend);
+        if (showLegend){
+            LegendTitle legend;
+            legend = new LegendTitle(plot1_1);
+//            legend.getSources();
+
+
+            legend.setPosition(RectangleEdge.RIGHT);
+            legend.setHorizontalAlignment(HorizontalAlignment.LEFT);
+            tracechart.addSubtitle(legend);
         }
         GraphPanel chpan = new GraphPanel(tracechart, false);
         chpan.setMinimumDrawHeight(0);
