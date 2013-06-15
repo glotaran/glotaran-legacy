@@ -881,7 +881,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar3.add(jBExportTimeTraces);
         jBExportTimeTraces.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.AccessibleContext.accessibleDescription")); // NOI18N
 
-        jTBOverlayTimeTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/ovelay32.png"))); // NOI18N
+        jTBOverlayTimeTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/overlay32.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayTimeTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.text")); // NOI18N
         jTBOverlayTimeTracess.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.toolTipText")); // NOI18N
         jTBOverlayTimeTracess.setFocusable(false);
@@ -952,7 +952,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar4.add(jBExportWaveTraces);
 
-        jTBOverlayWaveTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/ovelay32.png"))); // NOI18N
+        jTBOverlayWaveTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/overlay32.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayWaveTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.text")); // NOI18N
         jTBOverlayWaveTracess.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.toolTipText")); // NOI18N
         jTBOverlayWaveTracess.setFocusable(false);

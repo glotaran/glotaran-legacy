@@ -876,7 +876,7 @@
                 <Component class="javax.swing.JToggleButton" name="jTBOverlayTimeTracess">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/ovelay32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/overlay32.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBOverlayTimeTracess.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -1000,7 +1000,7 @@
                 <Component class="javax.swing.JToggleButton" name="jTBOverlayWaveTracess">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/ovelay32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/overlay32.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBOverlayWaveTracess.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
