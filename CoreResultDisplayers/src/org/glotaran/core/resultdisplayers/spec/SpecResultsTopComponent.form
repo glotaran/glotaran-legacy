@@ -363,13 +363,19 @@
             <Container class="javax.swing.JToolBar" name="jToolBar2">
               <Properties>
                 <Property name="rollover" type="boolean" value="true"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[300, 40]"/>
+                  <Dimension value="[150, 33]"/>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="-6" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.0" weightY="0.0"/>
+                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.0" weightY="0.0"/>
                 </Constraint>
               </Constraints>
 
@@ -395,7 +401,13 @@
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTFLinPartTraces.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[70, 19]"/>
+                      <Dimension value="[70, 25]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[25, 25]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[50, 25]"/>
                     </Property>
                   </Properties>
                   <Events>
@@ -407,7 +419,7 @@
                 <Component class="javax.swing.JButton" name="jButton1">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/AutoselectCurves32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/AutoselectCurves24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jButton1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -417,6 +429,15 @@
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -426,7 +447,7 @@
                 <Component class="javax.swing.JButton" name="jButton2">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/addTimeTrace32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/addTimeTrace24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jButton2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -436,6 +457,15 @@
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -445,7 +475,7 @@
                 <Component class="javax.swing.JButton" name="jButton3">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/addWaveTrace32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/addWaveTrace24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jButton3.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -455,6 +485,15 @@
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -819,10 +858,19 @@
             <Container class="javax.swing.JToolBar" name="jToolBar3">
               <Properties>
                 <Property name="rollover" type="boolean" value="true"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="-6" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.0" weightY="0.0"/>
+                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.0" weightY="0.0"/>
                 </Constraint>
               </Constraints>
 
@@ -831,7 +879,7 @@
                 <Component class="javax.swing.JButton" name="jBClearAllTimeTraces">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/curvesdelete32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/curvesdelete24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jBClearAllTimeTraces.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -842,6 +890,18 @@
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="iconTextGap" type="int" value="2"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[0, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -851,7 +911,7 @@
                 <Component class="javax.swing.JButton" name="jBExportTimeTraces">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/exportCurves32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/exportCurves24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jBExportTimeTraces.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -862,6 +922,18 @@
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="iconTextGap" type="int" value="2"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[0, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <AccessibilityProperties>
@@ -876,7 +948,7 @@
                 <Component class="javax.swing.JToggleButton" name="jTBOverlayTimeTracess">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/overlay32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/overlay24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBOverlayTimeTracess.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -887,6 +959,18 @@
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="iconTextGap" type="int" value="2"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[0, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -950,10 +1034,19 @@
             <Container class="javax.swing.JToolBar" name="jToolBar4">
               <Properties>
                 <Property name="rollover" type="boolean" value="true"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 33]"/>
+                </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="-6" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.0" weightY="0.0"/>
+                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.0" weightY="0.0"/>
                 </Constraint>
               </Constraints>
 
@@ -962,7 +1055,7 @@
                 <Component class="javax.swing.JButton" name="jBClearAllWavelengthTraces">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/curvesdelete32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/curvesdelete24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jBClearAllWavelengthTraces.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -972,6 +1065,18 @@
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[0, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -981,7 +1086,7 @@
                 <Component class="javax.swing.JButton" name="jBExportWaveTraces">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/exportCurves32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/exportCurves24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jBExportWaveTraces.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -991,6 +1096,18 @@
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[0, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
@@ -1000,7 +1117,7 @@
                 <Component class="javax.swing.JToggleButton" name="jTBOverlayWaveTracess">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/overlay32.png"/>
+                      <Image iconType="3" name="/org/glotaran/core/resultdisplayers/resources/overlay24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBOverlayWaveTracess.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -1010,6 +1127,18 @@
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[0, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[33, 29]"/>
+                    </Property>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>

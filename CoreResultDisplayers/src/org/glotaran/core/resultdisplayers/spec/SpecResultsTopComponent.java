@@ -530,7 +530,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
         jToolBar2.setRollover(true);
-        jToolBar2.setPreferredSize(new java.awt.Dimension(300, 40));
+        jToolBar2.setMaximumSize(new java.awt.Dimension(150, 33));
+        jToolBar2.setMinimumSize(new java.awt.Dimension(150, 33));
+        jToolBar2.setPreferredSize(new java.awt.Dimension(150, 33));
 
         org.openide.awt.Mnemonics.setLocalizedText(jTBLinLogTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBLinLogTraces.text")); // NOI18N
         jTBLinLogTraces.setFocusable(false);
@@ -545,7 +547,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         jTFLinPartTraces.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTFLinPartTraces.setText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTFLinPartTraces.text")); // NOI18N
-        jTFLinPartTraces.setMaximumSize(new java.awt.Dimension(70, 19));
+        jTFLinPartTraces.setMaximumSize(new java.awt.Dimension(70, 25));
+        jTFLinPartTraces.setMinimumSize(new java.awt.Dimension(25, 25));
+        jTFLinPartTraces.setPreferredSize(new java.awt.Dimension(50, 25));
         jTFLinPartTraces.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTFLinPartTracesFocusLost(evt);
@@ -554,11 +558,14 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar2.add(jTFLinPartTraces);
         jToolBar2.add(jSeparator3);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/AutoselectCurves32.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/AutoselectCurves24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton1.text")); // NOI18N
         jButton1.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton1.toolTipText")); // NOI18N
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setMaximumSize(new java.awt.Dimension(33, 29));
+        jButton1.setMinimumSize(new java.awt.Dimension(33, 29));
+        jButton1.setPreferredSize(new java.awt.Dimension(33, 29));
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -567,11 +574,14 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar2.add(jButton1);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/addTimeTrace32.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/addTimeTrace24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton2.text")); // NOI18N
         jButton2.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton2.toolTipText")); // NOI18N
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setMaximumSize(new java.awt.Dimension(33, 29));
+        jButton2.setMinimumSize(new java.awt.Dimension(33, 29));
+        jButton2.setPreferredSize(new java.awt.Dimension(33, 29));
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -580,11 +590,14 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar2.add(jButton2);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/addWaveTrace32.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/addWaveTrace24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton3.text")); // NOI18N
         jButton3.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton3.toolTipText")); // NOI18N
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setMaximumSize(new java.awt.Dimension(33, 29));
+        jButton3.setMinimumSize(new java.awt.Dimension(33, 29));
+        jButton3.setPreferredSize(new java.awt.Dimension(33, 29));
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -610,7 +623,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = -6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         jPanel13.add(jToolBar2, gridBagConstraints);
 
@@ -851,13 +863,20 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPanel12.setLayout(new java.awt.GridBagLayout());
 
         jToolBar3.setRollover(true);
+        jToolBar3.setMaximumSize(new java.awt.Dimension(150, 33));
+        jToolBar3.setMinimumSize(new java.awt.Dimension(150, 33));
+        jToolBar3.setPreferredSize(new java.awt.Dimension(150, 33));
 
-        jBClearAllTimeTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/curvesdelete32.png"))); // NOI18N
+        jBClearAllTimeTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/curvesdelete24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBClearAllTimeTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllTimeTraces.text")); // NOI18N
         jBClearAllTimeTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllTimeTraces.toolTipText")); // NOI18N
         jBClearAllTimeTraces.setFocusable(false);
         jBClearAllTimeTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBClearAllTimeTraces.setIconTextGap(2);
+        jBClearAllTimeTraces.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jBClearAllTimeTraces.setMaximumSize(new java.awt.Dimension(33, 29));
+        jBClearAllTimeTraces.setMinimumSize(new java.awt.Dimension(33, 29));
+        jBClearAllTimeTraces.setPreferredSize(new java.awt.Dimension(33, 29));
         jBClearAllTimeTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBClearAllTimeTraces.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -866,12 +885,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar3.add(jBClearAllTimeTraces);
 
-        jBExportTimeTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/exportCurves32.png"))); // NOI18N
+        jBExportTimeTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/exportCurves24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBExportTimeTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.text")); // NOI18N
         jBExportTimeTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.toolTipText")); // NOI18N
         jBExportTimeTraces.setFocusable(false);
         jBExportTimeTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBExportTimeTraces.setIconTextGap(2);
+        jBExportTimeTraces.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jBExportTimeTraces.setMaximumSize(new java.awt.Dimension(33, 29));
+        jBExportTimeTraces.setMinimumSize(new java.awt.Dimension(33, 29));
+        jBExportTimeTraces.setPreferredSize(new java.awt.Dimension(33, 29));
         jBExportTimeTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBExportTimeTraces.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -881,12 +904,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar3.add(jBExportTimeTraces);
         jBExportTimeTraces.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportTimeTraces.AccessibleContext.accessibleDescription")); // NOI18N
 
-        jTBOverlayTimeTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/overlay32.png"))); // NOI18N
+        jTBOverlayTimeTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/overlay24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayTimeTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.text")); // NOI18N
         jTBOverlayTimeTracess.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayTimeTracess.toolTipText")); // NOI18N
         jTBOverlayTimeTracess.setFocusable(false);
         jTBOverlayTimeTracess.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jTBOverlayTimeTracess.setIconTextGap(2);
+        jTBOverlayTimeTracess.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jTBOverlayTimeTracess.setMaximumSize(new java.awt.Dimension(33, 29));
+        jTBOverlayTimeTracess.setMinimumSize(new java.awt.Dimension(33, 29));
+        jTBOverlayTimeTracess.setPreferredSize(new java.awt.Dimension(33, 29));
         jTBOverlayTimeTracess.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jTBOverlayTimeTracess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -899,7 +926,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = -6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         jPanel12.add(jToolBar3, gridBagConstraints);
 
@@ -925,12 +951,19 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
         jToolBar4.setRollover(true);
+        jToolBar4.setMaximumSize(new java.awt.Dimension(150, 33));
+        jToolBar4.setMinimumSize(new java.awt.Dimension(150, 33));
+        jToolBar4.setPreferredSize(new java.awt.Dimension(150, 33));
 
-        jBClearAllWavelengthTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/curvesdelete32.png"))); // NOI18N
+        jBClearAllWavelengthTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/curvesdelete24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBClearAllWavelengthTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllWavelengthTraces.text")); // NOI18N
         jBClearAllWavelengthTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBClearAllWavelengthTraces.toolTipText")); // NOI18N
         jBClearAllWavelengthTraces.setFocusable(false);
         jBClearAllWavelengthTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBClearAllWavelengthTraces.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jBClearAllWavelengthTraces.setMaximumSize(new java.awt.Dimension(33, 29));
+        jBClearAllWavelengthTraces.setMinimumSize(new java.awt.Dimension(33, 29));
+        jBClearAllWavelengthTraces.setPreferredSize(new java.awt.Dimension(33, 29));
         jBClearAllWavelengthTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBClearAllWavelengthTraces.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -939,11 +972,15 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar4.add(jBClearAllWavelengthTraces);
 
-        jBExportWaveTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/exportCurves32.png"))); // NOI18N
+        jBExportWaveTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/exportCurves24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBExportWaveTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportWaveTraces.text")); // NOI18N
         jBExportWaveTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportWaveTraces.toolTipText")); // NOI18N
         jBExportWaveTraces.setFocusable(false);
         jBExportWaveTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBExportWaveTraces.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jBExportWaveTraces.setMaximumSize(new java.awt.Dimension(33, 29));
+        jBExportWaveTraces.setMinimumSize(new java.awt.Dimension(33, 29));
+        jBExportWaveTraces.setPreferredSize(new java.awt.Dimension(33, 29));
         jBExportWaveTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jBExportWaveTraces.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -952,11 +989,15 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         });
         jToolBar4.add(jBExportWaveTraces);
 
-        jTBOverlayWaveTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/overlay32.png"))); // NOI18N
+        jTBOverlayWaveTracess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/overlay24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBOverlayWaveTracess, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.text")); // NOI18N
         jTBOverlayWaveTracess.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBOverlayWaveTracess.toolTipText")); // NOI18N
         jTBOverlayWaveTracess.setFocusable(false);
         jTBOverlayWaveTracess.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTBOverlayWaveTracess.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jTBOverlayWaveTracess.setMaximumSize(new java.awt.Dimension(33, 29));
+        jTBOverlayWaveTracess.setMinimumSize(new java.awt.Dimension(33, 29));
+        jTBOverlayWaveTracess.setPreferredSize(new java.awt.Dimension(33, 29));
         jTBOverlayWaveTracess.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jTBOverlayWaveTracess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -969,7 +1010,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = -6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         jPanel11.add(jToolBar4, gridBagConstraints);
 
