@@ -266,7 +266,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         java.awt.GridBagConstraints gridBagConstraints;
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel14 = new javax.swing.JPanel();
+        jPOverviewTab = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jTBLinLog = new javax.swing.JToggleButton();
         jTFLinPart = new javax.swing.JTextField();
@@ -290,12 +290,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPDAS = new javax.swing.JPanel();
         jPSASnorm = new javax.swing.JPanel();
         jPDASnorm = new javax.swing.JPanel();
-        jPanel13 = new javax.swing.JPanel();
+        jPTracesTab = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
         jTBLinLogTraces = new javax.swing.JToggleButton();
         jTFLinPartTraces = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JToolBar.Separator();
-        jButton1 = new javax.swing.JButton();
+        jBAutoSelectTraces = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -321,7 +321,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPSingValuesPart = new javax.swing.JPanel();
         jPLeftSingVectorsPart = new javax.swing.JPanel();
         jPRightSingVectorsPart = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
+        jPSelectedTimTracesTab = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
         jBClearAllTimeTraces = new javax.swing.JButton();
         jBExportTimeTraces = new javax.swing.JButton();
@@ -329,11 +329,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPanel18 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jPSelTimeTrCollection = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
+        jPSelectedWavTracesTab = new javax.swing.JPanel();
         jToolBar4 = new javax.swing.JToolBar();
         jBClearAllWavelengthTraces = new javax.swing.JButton();
         jBExportWaveTraces = new javax.swing.JButton();
         jTBOverlayWaveTracess = new javax.swing.JToggleButton();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jPSelWavTrCollection = new javax.swing.JPanel();
 
@@ -343,7 +344,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(10, 10));
         jTabbedPane1.setOpaque(true);
 
-        jPanel14.setLayout(new java.awt.GridBagLayout());
+        jPOverviewTab.setLayout(new java.awt.GridBagLayout());
 
         jToolBar1.setRollover(true);
 
@@ -410,7 +411,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = -6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        jPanel14.add(jToolBar1, gridBagConstraints);
+        jPOverviewTab.add(jToolBar1, gridBagConstraints);
 
         jPanel6.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel6.setLayout(new java.awt.GridBagLayout());
@@ -523,11 +524,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel14.add(jPanel6, gridBagConstraints);
+        jPOverviewTab.add(jPanel6, gridBagConstraints);
 
-        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPanel14.TabConstraints.tabTitle"), jPanel14); // NOI18N
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPOverviewTab.TabConstraints.tabTitle"), jPOverviewTab); // NOI18N
 
-        jPanel13.setLayout(new java.awt.GridBagLayout());
+        jPTracesTab.setLayout(new java.awt.GridBagLayout());
 
         jToolBar2.setRollover(true);
         jToolBar2.setMaximumSize(new java.awt.Dimension(150, 33));
@@ -558,21 +559,21 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar2.add(jTFLinPartTraces);
         jToolBar2.add(jSeparator3);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/AutoselectCurves24.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton1.text")); // NOI18N
-        jButton1.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton1.toolTipText")); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setMaximumSize(new java.awt.Dimension(33, 29));
-        jButton1.setMinimumSize(new java.awt.Dimension(33, 29));
-        jButton1.setPreferredSize(new java.awt.Dimension(33, 29));
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBAutoSelectTraces.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/AutoselectCurves24.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jBAutoSelectTraces, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBAutoSelectTraces.text")); // NOI18N
+        jBAutoSelectTraces.setToolTipText(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBAutoSelectTraces.toolTipText")); // NOI18N
+        jBAutoSelectTraces.setFocusable(false);
+        jBAutoSelectTraces.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBAutoSelectTraces.setMaximumSize(new java.awt.Dimension(33, 29));
+        jBAutoSelectTraces.setMinimumSize(new java.awt.Dimension(33, 29));
+        jBAutoSelectTraces.setPreferredSize(new java.awt.Dimension(33, 29));
+        jBAutoSelectTraces.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBAutoSelectTraces.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBAutoSelectTracesActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButton1);
+        jToolBar2.add(jBAutoSelectTraces);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/glotaran/core/resultdisplayers/resources/addTimeTrace24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton2.text")); // NOI18N
@@ -624,7 +625,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        jPanel13.add(jToolBar2, gridBagConstraints);
+        jPTracesTab.add(jToolBar2, gridBagConstraints);
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -856,11 +857,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel13.add(jPanel3, gridBagConstraints);
+        jPTracesTab.add(jPanel3, gridBagConstraints);
 
-        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPanel13.TabConstraints.tabTitle"), jPanel13); // NOI18N
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPTracesTab.TabConstraints.tabTitle"), jPTracesTab); // NOI18N
 
-        jPanel12.setLayout(new java.awt.GridBagLayout());
+        jPSelectedTimTracesTab.setPreferredSize(new java.awt.Dimension(950, 1600));
+        jPSelectedTimTracesTab.setLayout(new java.awt.GridBagLayout());
 
         jToolBar3.setRollover(true);
         jToolBar3.setMaximumSize(new java.awt.Dimension(150, 33));
@@ -927,28 +929,36 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        jPanel12.add(jToolBar3, gridBagConstraints);
+        jPSelectedTimTracesTab.add(jToolBar3, gridBagConstraints);
 
-        jPanel18.setLayout(new java.awt.BorderLayout());
+        jPanel18.setPreferredSize(new java.awt.Dimension(800, 1600));
+        jPanel18.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane5.setBorder(null);
-        jScrollPane5.setPreferredSize(new java.awt.Dimension(1000, 700));
+        jScrollPane5.setPreferredSize(new java.awt.Dimension(800, 530));
 
-        jPSelTimeTrCollection.setLayout(new java.awt.GridLayout(2, 2));
+        jPSelTimeTrCollection.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), null));
+        jPSelTimeTrCollection.setMinimumSize(new java.awt.Dimension(20, 20));
+        jPSelTimeTrCollection.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPSelTimeTrCollection.setLayout(new java.awt.GridLayout(2, 2, 2, 2));
         jScrollPane5.setViewportView(jPSelTimeTrCollection);
 
-        jPanel18.add(jScrollPane5, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel18.add(jScrollPane5, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel12.add(jPanel18, gridBagConstraints);
+        jPSelectedTimTracesTab.add(jPanel18, gridBagConstraints);
 
-        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPanel12.TabConstraints.tabTitle"), jPanel12); // NOI18N
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPSelectedTimTracesTab.TabConstraints.tabTitle"), jPSelectedTimTracesTab); // NOI18N
 
-        jPanel11.setLayout(new java.awt.GridBagLayout());
+        jPSelectedWavTracesTab.setLayout(new java.awt.GridBagLayout());
 
         jToolBar4.setRollover(true);
         jToolBar4.setMaximumSize(new java.awt.Dimension(150, 33));
@@ -1011,11 +1021,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        jPanel11.add(jToolBar4, gridBagConstraints);
+        jPSelectedWavTracesTab.add(jToolBar4, gridBagConstraints);
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 1600));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane8.setBorder(null);
-        jScrollPane8.setPreferredSize(new java.awt.Dimension(1000, 700));
+        jScrollPane8.setPreferredSize(new java.awt.Dimension(800, 530));
 
+        jPSelWavTrCollection.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), null));
+        jPSelWavTrCollection.setMinimumSize(new java.awt.Dimension(20, 20));
+        jPSelWavTrCollection.setPreferredSize(new java.awt.Dimension(50, 50));
         jPSelWavTrCollection.setLayout(new java.awt.GridLayout(2, 2));
         jScrollPane8.setViewportView(jPSelWavTrCollection);
 
@@ -1027,9 +1043,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        jPanel11.add(jScrollPane8, gridBagConstraints);
+        jPanel2.add(jScrollPane8, gridBagConstraints);
 
-        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPanel11.TabConstraints.tabTitle"), jPanel11); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPSelectedWavTracesTab.add(jPanel2, gridBagConstraints);
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jPSelectedWavTracesTab.TabConstraints.tabTitle"), jPSelectedWavTracesTab); // NOI18N
 
         add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -1063,7 +1086,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         updateTrace(jSColum.getValue());
     }//GEN-LAST:event_jSColumStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBAutoSelectTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAutoSelectTracesActionPerformed
 //create dialog
         SelectTracesForPlot selTracePanel = new SelectTracesForPlot();
         selTracePanel.setMaxNumbers(res.getX2().length, res.getX().length);
@@ -1153,10 +1176,13 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBAutoSelectTracesActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         double portion = Double.valueOf(jTFLinPartTraces.getText());
+        if (selectedTimeTraces.isEmpty()) {
+        CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
+        }
         selectedTimeTraces.add(jSColum.getValue());
 //create jfreechart collections with selected time trace     
         XYSeriesCollection trace = CommonResDispTools.createFitRawTraceCollection(jSColum.getValue(), 0, res.getX().length, res, t0Curve[jSColum.getValue()], String.valueOf(res.getX2()[jSColum.getValue()]));
@@ -1181,13 +1207,14 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 ChartPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);
                 jPSelTimeTrCollection.add(linTime);
             }
-
             CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        if (selectedWaveTraces.isEmpty()) {
+        CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
+        }
         selectedWaveTraces.add(jSRow.getValue());
 //create jfreechart collections with selected time trace         
         XYSeriesCollection trace = CommonResDispTools.createFitRawWaveTrCollection(jSRow.getValue(), 0, res.getX2().length, res, String.valueOf(res.getX()[jSRow.getValue()]));
@@ -1519,6 +1546,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private void jTBOverlayWaveTracessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBOverlayWaveTracessActionPerformed
         jPSelWavTrCollection.removeAll();
         if (jTBOverlayWaveTracess.isSelected()) {
+             CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
             NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelenth (nm)");
             jPSelWavTrCollection.setLayout(new BorderLayout());
             ChartPanel chpan = CommonResDispTools.makeLinTimeTraceResidChart(selectedWaveTracesColection, selectedWaveResidualsColection, xAxis, "Selected spectra", true, true);
@@ -1542,12 +1570,14 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         }
         
         jPSelWavTrCollection.repaint();
+        jPSelWavTrCollection.updateUI();
     }//GEN-LAST:event_jTBOverlayWaveTracessActionPerformed
 
     private void jTBOverlayTimeTracessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBOverlayTimeTracessActionPerformed
         jPSelTimeTrCollection.removeAll();
         ChartPanel chpan;
         if (jTBOverlayTimeTracess.isSelected()) {
+            CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
             NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX(), "Time ~s");
             jPSelTimeTrCollection.setLayout(new BorderLayout());
             if (jTBLinLogTraces.isSelected()){
@@ -1580,15 +1610,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, selectedTimeTraces.size());
         }
         jPSelTimeTrCollection.repaint();
+        jPSelTimeTrCollection.updateUI();
     }//GEN-LAST:event_jTBOverlayTimeTracessActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAutoSelectTraces;
     private javax.swing.JButton jBClearAllTimeTraces;
     private javax.swing.JButton jBClearAllWavelengthTraces;
     private javax.swing.JButton jBExportTimeTraces;
     private javax.swing.JButton jBExportWaveTraces;
     private javax.swing.JButton jBUpdLinLog;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton8;
@@ -1601,26 +1632,27 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private javax.swing.JPanel jPDASnorm;
     private javax.swing.JPanel jPLeftSingVectors;
     private javax.swing.JPanel jPLeftSingVectorsPart;
+    private javax.swing.JPanel jPOverviewTab;
     private javax.swing.JPanel jPRightSingVectors;
     private javax.swing.JPanel jPRightSingVectorsPart;
     private javax.swing.JPanel jPSAS;
     private javax.swing.JPanel jPSASnorm;
     private javax.swing.JPanel jPSelTimeTrCollection;
     private javax.swing.JPanel jPSelWavTrCollection;
+    private javax.swing.JPanel jPSelectedTimTracesTab;
     private javax.swing.JPanel jPSelectedTimeTrace;
+    private javax.swing.JPanel jPSelectedWavTracesTab;
     private javax.swing.JPanel jPSelectedWaveTrace;
     private javax.swing.JPanel jPSingValues;
     private javax.swing.JPanel jPSingValuesPart;
     private javax.swing.JPanel jPSpecImage;
+    private javax.swing.JPanel jPTracesTab;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;

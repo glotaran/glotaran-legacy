@@ -14,7 +14,6 @@ import org.glotaran.core.models.structures.TimpResultDataset;
 import org.glotaran.jfreechartcustom.GlotaranDrawingSupplier;
 import org.glotaran.jfreechartcustom.GraphPanel;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.LinLogAxis;
@@ -24,18 +23,12 @@ import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
-import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleEdge;
 import static java.lang.Math.ceil;
 import static java.lang.Math.pow;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.block.BlockContainer;
-import org.jfree.chart.block.BorderArrangement;
-import org.jfree.chart.block.LabelBlock;
 import org.jfree.ui.HorizontalAlignment;
 
 /**
@@ -46,18 +39,19 @@ public class CommonResDispTools {
 
     private static final int CHART_SIZE = 200;
     private static final int LAYOUT_GAP = 2;
-    private static final int REPORT_PANEL_DEFAULT_WIDTH = 900;
-    private static final int REPORT_PANEL_DEFAULT_HEIGHT = 810;
+    private static final int REPORT_PANEL_DEFAULT_WIDTH = 800;
+    private static final int REPORT_PANEL_DEFAULT_HEIGHT = 530;
 
     public static void checkPanelSize(JPanel panelToResize, int numSelTraces) {
-        int rowNum = (int) ceil((double) numSelTraces / 4);
-        if (rowNum > 4) {
+        int rowNum = (int) ceil((double) numSelTraces / 3);
+        if (rowNum > 3) {
             panelToResize.setPreferredSize(new Dimension(REPORT_PANEL_DEFAULT_WIDTH, rowNum * CHART_SIZE + LAYOUT_GAP * (rowNum + 1)));
         }
         GridLayout gl = (GridLayout) panelToResize.getLayout();
-        if (numSelTraces / 4 >= gl.getRows()) {
-            panelToResize.setLayout(new GridLayout(rowNum, 4, LAYOUT_GAP, LAYOUT_GAP));
+        if (numSelTraces / 3 >= gl.getRows()) {
+            panelToResize.setLayout(new GridLayout(rowNum, 3, LAYOUT_GAP, LAYOUT_GAP));
         }
+        
     }
 
     public static void restorePanelSize(JPanel panelToResize) {
