@@ -1229,7 +1229,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             
         } else {
             NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelenth (nm)");
-            ChartPanel chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[jSColum.getValue()]), false);        
+            ChartPanel chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX()[jSRow.getValue()]), false);        
             jPSelWavTrCollection.add(chpan);
             CommonResDispTools.checkPanelSize(jPSelWavTrCollection, selectedWaveTraces.size());
         }
@@ -1238,6 +1238,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
     private void jBClearAllWavelengthTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearAllWavelengthTracesActionPerformed
         jPSelWavTrCollection.removeAll();
+        jTBOverlayWaveTracess.setSelected(false);
         CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
         jPSelWavTrCollection.repaint();
         selectedWaveTraces.clear();
@@ -1248,6 +1249,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
     private void jBClearAllTimeTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClearAllTimeTracesActionPerformed
         jPSelTimeTrCollection.removeAll();
+        jTBOverlayTimeTracess.setSelected(false);
         CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
         jPSelTimeTrCollection.repaint();
         selectedTimeTraces.clear();
@@ -1562,7 +1564,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 resid = new XYSeriesCollection(selectedWaveResidualsColection.getSeries(i));
                 trace = new XYSeriesCollection(selectedWaveTracesColection.getSeries(2*i));
                 trace.addSeries(selectedWaveTracesColection.getSeries(2 * i + 1));
-                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX2()[i]), false);
+                chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, resid.getSeriesKey(0).toString(), false);
                 jPSelWavTrCollection.add(chpan);
                 
             }
@@ -1600,9 +1602,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 trace.addSeries(selectedTimeTracesColection.getSeries(2 * i + 1));
                 if (jTBLinLogTraces.isSelected()) {
                     double portion = Double.valueOf(jTFLinPartTraces.getText());
-                    chpan = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX()[i]), false, portion);
+                    chpan = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, resid.getSeriesKey(0).toString(), false, portion);
                 } else {
-                    chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, String.valueOf(res.getX()[i]), false);
+                    chpan = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, resid.getSeriesKey(0).toString(), false);
                 }
                 jPSelTimeTrCollection.add(chpan);
 
