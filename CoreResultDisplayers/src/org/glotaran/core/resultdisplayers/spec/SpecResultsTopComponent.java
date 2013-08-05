@@ -346,6 +346,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         jPOverviewTab.setLayout(new java.awt.GridBagLayout());
 
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         org.openide.awt.Mnemonics.setLocalizedText(jTBLinLog, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBLinLog.text")); // NOI18N
@@ -410,7 +411,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = -6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPOverviewTab.add(jToolBar1, gridBagConstraints);
 
         jPanel6.setMinimumSize(new java.awt.Dimension(50, 50));
@@ -530,6 +531,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         jPTracesTab.setLayout(new java.awt.GridBagLayout());
 
+        jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
         jToolBar2.setMaximumSize(new java.awt.Dimension(150, 33));
         jToolBar2.setMinimumSize(new java.awt.Dimension(150, 33));
@@ -624,7 +626,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPTracesTab.add(jToolBar2, gridBagConstraints);
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
@@ -649,6 +651,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.weighty = 1.0;
         jPanel4.add(jPSpecImage, gridBagConstraints);
 
+        jSColum.setMaximum(0);
         jSColum.setValue(0);
         jSColum.setPreferredSize(new java.awt.Dimension(36, 16));
         jSColum.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -664,6 +667,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.weightx = 1.0;
         jPanel4.add(jSColum, gridBagConstraints);
 
+        jSRow.setMaximum(0);
         jSRow.setOrientation(javax.swing.JSlider.VERTICAL);
         jSRow.setValue(0);
         jSRow.setInverted(true);
@@ -864,6 +868,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPSelectedTimTracesTab.setPreferredSize(new java.awt.Dimension(950, 1600));
         jPSelectedTimTracesTab.setLayout(new java.awt.GridBagLayout());
 
+        jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
         jToolBar3.setMaximumSize(new java.awt.Dimension(150, 33));
         jToolBar3.setMinimumSize(new java.awt.Dimension(150, 33));
@@ -951,6 +956,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -960,6 +966,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         jPSelectedWavTracesTab.setLayout(new java.awt.GridBagLayout());
 
+        jToolBar4.setFloatable(false);
         jToolBar4.setRollover(true);
         jToolBar4.setMaximumSize(new java.awt.Dimension(150, 33));
         jToolBar4.setMinimumSize(new java.awt.Dimension(150, 33));
@@ -1042,11 +1049,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel2.add(jScrollPane8, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
