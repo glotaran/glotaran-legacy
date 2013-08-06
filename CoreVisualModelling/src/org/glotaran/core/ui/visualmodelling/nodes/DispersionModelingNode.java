@@ -71,7 +71,7 @@ public class DispersionModelingNode extends PropertiesAbstractNode {
         } 
         for (int i = 0; i < paramList.size(); i++) {
 
-            if(fixed!=null && !fixed && !paramFixedList.isEmpty()) {
+            if(fixed!=null && !fixed && !paramFixedList.isEmpty() && paramFixedList.size()>i) {
             params.addObj(new NonLinearParameter(paramList.get(i), paramFixedList.get(i)));
             } else {
             params.addObj(new NonLinearParameter(paramList.get(i), fixed));
