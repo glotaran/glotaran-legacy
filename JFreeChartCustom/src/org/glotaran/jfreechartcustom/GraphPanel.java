@@ -291,6 +291,7 @@ public class GraphPanel extends ChartPanel {
             Writer out = new OutputStreamWriter(
                     new FileOutputStream(new File(filename)), "UTF-8");
             svgGenerator.stream(out, true);
+            svgGenerator.dispose();
         }
     }
 
@@ -336,16 +337,20 @@ public class GraphPanel extends ChartPanel {
             int tracenum = data.getSeriesCount();            
             if (index == 0) {                
                 tempStrings.add(0, new StringBuilder());
-                tempStrings.get(0).append("X");
+//                tempStrings.get(0).append("X").append(String.valueOf(index));
             }
             for (int i = 0; i < tracenum; i++) {
+                if ((i!=0)||(index!=0)){
+                    tempStrings.get(0).append("\t");
+                }
+                tempStrings.get(0).append("X").append(data.getSeriesKey(i).toString());
                 tempStrings.get(0).append("\t");
                 tempStrings.get(0).append(data.getSeriesKey(i).toString());
                 if (errorBarsVisible) {
                     tempStrings.get(0).append("\t");
-                    tempStrings.get(0).append(data.getSeriesKey(i).toString() + "_Err-Hi");
+                    tempStrings.get(0).append(data.getSeriesKey(i).toString()).append("_Err-Hi");
                     tempStrings.get(0).append("\t");
-                    tempStrings.get(0).append(data.getSeriesKey(i).toString() + "_Err-Low");
+                    tempStrings.get(0).append(data.getSeriesKey(i).toString()).append("_Err-Low");
                 }
             }
 
@@ -354,10 +359,14 @@ public class GraphPanel extends ChartPanel {
                 if (index == 0) {
                 tempStrings.add(line, new StringBuilder());
                 }
-                if (index == 0) {
-                    tempStrings.get(line).append(new Formatter().format("%g", data.getXValue(0, j)).toString());
-                }
+//                if (index == 0) {
+//                    tempStrings.get(line).append(new Formatter().format("%g", data.getXValue(0, j)).toString());
+//                }
                 for (int i = 0; i < tracenum; i++) {
+                    if ((i!=0)||(index!=0)){
+                        tempStrings.get(line).append("\t");
+                    }
+                    tempStrings.get(line).append(new Formatter().format("%g", data.getXValue(i, j)).toString());
                     tempStrings.get(line).append("\t");
                     tempStrings.get(line).append(new Formatter().format("%g", data.getYValue(i, j)).toString());
                     if (errorBarsVisible) {
