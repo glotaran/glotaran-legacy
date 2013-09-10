@@ -350,7 +350,7 @@ public class FlimImageBH implements TGDatasetInterface {
         int increm = measinf.incr;
 
         for (int i = 0; i < size; ++i) {
-            image.getData()[i] = (int) tmpData[i] / increm;
+            image.setDataPoint(i, (int)tmpData[i]/increm); //[i] = (int) tmpData[i] / increm;
         }
         return image;
     }

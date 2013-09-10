@@ -77,6 +77,8 @@ import org.openide.util.Lookup;
 import org.openide.windows.CloneableTopComponent;
 import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
+import org.ujmp.core.intmatrix.impl.DefaultDenseIntMatrix2D;
+import org.ujmp.core.matrix.Matrix2D;
 
 /**
  * Top component which displays something.
@@ -159,7 +161,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         }
         
         if (flimImage != null) {
-            flimImage.makeBinnedImage(1);
+//            flimImage.makeBinnedImage(1);
             flimImage.buildIntMap(1);
             MakeIntImageChart(MakeXYZDataset());
             MakeTracesChart(PlotFirstTrace(0), false);
@@ -219,7 +221,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
             }
         }
         
-        flimImage.makeBinnedImage(1);
+//        flimImage.makeBinnedImage(1);
         tempData = dataObj.getDatasetTimp();
         flimImage.buildIntMap(1);
         if (tempData.getMaxInt() > flimImage.getMaxIntens()) {
@@ -864,7 +866,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
             for (int i = 0; i < v_flimImage.getCurveNum(); i++) {
                 if (v_dataset.getZValue(1, i) == -1) {
                     for (int j = 0; j < v_flimImage.getCannelN(); j++) {
-                        timpDat.getPsisim()[k * v_flimImage.getCannelN() + j] = v_flimImage.getData()[i * flimImage.getCannelN() + j];
+                        timpDat.getPsisim()[k * v_flimImage.getCannelN() + j] = v_flimImage.getDataPoint(i * flimImage.getCannelN() + j);
                     }
                     timpDat.getX2()[k] = i;
                     k++;
@@ -1209,14 +1211,14 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         int[] newData = new int[newChN*flimImage.getCurveNum()];
         for (int i = 0; i < flimImage.getCurveNum(); i++){
             for (int j = 0; j < newChN; j++){
-                newData[i*newChN+j] = flimImage.getData()[i*flimImage.getCannelN()+rangeSlider2.getLowValue()+j];
+                newData[i*newChN+j] = flimImage.getDataPoint(i*flimImage.getCannelN()+rangeSlider2.getLowValue()+j);
             }
         }
         
         flimImage.setData(newData.clone());
         flimImage.setTime(newTime);
         flimImage.setCannelN((short)newChN);
-        flimImage.makeBinnedImage(1);
+//        flimImage.makeBinnedImage(1);
         updateXYZDataset(); 
         
         sumSelectedPixels();
@@ -1347,12 +1349,15 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
     }
 
     private Matrix[] calculateSVD() {
-
-        Matrix newMatrix = MatrixFactory.importFromArray(flimImage.getData());
-        newMatrix = newMatrix.reshape(Ret.NEW, flimImage.getCannelN(),flimImage.getX()*flimImage.getY());
-
+        DefaultDenseIntMatrix2D newMatrix = new DefaultDenseIntMatrix2D(flimImage.getCannelN(),flimImage.getX()*flimImage.getY());
+        for (int i = 0; i < flimImage.getCannelN(); i ++){
+            for (int j = 0; j < flimImage.getX()*flimImage.getY(); j++){
+                newMatrix.setInt(flimImage.getDataPoint(j*flimImage.getCannelN()+i),i,j);   
+            }
+        }
+        //Matrix newMatrix = MatrixFactory.importFromArray(flimImage.getData());
+       // newMatrix = newMatrix.reshape(Ret.NEW, flimImage.getCannelN(),flimImage.getX()*flimImage.getY());
         svdResult = newMatrix.svd();
-
         return svdResult;
         
         
@@ -1371,7 +1376,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         for (int i = 0; i < flimImage.getCurveNum(); i++) {
             if (dataset.getZValue(1, i) == -1) {
                 for (int j = 0; j < flimImage.getCannelN(); j++) {
-                    sumTrace[j] += flimImage.getData()[i * flimImage.getCannelN() + j];
+                    sumTrace[j] += flimImage.getDataPoint(i * flimImage.getCannelN() + j);
                 }
             }
         }
@@ -1501,7 +1506,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         tracesCollection = new XYSeriesCollection();
         XYSeries seria = new XYSeries("Trace");
         for (int j = 0; j < flimImage.getCannelN(); j++) {
-            seria.add(j * flimImage.getCannelW(), flimImage.getData()[index * flimImage.getCannelN() + j]);
+            seria.add(j * flimImage.getCannelW(), flimImage.getDataPoint(index * flimImage.getCannelN() + j));
         }
         tracesCollection.addSeries(seria);
         return tracesCollection;
@@ -1510,7 +1515,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
     private void UpdateSelectedTrace(int item) {
         tracesCollection.getSeries(0).clear();
         for (int j = 0; j < flimImage.getCannelN(); j++) {
-            tracesCollection.getSeries(0).add(j * flimImage.getCannelW(), flimImage.getData()[item * flimImage.getCannelN() + j]);
+            tracesCollection.getSeries(0).add(j * flimImage.getCannelW(), flimImage.getDataPoint(item * flimImage.getCannelN() + j));
         }
     }
 

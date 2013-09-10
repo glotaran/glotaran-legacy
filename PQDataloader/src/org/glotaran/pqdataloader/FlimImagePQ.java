@@ -4,9 +4,6 @@
  */
 package org.glotaran.pqdataloader;
 
-import org.openide.util.NbBundle;
-import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -277,7 +274,7 @@ public class FlimImagePQ implements TGDatasetInterface {
                     // obtain row index
                     rowInd = (int) floor((((float)((oflCount*65536) + tmpSnk-lineStartTime)/lineTime))*flimImage.getX()); 
                     //add photon in the histogram
-                    flimImage.getData()[(lineInd*flimImage.getX()+rowInd)*flimImage.getCannelN()+(int)tmpdTime]++; 
+                    flimImage.incrementDataPoint((lineInd*flimImage.getX()+rowInd)*flimImage.getCannelN()+(int)tmpdTime); //;getData()[(lineInd*flimImage.getX()+rowInd)*flimImage.getCannelN()+(int)tmpdTime]++; 
                 }
                                 
                 
