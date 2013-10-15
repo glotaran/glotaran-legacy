@@ -75,15 +75,15 @@ public class SCVMatrixFile implements TGDatasetInterface {
             dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file);
             editorPanel = new CSVLoaderDialog(new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix)));
             NotifyDescriptor cellEditor = new NotifyDescriptor(
-                editorPanel,
-                "table",
-                NotifyDescriptor.OK_CANCEL_OPTION,
-                NotifyDescriptor.PLAIN_MESSAGE,
-                null,
-                NotifyDescriptor.CANCEL_OPTION);
+                    editorPanel,
+                    "table",
+                    NotifyDescriptor.OK_CANCEL_OPTION,
+                    NotifyDescriptor.PLAIN_MESSAGE,
+                    null,
+                    NotifyDescriptor.CANCEL_OPTION);
             if (DialogDisplayer.getDefault().notify(cellEditor).equals(NotifyDescriptor.OK_OPTION)) {
-                if ((editorPanel.getSkipRows()>0)||(editorPanel.getSkipColums()>0)){
-                    dataMatrix = dataMatrix.subMatrix(Ret.NEW, editorPanel.getSkipRows(), editorPanel.getSkipRows(), dataMatrix.getRowCount()-1, dataMatrix.getColumnCount()-1);    
+                if ((editorPanel.getSkipRows() > 0) || (editorPanel.getSkipColums() > 0)) {
+                    dataMatrix = dataMatrix.subMatrix(Ret.NEW, editorPanel.getSkipRows(), editorPanel.getSkipRows(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
                 }
                 dataset = new DatasetTimp();
                 dataset.setDatasetName(file.getName());
@@ -163,15 +163,15 @@ public class SCVMatrixFile implements TGDatasetInterface {
                         }
                     }
                 }
-                
-                if (editorPanel.isWaveCalbrationEnabled()){
+
+                if (editorPanel.isWaveCalbrationEnabled()) {
                     ArrayList<Double> calibration = new ArrayList<Double>();
-                    if (!editorPanel.getFilename().isEmpty()){
+                    if (!editorPanel.getFilename().isEmpty()) {
                         Scanner sc = new Scanner(new File(editorPanel.getFilename()));
-                        while (sc.hasNext()){
+                        while (sc.hasNext()) {
                             calibration.add(Double.parseDouble(sc.next()));
                         }
-                        
+
                         if (calibration.size() != dataset.getNl()) {
                             NotifyDescriptor.Message infoMessage = new NotifyDescriptor.Message(
                                     NbBundle.getBundle("org/glotaran/csvdataloader/Bundle").getString("wrongCalibrationSize"),
@@ -179,14 +179,14 @@ public class SCVMatrixFile implements TGDatasetInterface {
                             DialogDisplayer.getDefault().notify(infoMessage);
                             return dataset;
                         }
-                                
+
                         int splitIndex = 0;
-                        int overlapStartindex=0; 
-                        int i = 1;   
+                        int overlapStartindex = 0;
+                        int i = 1;
                         double splitValue = 0;
-                        
+
                         if (calibration.get(1) > calibration.get(0)) {
-                            while ((i < calibration.size()) &&(calibration.get(i) > calibration.get(i - 1))) {
+                            while ((i < calibration.size()) && (calibration.get(i) > calibration.get(i - 1))) {
                                 i++;
                             }
                             if (i < calibration.size() - 1) {
@@ -198,11 +198,10 @@ public class SCVMatrixFile implements TGDatasetInterface {
                                 }
                                 overlapStartindex = (int) (i + floor((splitIndex - i) * 0.5));
                                 splitIndex = (int) (splitIndex + floor((splitIndex - i) * 0.5));
-                            }  
+                            }
                             dataset.setPsisim(updateDatamatrix(dataset, overlapStartindex, splitIndex));
                             dataset.setNl((dataset.getNl() - splitIndex + overlapStartindex));
-                        } 
-                        else {
+                        } else {
                             while ((calibration.get(i) < calibration.get(i - 1)) && (i < calibration.size())) {
                                 i++;
                             }
@@ -222,13 +221,13 @@ public class SCVMatrixFile implements TGDatasetInterface {
                         dataset.setX2(updateWaves(calibration, overlapStartindex, splitIndex));
                     }
                 }
+                dataset.calcRangeInt();
             }
         } catch (MatrixException ex) {
             Logger.getLogger(SCVMatrixFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(SCVMatrixFile.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dataset.calcRangeInt();
         return dataset;
     }
 
@@ -238,11 +237,11 @@ public class SCVMatrixFile implements TGDatasetInterface {
     }
 
     private double[] updateDatamatrix(DatasetTimp dataset, int overlapStartindex, int splitIndex) {
-        int newNl = (dataset.getNl()-splitIndex+overlapStartindex);
-        double[] newPsiSim = new double[dataset.getNt()*newNl]; 
+        int newNl = (dataset.getNl() - splitIndex + overlapStartindex);
+        double[] newPsiSim = new double[dataset.getNt() * newNl];
         double scale = 0;
         double temp;
-        ArrayList<Double> scalevector = new ArrayList<Double>(); 
+        ArrayList<Double> scalevector = new ArrayList<Double>();
         //calculate ratio of timetracess in overlapStartindex and splitIndex   
         for (int j = 1; j < dataset.getNt(); j++) {
             if ((dataset.getPsisim()[(overlapStartindex) * dataset.getNt() + j] != 0) && (dataset.getPsisim()[(splitIndex) * dataset.getNt() + j] != 0)) {
@@ -253,28 +252,26 @@ public class SCVMatrixFile implements TGDatasetInterface {
             }
         }
 
-        if (scalevector.size()>0){
-            Collections.sort(scalevector); 
-            if (scalevector.size() % 2 == 1){
-                scale = scalevector.get((scalevector.size()-1)/2);
-            } 
-            else {
-                scale = (scalevector.get((scalevector.size())/2-1)+scalevector.get((scalevector.size())/2))/2;
+        if (scalevector.size() > 0) {
+            Collections.sort(scalevector);
+            if (scalevector.size() % 2 == 1) {
+                scale = scalevector.get((scalevector.size() - 1) / 2);
+            } else {
+                scale = (scalevector.get((scalevector.size()) / 2 - 1) + scalevector.get((scalevector.size()) / 2)) / 2;
             }
         }
 
-        for (int i = 0; i < dataset.getNt(); i++){
-            for (int j = 0; j < overlapStartindex; j++){
-                newPsiSim[j*dataset.getNt()+i] = dataset.getPsisim()[j*dataset.getNt()+i];
+        for (int i = 0; i < dataset.getNt(); i++) {
+            for (int j = 0; j < overlapStartindex; j++) {
+                newPsiSim[j * dataset.getNt() + i] = dataset.getPsisim()[j * dataset.getNt() + i];
             }
-            for (int j = 0; j < newNl - overlapStartindex; j++){
-                newPsiSim[(j+overlapStartindex)*dataset.getNt()+i] = dataset.getPsisim()[(j+splitIndex)*dataset.getNt()+i]*scale;
+            for (int j = 0; j < newNl - overlapStartindex; j++) {
+                newPsiSim[(j + overlapStartindex) * dataset.getNt() + i] = dataset.getPsisim()[(j + splitIndex) * dataset.getNt() + i] * scale;
             }
-        } 
+        }
         return newPsiSim;
     }
-    
-    
+
     private double[] updateWaves(ArrayList<Double> calibration, int overlapStartindex, int splitIndex) {
         double[] newX2 = new double[calibration.size() - splitIndex + overlapStartindex];
         for (int j = 0; j < overlapStartindex; j++) {
@@ -285,6 +282,4 @@ public class SCVMatrixFile implements TGDatasetInterface {
         }
         return newX2;
     }
-    
-    
 }
