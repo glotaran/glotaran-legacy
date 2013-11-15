@@ -142,11 +142,13 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                     if (service.getExtention().equalsIgnoreCase("raw")) {
                         jBConvertToAbs.setEnabled(true);
                     }
-                    if (data.getIntenceIm() != null) {
-                        jBTICorrection.setEnabled(true);
+                    if (data != null) {
+                        if (data.getIntenceIm() != null) {
+                            jBTICorrection.setEnabled(true);
+                        }
+                        MakeImageChart(MakeXYZDataset());
+                        updateFileInfo();
                     }
-                    MakeImageChart(MakeXYZDataset());
-                    updateFileInfo();
                     break;
                 }
             } catch (FileNotFoundException ex) {
