@@ -24,7 +24,6 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.core.stringmatrix.impl.CSVMatrix;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.panels.MatrixTableEditorPanel;
 import static java.lang.Math.floor;
@@ -83,13 +82,78 @@ public class SCVMatrixFile implements TGDatasetInterface {
                     NotifyDescriptor.CANCEL_OPTION);
             if (DialogDisplayer.getDefault().notify(cellEditor).equals(NotifyDescriptor.OK_OPTION)) {
                 if ((editorPanel.getSkipRows() > 0) || (editorPanel.getSkipColums() > 0)) {
-                    dataMatrix = dataMatrix.subMatrix(Ret.NEW, editorPanel.getSkipRows(), editorPanel.getSkipRows(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+                    dataMatrix = dataMatrix.subMatrix(Ret.NEW, editorPanel.getSkipRows(), editorPanel.getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
                 }
                 dataset = new DatasetTimp();
-                dataset.setDatasetName(file.getName());
+                dataset.setDatasetName(file.getName());                
                 if (editorPanel.isSpectraInRows()) {
                     dataMatrix = dataMatrix.transpose();
                 }
+                
+                if (editorPanel.isLifetimeDensityMap()) { 
+                    // set number of reconstructed timepoints
+                    int numberOfTimepoints = editorPanel.getTimepoints();
+                    double fromValue = editorPanel.getFrom();
+                    double toValue = editorPanel.getTo();
+                    double logFromValue = editorPanel.getLogFrom();
+                    double linFracValue = editorPanel.getLinearFraction();                                                
+                    // set number of recorded wavelengths
+                    dataset.setNl((int) dataMatrix.getRowCount() - 1);
+                    dataset.setX2(new double[dataset.getNl()]);
+                    double excitationWavelength = dataMatrix.getAsDouble(0, 0);
+                    double[] exponents = new double[((int) dataMatrix.getColumnCount() - 1)];
+                    for (int i = 0; i < exponents.length; i++) {
+                            exponents[i] = dataMatrix.getAsDouble(0, i + 1);
+                    }
+                    for (int i = 0; i < dataset.getNl(); i++) {
+                            dataset.getX2()[i] = dataMatrix.getAsDouble(i + 1, 0);
+                    }
+                    // set number of timepoint based on desired time resolution
+                    
+                    dataset.setNt(numberOfTimepoints+1);
+                    dataset.setX(new double[dataset.getNt()]);
+                    if (editorPanel.isLinLogEnabeled()) {
+                        int linpoints, logpoints;
+                        if (logFromValue > fromValue) {
+                            linFracValue = Math.abs(linFracValue) < 1 ? Math.abs(linFracValue) : 1;
+                            linpoints = (int) Math.floor(Math.abs(numberOfTimepoints * linFracValue));
+                            logpoints = numberOfTimepoints - linpoints;
+                            //double linstep = (logFromValue-fromValue)/(Math.floor(numberOfTimepoints*linFracValue))
+                            for (int i = 0; i < linpoints; i++) {
+                                dataset.getX()[i] = (logFromValue - fromValue) / linpoints * i;
+                            }
+                            for (int i = 0; i <= logpoints; i++) {
+                                dataset.getX()[i+linpoints] = Math.exp(Math.log(logFromValue) + (Math.log(toValue) - Math.log(logFromValue)) / logpoints * i);
+                            }
+                        } else {
+                            for (int i = 0; i <= numberOfTimepoints; i++) {
+                                dataset.getX()[i] = Math.exp(Math.log(fromValue) + (Math.log(toValue) - Math.log(fromValue)) / numberOfTimepoints * i);
+                            }
+                        }
+                    } else {
+
+                        for (int i = 0; i <= numberOfTimepoints; i++) {
+                            dataset.getX()[i] = (toValue - fromValue) / numberOfTimepoints * i;
+                        }
+                    }
+
+                    //for every wavelength (row) calculate, for every timepoint
+                    //pre_exponential_amplitudes[k]*Exp[-1/Exp[exponential_amplitude[k]] * t]
+                     double[] timepoints = dataset.getX();
+                     dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                        for (int j = 0; j < dataset.getNl(); j++) {
+                            for (int k = 0; k < exponents.length; k++) {
+                                for (int i = 0; i < dataset.getNt(); i++) {
+                                   dataset.getPsisim()[j * dataset.getNt() + i] += 
+                                           dataMatrix.getAsDouble(j + 1, k + 1)*Math.exp(-1/Math.exp(exponents[k])*timepoints[i]); 
+                                }
+                                
+                            }
+                        }
+                    
+                
+                } else {
+                
                 if (editorPanel.isLabelsInColums()) {
                     if (editorPanel.isLabelsInRows()) {
                         dataset.setNl((int) dataMatrix.getRowCount() - 1);
@@ -162,6 +226,8 @@ public class SCVMatrixFile implements TGDatasetInterface {
                             }
                         }
                     }
+                }
+                
                 }
 
                 if (editorPanel.isWaveCalbrationEnabled()) {

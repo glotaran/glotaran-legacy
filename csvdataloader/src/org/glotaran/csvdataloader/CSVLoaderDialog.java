@@ -11,8 +11,12 @@
 package org.glotaran.csvdataloader;
 
 import java.awt.Component;
+import java.awt.LayoutManager;
 import java.io.File;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.SpinnerNumberModel;
 import org.ujmp.gui.panels.MatrixTableEditorPanel;
 
@@ -24,12 +28,16 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
 
     /** Creates new form CSVLoaderDialog */
     public CSVLoaderDialog() {
-        initComponents();
+        initComponents();        
     }
     
     public CSVLoaderDialog(MatrixTableEditorPanel matixEditor) {
-        initComponents();
-        jpMatrixEditor.add(matixEditor);
+        initComponents();                
+        jpMatrixEditor.add(matixEditor);        
+        for (Component comp : jPLifetimeDensityMapSettings.getComponents()) {
+            comp.setVisible(cbLifetimeDensityMap.isSelected());
+        }
+        jPLifetimeDensityMapSettings.updateUI();  
     }
 
 
@@ -58,6 +66,20 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         spSkipRows = new javax.swing.JSpinner();
         spSkipColums = new javax.swing.JSpinner();
+        jPEnableLifetimeDensityMap = new javax.swing.JPanel();
+        cbLifetimeDensityMap = new javax.swing.JCheckBox();
+        jPLifetimeDensityMapSettings = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jFTFTimepoints = new javax.swing.JFormattedTextField();
+        jFTFFrom = new javax.swing.JFormattedTextField();
+        jCBLinLogEnabeled = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jFTFTo = new javax.swing.JFormattedTextField();
+        jFTFLogFrom = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jFTFLinearFraction = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         jRadioButton1.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRadioButton1.text")); // NOI18N
 
@@ -68,7 +90,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.gridheight = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -199,6 +221,138 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(jPSkip, gridBagConstraints);
+
+        jPEnableLifetimeDensityMap.setBackground(new java.awt.Color(223, 223, 223));
+        jPEnableLifetimeDensityMap.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPEnableLifetimeDensityMap.border.title"))); // NOI18N
+        jPEnableLifetimeDensityMap.setLayout(new java.awt.GridBagLayout());
+
+        cbLifetimeDensityMap.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.cbLifetimeDensityMap.text")); // NOI18N
+        cbLifetimeDensityMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLifetimeDensityMapActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        jPEnableLifetimeDensityMap.add(cbLifetimeDensityMap, gridBagConstraints);
+
+        jPLifetimeDensityMapSettings.setEnabled(false);
+
+        jLabel4.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel4.text")); // NOI18N
+
+        jFTFTimepoints.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jFTFTimepoints.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFTimepoints.text")); // NOI18N
+        jFTFTimepoints.setPreferredSize(new java.awt.Dimension(60, 19));
+
+        jFTFFrom.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+        jFTFFrom.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFFrom.text")); // NOI18N
+        jFTFFrom.setPreferredSize(new java.awt.Dimension(60, 19));
+
+        jCBLinLogEnabeled.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jCBLinLogEnabeled.text")); // NOI18N
+        jCBLinLogEnabeled.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBLinLogEnabeledActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel5.text")); // NOI18N
+
+        jLabel6.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel6.text")); // NOI18N
+
+        jFTFTo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+        jFTFTo.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFTo.text")); // NOI18N
+        jFTFTo.setPreferredSize(new java.awt.Dimension(60, 19));
+
+        jFTFLogFrom.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+        jFTFLogFrom.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFLogFrom.text")); // NOI18N
+        jFTFLogFrom.setPreferredSize(new java.awt.Dimension(60, 19));
+
+        jLabel3.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel3.text")); // NOI18N
+
+        jFTFLinearFraction.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jFTFLinearFraction.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFLinearFraction.text")); // NOI18N
+        jFTFLinearFraction.setPreferredSize(new java.awt.Dimension(60, 19));
+
+        jLabel7.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel7.text")); // NOI18N
+
+        javax.swing.GroupLayout jPLifetimeDensityMapSettingsLayout = new javax.swing.GroupLayout(jPLifetimeDensityMapSettings);
+        jPLifetimeDensityMapSettings.setLayout(jPLifetimeDensityMapSettingsLayout);
+        jPLifetimeDensityMapSettingsLayout.setHorizontalGroup(
+            jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
+                        .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jFTFTo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFTFTimepoints, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFTFFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
+                        .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFTFLinearFraction, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCBLinLogEnabeled)
+                            .addComponent(jLabel6)
+                            .addComponent(jFTFLogFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 54, Short.MAX_VALUE))))
+        );
+        jPLifetimeDensityMapSettingsLayout.setVerticalGroup(
+            jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jFTFFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jFTFTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jFTFTimepoints, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jCBLinLogEnabeled)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFTFLogFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jFTFLinearFraction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPEnableLifetimeDensityMap.add(jPLifetimeDensityMapSettings, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 1.0;
+        add(jPEnableLifetimeDensityMap, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbWaveCalbrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbWaveCalbrationActionPerformed
@@ -220,15 +374,41 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bOpenFileActionPerformed
 
+    private void cbLifetimeDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLifetimeDensityMapActionPerformed
+        // TODO add your handling code here:                
+        for (Component comp : jPLifetimeDensityMapSettings.getComponents()) {
+            comp.setVisible(cbLifetimeDensityMap.isSelected());
+        }
+        jPLifetimeDensityMapSettings.updateUI();                
+    }//GEN-LAST:event_cbLifetimeDensityMapActionPerformed
+
+    private void jCBLinLogEnabeledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBLinLogEnabeledActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBLinLogEnabeledActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bOpenFile;
     private javax.swing.JCheckBox cbLabelsInColums;
     private javax.swing.JCheckBox cbLabelsInRows;
+    private javax.swing.JCheckBox cbLifetimeDensityMap;
     private javax.swing.JCheckBox cbWaveCalbration;
     private javax.swing.JCheckBox cbspectraInRows;
+    private javax.swing.JCheckBox jCBLinLogEnabeled;
+    private javax.swing.JFormattedTextField jFTFFrom;
+    private javax.swing.JFormattedTextField jFTFLinearFraction;
+    private javax.swing.JFormattedTextField jFTFLogFrom;
+    private javax.swing.JFormattedTextField jFTFTimepoints;
+    private javax.swing.JFormattedTextField jFTFTo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPEnableLifetimeDensityMap;
+    private javax.swing.JPanel jPLifetimeDensityMapSettings;
     private javax.swing.JPanel jPSkip;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JPanel jpCalibration;
@@ -274,5 +454,40 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     public int getSkipColums() {
         return ((SpinnerNumberModel)spSkipColums.getModel()).getNumber().intValue();
     }
+
+    boolean isLifetimeDensityMap() {
+        return cbLifetimeDensityMap.isSelected();
+    }
+
+    public double getFrom() {
+        return Double.valueOf(jFTFFrom.getText());
+    }
+
+    public double getLinearFraction() {
+        return Double.valueOf(jFTFLinearFraction.getText());
+    }
+
+    public double getLogFrom() {
+        return Double.valueOf(jFTFLogFrom.getText());
+    }
+
+    public int getTimepoints() {
+        Integer jFTFTimepointsValue;
+        try {
+            jFTFTimepointsValue = Integer.valueOf(jFTFTimepoints.toString());
+        } catch (Exception e) {
+            jFTFTimepointsValue = 1000;
+        }
+        return (int) jFTFTimepointsValue;
+    }
+
+    public double getTo() {
+        return Double.valueOf(jFTFTo.getText());
+    }
+
+    public boolean isLinLogEnabeled() {
+        return jCBLinLogEnabeled.isSelected();
+    }
+      
 }
 
