@@ -142,10 +142,11 @@ public class SCVMatrixFile implements TGDatasetInterface {
                      double[] timepoints = dataset.getX();
                      dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
                         for (int j = 0; j < dataset.getNl(); j++) {
-                            for (int k = 0; k < exponents.length; k++) {
-                                for (int i = 0; i < dataset.getNt(); i++) {
-                                   dataset.getPsisim()[j * dataset.getNt() + i] += 
-                                           dataMatrix.getAsDouble(j + 1, k + 1)*Math.exp(-1/Math.exp(exponents[k])*timepoints[i]); 
+                            for (int i = 0; i < dataset.getNt(); i++) {
+                                for (int k = 0; k < exponents.length; k++) {
+                                   double mult = (k==(exponents.length-1)) ? editorPanel.getLastLifetimeMult() : 1;
+                                   dataset.getPsisim()[j * dataset.getNt() + i] = dataset.getPsisim()[j * dataset.getNt() + i] + 
+                                           dataMatrix.getAsDouble(j + 1, k + 1)*Math.exp(-1/(mult*Math.pow(10,exponents[k]))*timepoints[i]); 
                                 }
                                 
                             }
