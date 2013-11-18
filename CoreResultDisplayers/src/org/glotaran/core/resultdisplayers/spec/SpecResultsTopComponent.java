@@ -1524,6 +1524,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             double[] wavenumbers = res.getX2();
                         
 
+            // I think it should be
+            //for (int i = 0; i < fittedTracesMat.getColumnDimension(); i++) {
             for (int i = 0; i < fittedTracesMat.getRowDimension(); i++) {
                 sb.append(wavenumbers[i]);
                 sb.append(",");
