@@ -12,23 +12,23 @@ import org.glotaran.core.models.structures.BaseStructure;
  */
 public class BinHdr1 extends BaseStructure {
 /* The following is binary file header information  beginning*/
-    public int Curves;
-    public int BitsPerRecord;
-    public int RoutingChannels;
-    public int NumberOfBoards;
-    public int ActiveCurve;
-    public int MeasMode;
-    public int SubMode;
-    public int RangeNo;
-    public int Offset;
-    public int Tacq;				// in ms
-    public int StopAt;
-    public int StopOnOvfl;
-    public int Restart;
-    public int DispLinLog;
-    public int DispTimeFrom;		// 1ns steps
-    public int DispTimeTo;
-    public int DispCountsFrom;
-    public int DispCountsTo;
+    public int NumberOfCurves;                       // NumberOfCurves (int32)
+    public int BitsPerRecord;                // BitsPerHistoBin (int32)
+    public int RoutingChannels;              // RoutingChannels (int32)
+    public int NumberOfBoards;               // NumberOfBoards (int32)
+    public int ActiveCurve;                  // ActiveCurve (int32)
+    public int MeasMode;                     // MeasurementMode (int32)
+    public int SubMode;                      // SubMode (int32)
+    public int RangeNo;                      // RangeNo (int32)
+    public int Offset;                       // Offset (int32)
+    public int Tacq;                         // Tacq (int32) Acquisition Time in ms
+    public int StopAt;                       // StopAt (int32)
+    public int StopOnOvfl;                   // StopOnOvfl (int32) Stop on overflow
+    public int Restart;                       // Restart (int32)
+    public int DispLinLog;                   // DispLinLog (int32)
+    public int DispTimeFrom;		      // DispTimeAxisFrom (int32) Time axis from in ns
+    public int DispTimeTo;                   // DispTimeAxisTo (int32) Time axis to in ns
+    public int DispCountsFrom;               // DispCountAxisFrom (int32) Count axis from
+    public int DispCountsTo;                 // DispCountAxisTo (int32) Count axis to
     
 }

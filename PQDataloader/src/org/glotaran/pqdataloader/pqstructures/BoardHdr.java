@@ -12,15 +12,15 @@ import org.glotaran.core.models.structures.BaseStructure;
  */
 public class BoardHdr extends BaseStructure {
     /* The next is a board specific header */
-    public byte[] HardwareIdent = new byte[16];
-    public byte[] HardwareVersion = new byte[8];
-    public int HardwareSerial;
-    public int SyncDivider;
-    public int CFDZeroCross0;
-    public int CFDLevel0;
-    public int CFDZeroCross1;
-    public int CFDLevel1;
-    public float Resolution;
+    public byte[] HardwareIdent = new byte[16];  //Hardware Identifier
+    public byte[] HardwareVersion = new byte[8]; //Hardware Version
+    public int HardwareSerial;                   //HW Serial Number
+    public int SyncDivider;                      //Hardware Identifier
+    public int CFDZeroCross0;                    //CFD 0 ZeroCross (in mV)
+    public int CFDLevel0;                        //CFD 0 Discr (in mV)
+    public int CFDZeroCross1;                    //CFD 1 ZeroCross (in mV)
+    public int CFDLevel1;                        //CFD 1 Discr (in mV)
+    public float Resolution;                     //Resolution (in ns)
 //below is new in format version 2.0
     public int RouterModelCode;
     public int RouterEnabled;

@@ -24,6 +24,8 @@ import org.glotaran.pqdataloader.pqstructures.ParamStruct;
 import org.glotaran.pqdataloader.pqstructures.TTTRHdr;
 import org.glotaran.pqdataloader.pqstructures.TxtHdr;
 import static java.lang.Math.floor;
+import java.nio.ByteBuffer;
+import org.glotaran.pqdataloader.pqstructures.CurveHdr;
 
 /**
  *
@@ -121,14 +123,15 @@ public class PhdFilePQ implements TGDatasetInterface {
 
     
     @Override
-    public FlimImageAbstract loadFlimFile(File file) throws FileNotFoundException {
-        FlimImageAbstract flimImage = new FlimImageAbstract();
+    public DatasetTimp loadFile(File file) throws FileNotFoundException {
+        DatasetTimp dataset = new DatasetTimp();
         ImageInputStream f = new FileImageInputStream(new RandomAccessFile(file, "r"));
         f.setByteOrder(ByteOrder.LITTLE_ENDIAN);
         TxtHdr header = new TxtHdr();
         BinHdr1 binHead1 = new BinHdr1();
         BinHdr2 binHead2 = new BinHdr2();
-        TTTRHdr ttHeader = new TTTRHdr();
+        //TTTRHdr ttHeader = new TTTRHdr();
+        CurveHdr[] curves;
         BoardHdr[] boards;
         CurveMapping[] dispCurves = new CurveMapping[8];
         ParamStruct[] params = new ParamStruct[3];
@@ -147,144 +150,47 @@ public class PhdFilePQ implements TGDatasetInterface {
             }
             
             binHead2.fread(f);
-//for now number of boards fixed to 1 by PQ            
+            //for now number of boards fixed to 1 by PQ
             boards = new BoardHdr[binHead1.NumberOfBoards];
             for (int i = 0; i < binHead1.NumberOfBoards; i++){
                 boards[i] = new BoardHdr();
                 boards[i].fread(f);
             }
-            ttHeader.fread(f);
-            long temp;
-            long[] imageHead = new long[ttHeader.ImgHdrSize]; 
-//image related info (still has to be verified what is there, number 6 and 7 looks like is an image size)            
-            for(int i = 0; i < ttHeader.ImgHdrSize; i++){ 
-                imageHead[i] = f.readUnsignedInt();
-            } 
-            flimImage.setX((int)imageHead[6]);
-            flimImage.setY((int)imageHead[7]);
-            flimImage.setCurveNum((int)imageHead[6]*(int)imageHead[7]);
-            flimImage.setCannelN((short)4096);
-            flimImage.setTime(4096*boards[0].Resolution);
-            flimImage.setData(new int[flimImage.getCurveNum()*4096]);
-           
-                       
-            syncPeriod = 1E9/ttHeader.CntRate0;
-//loading photon events            
-            long tmpCh, tmpdTime, tmpSnk;
-            long oflCount = 0;
-            int marker=0;
-            int lineInd = -1;
-            int rowInd = -1;
-            long lineStartTime = 0, lineEndTime = 0, lineTime;
-            
-            long photStart = f.getStreamPosition();
-//get line scan time
-            boolean lineMarker = false;
-            while (!lineMarker){
-                temp = f.readUnsignedInt();
-                tmpCh = (temp >>> 28)& 0xf; //4 bits
-                tmpdTime = (temp >>>16) & 0xfff; //12 bits
-                tmpSnk = temp  & 0xffff; //16 bits
-                
-                if ((tmpCh==15)&&(tmpdTime==0)){
-                    oflCount++;
-                    continue;
-                } 
-                
-                if ((tmpCh==15)&&(tmpdTime>0)){
-                    //its a marker    
-                    //start of the line
-                    if (tmpdTime == 1) {
-                        // calculate start of the line time
-                        lineStartTime = (oflCount*65536) + tmpSnk;
-                        lineMarker = true;
+
+            if (binHead1.MeasMode == 0 && binHead1.BitsPerRecord == 32) {
+                curves = new CurveHdr[binHead1.NumberOfCurves];
+                int totalChannels = 0, maxChannels = 0;
+                for (int i = 0; i < binHead1.NumberOfCurves; i++) {
+                    curves[i] = new CurveHdr();
+                    curves[i].fread(f);
+                    //f.readLong();
+                    if (curves[i].SubMode == 2) { //2 means TRES
+                        totalChannels += curves[i].Channels;
+                        maxChannels = Math.max(curves[i].Channels, maxChannels);
                     }
                 }
+
+                dataset.setDatasetName(file.getName());
+                dataset.setNl(binHead1.NumberOfCurves - 1);
+                dataset.setNt(maxChannels);
+                dataset.setType("spec");
+                //The 0the curve (if measured) is always the IRF in a TRES measurement
+                dataset.setPsisim(new double[maxChannels * (binHead1.NumberOfCurves - 1)]); //perhaps change totalChannels to totalBins if data is set to be read in binned
+                dataset.setX(new double[dataset.getNt()]); //timepoints
+                dataset.setX2(new double[dataset.getNl()]); //wavelengths
+                for (int i = 1; i < binHead1.NumberOfCurves; i++) { //skip IRF (curve=0)
+                    f.seek(curves[i].DataOffset);
+                    for (int j = 0; j < curves[i].Channels; j++) {                        
+                        dataset.getPsisim()[j + (i - 1) * maxChannels] = f.readUnsignedInt();
+                        dataset.getX()[j] = curves[i].Resolution * j;
+                    }
+                    dataset.getX2()[i - 1] = (double) curves[i].P1;
+
+                }
+
+                dataset.calcRangeInt();
             }
-            lineMarker = false;
-            while (!lineMarker){
-                temp = f.readUnsignedInt();
-                tmpCh = (temp >>> 28)& 0xf; //4 bits
-                tmpdTime = (temp >>>16) & 0xfff; //12 bits
-                tmpSnk = temp  & 0xffff; //16 bits
-                
-                if ((tmpCh==15)&&(tmpdTime==0)){
-                    oflCount++;
-                    continue;
-                } 
-                
-                if ((tmpCh==15)&&(tmpdTime>0)){
-                    //its a marker    
-                    //start of the line
-                    if (tmpdTime == 2) {
-                        // calculate start of the line time
-                        lineEndTime = (oflCount*65536) + tmpSnk;
-                        lineMarker = true;
-                    }
-                }
-            }
-            lineTime = lineEndTime - lineStartTime;
-            
-            f.seek(photStart);
-            lineMarker = false;
-            for (long i = 0; i < ttHeader.Records; i++){
-                
-                temp = f.readUnsignedInt();
-//                temp = 2975487644l;                
-//                tmpCh = temp & 0xf0000000;
-//                tmpStSt = temp & 0xfff0000;
-//                tmpSnk = temp & 0xffff;
-                
-                tmpCh = (temp >>> 28)& 0xf; //4 bits
-                tmpdTime = (temp >>>16) & 0xfff; //12 bits
-                tmpSnk = temp  & 0xffff; //16 bits
-                
-                if ((tmpCh==15)&&(tmpdTime==0)){
-                    //owerflow marker
-                    oflCount++;
-                    continue;
-                } 
-                
-                if ((tmpCh==15)&&(tmpdTime>0)){
-                    //its a marker    
-                    //start of the line
-                    if (tmpdTime == 1) {
-                        if ((lineInd ==-1)||(lineInd == flimImage.getY())) {
-                            lineInd = 0;
-                        }
-                        // calculate start of the line time
-                        lineStartTime = (oflCount*65536) + tmpSnk;
-                        lineMarker = true;
-                    }
-                    //end of the line 
-                    if (tmpdTime == 2) { 
-                        lineInd++;
-                        lineMarker = false;
-                    }
-                    //end of frame
-                    if (tmpdTime == 6) {
-                        lineInd = -1;
-                        lineMarker = false;
-                    }
-                    continue;
-                }
-                
-                // photon analysis
-                if ((lineInd!=-1)&&lineMarker){
-                    // obtain row index
-                    rowInd = (int) floor((((float)((oflCount*65536) + tmpSnk-lineStartTime)/lineTime))*flimImage.getX()); 
-                    //add photon in the histogram
-                    flimImage.incrementDataPoint((lineInd*flimImage.getX()+rowInd)*flimImage.getCannelN()+(int)tmpdTime); //;getData()[(lineInd*flimImage.getX()+rowInd)*flimImage.getCannelN()+(int)tmpdTime]++; 
-                }
-                                
-                
-                
-                
-                
-            }
-            //f.seek(f.getStreamPosition()+ttHeader.ImgHdrSize);
-            
-            
+                                  
         } catch (IOException ex) {
             Logger.getLogger(PhdFilePQ.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -294,14 +200,13 @@ public class PhdFilePQ implements TGDatasetInterface {
         }
         
     
-        return flimImage;
+        return dataset;
     }
   
     
-@Override
-    public DatasetTimp loadFile(File file) throws FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    @Override
+    public FlimImageAbstract loadFlimFile(File file) throws FileNotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
-

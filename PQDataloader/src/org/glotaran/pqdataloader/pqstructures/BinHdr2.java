@@ -12,9 +12,9 @@ import org.glotaran.core.models.structures.BaseStructure;
  */
 public class BinHdr2 extends BaseStructure {
 /* The following is binary file header information  end*/
-    public int RepeatMode;
-    public int RepeatsPerCurve;
-    public int RepeatTime;
-    public int RepeatWaitTime;
-    public byte[] ScriptName = new byte[20];
+    public int RepeatMode;                  //RepeatMode (int32)
+    public int RepeatsPerCurve;             // RepeatsPerCurve (int32)
+    public int RepeatTime;                  // RepeatTime (int32)
+    public int RepeatWaitTime;              // RepeatTime (int32)
+    public byte[] ScriptName = new byte[20]; // ScriptName (char[20])
 }
