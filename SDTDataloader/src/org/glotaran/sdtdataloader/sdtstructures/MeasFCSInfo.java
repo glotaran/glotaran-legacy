@@ -10,6 +10,9 @@ import org.glotaran.core.models.structures.BaseStructure;
  */
 public class MeasFCSInfo extends BaseStructure {
 
+    // please note that where long is written here, a 32 bit unsigned int is meant
+    // in BaseStructure an exception is made for this
+
     public short chan;               // routing channel number   unsigned
     public char fcs_decay_calc;     // bit 0 = 1 - decay curve calculated   unsigned short
     // bit 1 = 1 - fcs   curve calculated

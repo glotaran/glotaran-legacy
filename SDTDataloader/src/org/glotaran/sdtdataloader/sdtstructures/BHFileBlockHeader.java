@@ -8,6 +8,8 @@ import org.glotaran.core.models.structures.BaseStructure;
  */
 public class BHFileBlockHeader extends BaseStructure {
 
+    // please note that where long is written here, a 32 bit unsigned int is meant
+    // in BaseStructure an exception is made for this
     public short block_no;              // number of the block in the file
     // valid only  when in 0 .. 0x7ffe range, otherwise use lblock_no field
     // obsolete now, lblock_no contains full block no information

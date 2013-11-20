@@ -275,7 +275,7 @@ public class FlimImageBH implements TGDatasetInterface {
 
     @Override
     public String getFilterString() {
-        return ".sdt Backer&Hickl FLIM Image";
+        return ".sdt Becker & Hickl FLIM Image";
     }
 
     @Override

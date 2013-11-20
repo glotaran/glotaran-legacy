@@ -14,6 +14,9 @@ import javax.imageio.stream.ImageInputStream;
 
 public class FileHeader extends BaseStructure {
 
+    // please note that where long is written here, a 32 bit unsigned int is meant
+    // in BaseStructure an exception is made for this
+
     public short revision;  // software revision number  (lower 4 bits >= 10(decimal))
     public long info_offs; // offset of the info part which contains general text
     // information (Title, date, time, contents etc.)
