@@ -13,7 +13,7 @@ import org.glotaran.core.models.structures.BaseStructure;
 public class CurveHdr extends BaseStructure {
     /* The next is a board specific header */
     public int CurveIndex;                      //Curve Index
-    public short TimeOfRecording;                 //uint!!! TimeOfRecording(i)/24/60/60+25569+693960;
+    public int TimeOfRecording;                 //uint! (32 bit) TimeOfRecording(i)/24/60/60+25569+693960;
     public byte[] HardwareIdent = new byte[16];  //Hardware Identifier
     public byte[] HardwareVersion = new byte[8]; //Hardware Version
     public int HardwareSerial;                  //HW Serial Number
