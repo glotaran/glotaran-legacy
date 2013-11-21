@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.glotaran.core.main.common;
 
 import java.math.BigDecimal;
@@ -20,23 +19,25 @@ import static java.lang.Math.abs;
 
 /**
  * Common functions to work with datasets
+ *
  * @author Sergey
  */
 public class CommonActionFunctions {
 
     /**
-     * Average several datasets 
-     * @param datasets list of the datasets (DatasetTimp) to be averaged 
-     * @return DatasetTimp - averaged dataset 
+     * Average several datasets
+     *
+     * @param datasets list of the datasets (DatasetTimp) to be averaged
+     * @return DatasetTimp - averaged dataset
      */
-    public static DatasetTimp averageSpecDatasets(ArrayList<DatasetTimp> datasets){
+    public static DatasetTimp averageSpecDatasets(ArrayList<DatasetTimp> datasets) {
         DatasetTimp newDataset;
         boolean differentX;
         boolean differentX2;
-        for (int i = 1; i < datasets.size(); i++){
-            differentX = Arrays.equals((datasets.get(0).getX()),(datasets.get(i).getX()));
-            differentX2 = Arrays.equals((datasets.get(0).getX2()),(datasets.get(i).getX2()));
-            if (!(differentX&&differentX2)){
+        for (int i = 1; i < datasets.size(); i++) {
+            differentX = Arrays.equals((datasets.get(0).getX()), (datasets.get(i).getX()));
+            differentX2 = Arrays.equals((datasets.get(0).getX2()), (datasets.get(i).getX2()));
+            if (!(differentX && differentX2)) {
                 return null;
             }
         }
@@ -48,189 +49,197 @@ public class CommonActionFunctions {
         newDataset.setX(datasets.get(0).getX().clone());
         newDataset.setX2(datasets.get(0).getX2().clone());
         newDataset.setPsisim(datasets.get(0).getPsisim().clone());
-        for (int j = 0; j < newDataset.getPsisim().length; j++){
-            for (int i = 1; i < datasets.size(); i++){
-                newDataset.getPsisim()[j]+=datasets.get(i).getPsisim()[j];
+        for (int j = 0; j < newDataset.getPsisim().length; j++) {
+            for (int i = 1; i < datasets.size(); i++) {
+                newDataset.getPsisim()[j] += datasets.get(i).getPsisim()[j];
             }
-            newDataset.getPsisim()[j]/=datasets.size();
+            newDataset.getPsisim()[j] /= datasets.size();
         }
         newDataset.calcRangeInt();
         newDataset.setType("spec");
         return newDataset;
     }
-    
+
     /**
-     * Resampling or averaging Dataset
-     * Resample just samples points (take for ex 1 out of every 4 points for instance) 
-     * thus reducing the total number of points without affecting the resolution too much, 
-     * Averaging sums them up and divides by the total number of points
-     * @param dataset DatasetTimp: to be averaged 
-     * @param average boolean: true - average / false - resample 
-     * @param xWin average/resample for X dimension (waves) 
-     * @param yWin average/resample for Y dimension (time) 
+     * Resampling or averaging Dataset Resample just samples points (take for ex
+     * 1 out of every 4 points for instance) thus reducing the total number of
+     * points without affecting the resolution too much, Averaging sums them up
+     * and divides by the total number of points
+     *
+     * @param dataset DatasetTimp: to be averaged
+     * @param average boolean: true - average / false - resample
+     * @param xWin average/resample for X dimension (waves)
+     * @param yWin average/resample for Y dimension (time)
      * @return DatasetTimp : resulted dataset
      */
-    public static DatasetTimp resampleDataset(DatasetTimp dataset, boolean average, int xWin, int yWin){
+    public static DatasetTimp resampleDataset(DatasetTimp dataset, boolean average, int xWin, int yWin) {
         int newHeight = dataset.getNt();
         int newWidth = dataset.getNl();
         double[] temp;
 
-        if (xWin!=0){
+        if (xWin != 0) {
 // work with x dimension
 //            newWidth = (int)ceil((double)dataset.getNl()/xWin);
 //because  dataset.getNl() and  xWin - integers > 0 we cn use next code and use integers without casting to double othre wise previous lin eshould be used 
-            newWidth = (dataset.getNl() + xWin - 1)/xWin;
+            newWidth = (dataset.getNl() + xWin - 1) / xWin;
             temp = new double[newWidth * newHeight];
 
             for (int i = 0; i < newHeight; i++) {
-                for (int j = 0; j < newWidth-1; j++) {
-                    if (average){
-                        for (int k = 0; k < xWin; k++){
-                            temp[i + j * newHeight]+= dataset.getPsisim()[i + (j*xWin+k) * newHeight];
+                for (int j = 0; j < newWidth - 1; j++) {
+                    if (average) {
+                        for (int k = 0; k < xWin; k++) {
+                            temp[i + j * newHeight] += dataset.getPsisim()[i + (j * xWin + k) * newHeight];
                         }
-                        temp[i + j * newHeight]/=xWin;
+                        temp[i + j * newHeight] /= xWin;
                     } else {
                         temp[i + j * newHeight] = dataset.getPsisim()[i + (j * xWin) * newHeight];
                     }
                 }
-                if (average){
-                    for (int k = (newWidth-1)*xWin; k < dataset.getNl(); k++){
-                        temp[i + (newWidth-1) * newHeight]+= dataset.getPsisim()[i + k * newHeight];
+                if (average) {
+                    for (int k = (newWidth - 1) * xWin; k < dataset.getNl(); k++) {
+                        temp[i + (newWidth - 1) * newHeight] += dataset.getPsisim()[i + k * newHeight];
                     }
-                        temp[i + (newWidth-1) * newHeight]/=(dataset.getNl()-(newWidth-1)*xWin);
+                    temp[i + (newWidth - 1) * newHeight] /= (dataset.getNl() - (newWidth - 1) * xWin);
                 } else {
-                        temp[i + (newWidth-1) * newHeight] = dataset.getPsisim()[i + (dataset.getNl()-1) * newHeight];
+                    temp[i + (newWidth - 1) * newHeight] = dataset.getPsisim()[i + (dataset.getNl() - 1) * newHeight];
                 }
             }
             dataset.setPsisim(temp);
             temp = new double[newWidth];
 
 //update x2 steps
-            for (int j = 0; j < newWidth-1; j++) {
-                if (average){
-                    for (int k = 0; k < xWin; k++){
-                        temp[j]+= dataset.getX2()[j * xWin + k];
+            for (int j = 0; j < newWidth - 1; j++) {
+                if (average) {
+                    for (int k = 0; k < xWin; k++) {
+                        temp[j] += dataset.getX2()[j * xWin + k];
                     }
-                    temp[j]/= xWin;
+                    temp[j] /= xWin;
                 } else {
-                    temp[j] = dataset.getX2()[j * xWin];    
+                    temp[j] = dataset.getX2()[j * xWin];
                 }
             }
-            if (average){
-                for (int k = (newWidth-1)*xWin; k < dataset.getNl(); k++ ){
-                    temp[newWidth-1] +=dataset.getX2()[k];
+            if (average) {
+                for (int k = (newWidth - 1) * xWin; k < dataset.getNl(); k++) {
+                    temp[newWidth - 1] += dataset.getX2()[k];
                 }
-                temp[newWidth-1]/=(dataset.getNl()-(newWidth-1)*xWin);
+                temp[newWidth - 1] /= (dataset.getNl() - (newWidth - 1) * xWin);
             } else {
-                temp[newWidth-1] = dataset.getX2()[dataset.getNl()-1];
+                temp[newWidth - 1] = dataset.getX2()[dataset.getNl() - 1];
             }
             dataset.setX2(temp);
             dataset.setNl(newWidth);
         }
 
 
-        if (yWin!=0){
+        if (yWin != 0) {
 // work with y dimension      
 //            newHeight = (int)ceil((double)dataset.getNt()/yWin);
 //because  dataset.getNt() and  yWin - integers > 0 we cn use next code and use integers without casting to double othre wise previous lin eshould be used 
-            newHeight = (dataset.getNt() + yWin - 1)/yWin;
+            newHeight = (dataset.getNt() + yWin - 1) / yWin;
             temp = new double[newWidth * newHeight];
 
             for (int i = 0; i < newWidth; i++) {
-                for (int j = 0; j < newHeight-1; j++) {
-                    if (average){
-                        for (int k = 0; k < yWin; k++){
-                            temp[i*newHeight + j]+= dataset.getPsisim()[i * dataset.getNt() + j*yWin + k];
+                for (int j = 0; j < newHeight - 1; j++) {
+                    if (average) {
+                        for (int k = 0; k < yWin; k++) {
+                            temp[i * newHeight + j] += dataset.getPsisim()[i * dataset.getNt() + j * yWin + k];
                         }
-                        temp[i*newHeight + j]/=yWin;
+                        temp[i * newHeight + j] /= yWin;
                     } else {
-                        temp[i*newHeight + j] = dataset.getPsisim()[i * dataset.getNt() + j*yWin];
+                        temp[i * newHeight + j] = dataset.getPsisim()[i * dataset.getNt() + j * yWin];
                     }
                 }
-                if (average){
-                    for (int k = (newHeight-1)*yWin; k < dataset.getNt(); k++){
-                        temp[(i+1)*newHeight-1]+= dataset.getPsisim()[i*dataset.getNt() + k];
+                if (average) {
+                    for (int k = (newHeight - 1) * yWin; k < dataset.getNt(); k++) {
+                        temp[(i + 1) * newHeight - 1] += dataset.getPsisim()[i * dataset.getNt() + k];
                     }
-                        temp[(i+1)*newHeight-1]/=(dataset.getNt()-(newHeight-1)*yWin);
+                    temp[(i + 1) * newHeight - 1] /= (dataset.getNt() - (newHeight - 1) * yWin);
                 } else {
-                        temp[(i+1)*newHeight-1] = dataset.getPsisim()[(i+1)*dataset.getNt() -1];
+                    temp[(i + 1) * newHeight - 1] = dataset.getPsisim()[(i + 1) * dataset.getNt() - 1];
                 }
             }
             dataset.setPsisim(temp);
             temp = new double[newHeight];
 
 //update x steps
-            for (int j = 0; j < newHeight-1; j++) {
-                if (average){
-                    for (int k = 0; k < yWin; k++){
-                        temp[j]+= dataset.getX()[j * yWin + k];
+            for (int j = 0; j < newHeight - 1; j++) {
+                if (average) {
+                    for (int k = 0; k < yWin; k++) {
+                        temp[j] += dataset.getX()[j * yWin + k];
                     }
-                    temp[j]/= yWin;
+                    temp[j] /= yWin;
                 } else {
                     temp[j] = dataset.getX()[j * yWin];
                 }
             }
-            if (average){
-                for (int k = (newHeight-1)*yWin; k < dataset.getNt(); k++ ){
-                    temp[newHeight-1] +=dataset.getX()[k];
+            if (average) {
+                for (int k = (newHeight - 1) * yWin; k < dataset.getNt(); k++) {
+                    temp[newHeight - 1] += dataset.getX()[k];
                 }
-                temp[newHeight-1]/=(dataset.getNt()-(newHeight-1)*yWin);
+                temp[newHeight - 1] /= (dataset.getNt() - (newHeight - 1) * yWin);
             } else {
-                temp[newHeight-1] = dataset.getX()[dataset.getNt()-1];
+                temp[newHeight - 1] = dataset.getX()[dataset.getNt() - 1];
             }
             dataset.setX(temp);
             dataset.setNt(newHeight);
         }
-        
+
         dataset.calcRangeInt();
         return dataset;
     }
 
     /**
-     * Select part of the dataset 
-     * @param dataset DatasetTimp source dataset 
+     * Select part of the dataset
+     *
+     * @param dataset DatasetTimp source dataset
      * @param minX double start selecting from (in actual values) wavelengths
      * @param maxX double end selecting at (in actual values) wavelengths
      * @param minY double start selecting from (in actual values) time
      * @param maxY double end selecting at (in actual values) time
      * @return DatasetTimp sub-dataset
      */
-    public static DatasetTimp selectInDataset(DatasetTimp dataset, double minX, double maxX, double minY, double maxY){
+    public static DatasetTimp selectInDataset(DatasetTimp dataset, double minX, double maxX, double minY, double maxY) {
         double[] temp;
-        if (minX!=0&&maxX!=0){
-            int indMixX=findWaveIndex(dataset, minX);
-            int indMaxX=findWaveIndex(dataset, maxX);
-            temp = new double[dataset.getNt()*(indMaxX-indMixX)] ;
-            for(int i = 0; i <dataset.getNt(); i++){
-                for(int j = 0; j < (indMaxX-indMixX); j++){
-                    temp[j*dataset.getNt()+i] = dataset.getPsisim()[(j+indMixX)*dataset.getNt()+i];
-                }
-            }
-            dataset.setPsisim(temp);
-            temp = new double[indMaxX-indMixX];
-            for (int i = 0; i<indMaxX-indMixX ; i++){
-                temp[i] = dataset.getX2()[i+indMixX];
-            }
-            dataset.setX2(temp);
-            dataset.setNl(indMaxX-indMixX);
+        boolean reversedAxis = dataset.getX2()[0] > dataset.getX2()[1];
+        if (!(minX == 0 && maxX == 0)) {
+            int indMixX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? maxX : (!reversedAxis && (minX > maxX) ? maxX : minX), false);
+            int indMaxX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? minX : (!reversedAxis && (minX > maxX) ? minX : maxX), true);
+            if (indMixX != -1 && indMaxX != -1) {
+                if (!(indMixX == 0 && indMaxX == (dataset.getX2().length - 1))) {
+                    temp = new double[dataset.getNt() * (1 + indMaxX - indMixX)];
+                    for (int i = 0; i < dataset.getNt(); i++) {
+                        for (int j = 0; j < (1 + indMaxX - indMixX); j++) {
+                            temp[j * dataset.getNt() + i] = dataset.getPsisim()[(j + indMixX) * dataset.getNt() + i];
+                        }
+                    }
+                    dataset.setPsisim(temp);
+                    temp = new double[1 + indMaxX - indMixX];
+                    for (int i = 0; i < (1 + indMaxX - indMixX); i++) {
+                        temp[i] = dataset.getX2()[i + indMixX];
+                    }
+                    dataset.setX2(temp);
+                    dataset.setNl(1 + indMaxX - indMixX);
+                } //else nothing to do
+            } // else no valid x range specified
+            // TODO: relaunch dialog or issue warning message
         }
-        
-        if (minY!=0&&maxY!=0){
-            int indMixY=findTimeIndex(dataset, minY);
-            int indMaxY=findTimeIndex(dataset, maxY);
-            temp = new double[dataset.getNl()*(indMaxY-indMixY)];
-            for (int j = 0; j < dataset.getNl(); j++){
-                for (int i = 0; i<(indMaxY-indMixY); i++){
-                    temp[j*(indMaxY-indMixY)+i] = dataset.getPsisim()[j*dataset.getNt()+i+indMixY];
+
+        if (!(minY == 0 && maxY == 0)) {
+            int indMixY = findTimeIndex(dataset, minY);
+            int indMaxY = findTimeIndex(dataset, maxY);
+            temp = new double[dataset.getNl() * (indMaxY - indMixY)];
+            for (int j = 0; j < dataset.getNl(); j++) {
+                for (int i = 0; i < (indMaxY - indMixY); i++) {
+                    temp[j * (indMaxY - indMixY) + i] = dataset.getPsisim()[j * dataset.getNt() + i + indMixY];
                 }
             }
             dataset.setPsisim(temp);
-            temp = new double[indMaxY-indMixY];
-            for (int i = 0; i<indMaxY-indMixY ; i++){
-                temp[i] = dataset.getX()[i+indMixY];
+            temp = new double[indMaxY - indMixY];
+            for (int i = 0; i < indMaxY - indMixY; i++) {
+                temp[i] = dataset.getX()[i + indMixY];
             }
             dataset.setX(temp);
-            dataset.setNt(indMaxY-indMixY);
+            dataset.setNt(indMaxY - indMixY);
         }
         dataset.calcRangeInt();
         return dataset;
@@ -238,8 +247,10 @@ public class CommonActionFunctions {
 
     /**
      * BG Corrections. Corrections done on source dataset.
+     *
      * @param dataset DatasetTimp : Source dataset;
-     * @param params BaseLineCorrectionParameters : parameters for BG corrections;
+     * @param params BaseLineCorrectionParameters : parameters for BG
+     * corrections;
      * @return DatasetTimp
      */
     public static DatasetTimp baselineCorrection(DatasetTimp dataset, BaseLineCorrectionParameters params) {
@@ -272,8 +283,8 @@ public class CommonActionFunctions {
                     int dim1From, dim1To, dim2From, dim2To;
                     dim1From = CommonActionFunctions.findTimeIndex(dataset, params.getBgRegConstD1()[0]);
                     dim1To = CommonActionFunctions.findTimeIndex(dataset, params.getBgRegConstD1()[1]);
-                    dim2From = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[0]);
-                    dim2To = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[1]);
+                    dim2From = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[0], false);
+                    dim2To = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[1], true);
                     double s = 0;
                     for (int i = dim1From; i < dim1To; i++) {
                         for (int j = dim2From; j < dim2To; j++) {
@@ -291,8 +302,8 @@ public class CommonActionFunctions {
 //subtract time trace 
         if (params.isTimetraceBG()) {
             int indFrom, indTo;
-            indFrom = CommonActionFunctions.findWaveIndex(dataset, params.getTimeTrBg()[0]);
-            indTo = CommonActionFunctions.findWaveIndex(dataset, params.getTimeTrBg()[1]);
+            indFrom = CommonActionFunctions.findWaveIndex(dataset, params.getTimeTrBg()[0], false);
+            indTo = CommonActionFunctions.findWaveIndex(dataset, params.getTimeTrBg()[1], true);
             bgSpec = new double[dataset.getNt()];
 
             for (int i = 0; i < dataset.getNt(); i++) {
@@ -314,7 +325,7 @@ public class CommonActionFunctions {
 //        if (params.isMeasuredBG()) {
 //            
 //        }
-        
+
 
 
 
@@ -322,10 +333,12 @@ public class CommonActionFunctions {
     }
 
     /**
-     * Correct for outliers. Corrections done on the source dataset 
+     * Correct for outliers. Corrections done on the source dataset
+     *
      * @param dataset DatasetTimp : source dataset
      * @param size int : size of the scanning window
-     * @param fence double : multiplication factor for acceptance fence 0.75*fence 
+     * @param fence double : multiplication factor for acceptance fence
+     * 0.75*fence
      * @return int : number of outliers;
      */
     public static int outliersCorrection(DatasetTimp dataset, int size, double fence) {
@@ -460,14 +473,16 @@ public class CommonActionFunctions {
     }
 
     /**
-     * Correct for total intensity, source dataset should have vector for corrections, corrections done on source dataset.
+     * Correct for total intensity, source dataset should have vector for
+     * corrections, corrections done on source dataset.
+     *
      * @param dataset DatasetTimp: source dataset
      * @return DatasetTimp : corrected dataset
      */
-    public static DatasetTimp totalIntencityCorrection(DatasetTimp dataset){
+    public static DatasetTimp totalIntencityCorrection(DatasetTimp dataset) {
         for (int j = 0; j < dataset.getNl(); j++) {
             for (int i = 0; i < dataset.getNt(); i++) {
-                dataset.getPsisim()[j * dataset.getNt() + i] = dataset.getPsisim()[j * dataset.getNt() + i] / (dataset.getIntenceIm()[i]/dataset.getIntenceIm()[0]);
+                dataset.getPsisim()[j * dataset.getNt() + i] = dataset.getPsisim()[j * dataset.getNt() + i] / (dataset.getIntenceIm()[i] / dataset.getIntenceIm()[0]);
             }
         }
         dataset.calcRangeInt();
@@ -475,9 +490,12 @@ public class CommonActionFunctions {
     }
 
     /**
-     * Convert transmission data to absorption, corrections done on source dataset. 
+     * Convert transmission data to absorption, corrections done on source
+     * dataset.
+     *
      * @param dataset DatasetTimp : source dataset
-     * @param baseLineNum int : number of spectra in the beginning of the image to use as baseline.
+     * @param baseLineNum int : number of spectra in the beginning of the image
+     * to use as baseline.
      * @return DatasetTimp
      */
     public static DatasetTimp convertToAbsorption(DatasetTimp dataset, int baseLineNum) {
@@ -505,12 +523,14 @@ public class CommonActionFunctions {
     }
 
     /**
-     * Export dataset to disc. 
+     * Export dataset to disc.
+     *
      * @param dataset DatasetTimp : dataset to be exported;
      * @param fileName String : destination file
-     * @param format String : type of export TIMP, CSV (coma separated with labels), Plain(tab separated with labels) 
+     * @param format String : type of export TIMP, CSV (coma separated with
+     * labels), Plain(tab separated with labels)
      */
-    public static void exportSpecDatasets(DatasetTimp dataset, String fileName, String format){
+    public static void exportSpecDatasets(DatasetTimp dataset, String fileName, String format) {
         BufferedWriter f = null;
         if (format.equals("TIMP")) {
             try {
@@ -591,25 +611,25 @@ public class CommonActionFunctions {
         if (format.equals("CSV")) {
             try {
                 try {
-                f = new BufferedWriter(new FileWriter(fileName));
-                f.append("0.0");
-                f.append(",");
-                for (int i = 0; i < dataset.getNt(); i++) {
-                    f.append(String.valueOf(dataset.getX()[i]));
+                    f = new BufferedWriter(new FileWriter(fileName));
+                    f.append("0.0");
                     f.append(",");
-                }
-                for (int i = 0; i < dataset.getNl(); i++) {
-                    f.append(String.valueOf(dataset.getX2()[i]));
-                    f.append(",");
-                    for (int j = 0; j < dataset.getNt(); j++) {
-                        f.append(String.valueOf(dataset.getPsisim()[i * dataset.getNt() + j]));
+                    for (int i = 0; i < dataset.getNt(); i++) {
+                        f.append(String.valueOf(dataset.getX()[i]));
                         f.append(",");
                     }
-                    f.newLine();
-                }
-                f.flush();
+                    for (int i = 0; i < dataset.getNl(); i++) {
+                        f.append(String.valueOf(dataset.getX2()[i]));
+                        f.append(",");
+                        for (int j = 0; j < dataset.getNt(); j++) {
+                            f.append(String.valueOf(dataset.getPsisim()[i * dataset.getNt() + j]));
+                            f.append(",");
+                        }
+                        f.newLine();
+                    }
+                    f.flush();
                 } finally {
-                    if (f!= null) {
+                    if (f != null) {
                         f.close();
                     }
                 }
@@ -621,26 +641,26 @@ public class CommonActionFunctions {
         if (format.equals("Plain")) {
             try {
                 try {
-                f = new BufferedWriter(new FileWriter(fileName));
-                f.append("0.0");
-                f.append("\t");
-                for (int i = 0; i < dataset.getNt(); i++) {
-                    f.append(String.valueOf(dataset.getX()[i]));
+                    f = new BufferedWriter(new FileWriter(fileName));
+                    f.append("0.0");
                     f.append("\t");
-                }
-                for (int i = 0; i < dataset.getNl(); i++) {
-                    f.append(String.valueOf(dataset.getX2()[i]));
-                    f.append("\t");
-                    for (int j = 0; j < dataset.getNt(); j++) {
-                        f.append(String.valueOf(dataset.getPsisim()[i * dataset.getNt() + j]));
+                    for (int i = 0; i < dataset.getNt(); i++) {
+                        f.append(String.valueOf(dataset.getX()[i]));
                         f.append("\t");
                     }
-                    f.newLine();
-                }
-                f.flush();
-                
+                    for (int i = 0; i < dataset.getNl(); i++) {
+                        f.append(String.valueOf(dataset.getX2()[i]));
+                        f.append("\t");
+                        for (int j = 0; j < dataset.getNt(); j++) {
+                            f.append(String.valueOf(dataset.getPsisim()[i * dataset.getNt() + j]));
+                            f.append("\t");
+                        }
+                        f.newLine();
+                    }
+                    f.flush();
+
                 } finally {
-                   if (f!= null) {
+                    if (f != null) {
                         f.close();
                     }
                 }
@@ -652,79 +672,69 @@ public class CommonActionFunctions {
 
     /**
      * Calculate median
-     * @param values ArrayList : source data  
+     *
+     * @param values ArrayList : source data
      * @return double : medial value
      */
-    public static double median(ArrayList values){
+    public static double median(ArrayList values) {
         Collections.sort(values);
         if (values.size() % 2 == 1) {
-            return (Double)values.get((values.size() + 1) / 2 - 1);
+            return (Double) values.get((values.size() + 1) / 2 - 1);
         } else {
-            double lower = (Double)values.get(values.size() / 2 - 1);
-            double upper = (Double)values.get(values.size() / 2);
+            double lower = (Double) values.get(values.size() / 2 - 1);
+            double upper = (Double) values.get(values.size() / 2);
             return (lower + upper) / 2.0;
         }
     }
 
     /**
-     * Calculate quantile 
-     * @param values ArrayList : source data  
-     * @param probability double : probability for quantile calculation 
+     * Calculate quantile
+     *
+     * @param values ArrayList : source data
+     * @param probability double : probability for quantile calculation
      * @return double
      */
-    public static double quantile(ArrayList values, double probability){
+    public static double quantile(ArrayList values, double probability) {
         Collections.sort(values);
         double pos;
         pos = probability * (values.size() + 1);
-        if (pos == floor(pos)){
-            return (Double)values.get((int)pos - 1);
-        }
-        else{
-            return probability*((Double)values.get((int)(floor(pos - 1))) + (Double)values.get((int)(floor(pos))));
+        if (pos == floor(pos)) {
+            return (Double) values.get((int) pos - 1);
+        } else {
+            return probability * ((Double) values.get((int) (floor(pos - 1))) + (Double) values.get((int) (floor(pos))));
         }
     }
 
     /**
      * Find index for wave Dataset;
+     *
      * @param dataset DatasetTimp : source dataset
-     * @param wave double : value 
-     * @return int : index of wave
+     * @param wave double : value
+     * @param runReverse boolean : indicates whether the function should start
+     * at last index rather than 0
+     * @return int : index of wave, or -1 if wave is outside of the valid range
      */
-    public static int findWaveIndex(DatasetTimp dataset, double wave) {
-        int index = 0;
-        if (dataset.getX2()[0] < dataset.getX2()[1]) {
-            //wavelengths
-            if (wave < dataset.getX2()[0]) {
-                return 0;
-            } else {
-                while (wave > dataset.getX2()[index]) {
-                    index++;
-                    if(index >= dataset.getX2().length) {
-                        return dataset.getX2().length-1;
-                    }
-                }
-                return index-1;
-            }
+    public static int findWaveIndex(DatasetTimp dataset, double wave, boolean runReverse) {
+        boolean isReversedAxis = dataset.getX2()[0] > dataset.getX2()[1];
+        int index = runReverse ? (dataset.getX2().length - 1) : 0;
+        if ((runReverse ^ isReversedAxis) ? (dataset.getX2()[index] < wave) : (dataset.getX2()[index] > wave)) {
+            return index;
         } else {
-            //wavenambers
-            if (wave > dataset.getX2()[0]) {
-                return 0;
-            } else {
-                while (wave < dataset.getX2()[index]) {
-                    index++;
-                    if(index >= dataset.getX2().length) {
-                        return dataset.getX2().length-1;
-                    }
+            while ((runReverse ^ isReversedAxis) ? (dataset.getX2()[index] > wave) : (dataset.getX2()[index] < wave)) {
+                index = runReverse ? (index - 1) : (index + 1);
+                if (index < 0 || index >= dataset.getX2().length) {
+                    return -1;
                 }
-                return index-1;
             }
+            return index;
         }
     }
 
     /**
-     * Find index for time step in  Dataset;
+     * Find index for time step in Dataset;
+     *
      * @param dataset DatasetTimp : source dataset
-     * @param time double : value 
+     * @param time double : value
      * @return int : index of time;
      */
     public static int findTimeIndex(DatasetTimp dataset, double time) {
@@ -738,7 +748,7 @@ public class CommonActionFunctions {
                     return dataset.getX().length - 1;
                 }
             }
-            return index-1;
+            return index - 1;
         }
     }
 }

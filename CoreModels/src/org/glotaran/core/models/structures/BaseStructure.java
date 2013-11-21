@@ -18,7 +18,7 @@ abstract public class BaseStructure {
 //            System.out.println(f.getStreamPosition());
             Field fl = fields[i];
             Class t = fl.getType();
-            if (t.equals(long.class)) {
+            if (t.equals(long.class)) { //temporary workaround; more permanent solution would be to define a base structure for every binary data type
                 if (getClass().getName().substring(0, 41).compareTo("org.glotaran.sdtdataloader.sdtstructures.") == 0) {
                     fl.set(this, f.readUnsignedInt()); //technically incorrect, in Java a long should be 8 bytes whereas readUnsignedInt() only reads 4 bytes
                 } else {

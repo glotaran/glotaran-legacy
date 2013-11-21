@@ -1180,7 +1180,10 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             data = CommonActionFunctions.selectInDataset(data, selectDataDialogPanel.getDim1From(), selectDataDialogPanel.getDim1To(), selectDataDialogPanel.getDim2From(), selectDataDialogPanel.getDim2To());
             jSColum.setValue(0);
             jSRow.setValue(0);
-            MakeImageChart(MakeXYZDataset());
+            if (data.getNt()==1||data.getNl()==1) {
+            } else {
+                MakeImageChart(MakeXYZDataset());
+            }
             updateFileInfo();
             this.repaint();
         }
@@ -1776,7 +1779,10 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             XYPlot plot2 = (XYPlot) this.subchartWaveTrace.getPlot();
             lowInd = (int) (this.lastXRange.getLowerBound());
             upInd = (int) (this.lastXRange.getUpperBound() - 1);
-            plot2.getDomainAxis().setRange(new Range(data.getX2()[lowInd],data.getX2()[upInd]));
+            double lowIndValue = data.getX2()[lowInd];
+            double upIndValue = data.getX2()[upInd];
+            Range domainAxisRange = lowIndValue > upIndValue ? (new Range(upIndValue, lowIndValue)) : (new Range(lowIndValue, upIndValue));
+            plot2.getDomainAxis().setRange(domainAxisRange);
             jSColum.setMinimum(lowInd);
             jSColum.setMaximum(upInd);
 
@@ -2022,7 +2028,10 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jTAInfo.append(tempString);
         tempString = "Nuber of wave steps: " + String.valueOf(data.getNl()) + "\n";
         jTAInfo.append(tempString);
-        tempString = "Wave step: " + String.valueOf(data.getX2()[1] - data.getX2()[0]) + "\n";
+
+        tempString = "Wave step: " + ((data.getX2().length > 1) ? String.valueOf(data.getX2()[1] - data.getX2()[0]) + "\n" : "0");
+
+
         jTAInfo.append(tempString);
 
         jTFMaxIntence.setText(String.valueOf(data.getMaxInt()));
