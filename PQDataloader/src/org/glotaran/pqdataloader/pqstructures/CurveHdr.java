@@ -32,10 +32,10 @@ public class CurveHdr extends BaseStructure {
     public float P3;                     //
     public int RangeNo;                           //
     public float Resolution;                     //CFD 1 Discr (in mV) //Resolution (in ns)
-    public int Channels;                           //
-    public int Tacq;                           //Acquisition Time (ms)
-    public int StopAfter;                           //
-    public int StopReason;                           //
+    public int Channels;                           //number of channels, typically 65536
+    public int Tacq;                                 //Acquisition Time (ms)
+    public int StopAfter;                           // Stop after this many ms
+    public int StopReason;                           //0=timeover, 1=manual, 2=overflow
     public int InpRate0;                           //
     public int InpRate1;                           //
     public int HistCountRate;                           //

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.core.models.structures.FlimImageAbstract;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -35,7 +36,7 @@ public class ASCIIImage implements TGDatasetInterface {
             loadedString = sc.nextLine();
             loadedString = sc.nextLine();
             if (loadedString.contains("\t")) { //check for tabs instead of spaces
-            loadedString = loadedString.trim().replaceAll("\t", " ");
+                loadedString = loadedString.trim().replaceAll("\t", " ");
             }
             if (loadedString.trim().equalsIgnoreCase("Time explicit") | loadedString.trim().equalsIgnoreCase("Wavelength explicit")) {
                 return "spec";
@@ -52,20 +53,26 @@ public class ASCIIImage implements TGDatasetInterface {
         }
     }
 
+    @Override
     public boolean Validator(File file) throws FileNotFoundException, IOException, IllegalAccessException, InstantiationException {
-        String loadedString;
-        Scanner sc = new Scanner(file);
-        if (sc.hasNextLine()) { //workaround for binary img file
-            loadedString = sc.nextLine();
-            loadedString = sc.nextLine();
-            loadedString = sc.nextLine();
-            if (loadedString.contains("\t")) { //check for tabs instead of spaces
-            loadedString = loadedString.trim().replaceAll("\t", " ");
-            }
-            if (loadedString.trim().equalsIgnoreCase("Time explicit")
-                    | loadedString.trim().equalsIgnoreCase("Wavelength explicit")
-                    | loadedString.trim().equalsIgnoreCase("FLIM image")) {
-                return true;
+        String ext = FileUtil.getExtension(file.getName());
+        if (ext.equalsIgnoreCase(getExtention())) {
+            String loadedString;
+            Scanner sc = new Scanner(file);
+            if (sc.hasNextLine()) { //workaround for binary img file
+                loadedString = sc.nextLine();
+                loadedString = sc.nextLine();
+                loadedString = sc.nextLine();
+                if (loadedString.contains("\t")) { //check for tabs instead of spaces
+                    loadedString = loadedString.trim().replaceAll("\t", " ");
+                }
+                if (loadedString.trim().equalsIgnoreCase("Time explicit")
+                        | loadedString.trim().equalsIgnoreCase("Wavelength explicit")
+                        | loadedString.trim().equalsIgnoreCase("FLIM image")) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -97,7 +104,7 @@ public class ASCIIImage implements TGDatasetInterface {
         loadedString = sc.nextLine();
         if (loadedString.contains("\t")) { //check for tabs instead of spaces
             loadedString = loadedString.trim().replaceAll("\t", " ");
-            }
+        }
         if (loadedString.trim().equalsIgnoreCase("Time explicit")) {
             sc.skip(Pattern.compile(" *Intervalnr", Pattern.CASE_INSENSITIVE));
             nt = sc.nextInt();
@@ -107,7 +114,7 @@ public class ASCIIImage implements TGDatasetInterface {
                 x[i] = Double.parseDouble(sc.next());
             }
             dataset.setX(x);
-            int lc =0;
+            int lc = 0;
             while (sc.hasNext() && (!sc.hasNext(Pattern.compile(" *Integrated", Pattern.CASE_INSENSITIVE)))) {
                 try {
                     x2Vector.addElement(Double.parseDouble(sc.next()));
@@ -116,7 +123,7 @@ public class ASCIIImage implements TGDatasetInterface {
                         row.addElement(Double.parseDouble(sc.next()));
                     }
                 } catch (java.lang.NumberFormatException e) {
-                    if (x2Vector.size()>=lc) {
+                    if (x2Vector.size() >= lc) {
                         x2Vector.remove(x2Vector.size() - 1);
                         row.removeAllElements();
                     }
@@ -144,11 +151,12 @@ public class ASCIIImage implements TGDatasetInterface {
             }
             x2 = new double[nl];
             psisim = new double[nt * nl];
-            boolean invertedWaves = x2Vector.get(0)<x2Vector.get(1) ? false : true; 
+            boolean invertedWaves = x2Vector.get(0) < x2Vector.get(1) ? false : true;
+            invertedWaves = false;
             for (int j = 0; j < nl; j++) {
                 for (int i = 0; i < nt; i++) {
-                    if (invertedWaves){
-                        psisim[(nl-j-1) * nt + i] = (Double) psisimVector.elementAt(j * nt + i);
+                    if (invertedWaves) {
+                        psisim[(nl - j - 1) * nt + i] = (Double) psisimVector.elementAt(j * nt + i);
                     } else {
                         psisim[j * nt + i] = (Double) psisimVector.elementAt(j * nt + i);
                     }
@@ -159,8 +167,8 @@ public class ASCIIImage implements TGDatasetInterface {
                         minInt = psisim[j * nt + i];
                     }
                 }
-                if (invertedWaves){
-                    x2[nl-j-1] = (Double) x2Vector.elementAt(j);
+                if (invertedWaves) {
+                    x2[nl - j - 1] = (Double) x2Vector.elementAt(j);
                 } else {
                     x2[j] = (Double) x2Vector.elementAt(j);
                 }
@@ -178,11 +186,12 @@ public class ASCIIImage implements TGDatasetInterface {
                 for (int i = 0; i < nl; i++) {
                     x2[i] = Double.parseDouble(sc.next());
                 }
-                boolean invertedWaves = x2[0]<x2[1] ? false : true; 
-                if (invertedWaves){
+                boolean invertedWaves = x2[0] < x2[1] ? false : true;
+                invertedWaves = false;
+                if (invertedWaves) {
                     double[] x2t = new double[nl];
-                    for (int i = 0; i < nl; i ++){ 
-                        x2t[nl-i-1] = x2[i];
+                    for (int i = 0; i < nl; i++) {
+                        x2t[nl - i - 1] = x2[i];
                     }
                     dataset.setX2(x2t);
                 } else {
@@ -212,8 +221,8 @@ public class ASCIIImage implements TGDatasetInterface {
                 psisim = new double[nt * nl];
                 for (int j = 0; j < nt; j++) {
                     for (int i = 0; i < nl; i++) {
-                        if (invertedWaves){
-                            psisim[(nl-i-1) * nt + j] = (Double) psisimVector.elementAt(j * nl + i);
+                        if (invertedWaves) {
+                            psisim[(nl - i - 1) * nt + j] = (Double) psisimVector.elementAt(j * nl + i);
                         } else {
                             psisim[i * nt + j] = (Double) psisimVector.elementAt(j * nl + i);
                         }

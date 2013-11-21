@@ -26,15 +26,15 @@ import org.glotaran.pqdataloader.pqstructures.TxtHdr;
 import static java.lang.Math.floor;
 import java.nio.ByteBuffer;
 import org.glotaran.pqdataloader.pqstructures.CurveHdr;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
  * @author Sergey
  */
 //@ServiceProvider(service=org.glotaran.core.interfaces.TGDatasetInterface.class)
-
 public class PhdFilePQ implements TGDatasetInterface {
-   
+
     @Override
     public String getExtention() {
         return "phd";
@@ -52,76 +52,80 @@ public class PhdFilePQ implements TGDatasetInterface {
 
     @Override
     public boolean Validator(File file) throws FileNotFoundException, IOException, IllegalAccessException, InstantiationException {
-        ImageInputStream f = new FileImageInputStream(new RandomAccessFile(file, "r"));
-        f.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-        TxtHdr header = new TxtHdr();
-        BinHdr1 binHead1 = new BinHdr1();
-        BinHdr2 binHead2 = new BinHdr2();
-        TTTRHdr ttHeader = new TTTRHdr();
-        BoardHdr[] boards;
-        CurveMapping[] dispCurves = new CurveMapping[8];
-        ParamStruct[] params = new ParamStruct[3];
-        header.fread(f);
-        
+        String ext = FileUtil.getExtension(file.getName());
+        if (ext.equalsIgnoreCase(getExtention())) {
+            ImageInputStream f = new FileImageInputStream(new RandomAccessFile(file, "r"));
+            f.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+            TxtHdr header = new TxtHdr();
+            BinHdr1 binHead1 = new BinHdr1();
+            BinHdr2 binHead2 = new BinHdr2();
+            TTTRHdr ttHeader = new TTTRHdr();
+            BoardHdr[] boards;
+            CurveMapping[] dispCurves = new CurveMapping[8];
+            ParamStruct[] params = new ParamStruct[3];
+            header.fread(f);
 
 
-        String temp = new String(header.Ident); 
-                
-        if (temp.trim().equalsIgnoreCase("PicoHarp 300")) {
-            temp = new String(header.FormatVersion);
-            if (temp.trim().equalsIgnoreCase("2.0")) {
-                binHead1.fread(f);
-                if (binHead1.MeasMode == 0) {
-                    for (int i = 0; i < 8; i++) {
-                        dispCurves[i] = new CurveMapping();
-                        dispCurves[i].fread(f);
-                    }
-                    for (int i = 0; i < 3; i++) {
-                        params[i] = new ParamStruct();
-                        params[i].fread(f);
-                    }
-                    binHead2.fread(f);
+
+            String temp = new String(header.Ident);
+
+            if (temp.trim().equalsIgnoreCase("PicoHarp 300")) {
+                temp = new String(header.FormatVersion);
+                if (temp.trim().equalsIgnoreCase("2.0")) {
+                    binHead1.fread(f);
+                    if (binHead1.MeasMode == 0) {
+                        for (int i = 0; i < 8; i++) {
+                            dispCurves[i] = new CurveMapping();
+                            dispCurves[i].fread(f);
+                        }
+                        for (int i = 0; i < 3; i++) {
+                            params[i] = new ParamStruct();
+                            params[i].fread(f);
+                        }
+                        binHead2.fread(f);
 //for now number of boards fixed to 1 by PQ            
-                    boards = new BoardHdr[binHead1.NumberOfBoards];
-                    for (int i = 0; i < binHead1.NumberOfBoards; i++) {
-                        boards[i] = new BoardHdr();
-                        boards[i].fread(f);
-                    }
-                    ttHeader.fread(f);
-                    if (ttHeader.ImgHdrSize > 0) {
-                        return true;
-                    } else {
+                        boards = new BoardHdr[binHead1.NumberOfBoards];
+                        for (int i = 0; i < binHead1.NumberOfBoards; i++) {
+                            boards[i] = new BoardHdr();
+                            boards[i].fread(f);
+                        }
+                        ttHeader.fread(f);
+                        if (ttHeader.ImgHdrSize > 0) {
+                            return true;
+                        } else {
 //                        NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
 //                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("noImage"),
 //                                NotifyDescriptor.ERROR_MESSAGE);
 //                        DialogDisplayer.getDefault().notify(errorMessage);
-                        return false;
-                    }
+                            return false;
+                        }
 
-                } else {
+                    } else {
 //                    NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
 //                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("wrongMeasMode"),
 //                                NotifyDescriptor.ERROR_MESSAGE);    
 //                    DialogDisplayer.getDefault().notify(errorMessage);
+                        return false;
+                    }
+                } else {
+//                NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
+//                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("wrongFileVersion"),
+//                                NotifyDescriptor.ERROR_MESSAGE);    
+//                DialogDisplayer.getDefault().notify(errorMessage);
                     return false;
                 }
             } else {
-//                NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
-//                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("wrongFileVersion"),
+//            NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
+//                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("wrongFileType"),
 //                                NotifyDescriptor.ERROR_MESSAGE);    
 //                DialogDisplayer.getDefault().notify(errorMessage);
                 return false;
             }
         } else {
-//            NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
-//                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("wrongFileType"),
-//                                NotifyDescriptor.ERROR_MESSAGE);    
-//                DialogDisplayer.getDefault().notify(errorMessage);
             return false;
         }
     }
 
-    
     @Override
     public DatasetTimp loadFile(File file) throws FileNotFoundException {
         DatasetTimp dataset = new DatasetTimp();
@@ -139,20 +143,20 @@ public class PhdFilePQ implements TGDatasetInterface {
         try {
             header.fread(f);
             binHead1.fread(f);
-            
-            for (int i =0; i<8; i++){
+
+            for (int i = 0; i < 8; i++) {
                 dispCurves[i] = new CurveMapping();
                 dispCurves[i].fread(f);
             }
-            for (int i =0; i<3; i++){
+            for (int i = 0; i < 3; i++) {
                 params[i] = new ParamStruct();
                 params[i].fread(f);
             }
-            
+
             binHead2.fread(f);
             //for now number of boards fixed to 1 by PQ
             boards = new BoardHdr[binHead1.NumberOfBoards];
-            for (int i = 0; i < binHead1.NumberOfBoards; i++){
+            for (int i = 0; i < binHead1.NumberOfBoards; i++) {
                 boards[i] = new BoardHdr();
                 boards[i].fread(f);
             }
@@ -180,7 +184,7 @@ public class PhdFilePQ implements TGDatasetInterface {
                 dataset.setX2(new double[dataset.getNl()]); //wavelengths
                 for (int i = 1; i < binHead1.NumberOfCurves; i++) { //skip IRF (curve=0)
                     f.seek(curves[i].DataOffset);
-                    for (int j = 0; j < curves[i].Channels; j++) {                        
+                    for (int j = 0; j < curves[i].Channels; j++) {
                         dataset.getPsisim()[j + (i - 1) * maxChannels] = f.readUnsignedInt();
                         dataset.getX()[j] = curves[i].Resolution * j;
                     }
@@ -190,7 +194,7 @@ public class PhdFilePQ implements TGDatasetInterface {
 
                 dataset.calcRangeInt();
             }
-                                  
+
         } catch (IOException ex) {
             Logger.getLogger(PhdFilePQ.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -198,15 +202,13 @@ public class PhdFilePQ implements TGDatasetInterface {
         } catch (InstantiationException ex) {
             Logger.getLogger(PhdFilePQ.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    
+
+
         return dataset;
     }
-  
-    
+
     @Override
     public FlimImageAbstract loadFlimFile(File file) throws FileNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

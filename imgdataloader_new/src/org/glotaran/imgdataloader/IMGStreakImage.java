@@ -14,6 +14,7 @@ import javax.imageio.stream.ImageInputStream;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.core.models.structures.FlimImageAbstract;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -38,19 +39,24 @@ public class IMGStreakImage implements TGDatasetInterface {
 
     @Override
     public boolean Validator(File file) throws FileNotFoundException, IOException, IllegalAccessException, InstantiationException {
-        char symb;
-        ImageInputStream f = new FileImageInputStream(new RandomAccessFile(file, "r"));
-        f.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-        symb = (char) f.readByte();
-        if (symb == 'I') {
+        String ext = FileUtil.getExtension(file.getName());
+        if (ext.equalsIgnoreCase(getExtention())) {
+            char symb;
+            ImageInputStream f = new FileImageInputStream(new RandomAccessFile(file, "r"));
+            f.setByteOrder(ByteOrder.LITTLE_ENDIAN);
             symb = (char) f.readByte();
-            if (symb == 'M') {
-                f.close();
-                return true;
+            if (symb == 'I') {
+                symb = (char) f.readByte();
+                if (symb == 'M') {
+                    f.close();
+                    return true;
+                }
             }
+            f.close();
+            return false;
+        } else {
+            return false;
         }
-        f.close();
-        return false;
     }
 
     @Override
@@ -154,20 +160,20 @@ public class IMGStreakImage implements TGDatasetInterface {
 //----------------
 
         strImage.calcRangeInt();
-        boolean invertedWaves = strImage.getX2()[0]<strImage.getX2()[1] ? false : true;
+        boolean invertedWaves = strImage.getX2()[0] < strImage.getX2()[1] ? false : true;
         if (invertedWaves) {
             double[] x2t = new double[strImage.getNl()];
-            double[] temp = new double[strImage.getNl()*strImage.getNt()];
+            double[] temp = new double[strImage.getNl() * strImage.getNt()];
             for (int j = 0; j < strImage.getNl(); j++) {
                 for (int i = 0; i < strImage.getNt(); i++) {
-                    temp[(strImage.getNl() -1 - j) * strImage.getNt() + i] = strImage.getPsisim()[j * strImage.getNt() + i];
+                    temp[(strImage.getNl() - 1 - j) * strImage.getNt() + i] = strImage.getPsisim()[j * strImage.getNt() + i];
                 }
                 x2t[strImage.getNl() - j - 1] = strImage.getX2()[j];
             }
             strImage.setX2(x2t);
             strImage.setPsisim(temp);
         }
-        
+
         return strImage;
     }
 
