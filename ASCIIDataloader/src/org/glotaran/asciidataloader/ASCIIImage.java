@@ -151,8 +151,7 @@ public class ASCIIImage implements TGDatasetInterface {
             }
             x2 = new double[nl];
             psisim = new double[nt * nl];
-            boolean invertedWaves = x2Vector.get(0) < x2Vector.get(1) ? false : true;
-            invertedWaves = false;
+            boolean invertedWaves = x2Vector.get(0) < x2Vector.get(1) ? false : true;            
             for (int j = 0; j < nl; j++) {
                 for (int i = 0; i < nt; i++) {
                     if (invertedWaves) {
@@ -186,8 +185,7 @@ public class ASCIIImage implements TGDatasetInterface {
                 for (int i = 0; i < nl; i++) {
                     x2[i] = Double.parseDouble(sc.next());
                 }
-                boolean invertedWaves = x2[0] < x2[1] ? false : true;
-                invertedWaves = false;
+                boolean invertedWaves = x2[0] < x2[1] ? false : true;                
                 if (invertedWaves) {
                     double[] x2t = new double[nl];
                     for (int i = 0; i < nl; i++) {
