@@ -202,46 +202,50 @@ public class CommonActionFunctions {
         double[] temp;
         boolean reversedAxis = dataset.getX2()[0] > dataset.getX2()[1];
         if (!(minX == 0 && maxX == 0)) {
-            int indMixX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? maxX : (!reversedAxis && (minX > maxX) ? maxX : minX), false);
+            int indMinX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? maxX : (!reversedAxis && (minX > maxX) ? maxX : minX), false);
             int indMaxX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? minX : (!reversedAxis && (minX > maxX) ? minX : maxX), true);
-            if (indMixX != -1 && indMaxX != -1) {
-                if (!(indMixX == 0 && indMaxX == (dataset.getX2().length - 1))) {
-                    temp = new double[dataset.getNt() * (1 + indMaxX - indMixX)];
+            if (indMinX != -1 && indMaxX != -1) {
+                if (!(indMinX == 0 && indMaxX == (dataset.getX2().length - 1))) {
+                    temp = new double[dataset.getNt() * (1 + indMaxX - indMinX)];
                     for (int i = 0; i < dataset.getNt(); i++) {
-                        for (int j = 0; j < (1 + indMaxX - indMixX); j++) {
-                            temp[j * dataset.getNt() + i] = dataset.getPsisim()[(j + indMixX) * dataset.getNt() + i];
+                        for (int j = 0; j < (1 + indMaxX - indMinX); j++) {
+                            temp[j * dataset.getNt() + i] = dataset.getPsisim()[(j + indMinX) * dataset.getNt() + i];
                         }
                     }
                     dataset.setPsisim(temp);
-                    temp = new double[1 + indMaxX - indMixX];
-                    for (int i = 0; i < (1 + indMaxX - indMixX); i++) {
-                        temp[i] = dataset.getX2()[i + indMixX];
+                    temp = new double[1 + indMaxX - indMinX];
+                    for (int i = 0; i < (1 + indMaxX - indMinX); i++) {
+                        temp[i] = dataset.getX2()[i + indMinX];
                     }
                     dataset.setX2(temp);
-                    dataset.setNl(1 + indMaxX - indMixX);
+                    dataset.setNl(1 + indMaxX - indMinX);
+                    dataset.calcRangeInt();
                 } //else nothing to do
             } // else no valid x range specified
-            // TODO: relaunch dialog or issue warning message
+            // TODO: relaunch dialog or issue warning message            
         }
 
         if (!(minY == 0 && maxY == 0)) {
-            int indMixY = findTimeIndex(dataset, minY);
+
+            int indMinY = findTimeIndex(dataset, minY);
             int indMaxY = findTimeIndex(dataset, maxY);
-            temp = new double[dataset.getNl() * (indMaxY - indMixY)];
-            for (int j = 0; j < dataset.getNl(); j++) {
-                for (int i = 0; i < (indMaxY - indMixY); i++) {
-                    temp[j * (indMaxY - indMixY) + i] = dataset.getPsisim()[j * dataset.getNt() + i + indMixY];
+            if (!(indMinY == 0 && indMaxY == (dataset.getX().length - 1))) {
+                temp = new double[dataset.getNl() * (1 + indMaxY - indMinY)];
+                for (int j = 0; j < dataset.getNl(); j++) {
+                    for (int i = 0; i < (1 + indMaxY - indMinY); i++) {
+                        temp[j * (1 + indMaxY - indMinY) + i] = dataset.getPsisim()[j * dataset.getNt() + i + indMinY];
+                    }
                 }
-            }
-            dataset.setPsisim(temp);
-            temp = new double[indMaxY - indMixY];
-            for (int i = 0; i < indMaxY - indMixY; i++) {
-                temp[i] = dataset.getX()[i + indMixY];
-            }
-            dataset.setX(temp);
-            dataset.setNt(indMaxY - indMixY);
+                dataset.setPsisim(temp);
+                temp = new double[1 + indMaxY - indMinY];
+                for (int i = 0; i < (1 + indMaxY - indMinY); i++) {
+                    temp[i] = dataset.getX()[i + indMinY];
+                }
+                dataset.setX(temp);
+                dataset.setNt(1 + indMaxY - indMinY);
+                dataset.calcRangeInt();
+            }            
         }
-        dataset.calcRangeInt();
         return dataset;
     }
 
@@ -742,7 +746,7 @@ public class CommonActionFunctions {
         if (time < dataset.getX()[0]) {
             return 0;
         } else {
-            while (time > dataset.getX()[index]) {
+            while (time >= dataset.getX()[index]) {
                 index++;
                 if (index >= dataset.getX().length) {
                     return dataset.getX().length - 1;
