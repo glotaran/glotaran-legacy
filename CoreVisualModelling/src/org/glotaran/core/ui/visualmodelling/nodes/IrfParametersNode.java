@@ -28,8 +28,9 @@ public class IrfParametersNode extends PropertiesAbstractNode {
     private EnumTypes.IRFTypes irfTypeProperty = EnumTypes.IRFTypes.GAUSSIAN;
     private Boolean backSweep = false;
     private Double sweepPeriod = null;
+    private Integer multiGaussNum = 1;
     IrfparPanelModel irfparPanel;
-    private String[] propNames = new String[]{"Name", "Type", "Use backsweep", "Sweep period", "Measured IRF"};
+    private String[] propNames = new String[]{"Name", "Type", "Use backsweep", "Sweep period", "Measured IRF", "Extra gaussians"};
 
     public IrfParametersNode(PropertyChangeListener listn) {
         super("IRFPar", new IrfParametersKeys(2));
@@ -82,6 +83,15 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         firePropertyChange("SetBackSweep", null, backSweep);
     }
 
+    public Integer getMultiGaussNum(){
+        return multiGaussNum;
+        
+    }
+    
+    public void setMultiGaussNum(Integer multiGaussNum){
+        this.multiGaussNum = multiGaussNum;
+    }
+    
     public Double getSweepPeriod() {
         return sweepPeriod;
     }
@@ -165,6 +175,14 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             }
             addStreackProp();
         }
+        
+        if (irfType.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)){
+//add handling of multiple gaussian propetries and subnodes             
+            
+            
+            addMultipleGaussianProperties();
+        }
+        
         if (irfType.equals(EnumTypes.IRFTypes.MEASURED_IRF)) {
             childColection.setMeasuredIrf();
             if (backSweep) {
@@ -184,6 +202,16 @@ public class IrfParametersNode extends PropertiesAbstractNode {
 
     public EnumTypes.IRFTypes getIRFType() {
         return irfTypeProperty;
+    }
+
+    private void addMultipleGaussianProperties(){
+        try {
+            Property<Integer> extraGaussNumber = new PropertySupport.Reflection<Integer>(this, Integer.class, "multiGaussNum");
+            extraGaussNumber.setName(propNames[5]);
+            getSheet().get(Sheet.PROPERTIES).put(extraGaussNumber);
+        } catch (NoSuchMethodException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 
     private void addStreackProp() {
@@ -206,8 +234,8 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         }
     }
 
-    private void addMeasuredIrfProp() {
-        PropertySupport.Reflection measuredIRF = null;
+    private void addMeasuredIrfProp() { //it should not be here, will be moved to lower level. 
+        PropertySupport.Reflection measuredIRF;
         try {
             measuredIRF = new PropertySupport.Reflection(this, TgmDataObject.class, "getTgmDataObject", null);
             measuredIRF.setPropertyEditorClass(MeasuredIRFPropertyEditor.class);

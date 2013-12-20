@@ -55,8 +55,8 @@ public class EnumTypes {
 
     public enum IRFTypes {
 
-        GAUSSIAN, DOUBLE_GAUSSIAN, MEASURED_IRF;
-        private String[] strNames = new String[]{"Gaussian", "Double Gaussian", "Measured IRF"};
+        GAUSSIAN, DOUBLE_GAUSSIAN, MULTIPLE_GAUSSIAN, MEASURED_IRF, ;
+        private String[] strNames = new String[]{"Gaussian", "Double Gaussian", "Multiple Gaussian", "Measured IRF"};
 
         @Override
         public String toString() {
@@ -65,8 +65,10 @@ public class EnumTypes {
                     return strNames[0];
                 case DOUBLE_GAUSSIAN:
                     return strNames[1];
-                case MEASURED_IRF:
+                case MULTIPLE_GAUSSIAN:
                     return strNames[2];
+                case MEASURED_IRF:
+                    return strNames[3];
                 default:
                     return strNames[0];
             }
@@ -84,7 +86,9 @@ public class EnumTypes {
                     return GAUSSIAN;
                 case 1:
                     return DOUBLE_GAUSSIAN;
-                case 2:
+                case 2: 
+                    return MULTIPLE_GAUSSIAN;
+                case 3:
                     return MEASURED_IRF;
                 default:
                     return GAUSSIAN;
