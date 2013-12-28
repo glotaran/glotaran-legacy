@@ -51,6 +51,7 @@
             <xsd:element name="partaufixed" type="xsd:boolean" default="false" nillable="true"></xsd:element>
             <xsd:element name="lamda" type="xsd:double" nillable="true"></xsd:element>
             <xsd:element name="irf" type="xsd:double" maxOccurs="unbounded" default="0" nillable="true"></xsd:element>
+            <xsd:element name="irftype" type="xsd:string" nillable="true"></xsd:element>
             <xsd:element name="fixed" type="xsd:boolean" default="false" maxOccurs="unbounded" nillable="true"/>
             <xsd:element name="backsweepEnabled" type="xsd:boolean" nillable="true" default="false"/>
             <xsd:element name="backsweepPeriod" type="xsd:double" nillable="true"/>

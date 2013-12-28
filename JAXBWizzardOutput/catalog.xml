@@ -6,4 +6,5 @@
     <system systemId="file:/home/src/Glotaran/glotaran~trunk/factory/trunk/JAXBWizzardOutput/src/org/glotaran/core/models/gta/GlobalAndTargetAnalysisSchema.xsd" uri="xml-resources/jaxb/GtaBinding/GlobalAndTargetAnalysisSchema.xsd"/>
     <system systemId="file:/C:/Users/Joris/Documents/NetBeansProjects/glotaran~trunk/trunk/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
     <system systemId="file:/home/src/Glotaran/glotaran~trunk/factory/trunk/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
+    <system systemId="file:/home/jsg210/src/Glotaran/Glotaran1.3/glotaran~glotaran-1-3/JAXBWizzardOutput/src/org/glotaran/core/models/tgm/TgmSchema.xsd" uri="xml-resources/jaxb/TgmBinding/TgmSchema.xsd"/>
 </catalog>
