@@ -160,6 +160,7 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             } else {
                 childColection.removeParams(currCompNum - 2);
             }
+            getSheet().get(Sheet.PROPERTIES).remove(propNames[5]);
             addStreackProp();
         }
         if (irfType.equals(EnumTypes.IRFTypes.DOUBLE_GAUSSIAN)) {
@@ -173,14 +174,19 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             } else {
                 childColection.removeParams(currCompNum - 4);
             }
+            getSheet().get(Sheet.PROPERTIES).remove(propNames[5]);
             addStreackProp();
         }
         
         if (irfType.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)){
-//add handling of multiple gaussian propetries and subnodes             
+//add handling of multiple gaussian propetries and subnodes 
             
-            
+            if (backSweep) {
+                getSheet().get(Sheet.PROPERTIES).remove(propNames[3]);
+            }
+            getSheet().get(Sheet.PROPERTIES).remove(propNames[2]);
             addMultipleGaussianProperties();
+            addStreackProp();
         }
         
         if (irfType.equals(EnumTypes.IRFTypes.MEASURED_IRF)) {

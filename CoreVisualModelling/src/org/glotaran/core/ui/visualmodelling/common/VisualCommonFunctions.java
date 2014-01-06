@@ -549,6 +549,7 @@ public class VisualCommonFunctions {
                     irfModel.getIrf().clear();
                     irfModel.getFixed().clear();
                 }
+                irfModel.setIrftype(irfType.toString());
                 for (int i = 0; i < 2; i++) {
                     irfModel.getIrf().add(
                             ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
@@ -563,7 +564,24 @@ public class VisualCommonFunctions {
                     irfModel.getIrf().clear();
                     irfModel.getFixed().clear();
                 }
+                irfModel.setIrftype(irfType.toString());
                 for (int i = 0; i < 4; i++) {
+                    irfModel.getIrf().add(
+                            ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
+                    irfModel.getFixed().add(
+                            ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());
+                }
+                break;
+            }
+            case MULTIPLE_GAUSSIAN: {
+                irfModel.setMirf(Boolean.FALSE);
+                if (irfModel.getIrf() != null) {
+                    irfModel.getIrf().clear();
+                    irfModel.getFixed().clear();
+                }
+                irfModel.setIrftype(irfType.toString());
+//                int nodeCount = ((IrfParametersNode) evt.getSource()).getChildren().getNodesCount();
+                for (int i = 0; i < 5; i++) {
                     irfModel.getIrf().add(
                             ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
                     irfModel.getFixed().add(
@@ -573,6 +591,7 @@ public class VisualCommonFunctions {
             }
             case MEASURED_IRF: {
                 irfModel.setMirf(Boolean.TRUE);
+                irfModel.setIrftype(irfType.toString());
                 //todo finish measured IRF implementation
                 break;
             }

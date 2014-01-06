@@ -13,7 +13,7 @@ import org.glotaran.core.ui.visualmodelling.nodes.dataobjects.NonLinearParameter
  */
 public class IrfParametersSubNode extends ParametersSubNode {
 
-    private String[] nodeNames = new String[]{"Position", "Width", "Width2", "Ratio"};
+    private String[] nodeNames = new String[]{"Position", "Width", "Width2", "Ratio", "test"};
 
     public IrfParametersSubNode(NonLinearParameter data) {
         super(data);
