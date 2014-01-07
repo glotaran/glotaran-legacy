@@ -6,6 +6,7 @@ package org.glotaran.core.ui.visualmodelling.nodes.dataobjects;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.glotaran.core.ui.visualmodelling.nodes.IrfMeasuredIrfSubNode;
 import org.glotaran.core.ui.visualmodelling.nodes.IrfParametersSubNode;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -49,6 +50,9 @@ public class IrfParametersKeys extends NonLinearParametersKeys {
     protected Node[] createNodes(Object key) {
         if (key.getClass().equals(NonLinearParameter.class)) {
             return new Node[]{new IrfParametersSubNode((NonLinearParameter) key)};
+        }
+        if (key.getClass().equals(MeasuredIrfDO.class)){
+            return new Node[]{new IrfMeasuredIrfSubNode((MeasuredIrfDO) key)};
         }
         return new Node[]{new AbstractNode(Children.LEAF)};
     }

@@ -12,13 +12,12 @@ import java.awt.Component;
 import java.beans.PropertyEditorSupport;
 
 /**
- *
  * @author slapten
  */
 public class MeasuredIRFPropertyEditor extends PropertyEditorSupport {
     @Override
     public String getAsText() {
-        return "MeasuredIRF";
+        return "Measured Irf Dataset";
     }
 
     @Override
@@ -30,7 +29,7 @@ public class MeasuredIRFPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public Component getCustomEditor() {
-        return new MeasuredIrfparPanel((TgmDataObject) getValue());
+        return new MeasuredIrfparPanel((String) getValue());
     }
 
     @Override

@@ -9,6 +9,39 @@ package org.glotaran.core.ui.visualmodelling.common;
  * @author slapten
  */
 public class EnumTypes {
+    public enum ConvolutionTypes {
+        SCATTERCONVOLUTION, REFERENCECONVOLUTION;
+        private String[] strNames = new String[]{"Scatter convolution", "Reference convolution"};
+        
+        @Override
+        public String toString() {
+            switch (this) {
+                case SCATTERCONVOLUTION:
+                    return strNames[0];
+                case REFERENCECONVOLUTION:
+                    return strNames[1];
+                default:
+                    return strNames[0];
+            }
+        }
+        
+        public ConvolutionTypes setFromString(String str){
+            int index = 0;
+            for (int i = 0; i < strNames.length; i++) {
+                if (strNames[i].equalsIgnoreCase(str)) {
+                    index = i;
+                }
+            }
+            switch (index) {
+                case 0:
+                    return SCATTERCONVOLUTION;
+                case 1:
+                    return REFERENCECONVOLUTION;
+                default:
+                    return SCATTERCONVOLUTION;
+            }
+        }
+    };
 
     public enum ConnectionTypes {
 
@@ -51,7 +84,7 @@ public class EnumTypes {
                     return GTADATASETCONTAINER;
             }
         }
-    }
+    };
 
     public enum IRFTypes {
 
@@ -190,6 +223,11 @@ public class EnumTypes {
         if (obj.getClass().equals(CohSpecTypes.class)) {
             return ((CohSpecTypes) obj).strNames;
         }
+        
+        if (obj.getClass().equals(ConvolutionTypes.class)) {
+            return ((ConvolutionTypes) obj).strNames;
+        }
+        
         return new String[]{};
     }
 
@@ -205,6 +243,11 @@ public class EnumTypes {
         if (obj.getClass().equals(CohSpecTypes.class)) {
             return ((CohSpecTypes) obj).values();
         }
+        
+        if (obj.getClass().equals(ConvolutionTypes.class)) {
+            return ((ConvolutionTypes) obj).values();
+        }
+        
         return new String[]{};
     }
 };

@@ -7,7 +7,6 @@ package org.glotaran.core.ui.visualmodelling.nodes.dataobjects;
 import org.glotaran.core.models.tgm.KinPar;
 
 /**
- *
  * @author lsp
  */
 public class NonLinearParameter extends AbstractParameterDO implements Comparable<NonLinearParameter>{
