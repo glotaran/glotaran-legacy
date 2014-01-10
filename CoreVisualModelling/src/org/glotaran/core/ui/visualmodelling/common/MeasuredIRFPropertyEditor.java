@@ -6,8 +6,6 @@
 package org.glotaran.core.ui.visualmodelling.common;
 
 import org.glotaran.tgmeditor.panels.MeasuredIrfparPanel;
-import org.glotaran.tgmfilesupport.TgmDataObject;
-
 import java.awt.Component;
 import java.beans.PropertyEditorSupport;
 

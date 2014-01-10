@@ -149,7 +149,7 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         IrfParametersKeys childColection = (IrfParametersKeys) getChildren();
         int currCompNum = childColection.getNodesCount();
         if (irfType.equals(EnumTypes.IRFTypes.GAUSSIAN)) {
-            if (currCompNum == 1) {
+            if (irfTypeProperty == EnumTypes.IRFTypes.MEASURED_IRF) {
                 childColection.backFromMeasuredIrf();
                 childColection = (IrfParametersKeys) getChildren();
                 currCompNum = childColection.getNodesCount();
@@ -163,7 +163,7 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             addStreackProp();
         }
         if (irfType.equals(EnumTypes.IRFTypes.DOUBLE_GAUSSIAN)) {
-            if (currCompNum == 1) {
+            if (irfTypeProperty == EnumTypes.IRFTypes.MEASURED_IRF) {
                 childColection.backFromMeasuredIrf();
                 childColection = (IrfParametersKeys) getChildren();
                 currCompNum = childColection.getNodesCount();
@@ -178,8 +178,18 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         }
         
         if (irfType.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)){
-//add handling of multiple gaussian propetries and subnodes 
-            
+            if (irfTypeProperty == EnumTypes.IRFTypes.MEASURED_IRF) {
+                childColection.backFromMeasuredIrf();
+                childColection = (IrfParametersKeys) getChildren();
+                currCompNum = childColection.getNodesCount();
+            }
+            if (currCompNum == 2) { 
+                childColection.addDefaultObj(3);
+            }
+            if (currCompNum == 4) {
+                childColection.removeParams(2);
+                childColection.addDefaultObj(3);
+            }
             if (backSweep) {
                 getSheet().get(Sheet.PROPERTIES).remove(propNames[3]);
             }
@@ -187,7 +197,6 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             addMultipleGaussianProperties();
             addStreackProp();
         }
-        
         if (irfType.equals(EnumTypes.IRFTypes.MEASURED_IRF)) {
             childColection.setMeasuredIrf();
             if (backSweep) {
