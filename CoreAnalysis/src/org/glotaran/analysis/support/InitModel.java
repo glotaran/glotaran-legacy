@@ -275,7 +275,17 @@ public class InitModel {
             IrfparPanelModel irfPanel = tgm.getDat().getIrfparPanel();
             int count = 0;
             if (irfPanel.getIrf().size() > 0) {
-                irfStr = "irfpar = ";
+                if (irfPanel.getIrf().size()==2){
+                        irfStr =  "irffun = \"gaus\",";
+                } else {
+                    if (irfPanel.getIrf().size()==4){
+                        irfStr =  "irffun = \"doublegaus\",";
+                    } else {
+                        irfStr =  "irffun = \"multiplegaus\",";
+                    }
+                }
+                    
+                irfStr = irfStr + "irfpar = ";
                 for (int i = 0; i < irfPanel.getIrf().size(); i++) {
                     if (count > 0) {
                         irfStr = irfStr + ",";
