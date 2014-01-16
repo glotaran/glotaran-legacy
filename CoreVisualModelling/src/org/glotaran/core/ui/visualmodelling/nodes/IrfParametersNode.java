@@ -9,7 +9,6 @@ import java.beans.PropertyChangeListener;
 import org.glotaran.core.models.tgm.IrfparPanelModel;
 import org.glotaran.core.ui.visualmodelling.common.EnumPropertyEditor;
 import org.glotaran.core.ui.visualmodelling.common.EnumTypes;
-import org.glotaran.core.ui.visualmodelling.common.MeasuredIRFPropertyEditor;
 import org.glotaran.core.ui.visualmodelling.nodes.dataobjects.IrfParametersKeys;
 import org.glotaran.tgmfilesupport.TgmDataObject;
 import org.openide.nodes.PropertySupport;
@@ -50,12 +49,20 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         if (irfparPanel.isMirf() != null) {
             if (irfparPanel.isMirf()) {
                 setIRFType(EnumTypes.IRFTypes.MEASURED_IRF);
-            }
-            else {
-                if (irfparPanel.getIrf().size() == 2) {
-                    setIRFType(EnumTypes.IRFTypes.GAUSSIAN);
+            } else {
+                if (irfparPanel.getIrftype()==null) {
+                    if (irfparPanel.getIrf().size() == 2) {
+                        setIRFType(EnumTypes.IRFTypes.GAUSSIAN);
+                    } else {
+                        setIRFType(EnumTypes.IRFTypes.DOUBLE_GAUSSIAN);
+                    }
                 } else {
-                    setIRFType(EnumTypes.IRFTypes.DOUBLE_GAUSSIAN);
+                    this.irfTypeProperty = irfTypeProperty.setFromStr(irfparPanel.getIrftype());
+                    if (irfTypeProperty.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)){
+                        multiGaussNum = (irfparPanel.getIrf().size()-2)/3;
+                        
+                    }
+                    setIRFType(irfTypeProperty);   
                 }
             }
         }
@@ -89,7 +96,16 @@ public class IrfParametersNode extends PropertiesAbstractNode {
     }
     
     public void setMultiGaussNum(Integer multiGaussNum){
+        int oldVal = this.multiGaussNum;
+        IrfParametersKeys childColection = (IrfParametersKeys) getChildren();
+        if (this.multiGaussNum < multiGaussNum){
+            childColection.addDefaultObj((multiGaussNum-this.multiGaussNum)*3);
+        } else {
+            childColection.removeParams((this.multiGaussNum-multiGaussNum)*3);
+            
+        }
         this.multiGaussNum = multiGaussNum;
+        firePropertyChange("multiGausNum", oldVal, multiGaussNum);
     }
     
     public Double getSweepPeriod() {
@@ -171,7 +187,8 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             if (currCompNum < 4) {
                 childColection.addDefaultObj(4 - currCompNum);
             } else {
-                childColection.removeParams(currCompNum - 4);
+                childColection.removeParams(currCompNum - 2);
+                childColection.addDefaultObj(2);
             }
             getSheet().get(Sheet.PROPERTIES).remove(propNames[5]);
             addStreackProp();
@@ -184,11 +201,11 @@ public class IrfParametersNode extends PropertiesAbstractNode {
                 currCompNum = childColection.getNodesCount();
             }
             if (currCompNum == 2) { 
-                childColection.addDefaultObj(3);
+                childColection.addDefaultObj(multiGaussNum*3);
             }
             if (currCompNum == 4) {
                 childColection.removeParams(2);
-                childColection.addDefaultObj(3);
+                childColection.addDefaultObj(multiGaussNum*3);
             }
             if (backSweep) {
                 getSheet().get(Sheet.PROPERTIES).remove(propNames[3]);

@@ -241,6 +241,26 @@ public class VisualCommonFunctions {
             if (evt.getPropertyName().equalsIgnoreCase("SetIRFType")) {
                 setIrfType(irfModel, evt, (IRFTypes) evt.getNewValue());
             }
+            
+            if (evt.getPropertyName().equalsIgnoreCase("multiGausNum")) {
+                Integer oldVal = (Integer)evt.getOldValue();
+                Integer newVal = (Integer)evt.getNewValue();
+                if (oldVal < newVal){
+                    for (int i = 0; i < (newVal-oldVal)*3; i++) {
+                        irfModel.getIrf().add(
+                            ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
+                        irfModel.getFixed().add(
+                            ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());
+                    }
+                } else {
+                    for (int i = 0; i < (oldVal-newVal)*3; i++) {
+                        irfModel.getIrf().remove(irfModel.getIrf().size() - 1);
+                        irfModel.getFixed().remove(irfModel.getFixed().size() - 1);
+                }
+                    
+                }
+//                setIrfType(irfModel, evt, (IRFTypes) evt.getNewValue());
+            }
 
             if (evt.getPropertyName().equalsIgnoreCase("start")) {
                 if (irfModel.getIrf().isEmpty()) {
@@ -542,6 +562,7 @@ public class VisualCommonFunctions {
             
     private static void setIrfType(IrfparPanelModel irfModel, PropertyChangeEvent evt, EnumTypes.IRFTypes type) {
         EnumTypes.IRFTypes irfType = type;
+        irfModel.setIrftype(type.toString());
         switch (irfType) {
             case GAUSSIAN: {
                 irfModel.setMirf(Boolean.FALSE);
@@ -580,8 +601,8 @@ public class VisualCommonFunctions {
                     irfModel.getFixed().clear();
                 }
                 irfModel.setIrftype(irfType.toString());
-//                int nodeCount = ((IrfParametersNode) evt.getSource()).getChildren().getNodesCount();
-                for (int i = 0; i < 5; i++) {
+                int nodeCount = ((IrfParametersNode) evt.getSource()).getChildren().getNodesCount();
+                for (int i = 0; i < nodeCount; i++) {
                     irfModel.getIrf().add(
                             ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
                     irfModel.getFixed().add(
