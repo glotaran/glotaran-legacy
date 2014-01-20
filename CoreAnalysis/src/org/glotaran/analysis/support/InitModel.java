@@ -235,6 +235,9 @@ public class InitModel {
             }
         }
         if (weightParPanelModel.isPoisson() != null && weightParPanelModel.isPoisson()) {
+            if (weightpar == null) {
+                weightpar = "";
+            }
             if (weightpar.isEmpty()) {
                 weightpar = "weightpar = list(poisson = TRUE";
             } else {
