@@ -587,7 +587,6 @@
                             <Component class="javax.swing.JSlider" name="jSColum">
                               <Properties>
                                 <Property name="maximum" type="int" value="0"/>
-                                <Property name="value" type="int" value="0"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[36, 16]"/>
                                 </Property>
@@ -605,7 +604,6 @@
                               <Properties>
                                 <Property name="maximum" type="int" value="0"/>
                                 <Property name="orientation" type="int" value="1"/>
-                                <Property name="value" type="int" value="0"/>
                                 <Property name="inverted" type="boolean" value="true"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[36, 16]"/>

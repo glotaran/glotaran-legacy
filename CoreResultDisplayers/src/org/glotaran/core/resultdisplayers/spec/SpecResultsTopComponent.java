@@ -221,15 +221,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 jSRow.setMaximum(dataset.GetImageHeigth() - 1);
                 jSRow.setMinimum(0);
                 jSRow.setValue(0);
-
-                jTFCentrWave.setText(String.valueOf(res.getLamdac()));
+                
+                String lambdaC = "";
+                lambdaC += new Formatter().format("%4.4g",res.getLamdac());
+                jTFCentrWave.setText(lambdaC);
                 if (res.getParmu() != null) {
                     String parmuStr = "";
                     for (int i = 0; i < res.getParmu().length / 2; i++) {
                         if (i > 0) {
                             parmuStr = parmuStr + ",";
                         }
-                        parmuStr += new Formatter().format("%6.1g", res.getParmu()[i]);
+                        parmuStr += new Formatter().format("%4.4g", res.getParmu()[i]);
                     }
                     jTFCurvParam.setText(parmuStr);
                 }
@@ -1525,8 +1527,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                         
 
             // I think it should be
-            //for (int i = 0; i < fittedTracesMat.getColumnDimension(); i++) {
-            for (int i = 0; i < fittedTracesMat.getRowDimension(); i++) {
+            for (int i = 0; i < fittedTracesMat.getColumnDimension(); i++) {
+            //for (int i = 0; i < fittedTracesMat.getRowDimension(); i++) {
                 sb.append(wavenumbers[i]);
                 sb.append(",");
                 for (int index = 0; index < selectedWaveTraces.size(); index++) {                                        
