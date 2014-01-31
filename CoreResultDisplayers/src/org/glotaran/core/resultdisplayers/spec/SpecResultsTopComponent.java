@@ -2274,8 +2274,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     }
 
     private void updateTrace(int xIndex) {
-        XYSeriesCollection trace = CommonResDispTools.createFitRawTraceCollection(xIndex, 0, res.getX().length, res);
-        XYSeriesCollection resid = CommonResDispTools.createResidTraceCollection(xIndex, 0, res.getX().length, res);
+        XYSeriesCollection trace = CommonResDispTools.createFitRawTraceCollection(xIndex, 0, res.getX().length, res, t0Curve[xIndex], "trace");
+        XYSeriesCollection resid = CommonResDispTools.createResidTraceCollection(xIndex, 0, res.getX().length, res,t0Curve[xIndex], "trace");
         if (!jTBLinLogTraces.isSelected()) {
             NumberAxis xAxis = CommonResDispTools.createLinAxis(res.getX(), "time");
             GraphPanel linTime = CommonResDispTools.makeLinTimeTraceResidChart(trace, resid, xAxis, null, false);
