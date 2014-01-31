@@ -198,16 +198,12 @@
                 <binary-origin>release/modules/ext/netlib-java.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/optimization.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/optimization.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/parallelcolt-0.9.4.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/parallelcolt-0.9.4.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/arpack-combo.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/arpack-combo.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/ejml-0.24.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/ejml-0.24.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/concurrent.jar</runtime-relative-path>
@@ -218,32 +214,36 @@
                 <binary-origin>release/modules/ext/colt.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/csparsej.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/csparsej.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/jtransforms.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jtransforms.jar</binary-origin>
+                <runtime-relative-path>ext/optimization.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/optimization.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/Jama-1.0.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/Jama-1.0.2.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/ujmp-complete-0.2.5.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/ujmp-complete-0.2.5.jar</binary-origin>
+                <runtime-relative-path>ext/jtransforms.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jtransforms.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/ojalgo-29.0.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/ojalgo-29.0.jar</binary-origin>
+                <runtime-relative-path>ext/csparsej.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/csparsej.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/jplasma.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/jplasma.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/ejml-0.17.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/ejml-0.17.jar</binary-origin>
+                <runtime-relative-path>ext/ojalgo-29.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/ojalgo-29.0.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/ujmp-complete-0.2.5.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/ujmp-complete-0.2.5.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/parallelcolt-0.9.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/parallelcolt-0.9.4.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
