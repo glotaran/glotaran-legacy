@@ -104,7 +104,7 @@ public class CommonResDispTools {
         plot1_1.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         plot1_1.getDomainAxis().setInverted(true);
         plot1_1.setRangeZeroBaselineVisible(true);
-        plot1_1.getRangeAxis().setAutoRange(false);
+        plot1_1.getRangeAxis().setAutoRange(true);
         for (int i = 0; i < trace.getSeriesCount(); i++) {
             plot1_1.getRenderer().setSeriesPaint(i, drawSuplTrace.getNextPaint());
             plot1_1.getRenderer().setSeriesStroke(i, drawSuplTrace.getNextStroke());
@@ -115,7 +115,7 @@ public class CommonResDispTools {
         plot1_2.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         plot1_2.getDomainAxis().setInverted(true);
         plot1_2.setRangeZeroBaselineVisible(true);
-        plot1_2.getRangeAxis().setAutoRange(false);
+        plot1_2.getRangeAxis().setAutoRange(true);
         for (int i = 0; i < residuals.getSeriesCount(); i++) {
             plot1_2.getRenderer().setSeriesPaint(i, drawSuplResid.getNextPaint());
         }
@@ -126,6 +126,7 @@ public class CommonResDispTools {
         plot.setOrientation(PlotOrientation.VERTICAL);
         plot.getDomainAxis().setLowerMargin(0.0);
         plot.getDomainAxis().setUpperMargin(0.0);
+        plot.getDomainAxis().setAutoRange(true);
         Font titleFont = new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12);
         JFreeChart tracechart = new JFreeChart(name, titleFont, plot, showLegend);
         if (showLegend){
