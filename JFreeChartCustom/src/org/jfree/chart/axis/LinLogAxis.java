@@ -368,7 +368,7 @@ public class LinLogAxis extends ValueAxis {
      *
      */
     @Override
-    protected void autoAdjustRange() {
+    protected void autoAdjustRange() {        
         Plot plot = getPlot();
         if (plot == null) {
             return;  // no plot, no data
@@ -399,26 +399,26 @@ public class LinLogAxis extends ValueAxis {
                     upper = upper + adjust;
                 }
             }
-
-            if (lower < leftLinearBoundValue && upper > rightLinearBoundValue) {
-                upper = calculateValue(calculateLog(upper) + getUpperMargin() * totalRange);
-                lower = -calculateValue(calculateLog(Math.abs(lower)) + getLowerMargin() * totalRange);
-            } else if (lower < leftLinearBoundValue && upper < rightLinearBoundValue && upper > leftLinearBoundValue) {
-                upper = upper + getUpperMargin() * totalRange;
-                lower = lower - getLowerMargin() * totalRange;
-            } else if (lower < leftLinearBoundValue && upper < rightLinearBoundValue) {
-                upper = upper + getUpperMargin() * totalRange;
-                lower = lower - getLowerMargin() * totalRange;
-            } else if (lower > leftLinearBoundValue && lower < rightLinearBoundValue && upper > rightLinearBoundValue) {
-                upper = upper + getUpperMargin() * totalRange;
-                lower = lower - getLowerMargin() * totalRange;
-            } else if (lower > leftLinearBoundValue && lower < rightLinearBoundValue && upper < rightLinearBoundValue && upper > leftLinearBoundValue) {
-                upper = upper + getUpperMargin() * totalRange;
-                lower = lower - getLowerMargin() * totalRange;
-            } else { //lower > rightLinearBoundValue && upper > rightLinearBoundValue               
-                upper = upper + getUpperMargin() * totalRange;
-                lower = lower - getLowerMargin() * totalRange;
-            }
+              //TODO: investigate this code block. It was creating infinite values for lower and/or upper whenever getUpperMargin() or getLowerMargin() were not zero and totalRange was very large
+//            if (lower < leftLinearBoundValue && upper > rightLinearBoundValue) {
+//                upper = calculateValue(calculateLog(upper)) + getUpperMargin() * totalRange;
+//                lower = -calculateValue(calculateLog(Math.abs(lower))) + getLowerMargin() * totalRange;
+//            } else if (lower < leftLinearBoundValue && upper < rightLinearBoundValue && upper > leftLinearBoundValue) {
+//                upper = upper + getUpperMargin() * totalRange;
+//                lower = lower - getLowerMargin() * totalRange;
+//            } else if (lower < leftLinearBoundValue && upper < rightLinearBoundValue) {
+//                upper = upper + getUpperMargin() * totalRange;
+//                lower = lower - getLowerMargin() * totalRange;
+//            } else if (lower > leftLinearBoundValue && lower < rightLinearBoundValue && upper > rightLinearBoundValue) {
+//                upper = upper + getUpperMargin() * totalRange;
+//                lower = lower - getLowerMargin() * totalRange;
+//            } else if (lower > leftLinearBoundValue && lower < rightLinearBoundValue && upper < rightLinearBoundValue && upper > leftLinearBoundValue) {
+//                upper = upper + getUpperMargin() * totalRange;
+//                lower = lower - getLowerMargin() * totalRange;
+//            } else { //lower > rightLinearBoundValue && upper > rightLinearBoundValue               
+//                upper = upper + getUpperMargin() * totalRange;
+//                lower = lower - getLowerMargin() * totalRange;
+//            }
             setRange(new Range(lower, upper), false, false);
         }
     }
@@ -426,7 +426,7 @@ public class LinLogAxis extends ValueAxis {
     @Override
     public void setRange(Range range) {
         super.setRange(range);
-        calculateTotalRange();
+        calculateTotalRange();        
     }
 
     @Override
