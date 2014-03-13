@@ -78,8 +78,13 @@ public class ModelDiffsChangeNode extends PropertiesAbstractNode {
         if (tgmFO != null) {
             try {
                 tgmDO = ((TgmDataObject) DataObject.find(tgmFO));
-            } catch (DataObjectNotFoundException ex) {
+            } catch (DataObjectNotFoundException ex ) {
                 CoreErrorMessages.fileLoadException("changes TGM");
+            } catch (java.lang.ClassCastException ex) { //at least catch error or file won't open
+                // optionally delete empty file, but check if empty first
+                // then remove it from Schema file as well
+                //tgmFO.delete(); 
+                
             }
         }
         if (tgmDO != null) {
