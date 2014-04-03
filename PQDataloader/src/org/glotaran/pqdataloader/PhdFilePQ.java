@@ -163,12 +163,24 @@ public class PhdFilePQ implements TGDatasetInterface {
 
             if (binHead1.MeasMode == 0 && binHead1.BitsPerRecord == 32) {
                 curves = new CurveHdr[binHead1.NumberOfCurves];
+                int numberOfTRES = 0,numberOfOSC =0, numberOfINT=0;
                 int totalChannels = 0, maxChannels = 0;
                 for (int i = 0; i < binHead1.NumberOfCurves; i++) {
                     curves[i] = new CurveHdr();
                     curves[i].fread(f);
                     //f.readLong();
+                    if (curves[i].SubMode == 0) {//0 means OSC
+                        numberOfOSC++;
+                        totalChannels += curves[i].Channels;
+                        maxChannels = Math.max(curves[i].Channels, maxChannels);
+                    }
+                    if (curves[i].SubMode == 1) {//1 means INT
+                        numberOfINT++;
+                        totalChannels += curves[i].Channels;
+                        maxChannels = Math.max(curves[i].Channels, maxChannels);
+                    }
                     if (curves[i].SubMode == 2) { //2 means TRES
+                        numberOfTRES++;
                         totalChannels += curves[i].Channels;
                         maxChannels = Math.max(curves[i].Channels, maxChannels);
                     }
