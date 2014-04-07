@@ -1416,16 +1416,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
     private void jBExportTimeTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExportTimeTracesActionPerformed
         // Exports all current traces on the tab in the following format
-        // TAB  Wav1    Res1    Wav2    Res2
-        // t0   y01     r01     y02     r02
-        // t0   y11     r11     y12     r12
-        
+        // wav1  data1 fit1 resid1   waw2 data2 fit2 Res2
+        // t01    d01   f01  r01     t02   d02  f02  r02
+        // t11    d01   f11  r11     t12   d02  f12  r12
+        Jama.Matrix dataTracesMat;
         Jama.Matrix fittedTracesMat;
         Jama.Matrix residualTracesMat;
         BufferedWriter output = null;
         
         JFileChooser fileChooser = new JFileChooser();
         //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
+        //TODO: add in filechooser delimiter for file
         ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
@@ -1439,14 +1440,15 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         try {
             output = new BufferedWriter(new FileWriter(new File(filename)));
             StringBuilder sb = new StringBuilder();
+            dataTracesMat = res.getTraces();
             fittedTracesMat = res.getFittedTraces();
             residualTracesMat = res.getResiduals();
             double[] wavenumbers = res.getX2();
             
-            sb.append("FIT,");
+
             for (int index = 0; index < selectedTimeTraces.size(); index++) {
                 sb.append(wavenumbers[selectedTimeTraces.get(index)]);
-                sb.append(",    ");
+                sb.append(",data,fit,residuals");
                 if (index < selectedTimeTraces.size() - 1) {
                     sb.append(",");
                 }
@@ -1456,9 +1458,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             double[] timepoints = res.getX();            
 
             for (int i = 0; i < fittedTracesMat.getRowDimension(); i++) {
-                sb.append(timepoints[i]);
-                sb.append(",");
-                for (int index = 0; index < selectedTimeTraces.size(); index++) {                                        
+                for (int index = 0; index < selectedTimeTraces.size(); index++) {
+                    sb.append(timepoints[i]-t0Curve[selectedTimeTraces.get(index)]);
+                    sb.append(",");
+                    sb.append(dataTracesMat.get(i, selectedTimeTraces.get(index)));
+                    sb.append(",");
                     sb.append(fittedTracesMat.get(i, selectedTimeTraces.get(index)));
                     sb.append(",");
                     sb.append(residualTracesMat.get(i, selectedTimeTraces.get(index)));
@@ -1486,17 +1490,19 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
     private void jBExportWaveTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExportWaveTracesActionPerformed
         // export jPSelWavTrCollection
-                // Exports all current traces on the tab in the following format
-        // TAB   Time1    Res1    Time2   Res2
-        // Wav1   y01     r01     y02     r02
-        // Wav2   y11     r11     y12     r12
+        // Exports all current traces on the tab in the following format
+        // time  data1 fit1 resid1  time2 data2 fit2 Res2
+        // wav01  d01   f01  r01    wav02   d02  f02  r02
+        // wav11  d01   f11  r11    wav12   d02  f12  r12
         
+        Jama.Matrix dataTracesMat;
         Jama.Matrix fittedTracesMat;
         Jama.Matrix residualTracesMat;
         BufferedWriter output = null;
         
         JFileChooser fileChooser = new JFileChooser();
         //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
+        //TODO: add in filechooser delimiter for file
         ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
@@ -1510,31 +1516,29 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         try {
             output = new BufferedWriter(new FileWriter(new File(filename)));
             StringBuilder sb = new StringBuilder();
+            dataTracesMat = res.getTraces();
             fittedTracesMat = res.getFittedTraces();
             residualTracesMat = res.getResiduals();
-            double[] timepoints = res.getX();           
+            double[] timepoints = res.getX();
             
-            sb.append("FIT,");
             for (int index = 0; index < selectedWaveTraces.size(); index++) {
                 sb.append(timepoints[selectedWaveTraces.get(index)]);
-                sb.append(",    ");
+                sb.append(",data,fit,residuals");
                 if (index < selectedWaveTraces.size() - 1) {
                     sb.append(",");
                 }
             }
             sb.append("\n");
             double[] wavenumbers = res.getX2();
-                        
-
-            // I think it should be
             for (int i = 0; i < fittedTracesMat.getColumnDimension(); i++) {
-            //for (int i = 0; i < fittedTracesMat.getRowDimension(); i++) {
-                sb.append(wavenumbers[i]);
-                sb.append(",");
-                for (int index = 0; index < selectedWaveTraces.size(); index++) {                                        
-                    sb.append(fittedTracesMat.get(selectedWaveTraces.get(index),i));
+                for (int index = 0; index < selectedWaveTraces.size(); index++) {
+                    sb.append(wavenumbers[i]);
                     sb.append(",");
-                    sb.append(residualTracesMat.get(selectedWaveTraces.get(index),i));
+                    sb.append(dataTracesMat.get(selectedWaveTraces.get(index), i));
+                    sb.append(",");
+                    sb.append(fittedTracesMat.get(selectedWaveTraces.get(index), i));
+                    sb.append(",");
+                    sb.append(residualTracesMat.get(selectedWaveTraces.get(index), i));
                     if (index < selectedWaveTraces.size() - 1) {
                         sb.append(",");
                     }
