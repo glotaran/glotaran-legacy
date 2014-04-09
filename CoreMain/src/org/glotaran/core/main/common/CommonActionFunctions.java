@@ -733,6 +733,31 @@ public class CommonActionFunctions {
             return index;
         }
     }
+    /**
+     * Find index for wave Dataset;
+     *
+     * @param dataset double array : source 
+     * @param value double : value
+     * @param runReverse boolean : indicates whether the function should start
+     * at last index rather than 0
+     * @return int : index of wave, or -1 if wave is outside of the valid range
+     */
+    
+    public static int findIndex(double[] dataset, double value, boolean runReverse) {
+        boolean isReversedAxis = dataset[0] > dataset[1];
+        int index = runReverse ? (dataset.length - 1) : 0;
+        if ((runReverse ^ isReversedAxis) ? (dataset[index] < value) : (dataset[index] > value)) {
+            return index;
+        } else {
+            while ((runReverse ^ isReversedAxis) ? (dataset[index] > value) : (dataset[index] < value)) {
+                index = runReverse ? (index - 1) : (index + 1);
+                if (index < 0 || index >= dataset.length) {
+                    return -1;
+                }
+            }
+            return index;
+        }
+    }
 
     /**
      * Find index for time step in Dataset;
