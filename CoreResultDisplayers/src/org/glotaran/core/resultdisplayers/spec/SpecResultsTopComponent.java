@@ -73,6 +73,7 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.ujmp.core.calculation.Calculation.Ret;
 import static java.lang.Math.abs;
+import org.glotaran.core.main.common.CommonActionFunctions;
 
 /**
  * Top component which displays something.
@@ -1097,7 +1098,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
     private void jBAutoSelectTracesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAutoSelectTracesActionPerformed
 //create dialog
-        SelectTracesForPlot selTracePanel = new SelectTracesForPlot();
+        SelectTracesForPlot selTracePanel = new SelectTracesForPlot(res.getX2()[0],res.getX2()[res.getX2().length-1],res.getX()[0],res.getX()[res.getX().length-1]);
         selTracePanel.setMaxNumbers(res.getX2().length, res.getX().length);
         NotifyDescriptor selTracesDialog = new NotifyDescriptor(
                 selTracePanel,
@@ -1111,21 +1112,27 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 //create time traces collection
             if (selTracePanel.getSelectXState()) {
                 int numSelTraces = selTracePanel.getSelectXNum();
-                int w = res.getX2().length / numSelTraces;
+                int startInd = CommonActionFunctions.findIndex(res.getX2(),selTracePanel.getSelectXStart(),false);
+                int endInd = CommonActionFunctions.findIndex(res.getX2(),selTracePanel.getSelectXEnd(),true);
+//                int w = res.getX2().length / numSelTraces;
+                int w = (endInd-startInd) / numSelTraces;
                 int xIndex;
-                selectedTimeTraces.clear();
-                jPSelTimeTrCollection.removeAll();
-                selectedTimeResidualsColection.removeAllSeries();
-                selectedTimeTracesColection.removeAllSeries();
-                CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
-                CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, numSelTraces);
+                if (!selTracePanel.isXCollectionAppend()) {
+                    selectedTimeTraces.clear();
+                    jPSelTimeTrCollection.removeAll();
+                    selectedTimeResidualsColection.removeAllSeries();
+                    selectedTimeTracesColection.removeAllSeries();
+                    CommonResDispTools.restorePanelSize(jPSelTimeTrCollection);
+                    CommonResDispTools.checkPanelSize(jPSelTimeTrCollection, numSelTraces);
+                }
                 NumberAxis xAxis;
                 XYSeriesCollection trace;
                 XYSeriesCollection resid;
                 GraphPanel linTime;
                 
+                                
                 for (int i = 0; i < numSelTraces; i++) {
-                    xIndex = i * w;
+                    xIndex = startInd + i * w;
                     trace= CommonResDispTools.createFitRawTraceCollection(xIndex, 0, res.getX().length, res,t0Curve[xIndex], String.valueOf(res.getX2()[xIndex]));    
                     resid = CommonResDispTools.createResidTraceCollection(xIndex, 0, res.getX().length, res, t0Curve[xIndex], String.valueOf(res.getX2()[xIndex]));
                             
@@ -1149,23 +1156,29 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 //create wave traces colection
             if (selTracePanel.getSelectYState()) {
                 int numSelTraces = selTracePanel.getSelectYNum();
-                int w = res.getX().length / numSelTraces;
                 XYSeriesCollection trace, resid;
                 int xIndex;
+                int startInd = CommonActionFunctions.findIndex(res.getX(),selTracePanel.getSelectYStart(),false);    
+                int endInd = CommonActionFunctions.findIndex(res.getX(),selTracePanel.getSelectYEnd(),true);
+//                int w = res.getX().length / numSelTraces;
+                int w = (endInd-startInd) / numSelTraces;
                 NumberAxis xAxis;
                 ChartPanel chpan;
-                selectedWaveTraces.clear();
-                jPSelWavTrCollection.removeAll();
                 
-                selectedWaveTracesColection.removeAllSeries();
-                selectedWaveResidualsColection.removeAllSeries();
+                if (!selTracePanel.isYCollectionAppend()) {
+                    selectedWaveTraces.clear();
+                    jPSelWavTrCollection.removeAll();
+                    selectedWaveTracesColection.removeAllSeries();
+                    selectedWaveResidualsColection.removeAllSeries();
+                    CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
+                    CommonResDispTools.checkPanelSize(jPSelWavTrCollection, numSelTraces);
+                }
                 
-                CommonResDispTools.restorePanelSize(jPSelWavTrCollection);
-                CommonResDispTools.checkPanelSize(jPSelWavTrCollection, numSelTraces);
-
                 for (int i = 0; i < numSelTraces; i++) {
 //create common X axe for plot
-                    xIndex = i * w;
+                                       
+//                    xIndex = i * w;
+                    xIndex = startInd + i * w;
                     xAxis = CommonResDispTools.createLinAxis(res.getX2(), "Wavelength (nm)");                   
                     trace = CommonResDispTools.createFitRawWaveTrCollection(xIndex, 0, res.getX2().length, res, String.valueOf(res.getX()[xIndex]));
                     resid = CommonResDispTools.createResidWaveCollection(xIndex, 0, res.getX2().length, res, String.valueOf(res.getX()[xIndex]));

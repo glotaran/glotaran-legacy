@@ -1,5 +1,6 @@
 package org.glotaran.core.resultdisplayers.common.panels;
 
+import java.util.Formatter;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.NbBundle;
@@ -15,6 +16,14 @@ public class SelectTracesForPlot extends java.awt.Panel {
     public SelectTracesForPlot() {
         initComponents();
     }
+    
+    public SelectTracesForPlot(double timeStart, double timeEnd, double waveStart, double waveEnd) {
+        initComponents();
+        jTXCollectionStart.setText(String.format("%6.2f",timeStart));
+        jTXCollectionEnd.setText(String.format("%6.2f",timeEnd));
+        jTYCollectionStart.setText(String.format("%6.4f",waveStart));
+        jTYCollectionEnd.setText(String.format("%6.4g",waveEnd));
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,17 +35,17 @@ public class SelectTracesForPlot extends java.awt.Panel {
         jLabel2 = new javax.swing.JLabel();
         jTXnum = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTWaveCollectionFrom = new javax.swing.JTextField();
-        jTWaveCollectionTo = new javax.swing.JTextField();
-        jCBAppendTimeCollection = new javax.swing.JCheckBox();
+        jTXCollectionStart = new javax.swing.JTextField();
+        jTXCollectionEnd = new javax.swing.JTextField();
+        jCBAppendXCollection = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPTimeColection = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jTTimeCollectionFrom1 = new javax.swing.JTextField();
-        jTTimeCollectionTo1 = new javax.swing.JTextField();
-        jCBAppendTimeCollection1 = new javax.swing.JCheckBox();
+        jTYCollectionStart = new javax.swing.JTextField();
+        jTYCollectionEnd = new javax.swing.JTextField();
+        jCBAppendYCollection = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -110,39 +119,41 @@ public class SelectTracesForPlot extends java.awt.Panel {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         jPWaveColection.add(jLabel3, gridBagConstraints);
 
-        jTWaveCollectionFrom.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTWaveCollectionFrom.text")); // NOI18N
-        jTWaveCollectionFrom.setEnabled(false);
-        jTWaveCollectionFrom.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTWaveCollectionFrom.setPreferredSize(new java.awt.Dimension(50, 20));
+        jTXCollectionStart.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTXCollectionStart.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTXCollectionStart.text")); // NOI18N
+        jTXCollectionStart.setEnabled(false);
+        jTXCollectionStart.setMinimumSize(new java.awt.Dimension(80, 20));
+        jTXCollectionStart.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
-        jPWaveColection.add(jTWaveCollectionFrom, gridBagConstraints);
+        jPWaveColection.add(jTXCollectionStart, gridBagConstraints);
 
-        jTWaveCollectionTo.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTWaveCollectionTo.text")); // NOI18N
-        jTWaveCollectionTo.setEnabled(false);
-        jTWaveCollectionTo.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTWaveCollectionTo.setPreferredSize(new java.awt.Dimension(50, 20));
+        jTXCollectionEnd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTXCollectionEnd.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTXCollectionEnd.text")); // NOI18N
+        jTXCollectionEnd.setEnabled(false);
+        jTXCollectionEnd.setMinimumSize(new java.awt.Dimension(80, 20));
+        jTXCollectionEnd.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
-        jPWaveColection.add(jTWaveCollectionTo, gridBagConstraints);
+        jPWaveColection.add(jTXCollectionEnd, gridBagConstraints);
 
-        jCBAppendTimeCollection.setSelected(true);
-        jCBAppendTimeCollection.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jCBAppendTimeCollection.text")); // NOI18N
-        jCBAppendTimeCollection.setEnabled(false);
+        jCBAppendXCollection.setSelected(true);
+        jCBAppendXCollection.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jCBAppendXCollection.text")); // NOI18N
+        jCBAppendXCollection.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPWaveColection.add(jCBAppendTimeCollection, gridBagConstraints);
+        jPWaveColection.add(jCBAppendXCollection, gridBagConstraints);
 
         jLabel5.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jLabel5.text")); // NOI18N
         jLabel5.setEnabled(false);
@@ -192,39 +203,41 @@ public class SelectTracesForPlot extends java.awt.Panel {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         jPTimeColection.add(jLabel8, gridBagConstraints);
 
-        jTTimeCollectionFrom1.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTTimeCollectionFrom1.text")); // NOI18N
-        jTTimeCollectionFrom1.setEnabled(false);
-        jTTimeCollectionFrom1.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTTimeCollectionFrom1.setPreferredSize(new java.awt.Dimension(50, 20));
+        jTYCollectionStart.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTYCollectionStart.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTYCollectionStart.text")); // NOI18N
+        jTYCollectionStart.setEnabled(false);
+        jTYCollectionStart.setMinimumSize(new java.awt.Dimension(80, 20));
+        jTYCollectionStart.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
-        jPTimeColection.add(jTTimeCollectionFrom1, gridBagConstraints);
+        jPTimeColection.add(jTYCollectionStart, gridBagConstraints);
 
-        jTTimeCollectionTo1.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTTimeCollectionTo1.text")); // NOI18N
-        jTTimeCollectionTo1.setEnabled(false);
-        jTTimeCollectionTo1.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTTimeCollectionTo1.setPreferredSize(new java.awt.Dimension(50, 20));
+        jTYCollectionEnd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTYCollectionEnd.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jTYCollectionEnd.text")); // NOI18N
+        jTYCollectionEnd.setEnabled(false);
+        jTYCollectionEnd.setMinimumSize(new java.awt.Dimension(80, 20));
+        jTYCollectionEnd.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
-        jPTimeColection.add(jTTimeCollectionTo1, gridBagConstraints);
+        jPTimeColection.add(jTYCollectionEnd, gridBagConstraints);
 
-        jCBAppendTimeCollection1.setSelected(true);
-        jCBAppendTimeCollection1.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jCBAppendTimeCollection1.text")); // NOI18N
-        jCBAppendTimeCollection1.setEnabled(false);
+        jCBAppendYCollection.setSelected(true);
+        jCBAppendYCollection.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jCBAppendYCollection.text")); // NOI18N
+        jCBAppendYCollection.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPTimeColection.add(jCBAppendTimeCollection1, gridBagConstraints);
+        jPTimeColection.add(jCBAppendYCollection, gridBagConstraints);
 
         jLabel9.setText(org.openide.util.NbBundle.getMessage(SelectTracesForPlot.class, "SelectTracesForPlot.jLabel9.text")); // NOI18N
         jLabel9.setEnabled(false);
@@ -321,8 +334,8 @@ public class SelectTracesForPlot extends java.awt.Panel {
     }//GEN-LAST:event_jTYnumKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCBAppendTimeCollection;
-    private javax.swing.JCheckBox jCBAppendTimeCollection1;
+    private javax.swing.JCheckBox jCBAppendXCollection;
+    private javax.swing.JCheckBox jCBAppendYCollection;
     private javax.swing.JCheckBox jCbTraceColX;
     private javax.swing.JCheckBox jCbTraceColY;
     private javax.swing.JLabel jLabel1;
@@ -336,11 +349,11 @@ public class SelectTracesForPlot extends java.awt.Panel {
     private javax.swing.JPanel jPTimeColection;
     private javax.swing.JPanel jPWaveColection;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTTimeCollectionFrom1;
-    private javax.swing.JTextField jTTimeCollectionTo1;
-    private javax.swing.JTextField jTWaveCollectionFrom;
-    private javax.swing.JTextField jTWaveCollectionTo;
+    private javax.swing.JTextField jTXCollectionEnd;
+    private javax.swing.JTextField jTXCollectionStart;
     private javax.swing.JTextField jTXnum;
+    private javax.swing.JTextField jTYCollectionEnd;
+    private javax.swing.JTextField jTYCollectionStart;
     private javax.swing.JTextField jTYnum;
     // End of variables declaration//GEN-END:variables
 
@@ -371,5 +384,28 @@ public class SelectTracesForPlot extends java.awt.Panel {
 
     public void setEnabledYDimension(boolean state) {
         jCbTraceColY.setEnabled(state);
+    }
+    public double getSelectXStart(){
+        return Double.parseDouble(jTXCollectionStart.getText());
+    }
+    
+    public double getSelectXEnd(){
+        return Double.parseDouble(jTXCollectionEnd.getText());
+    }
+    
+    public double getSelectYStart(){
+        return Double.parseDouble(jTYCollectionStart.getText());
+    }
+    
+    public double getSelectYEnd(){
+        return Double.parseDouble(jTYCollectionEnd.getText());
+    }
+    
+    public boolean isXCollectionAppend(){
+        return jCBAppendXCollection.isSelected();
+    }
+    
+    public boolean isYCollectionAppend(){
+        return jCBAppendYCollection.isSelected();
     }
 }
