@@ -289,13 +289,14 @@ public class CommonActionFunctions {
                     dim1To = CommonActionFunctions.findTimeIndex(dataset, params.getBgRegConstD1()[1]);
                     dim2From = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[0], false);
                     dim2To = CommonActionFunctions.findWaveIndex(dataset, params.getBgRegConstD2()[1], true);
+                    //TODO: check if specified region (partially) overlaps with dataset
                     double s = 0;
-                    for (int i = dim1From; i < dim1To; i++) {
-                        for (int j = dim2From; j < dim2To; j++) {
+                    for (int i = dim1From; i < (1 + (dim1To - dim1From)); i++) {
+                        for (int j = dim2From; j < (1 + (dim2To - dim2From)); j++) {
                             s += dataset.getPsisim()[i + j * dataset.getNt()];
                         }
                     }
-                    bgConstant = s / ((dim1To - dim1From) * (dim2To - dim2From));
+                    bgConstant = s / ((1 + dim1To - dim1From) * (1 + dim2To - dim2From));
                 }
             }
             //subtract  bgConstant from the dataset
