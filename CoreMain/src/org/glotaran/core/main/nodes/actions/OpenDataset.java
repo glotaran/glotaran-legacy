@@ -1,5 +1,6 @@
 package org.glotaran.core.main.nodes.actions;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -7,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.regex.Pattern;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.main.project.TGProject;
@@ -48,23 +52,51 @@ public final class OpenDataset extends CookieAction {
         services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
         dataObject = activatedNodes[0].getLookup().lookup(DataObject.class);
         final JFileSourcePane pane = new JFileSourcePane();
-        final ActionListener lst = new ActionListener() {
+        final ActionListener lst;
+        lst = new ActionListener() {
+            String test;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 File[] files;
                 if (e.getActionCommand().equalsIgnoreCase("Finish")) {
-                    pane.setVisible(false);
+                    pane.setVisible(false);                    
                     files = pane.getSelectedFiles();
+                    if (files.length == 0) {
+                        tryToGetStringFromTextField(pane.getComponents());
+                        if (!test.isEmpty()) {
+                            File tryPath = new File(test);
+                            tryPath.exists();
+                            openSelectedFiles(new File[]{tryPath});
+                            return;
+                        }
+                    }
                     openSelectedFiles(files);
                 }
+            }
+
+            public void tryToGetStringFromTextField(Component[] comp) {
+                for (int x = 0; x < comp.length; x++) {
+                    if (comp[x] instanceof JFileChooser) {
+                        tryToGetStringFromTextField(((JFileChooser) comp[x]).getComponents());
+                    } else if (comp[x] instanceof JPanel) {
+                        tryToGetStringFromTextField(((JPanel) comp[x]).getComponents());
+                    } else if (comp[x] instanceof JTextField) {
+                        test = ((JTextField) comp[x]).getText();
+                        return;
+                    }
+                }
+
             }
         };
         final WizardDescriptor wdesc = WizardUtilities.createSimplewWizard(
                 pane,
                 NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("openFile"));
+
         wdesc.setButtonListener(lst);
-        DialogDisplayer.getDefault().notify(wdesc);
+
+        DialogDisplayer.getDefault()
+                .notify(wdesc);
     }
 
     @Override
@@ -172,4 +204,3 @@ public final class OpenDataset extends CookieAction {
         }
     }
 }
-
