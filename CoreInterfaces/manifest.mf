@@ -3,5 +3,5 @@ AutoUpdate-Show-In-Client: true
 AutoUpdate-Essential-Module: true
 OpenIDE-Module: org.glotaran.core.interfaces/1
 OpenIDE-Module-Localizing-Bundle: org/glotaran/core/interfaces/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.0
+OpenIDE-Module-Specification-Version: 3.1
 

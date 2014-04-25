@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 OpenIDE-Module: org.glotaran.imgdataloader/1
 OpenIDE-Module-Localizing-Bundle: org/glotaran/imgdataloader/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.2
+OpenIDE-Module-Specification-Version: 3.3
 

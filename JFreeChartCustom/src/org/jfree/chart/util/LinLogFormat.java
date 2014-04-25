@@ -225,6 +225,7 @@ public class LinLogFormat extends NumberFormat {
      *
      * @return A string buffer containing the formatted value.
      */
+    @Override
     public StringBuffer format(double number, StringBuffer toAppendTo,
             FieldPosition pos) {
         StringBuffer result = new StringBuffer();

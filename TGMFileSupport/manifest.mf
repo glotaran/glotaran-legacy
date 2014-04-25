@@ -3,4 +3,4 @@ AutoUpdate-Show-In-Client: false
 OpenIDE-Module: org.glotaran.tgmfilesupport/1
 OpenIDE-Module-Layer: org/glotaran/tgmfilesupport/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/tgmfilesupport/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.0
+OpenIDE-Module-Specification-Version: 3.1
