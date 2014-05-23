@@ -190,20 +190,28 @@ public class PhdFilePQ implements TGDatasetInterface {
                 dataset.setNl(binHead1.NumberOfCurves - 1);
                 dataset.setNt(maxChannels);
                 dataset.setType("spec");
+                
                 //The 0the curve (if measured) is always the IRF in a TRES measurement
                 dataset.setPsisim(new double[maxChannels * (binHead1.NumberOfCurves - 1)]); //perhaps change totalChannels to totalBins if data is set to be read in binned
                 dataset.setX(new double[dataset.getNt()]); //timepoints
                 dataset.setX2(new double[dataset.getNl()]); //wavelengths
-                for (int i = 1; i < binHead1.NumberOfCurves; i++) { //skip IRF (curve=0)
+                dataset.setMeasuredIRF(new double[maxChannels]);
+                dataset.setMeasuredIRFDomainAxis(new double[maxChannels]);
+                for (int i = 0; i < binHead1.NumberOfCurves; i++) { //skip IRF (curve=0)                    
                     f.seek(curves[i].DataOffset);
                     for (int j = 0; j < curves[i].Channels; j++) {
-                        dataset.getPsisim()[j + (i - 1) * maxChannels] = f.readUnsignedInt();
-                        dataset.getX()[j] = curves[i].Resolution * j;
+                        if (i==0) {
+                            dataset.getMeasuredIRF()[j] = f.readUnsignedInt();
+                            dataset.getMeasuredIRFDomainAxis()[j] = curves[i].Resolution * j;
+                        } else {
+                            dataset.getPsisim()[j + (i - 1) * maxChannels] = f.readUnsignedInt();
+                            dataset.getX()[j] = curves[i].Resolution * j;
+                        }
                     }
-                    dataset.getX2()[i - 1] = (double) curves[i].P1;
-
+                    if (i>0) {
+                        dataset.getX2()[i - 1] = (double) curves[i].P1;
+                    }
                 }
-
                 dataset.calcRangeInt();
             }
 

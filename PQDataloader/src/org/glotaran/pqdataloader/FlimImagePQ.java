@@ -95,7 +95,7 @@ public class FlimImagePQ implements TGDatasetInterface {
 //                                NbBundle.getBundle("org/glotaran/pqdataloader/Bundle").getString("noImage"),
 //                                NotifyDescriptor.ERROR_MESSAGE);
 //                        DialogDisplayer.getDefault().notify(errorMessage);
-                            return false;
+                            return true;
                         }
 
                     } else {

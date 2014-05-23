@@ -21,6 +21,14 @@ public final class DatasetTimp implements Serializable {
     private double[] intenceIm; //intensity image for flimimage
     private String datasetName; //dataset name
     private String type;        //type: spec/flim/mas
+    private String x1label;      //typically timescale (i.e. "Time")
+    private String x1unit;      //typically "ps" or "ns"
+    private String x2label;      //spectral unit (i.e. "Wavelength (nm)"
+    private String x2unit;      //typically spectral unit (i.e. "Wavelength (nm)"
+    private String datalabel;    // i.e. "Intensity" "Fluorescence" "Absorption" 
+    private String dataunit;    // ("counts", "intensity", "V", "a.u.")
+    private double[] measuredIRF; // vector with measured IRF
+    private double[] measuredIRFDomainAxis; //(calibrated) time axis
     public static final long serialVersionUID = 1L;
 
     /**
@@ -257,6 +265,70 @@ public final class DatasetTimp implements Serializable {
      */
     public void setMinInt(double minInt) {
         this.minInt = minInt;
+    }
+
+    public double[] getMeasuredIRF() {
+        return measuredIRF;
+    }
+
+    public void setMeasuredIRF(double[] measuredIRF) {
+        this.measuredIRF = measuredIRF;
+    }
+
+    public double[] getMeasuredIRFDomainAxis() {
+        return measuredIRFDomainAxis;
+    }
+
+    public void setMeasuredIRFDomainAxis(double[] measuredIRFDomainAxis) {
+        this.measuredIRFDomainAxis = measuredIRFDomainAxis;
+    }
+
+    public String getX1label() {
+        return x1label;
+    }
+
+    public void setX1label(String x1label) {
+        this.x1label = x1label;
+    }
+
+    public String getX1unit() {
+        return x1unit;
+    }
+
+    public void setX1unit(String x1unit) {
+        this.x1unit = x1unit;
+    }
+
+    public String getX2label() {
+        return x2label;
+    }
+
+    public void setX2label(String x2label) {
+        this.x2label = x2label;
+    }
+
+    public String getX2unit() {
+        return x2unit;
+    }
+
+    public void setX2unit(String x2unit) {
+        this.x2unit = x2unit;
+    }
+
+    public String getDatalabel() {
+        return datalabel;
+    }
+
+    public void setDatalabel(String datalabel) {
+        this.datalabel = datalabel;
+    }
+
+    public String getDataunit() {
+        return dataunit;
+    }
+
+    public void setDataunit(String dataunit) {
+        this.dataunit = dataunit;
     }
 
     /**
