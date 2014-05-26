@@ -676,6 +676,69 @@ public class CommonActionFunctions {
     }
 
     /**
+     * Export the IRF contained in a DatasetTimp object to disc.
+     *
+     * @param dataset DatasetTimp : dataset of which the IRF should be exported;
+     * @param fileName String : destination file
+     * @param format String : type of export TIMP, CSV (coma separated with
+     * labels), Plain(tab separated with labels)
+     */
+    public static void exportIRFFromDataset(DatasetTimp dataset, String fileName, String format) {
+        BufferedWriter f = null;
+        if (format.equals("TIMP")) {
+            try {
+                try {
+                    f = new BufferedWriter(new FileWriter(fileName));
+                    f.append(fileName);
+                    f.newLine();
+                    f.append(dataset.getDatasetName() + "_IRF");
+                    f.newLine();
+                    if (dataset.getType().equalsIgnoreCase("spec")) {
+                        f.append("Wavelength explicit");
+                        f.newLine();
+                        f.append("Intervalnr ");
+                        f.append("  "); //Do not add a tab here!
+                        f.append(String.valueOf(1));
+                        f.newLine();
+                    } else {
+//                        if (dataset.getType().equalsIgnoreCase("flim")) {
+//                            f.append("FLIM image");
+//                            f.newLine();
+//                            f.append(String.valueOf(dataset.getOriginalWidth()));
+//                            f.append("  "); //Do not add a tab here!
+//                            f.append(String.valueOf(dataset.getOriginalHeight()));
+//                            f.newLine();
+//                            f.append(String.valueOf(dataset.getNt()));
+//                            f.newLine();
+//                            f.append(String.valueOf(dataset.getNl()));
+//                            f.newLine();
+//                        }
+                    }
+                    f.append(String.valueOf(dataset.getMeasuredIRF().length));
+                    f.newLine();
+
+                    for (int i = 0; i < dataset.getMeasuredIRF().length; i++) {
+                        f.append(String.valueOf(dataset.getMeasuredIRFDomainAxis()[i]));
+                        f.append("\t");
+                        f.append(String.valueOf(dataset.getMeasuredIRF()[i]));
+                        f.newLine();
+                    }
+
+                    f.flush();
+                } finally {
+                    if (f != null) {
+                        f.close();
+                    }
+                }
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
+        }
+
+    }
+
+    /**
      * Calculate median
      *
      * @param values ArrayList : source data
