@@ -93,7 +93,7 @@ public final class ExportIRF implements ActionListener {
 
         if (dataset != null) {
             if (dataset.getMeasuredIRF() != null) {
-                ExportPanelForm exportDialogPanel = new ExportPanelForm();
+                ExportPanelForm exportDialogPanel = new ExportPanelForm((TGProject) FileOwnerQuery.getOwner(datafile.getPrimaryFile()));
                 NotifyDescriptor exportDataDialog = new NotifyDescriptor(
                         exportDialogPanel,
                         "Export IRF ...",

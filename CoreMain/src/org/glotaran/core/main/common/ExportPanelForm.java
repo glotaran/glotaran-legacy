@@ -13,6 +13,11 @@ package org.glotaran.core.main.common;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import org.glotaran.core.main.nodes.actions.FileUtilities;
+import org.glotaran.core.main.project.TGProject;
+import org.netbeans.api.project.Project;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -21,10 +26,17 @@ import javax.swing.JFileChooser;
 public class ExportPanelForm extends javax.swing.JPanel {
 
     private String fileName = "";
+    private FileObject workingDirectory;
 
     /** Creates new form ExportPanelForm */
     public ExportPanelForm() {
         initComponents();
+    }
+
+    public ExportPanelForm(Project tgProject) {
+        initComponents();
+        workingDirectory = tgProject.getProjectDirectory();
+
     }
 
     /** This method is called from within the constructor to
@@ -112,7 +124,7 @@ public class ExportPanelForm extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = workingDirectory != null ? new JFileChooser(FileUtil.toFile(workingDirectory)) : new JFileChooser();
         chooser.setDialogTitle("Select filename ...");
         chooser.setMultiSelectionEnabled(false);
         if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {

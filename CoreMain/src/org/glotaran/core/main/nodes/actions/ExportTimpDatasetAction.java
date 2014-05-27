@@ -9,8 +9,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.glotaran.core.main.common.ExportPanelForm;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
+import org.glotaran.core.main.project.TGProject;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.structures.DatasetTimp;
+import org.netbeans.api.project.FileOwnerQuery;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.loaders.DataObject;
@@ -31,7 +33,7 @@ public final class ExportTimpDatasetAction implements ActionListener {
         }
         if (dataset!=null) {
 
-            ExportPanelForm exportDialogPanel = new ExportPanelForm();
+            ExportPanelForm exportDialogPanel = new ExportPanelForm((TGProject) FileOwnerQuery.getOwner(context.getPrimaryFile()));
             NotifyDescriptor exportDataDialog = new NotifyDescriptor(
                     exportDialogPanel,
                     "Export dataset ...",
