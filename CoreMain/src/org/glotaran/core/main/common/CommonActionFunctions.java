@@ -483,19 +483,21 @@ public class CommonActionFunctions {
 
             //TODO: make this code abstract into multiple operations: substract, add, set, devide
             //calculate constant from data based on the filled numbers and put it to bgConstant
-            int dim1From, dim1To, dim2From, dim2To;
-            dim1From = CommonActionFunctions.findTimeIndex(dataset, ocParameters.getOcRegConstD1()[0]);
-            dim1To = CommonActionFunctions.findTimeIndex(dataset, ocParameters.getOcRegConstD1()[1]);
-            dim2From = CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[0], false);
-            dim2To = CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[1], true);
+            int dim1From, dim1To, dim2From, dim2To;    
+            dim1From = ocParameters.getOcRegConstD1() == null ? 0 : CommonActionFunctions.findTimeIndex(dataset, ocParameters.getOcRegConstD1()[0]);
+            dim1To = ocParameters.getOcRegConstD1() == null ? dataset.getNt(): CommonActionFunctions.findTimeIndex(dataset, ocParameters.getOcRegConstD1()[1]);
+            dim2From = ocParameters.getOcRegConstD2() == null ? 0 : CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[0], false);
+            dim2To = ocParameters.getOcRegConstD2() == null ? dataset.getNl(): CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[1], true);
             //TODO: check if specified region (partially) overlaps with dataset
             double s = ocParameters.getOcConstValue();
-            for (int i = dim1From; i < (1 + (dim1To - dim1From)); i++) {
-                for (int j = dim2From; j < (1 + (dim2To - dim2From)); j++) {
-                    dataset.getPsisim()[i + j * dataset.getNt()] = s;
+            for (int i = 0; i < (dim1To-dim1From); i++) {
+                for (int j = 0; j < (dim2To-dim2From); j++) {
+                    if ((i+dim1From) *(j+dim2From) < dataset.getPsisim().length) {
+                    dataset.getPsisim()[(i+dim1From) + (j+dim2From) * dataset.getNt()] = s;
+                    }
                 }
             }
-
+            dataset.calcRangeInt();
         }
     }
 

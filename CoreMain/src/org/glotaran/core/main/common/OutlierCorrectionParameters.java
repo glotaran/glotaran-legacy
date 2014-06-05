@@ -41,7 +41,7 @@ public class OutlierCorrectionParameters {
      * @return double[2] [valueFrom, valueTo], returns copy of values stored in the class
      */
     public double[] getOcRegConstD1() {
-        return ocRegConstD1.clone();
+        return ocRegConstD1 == null ? null : ocRegConstD1.clone();
     }
 
     /**
@@ -63,7 +63,7 @@ public class OutlierCorrectionParameters {
      * @return double[2] [valueFrom, valueTo], returns copy of values stored in the class
      */
     public double[] getOcRegConstD2() {
-        return ocRegConstD2.clone();
+        return ocRegConstD2 == null ? null : ocRegConstD2.clone();
     }
     
     /**

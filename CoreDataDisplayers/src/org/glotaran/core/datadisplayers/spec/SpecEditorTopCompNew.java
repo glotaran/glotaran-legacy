@@ -1228,11 +1228,12 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             MakeImageChart(MakeXYZDataset());
             updateFileInfo();
             this.repaint();
-
+            if (ocParameters.isIndividualOutlierC()) {
             NotifyDescriptor.Message warningMessage = new NotifyDescriptor.Message(String.valueOf(ocParameters.getNumberOfIndividualOutliersRemoved()) + " "
                     + NbBundle.getBundle("org/glotaran/core/datadisplayers/Bundle").getString("outliersNumber"),
                     NotifyDescriptor.INFORMATION_MESSAGE);
             DialogDisplayer.getDefault().notify(warningMessage);
+            }
 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
