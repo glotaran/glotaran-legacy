@@ -427,7 +427,9 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
 
     private void enableDisableControls() {
         setEnabledRecursively(jPReplaceIndividualOutliers, jRBReplaceIndividualOutliers.isSelected());
-        setEnabledRecursively(jPSetRegionToConstantValue, jRBSetRegionToConstantValue.isSelected());
+        setEnabledRecursively(jPSetRegionToConstantValue, jRBSetRegionToConstantValue.isSelected());        
+        outlierParameters.setIndividualOutlierC(jRBReplaceIndividualOutliers.isSelected());
+        outlierParameters.setRegionValueC(jRBSetRegionToConstantValue.isSelected());
     }
 
     void setEnabledRecursively(Component component, boolean enabled) {

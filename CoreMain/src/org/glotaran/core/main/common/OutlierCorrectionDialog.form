@@ -148,7 +148,7 @@
                           <Component id="jTFdim1From" pref="50" max="32767" attributes="0"/>
                           <Component id="jTFdim1To" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -237,7 +237,7 @@
                           <Component id="jTFdim2From" pref="50" max="32767" attributes="0"/>
                           <Component id="jTFdim2To" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -320,7 +320,7 @@
                       <Component id="jLConstValue" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jTFconstRepVal" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace pref="113" max="32767" attributes="0"/>
+                      <EmptySpace pref="88" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

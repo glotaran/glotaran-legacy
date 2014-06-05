@@ -244,7 +244,7 @@ public class CommonActionFunctions {
                 dataset.setX(temp);
                 dataset.setNt(1 + indMaxY - indMinY);
                 dataset.calcRangeInt();
-            }            
+            }
         }
         return dataset;
     }
@@ -351,135 +351,151 @@ public class CommonActionFunctions {
             int size = ocParameters.getWindowSize();
             int fence = ocParameters.getFence();
 
-        int ywindnum = dataset.getNl() / size;
-        int xwindnum = dataset.getNt() / size;
+            int ywindnum = dataset.getNl() / size;
+            int xwindnum = dataset.getNt() / size;
 
-        ArrayList<Double> wind = new ArrayList<Double>();
+            ArrayList<Double> wind = new ArrayList<Double>();
 
-        int outliercount = 0;
-        double med;
-        double lowage, hiage;
-        double interv;
+            int outliercount = 0;
+            double med;
+            double lowage, hiage;
+            double interv;
 // mask containes all positions where outliers detected
 //            short[] mask = new short[data.getNl() * data.getNt()];
 //first region - compleate windows
-        for (int n = 0; n < ywindnum - 1; n++) {
-            for (int m = 0; m < xwindnum - 1; m++) {
-                wind.clear();
-                for (int x = 0; x < size; x++) {
-                    for (int y = 0; y < size; y++) {
-                        wind.add(dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y]);
+            for (int n = 0; n < ywindnum - 1; n++) {
+                for (int m = 0; m < xwindnum - 1; m++) {
+                    wind.clear();
+                    for (int x = 0; x < size; x++) {
+                        for (int y = 0; y < size; y++) {
+                            wind.add(dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y]);
+                        }
+                    }
+                    med = median(wind);
+                    interv = abs(quantile(wind, 0.75) - quantile(wind, 0.25));
+
+                    if (interv == 0) {
+                        interv = 1;
+                    }
+                    lowage = med - fence * interv;
+                    hiage = med + fence * interv;
+
+                    for (int x = 0; x < size; x++) {
+                        for (int y = 0; y < size; y++) {
+                            if ((dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y] > hiage)
+                                    || ((dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y] < lowage))) {
+//                                mask[(n * size + x) * data.getNl() + m * size + y] = 1;
+                                dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y] = med;
+                                outliercount++;
+                            }
+                        }
                     }
                 }
+//second region windows with smaller width - left side of the image (if present)
+                //               wind = new ArrayList<Double>((data.getNl() - (xwindnum - 1) * size) * size);
+                wind.clear();
+                for (int y = 0; y < size; y++) {
+                    for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
+                        wind.add(dataset.getPsisim()[(n * size + y) * dataset.getNt() + x]);
+                    }
+                }
+
                 med = median(wind);
                 interv = abs(quantile(wind, 0.75) - quantile(wind, 0.25));
-
                 if (interv == 0) {
                     interv = 1;
                 }
                 lowage = med - fence * interv;
                 hiage = med + fence * interv;
+                for (int y = 0; y < size; y++) {
+                    for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
+                        if ((dataset.getPsisim()[(n * size + y) * dataset.getNt() + x] > hiage)
+                                || (dataset.getPsisim()[(n * size + y) * dataset.getNt() + x] < lowage)) {
 
-                for (int x = 0; x < size; x++) {
-                    for (int y = 0; y < size; y++) {
-                        if ((dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y] > hiage)
-                                || ((dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y] < lowage))) {
-//                                mask[(n * size + x) * data.getNl() + m * size + y] = 1;
-                            dataset.getPsisim()[(n * size + x) * dataset.getNt() + m * size + y] = med;
+//                            mask[(n * size + y) * data.getNl() + x] = 1;
+                            dataset.getPsisim()[(n * size + y) * dataset.getNt() + x] = med;
                             outliercount++;
                         }
                     }
                 }
             }
-//second region windows with smaller width - left side of the image (if present)
-            //               wind = new ArrayList<Double>((data.getNl() - (xwindnum - 1) * size) * size);
-            wind.clear();
-            for (int y = 0; y < size; y++) {
-                for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
-                    wind.add(dataset.getPsisim()[(n * size + y) * dataset.getNt() + x]);
-                }
-            }
-
-            med = median(wind);
-            interv = abs(quantile(wind, 0.75) - quantile(wind, 0.25));
-            if (interv == 0) {
-                interv = 1;
-            }
-            lowage = med - fence * interv;
-            hiage = med + fence * interv;
-            for (int y = 0; y < size; y++) {
-                for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
-                    if ((dataset.getPsisim()[(n * size + y) * dataset.getNt() + x] > hiage)
-                            || (dataset.getPsisim()[(n * size + y) * dataset.getNt() + x] < lowage)) {
-
-//                            mask[(n * size + y) * data.getNl() + x] = 1;
-                        dataset.getPsisim()[(n * size + y) * dataset.getNt() + x] = med;
-                        outliercount++;
-                    }
-                }
-            }
-        }
 //third region windows with smaller height - bottom part of the image (if present)
 //            wind = new ArrayList<Double>((data.getNt() - (ywindnum - 1) * size) * size);
-        for (int m = 0; m < xwindnum - 1; m++) {
+            for (int m = 0; m < xwindnum - 1; m++) {
+                wind.clear();
+                for (int y = (ywindnum - 1) * size; y < dataset.getNl(); y++) {
+                    for (int x = 0; x < size; x++) {
+                        wind.add(dataset.getPsisim()[y * dataset.getNt() + m * size + x]);
+                    }
+                }
+                med = median(wind);
+                interv = abs(quantile(wind, 0.75) - quantile(wind, 0.25));
+                if (interv == 0) {
+                    interv = 1;
+                }
+
+                lowage = med - fence * interv;
+                hiage = med + fence * interv;
+
+                for (int y = (ywindnum - 1) * size; y < dataset.getNl(); y++) {
+                    for (int x = 0; x < size; x++) {
+                        if ((dataset.getPsisim()[y * dataset.getNt() + m * size + x] > hiage)
+                                || (dataset.getPsisim()[y * dataset.getNt() + m * size + x] < lowage)) {
+//                            mask[y * data.getNl() + m * size + x] = 1;
+                            dataset.getPsisim()[y * dataset.getNt() + m * size + x] = med;
+                            outliercount++;
+                        }
+                    }
+                }
+            }
+//forth region windows with smaller width and height - left sfottom angle of the image (if present)
             wind.clear();
             for (int y = (ywindnum - 1) * size; y < dataset.getNl(); y++) {
-                for (int x = 0; x < size; x++) {
-                    wind.add(dataset.getPsisim()[y * dataset.getNt() + m * size + x]);
+                for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
+                    wind.add(dataset.getPsisim()[y * dataset.getNt() + x]);
                 }
             }
             med = median(wind);
             interv = abs(quantile(wind, 0.75) - quantile(wind, 0.25));
+
             if (interv == 0) {
                 interv = 1;
             }
-
             lowage = med - fence * interv;
             hiage = med + fence * interv;
 
-            for (int y = (ywindnum - 1) * size; y < dataset.getNl(); y++) {
-                for (int x = 0; x < size; x++) {
-                    if ((dataset.getPsisim()[y * dataset.getNt() + m * size + x] > hiage)
-                            || (dataset.getPsisim()[y * dataset.getNt() + m * size + x] < lowage)) {
-//                            mask[y * data.getNl() + m * size + x] = 1;
-                        dataset.getPsisim()[y * dataset.getNt() + m * size + x] = med;
-                        outliercount++;
-                    }
-                }
-            }
-        }
-//forth region windows with smaller width and height - left sfottom angle of the image (if present)
-        wind.clear();
-        for (int y = (ywindnum - 1) * size; y < dataset.getNl(); y++) {
-            for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
-                wind.add(dataset.getPsisim()[y * dataset.getNt() + x]);
-            }
-        }
-        med = median(wind);
-        interv = abs(quantile(wind, 0.75) - quantile(wind, 0.25));
-
-        if (interv == 0) {
-            interv = 1;
-        }
-        lowage = med - fence * interv;
-        hiage = med + fence * interv;
-
-        for (int y = (ywindnum - 1) * size; y < dataset.getNt(); y++) {
-            for (int x = (xwindnum - 1) * size; x < dataset.getNl(); x++) {
-                if ((dataset.getPsisim()[y * dataset.getNt() + x] > hiage)
-                        || (dataset.getPsisim()[y * dataset.getNt() + x] < lowage)) {
+            for (int y = (ywindnum - 1) * size; y < dataset.getNt(); y++) {
+                for (int x = (xwindnum - 1) * size; x < dataset.getNl(); x++) {
+                    if ((dataset.getPsisim()[y * dataset.getNt() + x] > hiage)
+                            || (dataset.getPsisim()[y * dataset.getNt() + x] < lowage)) {
 
 //                        mask[y * data.getNl() + x] = 1;
 
-                    dataset.getPsisim()[y * dataset.getNt() + x] = med;
-                    outliercount++;
+                        dataset.getPsisim()[y * dataset.getNt() + x] = med;
+                        outliercount++;
+                    }
                 }
             }
-        }
-        dataset.calcRangeInt();
+            dataset.calcRangeInt();
             ocParameters.setNumberOfIndividualOutliersRemoved(outliercount);
         }
         if (ocParameters.isRegionValueC()) {
+
+            //TODO: make this code abstract into multiple operations: substract, add, set, devide
+            //calculate constant from data based on the filled numbers and put it to bgConstant
+            int dim1From, dim1To, dim2From, dim2To;
+            dim1From = CommonActionFunctions.findTimeIndex(dataset, ocParameters.getOcRegConstD1()[0]);
+            dim1To = CommonActionFunctions.findTimeIndex(dataset, ocParameters.getOcRegConstD1()[1]);
+            dim2From = CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[0], false);
+            dim2To = CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[1], true);
+            //TODO: check if specified region (partially) overlaps with dataset
+            double s = ocParameters.getOcConstValue();
+            for (int i = dim1From; i < (1 + (dim1To - dim1From)); i++) {
+                for (int j = dim2From; j < (1 + (dim2To - dim2From)); j++) {
+                    dataset.getPsisim()[i + j * dataset.getNt()] = s;
+                }
+            }
+
         }
     }
 
@@ -803,16 +819,16 @@ public class CommonActionFunctions {
             return index;
         }
     }
+
     /**
      * Find index for wave Dataset;
      *
-     * @param dataset double array : source 
+     * @param dataset double array : source
      * @param value double : value
      * @param runReverse boolean : indicates whether the function should start
      * at last index rather than 0
      * @return int : index of wave, or -1 if wave is outside of the valid range
      */
-    
     public static int findIndex(double[] dataset, double value, boolean runReverse) {
         boolean isReversedAxis = dataset[0] > dataset[1];
         int index = runReverse ? (dataset.length - 1) : 0;
