@@ -1212,7 +1212,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
     }//GEN-LAST:event_jBSubtractBGActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        OutlierCorrectionDialog outliersCorrectionDialogPanel = new OutlierCorrectionDialog();
+        int maxWindowSize = data.getNt() < data.getNl() ? data.getNt() : data.getNl();
+        OutlierCorrectionDialog outliersCorrectionDialogPanel = new OutlierCorrectionDialog(maxWindowSize);
         NotifyDescriptor outliersCorrectionDialog = new NotifyDescriptor(
                 outliersCorrectionDialogPanel,
                 NbBundle.getBundle("org/glotaran/core/datadisplayers/Bundle").getString("outlierDetectionDialogTitle"),
@@ -1222,14 +1223,13 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                 NotifyDescriptor.CANCEL_OPTION);
 
         if (DialogDisplayer.getDefault().notify(outliersCorrectionDialog).equals(NotifyDescriptor.OK_OPTION)) {
-            int size = outliersCorrectionDialogPanel.getWindowSize();
-            double fence = outliersCorrectionDialogPanel.getFence();
-            int outliercount = CommonActionFunctions.outliersCorrection(data, size, fence);
+            OutlierCorrectionParameters ocParameters = outliersCorrectionDialogPanel.getOutlierParameters();
+            CommonActionFunctions.outliersCorrection(data, ocParameters);
             MakeImageChart(MakeXYZDataset());
             updateFileInfo();
             this.repaint();
 
-            NotifyDescriptor.Message warningMessage = new NotifyDescriptor.Message(String.valueOf(outliercount) + " "
+            NotifyDescriptor.Message warningMessage = new NotifyDescriptor.Message(String.valueOf(ocParameters.getNumberOfIndividualOutliersRemoved()) + " "
                     + NbBundle.getBundle("org/glotaran/core/datadisplayers/Bundle").getString("outliersNumber"),
                     NotifyDescriptor.INFORMATION_MESSAGE);
             DialogDisplayer.getDefault().notify(warningMessage);

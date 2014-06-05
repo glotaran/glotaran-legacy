@@ -133,8 +133,7 @@ public final class AverageTGDDatasetsAction implements ActionListener {
                 if (preprocessDialogPanel.getOutliersState()) {
                     for (DatasetTimp dataset : listOfTimpDatasets) {
                         CommonActionFunctions.outliersCorrection(dataset,
-                                preprocessDialogPanel.getOutlierCorrectionPanel().getWindowSize(),
-                                preprocessDialogPanel.getOutlierCorrectionPanel().getFence());
+                                preprocessDialogPanel.getOutlierCorrectionPanel().getOutlierParameters());
                     }
                 }
 

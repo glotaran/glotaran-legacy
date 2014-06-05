@@ -346,7 +346,11 @@ public class CommonActionFunctions {
      * 0.75*fence
      * @return int : number of outliers;
      */
-    public static int outliersCorrection(DatasetTimp dataset, int size, double fence) {
+    public static void outliersCorrection(DatasetTimp dataset, OutlierCorrectionParameters ocParameters) {
+        if (ocParameters.isIndividualOutlierC()) {
+            int size = ocParameters.getWindowSize();
+            int fence = ocParameters.getFence();
+
         int ywindnum = dataset.getNl() / size;
         int xwindnum = dataset.getNt() / size;
 
@@ -473,8 +477,10 @@ public class CommonActionFunctions {
             }
         }
         dataset.calcRangeInt();
-
-        return outliercount;
+            ocParameters.setNumberOfIndividualOutliersRemoved(outliercount);
+        }
+        if (ocParameters.isRegionValueC()) {
+        }
     }
 
     /**
