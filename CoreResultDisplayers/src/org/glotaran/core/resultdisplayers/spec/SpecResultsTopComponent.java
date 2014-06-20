@@ -304,7 +304,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jButton8 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
-        jButton1 = new javax.swing.JButton();
+        jBExportResiduals = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
@@ -626,16 +626,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar2.add(jButton8);
         jToolBar2.add(jSeparator4);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton1.text")); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(jBExportResiduals, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportResiduals.text")); // NOI18N
+        jBExportResiduals.setFocusable(false);
+        jBExportResiduals.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBExportResiduals.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBExportResiduals.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBExportResidualsActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButton1);
+        jToolBar2.add(jBExportResiduals);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1653,10 +1653,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPSelTimeTrCollection.updateUI();
     }//GEN-LAST:event_jTBOverlayTimeTracessActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBExportResidualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExportResidualsActionPerformed
         // Exports residulas matrix
-        Jama.Matrix dataTracesMat;
-        Jama.Matrix fittedTracesMat;
         Jama.Matrix residualTracesMat;
         BufferedWriter output = null;
         
@@ -1693,11 +1691,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             sb.append("\n");
 
             for (int i = 0; i < residualTracesMat.getRowDimension(); i++) {
+                sb.append(timepoints[i]);
+                sb.append(",");
                 for (int j = 0; j < residualTracesMat.getColumnDimension(); j++) {
-                    sb.append(timepoints[i]);
-                    sb.append(",");
                     sb.append(residualTracesMat.get(i, j));
-                    if (j < selectedTimeTraces.size() - 1) {
+                    if (j < residualTracesMat.getColumnDimension() - 1) {
                         sb.append(",");
                     }
                 }
@@ -1716,16 +1714,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             }
         }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBExportResidualsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAutoSelectTraces;
     private javax.swing.JButton jBClearAllTimeTraces;
     private javax.swing.JButton jBClearAllWavelengthTraces;
+    private javax.swing.JButton jBExportResiduals;
     private javax.swing.JButton jBExportTimeTraces;
     private javax.swing.JButton jBExportWaveTraces;
     private javax.swing.JButton jBUpdLinLog;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton8;
