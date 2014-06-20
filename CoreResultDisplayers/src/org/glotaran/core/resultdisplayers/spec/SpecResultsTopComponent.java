@@ -304,6 +304,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jButton8 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
@@ -625,6 +626,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar2.add(jButton8);
         jToolBar2.add(jSeparator4);
 
+        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton1.text")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton1);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -655,7 +667,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPanel4.add(jPSpecImage, gridBagConstraints);
 
         jSColum.setMaximum(0);
-        jSColum.setValue(0);
         jSColum.setPreferredSize(new java.awt.Dimension(36, 16));
         jSColum.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -672,7 +683,6 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 
         jSRow.setMaximum(0);
         jSRow.setOrientation(javax.swing.JSlider.VERTICAL);
-        jSRow.setValue(0);
         jSRow.setInverted(true);
         jSRow.setPreferredSize(new java.awt.Dimension(36, 16));
         jSRow.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -1643,6 +1653,71 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPSelTimeTrCollection.updateUI();
     }//GEN-LAST:event_jTBOverlayTimeTracessActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Exports residulas matrix
+        Jama.Matrix dataTracesMat;
+        Jama.Matrix fittedTracesMat;
+        Jama.Matrix residualTracesMat;
+        BufferedWriter output = null;
+        
+        JFileChooser fileChooser = new JFileChooser();
+        //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
+        //TODO: add in filechooser delimiter for file
+        //add possibility to select t0 correction
+        ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
+        fileChooser.addChoosableFileFilter(filter);
+        int option = fileChooser.showSaveDialog(this);
+        
+        if (option == JFileChooser.APPROVE_OPTION) {
+            String filename = fileChooser.getSelectedFile().getPath();
+                if (!filename.endsWith(".csv")) {
+                    filename += ".csv";
+                }                    
+
+        try {
+            output = new BufferedWriter(new FileWriter(new File(filename)));
+            StringBuilder sb = new StringBuilder();
+//            dataTracesMat = res.getTraces();
+//            fittedTracesMat = res.getFittedTraces();
+            residualTracesMat = res.getResiduals();
+            double[] wavenumbers = res.getX2();
+            double[] timepoints = res.getX();         
+            
+            sb.append("0,");
+            for (int index = 0; index < wavenumbers.length; index++) {
+                sb.append(wavenumbers[index]);
+                if (index < wavenumbers.length - 1) {
+                    sb.append(",");
+                }
+            }
+            sb.append("\n");
+
+            for (int i = 0; i < residualTracesMat.getRowDimension(); i++) {
+                for (int j = 0; j < residualTracesMat.getColumnDimension(); j++) {
+                    sb.append(timepoints[i]);
+                    sb.append(",");
+                    sb.append(residualTracesMat.get(i, j));
+                    if (j < selectedTimeTraces.size() - 1) {
+                        sb.append(",");
+                    }
+                }
+                sb.append("\n");
+            }
+            output.append(sb);
+            output.close();
+
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        } finally {
+            try {
+                output.close();
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAutoSelectTraces;
     private javax.swing.JButton jBClearAllTimeTraces;
@@ -1650,6 +1725,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private javax.swing.JButton jBExportTimeTraces;
     private javax.swing.JButton jBExportWaveTraces;
     private javax.swing.JButton jBUpdLinLog;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton8;
