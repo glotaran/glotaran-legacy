@@ -52,6 +52,14 @@
             <file name="org-netbeans-modules-favorites-Add.instance_hidden"/>
         </folder>
     </folder>
+    <folder name="Export">
+        <file name="org-glotaran-core-main-nodes-actions-ExportIRF-separatorBefore.instance">
+            <attr name="instanceCreate" newvalue="javax.swing.JSeparator"/>
+        </file>
+        <file name="org-glotaran-core-main-nodes-actions-ExportIRF.shadow">
+            <attr name="originalFile" stringvalue="Actions/File/org-glotaran-core-main-nodes-actions-ExportIRF.instance"/>
+        </file>
+    </folder>
     <folder name="Loaders">
         <folder name="text">
             <folder name="tgd+xml">
@@ -296,12 +304,15 @@
             </folder>
         </folder>
     </folder>
-    <folder name="Menu">
+    <folder name="Menu">        
         <folder name="File">
             <file name="org-glotaran-core-main-nodes-actions-OpenDatasetFile.shadow">
                 <attr name="originalFile" stringvalue="Actions/Project/org-glotaran-core-main-nodes-actions-OpenDataset.instance"/>
                 <attr name="position" intvalue="300"/>
             </file>
+        </folder>
+        <folder name="Export">
+            <attr name="position" intvalue="1100"/>
         </folder>
     </folder>
     <folder name="Services">

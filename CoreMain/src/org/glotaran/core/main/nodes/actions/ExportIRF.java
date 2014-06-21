@@ -38,7 +38,9 @@ import org.openide.util.NbBundle.Messages;
 @ActionRegistration(
         displayName = "#CTL_ExportIRF")
 @ActionReferences({
-    @ActionReference(path = "Menu/File", position = 1429, separatorBefore = 1428),
+    @ActionReference(path = "Menu/Export", position = 140),
+    @ActionReference(path = "Loaders/text/tgd+xml/Actions", position = 250),
+    @ActionReference(path = "Loaders/text/x-timpdataset/Actions", position = 250),
     @ActionReference(path = "Shortcuts", name = "D-S-I")
 })
 @Messages("CTL_ExportIRF=Export IRF")
