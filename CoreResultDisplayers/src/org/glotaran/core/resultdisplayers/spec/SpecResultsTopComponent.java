@@ -1125,6 +1125,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 int startInd = CommonActionFunctions.findIndex(res.getX2(),selTracePanel.getSelectXStart(),false);
                 int endInd = CommonActionFunctions.findIndex(res.getX2(),selTracePanel.getSelectXEnd(),true);
 //                int w = res.getX2().length / numSelTraces;
+                if ((endInd-startInd)<numSelTraces) {
+                    numSelTraces = endInd-startInd+1;
+                }
                 int w = (endInd-startInd) / numSelTraces;
                 int xIndex;
                 if (!selTracePanel.isXCollectionAppend()) {
@@ -1171,6 +1174,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                 int startInd = CommonActionFunctions.findIndex(res.getX(),selTracePanel.getSelectYStart(),false);    
                 int endInd = CommonActionFunctions.findIndex(res.getX(),selTracePanel.getSelectYEnd(),true);
 //                int w = res.getX().length / numSelTraces;
+                if ((endInd-startInd)<numSelTraces) {
+                    numSelTraces = endInd-startInd+1;
+                }
                 int w = (endInd-startInd) / numSelTraces;
                 NumberAxis xAxis;
                 ChartPanel chpan;
