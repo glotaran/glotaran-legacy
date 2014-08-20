@@ -19,3 +19,163 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
+# /
+/build
+/dist
+
+# /ASCIIDataloader/
+/ASCIIDataloader/build
+
+# /ASCIIDataloader/nbproject/
+/ASCIIDataloader/nbproject/private
+
+# /AVGDataloader/
+/AVGDataloader/build
+
+# /AnalysisOverviewFileSupport/
+/AnalysisOverviewFileSupport/build
+
+# /CoreAUC/
+/CoreAUC/build
+
+# /CoreAUC/nbproject/
+/CoreAUC/nbproject/private
+
+# /CoreAnalysis/
+/CoreAnalysis/build
+
+# /CoreAnalysis/nbproject/
+/CoreAnalysis/nbproject/private
+
+# /CoreDataDisplayers/
+/CoreDataDisplayers/build
+
+# /CoreDataDisplayers/nbproject/
+/CoreDataDisplayers/nbproject/private
+
+# /CoreInterfaces/
+/CoreInterfaces/build
+
+# /CoreInterfaces/nbproject/
+/CoreInterfaces/nbproject/private
+
+# /CoreMain/
+/CoreMain/build
+
+# /CoreMain/nbproject/
+/CoreMain/nbproject/private
+
+# /CoreMessages/
+/CoreMessages/build
+
+# /CoreModels/
+/CoreModels/build
+
+# /CoreModels/nbproject/
+/CoreModels/nbproject/private
+
+# /CoreResultDisplayers/
+/CoreResultDisplayers/build
+
+# /CoreResultDisplayers/nbproject/
+/CoreResultDisplayers/nbproject/private
+
+# /CoreSimulation/
+/CoreSimulation/build
+
+# /CoreUI/
+/CoreUI/build
+
+# /CoreVisualModelling/
+/CoreVisualModelling/build
+
+# /CoreVisualModelling/nbproject/
+/CoreVisualModelling/nbproject/private
+
+# /GtaFileSupport/
+/GtaFileSupport/build
+
+# /GtaFileSupport/nbproject/
+/GtaFileSupport/nbproject/private
+
+# /JAXBWizzardOutput/
+/JAXBWizzardOutput/build
+/JAXBWizzardOutput/dist
+
+# /JAXBWizzardOutput/nbproject/
+/JAXBWizzardOutput/nbproject/private
+
+# /JFreeChartCustom/
+/JFreeChartCustom/build
+
+# /JFreeChartCustom/nbproject/
+/JFreeChartCustom/nbproject/private
+
+# /JRConnect/
+/JRConnect/build
+
+# /JRI/
+/JRI/build
+
+# /PQDataloader/
+/PQDataloader/build
+
+# /PQDataloader/nbproject/
+/PQDataloader/nbproject/private
+
+# /REngine/
+/REngine/build
+
+# /RawDataloader/
+/RawDataloader/build
+
+# /RawDataloader/nbproject/
+/RawDataloader/nbproject/private
+
+# /SDTDataloader/
+/SDTDataloader/build
+
+# /SDTDataloader/nbproject/
+/SDTDataloader/nbproject/private
+
+# /SimSupport/
+/SimSupport/build
+
+# /TGMFileSupport/
+/TGMFileSupport/build
+
+# /TGMFileSupport/nbproject/
+/TGMFileSupport/nbproject/private
+
+# /TIMPController/
+/TIMPController/build
+
+# /UJMPwithdep/
+/UJMPwithdep/build
+
+# /batik/
+/batik/build
+
+# /bio-formats/
+/bio-formats/build
+
+# /csvdataloader/
+/csvdataloader/build
+
+# /csvdataloader/nbproject/
+/csvdataloader/nbproject/private
+
+# /imgdataloader_new/
+/imgdataloader_new/build
+
+# /imgdataloader_new/nbproject/
+/imgdataloader_new/nbproject/private
+
+# /jcommon/
+/jcommon/build
+
+# /jfreechart/
+/jfreechart/build
+
+# /jide-oss/
+/jide-oss/build
