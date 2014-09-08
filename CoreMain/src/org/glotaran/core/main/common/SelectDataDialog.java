@@ -30,6 +30,7 @@ public class SelectDataDialog extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPDim1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -42,108 +43,111 @@ public class SelectDataDialog extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jTFDim2To = new javax.swing.JTextField();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jPDim1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jPDim1.border.title"))); // NOI18N
-        jPDim1.setPreferredSize(new java.awt.Dimension(150, 93));
+        jPDim1.setMinimumSize(new java.awt.Dimension(140, 70));
+        jPDim1.setPreferredSize(new java.awt.Dimension(150, 70));
+        jPDim1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jLabel1.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 3, 0);
+        jPDim1.add(jLabel1, gridBagConstraints);
 
         jTFDim1From.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jTFDim1From.text")); // NOI18N
         jTFDim1From.setPreferredSize(new java.awt.Dimension(20, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 125;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 1, 0);
+        jPDim1.add(jTFDim1From, gridBagConstraints);
 
         jLabel2.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 0);
+        jPDim1.add(jLabel2, gridBagConstraints);
 
         jTFDim1To.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jTFDim1To.text")); // NOI18N
         jTFDim1To.setPreferredSize(new java.awt.Dimension(20, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 125;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 10, 0, 0);
+        jPDim1.add(jTFDim1To, gridBagConstraints);
 
-        javax.swing.GroupLayout jPDim1Layout = new javax.swing.GroupLayout(jPDim1);
-        jPDim1.setLayout(jPDim1Layout);
-        jPDim1Layout.setHorizontalGroup(
-            jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPDim1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTFDim1To, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(jTFDim1From, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
-        );
-        jPDim1Layout.setVerticalGroup(
-            jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPDim1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(jPDim1Layout.createSequentialGroup()
-                        .addComponent(jTFDim1From, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFDim1To, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 80;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPDim1, gridBagConstraints);
 
         jPDim2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jPDim2.border.title"))); // NOI18N
-        jPDim2.setPreferredSize(new java.awt.Dimension(150, 93));
+        jPDim2.setMinimumSize(new java.awt.Dimension(140, 70));
+        jPDim2.setPreferredSize(new java.awt.Dimension(150, 70));
+        jPDim2.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jLabel3.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPDim2.add(jLabel3, gridBagConstraints);
 
         jTFDim2From.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jTFDim2From.text")); // NOI18N
         jTFDim2From.setPreferredSize(new java.awt.Dimension(20, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 125;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 1, 0);
+        jPDim2.add(jTFDim2From, gridBagConstraints);
 
         jLabel4.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jLabel4.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jPDim2.add(jLabel4, gridBagConstraints);
 
         jTFDim2To.setText(org.openide.util.NbBundle.getMessage(SelectDataDialog.class, "SelectDataDialog.jTFDim2To.text")); // NOI18N
         jTFDim2To.setPreferredSize(new java.awt.Dimension(20, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 125;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 10, 0, 0);
+        jPDim2.add(jTFDim2To, gridBagConstraints);
 
-        javax.swing.GroupLayout jPDim2Layout = new javax.swing.GroupLayout(jPDim2);
-        jPDim2.setLayout(jPDim2Layout);
-        jPDim2Layout.setHorizontalGroup(
-            jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTFDim2To, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(jTFDim2From, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
-        );
-        jPDim2Layout.setVerticalGroup(
-            jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTFDim2From, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTFDim2To, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPDim2, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(jPDim1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPDim1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPDim2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 80;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPDim2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 

@@ -41,6 +41,7 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jCbResampleX = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -50,15 +51,31 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
         jTXnum = new javax.swing.JTextField();
         jCbAveraging = new javax.swing.JCheckBox();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jCbResampleX.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jCbResampleX.text")); // NOI18N
         jCbResampleX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCbResampleXActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        add(jCbResampleX, gridBagConstraints);
 
         jLabel1.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jLabel1.text")); // NOI18N
         jLabel1.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 25, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         jCbResampleY.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jCbResampleY.text")); // NOI18N
         jCbResampleY.addActionListener(new java.awt.event.ActionListener() {
@@ -66,9 +83,23 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
                 jCbResampleYActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        add(jCbResampleY, gridBagConstraints);
 
         jLabel2.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jLabel2.text")); // NOI18N
         jLabel2.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 25, 0, 0);
+        add(jLabel2, gridBagConstraints);
 
         jTYnum.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jTYnum.text")); // NOI18N
         jTYnum.setEnabled(false);
@@ -77,6 +108,14 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
                 jTYnumKeyReleased(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 5);
+        add(jTYnum, gridBagConstraints);
 
         jTXnum.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jTXnum.text")); // NOI18N
         jTXnum.setEnabled(false);
@@ -85,51 +124,23 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
                 jTXnumKeyReleased(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 5);
+        add(jTXnum, gridBagConstraints);
 
         jCbAveraging.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jCbAveraging.text")); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCbAveraging)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTYnum, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTXnum))
-                        .addComponent(jCbResampleX)
-                        .addComponent(jCbResampleY)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCbResampleX)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTXnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCbResampleY)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTYnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCbAveraging)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        add(jCbAveraging, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCbResampleXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbResampleXActionPerformed
