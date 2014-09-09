@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.SimSupport">
-    <module_version install_time="1410230391436" last="true" origin="installer" specification_version="1.4">
-        <file crc="792282722" name="config/Modules/org-glotaran-SimSupport.xml"/>
-        <file crc="1377977827" name="modules/org-glotaran-SimSupport.jar"/>
-    </module_version>
-</module>

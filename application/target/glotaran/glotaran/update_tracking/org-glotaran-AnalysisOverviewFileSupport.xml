@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.AnalysisOverviewFileSupport">
-    <module_version install_time="1410230392252" last="true" origin="installer" specification_version="1.4">
-        <file crc="3675879006" name="config/Modules/org-glotaran-AnalysisOverviewFileSupport.xml"/>
-        <file crc="677448281" name="modules/org-glotaran-AnalysisOverviewFileSupport.jar"/>
-        <file crc="197743737" name="update_tracking/org-glotaran-AnalysisOverviewFileSupport.xml"/>
-    </module_version>
-</module>

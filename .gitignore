@@ -1,6 +1,13 @@
 #ant specific
 dist/
 build/
+
+#Maven specific
+*/target/*
+.classpath
+.project
+.settings/
+target/
  
 #netbeans specific
 nbproject/*

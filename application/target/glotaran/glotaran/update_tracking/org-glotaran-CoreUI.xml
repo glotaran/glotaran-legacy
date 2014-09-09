@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreUI">
-    <module_version install_time="1410230390584" last="true" origin="installer" specification_version="1.4">
-        <file crc="3819222543" name="config/Modules/org-glotaran-CoreUI.xml"/>
-        <file crc="2394647552" name="modules/org-glotaran-CoreUI.jar"/>
-    </module_version>
-</module>

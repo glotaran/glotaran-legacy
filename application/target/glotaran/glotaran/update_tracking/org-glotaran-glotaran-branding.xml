@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.glotaran.branding">
-    <module_version install_time="1410230390566" last="true" origin="installer" specification_version="1.4">
-        <file crc="2188718009" name="config/Modules/org-glotaran-glotaran-branding.xml"/>
-        <file crc="944038632" name="core/locale/core_glotaran.jar"/>
-        <file crc="1484367814" name="modules/locale/org-netbeans-core-windows_glotaran.jar"/>
-        <file crc="287372205" name="modules/locale/org-netbeans-core_glotaran.jar"/>
-        <file crc="471453872" name="modules/org-glotaran-glotaran-branding.jar"/>
-    </module_version>
-</module>

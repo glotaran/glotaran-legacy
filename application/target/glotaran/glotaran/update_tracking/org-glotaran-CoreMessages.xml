@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreMessages">
-    <module_version install_time="1410230391411" last="true" origin="installer" specification_version="1.4">
-        <file crc="2160997615" name="config/Modules/org-glotaran-CoreMessages.xml"/>
-        <file crc="2952518309" name="modules/org-glotaran-CoreMessages.jar"/>
-    </module_version>
-</module>

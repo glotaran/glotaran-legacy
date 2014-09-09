@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreAUC">
-    <module_version install_time="1410230391858" last="true" origin="installer" specification_version="1.4">
-        <file crc="1032956210" name="config/Modules/org-glotaran-CoreAUC.xml"/>
-        <file crc="4018638505" name="modules/org-glotaran-CoreAUC.jar"/>
-    </module_version>
-</module>

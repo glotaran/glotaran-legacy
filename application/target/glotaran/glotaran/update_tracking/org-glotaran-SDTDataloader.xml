@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.SDTDataloader">
-    <module_version install_time="1410230392202" last="true" origin="installer" specification_version="1.4">
-        <file crc="4224125363" name="config/Modules/org-glotaran-SDTDataloader.xml"/>
-        <file crc="2549350886" name="modules/org-glotaran-SDTDataloader.jar"/>
-        <file crc="3418268101" name="update_tracking/org-glotaran-SDTDataloader.xml"/>
-    </module_version>
-</module>

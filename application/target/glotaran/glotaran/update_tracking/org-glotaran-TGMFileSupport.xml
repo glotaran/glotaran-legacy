@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.TGMFileSupport">
-    <module_version install_time="1410231278849" last="true" origin="installer" specification_version="1.4">
-        <file crc="752600171" name="config/Modules/org-glotaran-TGMFileSupport.xml"/>
-        <file crc="3078580825" name="modules/org-glotaran-TGMFileSupport.jar"/>
-    </module_version>
-</module>

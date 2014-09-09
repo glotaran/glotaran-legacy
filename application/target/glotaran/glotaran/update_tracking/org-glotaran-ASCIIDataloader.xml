@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.ASCIIDataloader">
-    <module_version install_time="1410230392215" last="true" origin="installer" specification_version="1.4">
-        <file crc="1446127572" name="config/Modules/org-glotaran-ASCIIDataloader.xml"/>
-        <file crc="3017922410" name="modules/org-glotaran-ASCIIDataloader.jar"/>
-        <file crc="732443491" name="update_tracking/org-glotaran-ASCIIDataloader.xml"/>
-    </module_version>
-</module>

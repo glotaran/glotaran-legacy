@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreResultDisplayers">
-    <module_version install_time="1410230392171" last="true" origin="installer" specification_version="1.4">
-        <file crc="171708483" name="config/Modules/org-glotaran-CoreResultDisplayers.xml"/>
-        <file crc="4135575409" name="modules/ext/org.glotaran.CoreResultDisplayers/org-jfree/jcommon.jar"/>
-        <file crc="2688481381" name="modules/ext/org.glotaran.CoreResultDisplayers/org-jfree/jfreechart.jar"/>
-        <file crc="895565980" name="modules/org-glotaran-CoreResultDisplayers.jar"/>
-        <file crc="2802845192" name="update_tracking/org-glotaran-CoreResultDisplayers.xml"/>
-    </module_version>
-</module>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreMain">
-    <module_version install_time="1410230391187" last="true" origin="installer" specification_version="1.4">
-        <file crc="2696431894" name="config/Modules/org-glotaran-CoreMain.xml"/>
-        <file crc="5540163" name="modules/org-glotaran-CoreMain.jar"/>
-    </module_version>
-</module>

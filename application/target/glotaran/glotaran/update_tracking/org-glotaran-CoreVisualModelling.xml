@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreVisualModelling">
-    <module_version install_time="1410230391572" last="true" origin="installer" specification_version="1.4">
-        <file crc="2095840380" name="config/Modules/org-glotaran-CoreVisualModelling.xml"/>
-        <file crc="2044616765" name="modules/org-glotaran-CoreVisualModelling.jar"/>
-    </module_version>
-</module>
