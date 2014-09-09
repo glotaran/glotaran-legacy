@@ -13,13 +13,19 @@ import org.glotaran.core.main.nodes.TimpDatasetNode;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.filesystems.MIMEResolver;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.InstanceDataObject;
 import org.openide.loaders.MultiFileLoader;
 import org.openide.nodes.CookieSet;
 import org.openide.nodes.Node;
 import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 
+@MIMEResolver.Registration(displayName="#Services/MIMEResolver/TimpDatasetResolver.xml",
+            resource="../../TimpDatasetResolver.xml",
+            position=1400 )
+@NbBundle.Messages("Services/MIMEResolver/TimpDatasetResolver.xml=Timp Datasets")
 public class TimpDatasetDataObject extends InstanceDataObject {
 
     public TimpDatasetDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {

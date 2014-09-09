@@ -52,7 +52,7 @@
 	<publicPackage>org.jfree.data.time</publicPackage>
 	<publicPackage>org.jfree.data.time.ohlc</publicPackage>
 	<publicPackage>org.jfree.data.xml</publicPackage>
-	<publicPackage>org.jfree.data.xy</publicPackage>
+	<publicPackage>org.jfree.data.xy</publicPackage>    
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -85,12 +85,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>jcommon</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>jcommon</artifactId>
-            <groupId>org.jfree</groupId>
-            <type>jar</type>
-            <version>1.0.23</version>
         </dependency>
     </dependencies>
     <properties>

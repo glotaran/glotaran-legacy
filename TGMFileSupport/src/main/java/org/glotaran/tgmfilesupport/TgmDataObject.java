@@ -12,6 +12,7 @@ import org.openide.ErrorManager;
 import org.openide.cookies.SaveCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.filesystems.MIMEResolver;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiDataObject;
 import org.openide.loaders.MultiFileLoader;
@@ -20,6 +21,10 @@ import org.openide.nodes.Node;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
+
+@MIMEResolver.Registration(displayName="org/glotaran/tgmfilesupporrt#Services/MIMEResolver/TgmResolver.xml",
+            resource="TgmResolver.xml",
+            position=1700 )
 
 public class TgmDataObject extends MultiDataObject implements SaveCookie {
     

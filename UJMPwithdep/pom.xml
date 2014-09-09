@@ -220,21 +220,10 @@
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
-          <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.ujmp</groupId>
             <artifactId>ujmp-complete</artifactId>
             <version>0.2.5</version>                  
-        </dependency>
-        <dependency>
-            <groupId>gov.nist.math.jama</groupId>
-            <artifactId>gov.nist.math.jama</artifactId>
-            <version>1.1.1</version>
-            <classifier>jar-with-dependencies</classifier>
         </dependency>	
 	 <!-- <dependency>
 		<groupId>??????</groupId>
@@ -313,6 +302,11 @@
             <groupId>net.sourceforge.parallelcolt</groupId>
             <artifactId>parallelcolt</artifactId>
             <version>0.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>Jama</groupId>
+            <artifactId>Jama</artifactId>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
     <properties>

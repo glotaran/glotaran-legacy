@@ -71,14 +71,7 @@
                 </folder>
             </folder>
         </folder>
-    </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="SpectralModelResolver.xml" url="SpectralModelResolver.xml">
-                <attr name="displayName" bundlevalue="org.glotaran.simfilesupport.Bundle#Services/MIMEResolver/SpectralModelResolver.xml"/>
-            </file>
-        </folder>
-    </folder>
+    </folder>    
     <folder name="Templates">
         <folder name="Other">
             <file name="SpectralModelTemplate.xml" url="SpectralModelTemplate.xml">

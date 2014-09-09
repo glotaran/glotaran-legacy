@@ -11,6 +11,7 @@ import org.glotaran.core.models.gta.GtaProjectScheme;
 import org.openide.cookies.SaveCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.filesystems.MIMEResolver;
 import org.openide.loaders.DataNode;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiDataObject;
@@ -21,6 +22,9 @@ import org.openide.nodes.Children;
 import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 
+@MIMEResolver.Registration(displayName="#Services/MIMEResolver/GtaResolver.xml",
+            resource="GtaResolver.xml",
+            position=1500 )
 public class GtaDataObject extends MultiDataObject implements SaveCookie {
 
     private GtaProjectScheme gtaScheme;

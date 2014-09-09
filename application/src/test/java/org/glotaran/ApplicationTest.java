@@ -11,7 +11,7 @@ public class ApplicationTest extends NbTestCase {
         return NbModuleSuite.createConfiguration(ApplicationTest.class).
                 gui(false).
                 failOnMessage(Level.WARNING). // works at least in RELEASE71
-                failOnException(Level.INFO).
+                //failOnException(Level.INFO). // if ENABELED then the test will fail on INFO [org.netbeans.core.network.proxy.NetworkProxyReloader]: System network proxy resolver: no suitable found, using fallback.
                 enableClasspathModules(false). 
                 clusters(".*").
                 suite(); // RELEASE71+, else use NbModuleSuite.create(NbModuleSuite.createConfiguration(...))

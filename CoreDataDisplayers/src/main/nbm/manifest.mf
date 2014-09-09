@@ -1,4 +1,3 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Layer: org/glotaran/core/datadisplayers/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/core/datadisplayers/Bundle.properties
 

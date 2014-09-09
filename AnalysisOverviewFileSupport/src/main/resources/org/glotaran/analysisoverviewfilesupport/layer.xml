@@ -72,11 +72,4 @@
             </folder>
         </folder>
     </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="AnalysisResultResolver.xml" url="AnalysisResultResolver.xml">
-                <attr name="displayName" bundlevalue="org.glotaran.analysisoverviewfilesupport.Bundle#Services/MIMEResolver/AnalysisResultResolver.xml"/>
-            </file>
-        </folder>
-    </folder>
 </filesystem>

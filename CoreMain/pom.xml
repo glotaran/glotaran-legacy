@@ -100,11 +100,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>UJMPwithdep</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
             <version>RELEASE80</version>
@@ -125,6 +120,11 @@
             <artifactId>org-netbeans-modules-projectuiapi</artifactId>
             <version>RELEASE80</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>UJMPwithdep</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>

@@ -11,6 +11,7 @@ import org.glotaran.core.models.sim.SpectralModelSpecification;
 import org.openide.cookies.SaveCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.filesystems.MIMEResolver;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiDataObject;
 import org.openide.loaders.MultiFileLoader;
@@ -20,7 +21,15 @@ import org.openide.nodes.Children;
 import org.openide.text.DataEditorSupport;
 import org.openide.util.Lookup;
 
-public class SpectralModelDataObject extends MultiDataObject implements SaveCookie {
+/**
+ *
+ * @author jsg210
+ */
+@MIMEResolver.Registration(displayName="org/glotaran/simfilesupporrt#Services/MIMEResolver/SpectralModelResolver.xml",
+            resource="../SpectralModelResolver.xml",
+            position=1600 )
+
+ public class SpectralModelDataObject extends MultiDataObject implements SaveCookie {
 
     SpectralModelSpecification sim;
 

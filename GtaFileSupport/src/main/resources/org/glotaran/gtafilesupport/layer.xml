@@ -37,13 +37,6 @@
             </folder>
         </folder>
     </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="GtaResolver.xml" url="GtaResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.glotaran.gtafilesupport.Bundle"/>
-            </file>
-        </folder>
-    </folder>
     <folder name="Templates">
         <folder name="Glotaran">
             <file name="GtaTemplate.xml" url="GtaTemplate.xml">

@@ -315,23 +315,6 @@
             <attr name="position" intvalue="1100"/>
         </folder>
     </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="SummaryResolver.xml" url="SummaryResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.glotaran.core.main.Bundle"/>
-            </file>
-            <file name="TgdResolver.xml" url="TgdResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.glotaran.core.main.Bundle"/>
-            </file>
-            <file name="TimpDatasetResolver.xml" url="TimpDatasetResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.glotaran.core.main.Bundle"/>
-            </file>
-            <file name="TimpResultResolver.xml" url="TimpResultResolver.xml">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.glotaran.core.main.Bundle"/>
-            </file>
-
-        </folder>
-    </folder>
     <folder name="Templates">
         <folder name="Project">
             <folder name="General">

@@ -69,12 +69,6 @@
             <artifactId>jcommon</artifactId>
             <version>${project.version}</version>          
         </dependency>
-        <dependency>
-            <artifactId>jcommon</artifactId>
-            <groupId>org.jfree</groupId>
-            <type>jar</type>
-            <version>1.0.23</version>
-        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
