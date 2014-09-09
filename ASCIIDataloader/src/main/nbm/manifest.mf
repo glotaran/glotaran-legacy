@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Layer: org/glotaran/asciidataloader/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/asciidataloader/Bundle.properties
+

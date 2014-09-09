@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreInterfaces">
+    <module_version install_time="1410230391101" last="true" origin="installer" specification_version="1.4">
+        <file crc="3230343115" name="config/Modules/org-glotaran-CoreInterfaces.xml"/>
+        <file crc="1849398825" name="modules/org-glotaran-CoreInterfaces.jar"/>
+    </module_version>
+</module>

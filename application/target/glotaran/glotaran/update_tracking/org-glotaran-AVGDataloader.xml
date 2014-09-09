@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.AVGDataloader">
+    <module_version install_time="1410230391958" last="true" origin="installer" specification_version="1.4">
+        <file crc="1542456201" name="config/Modules/org-glotaran-AVGDataloader.xml"/>
+        <file crc="1810308735" name="modules/org-glotaran-AVGDataloader.jar"/>
+        <file crc="240142340" name="update_tracking/org-glotaran-AVGDataloader.xml"/>
+    </module_version>
+</module>

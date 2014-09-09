@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreSimulation">
+    <module_version install_time="1410230390624" last="true" origin="installer" specification_version="1.4">
+        <file crc="4037665422" name="config/Modules/org-glotaran-CoreSimulation.xml"/>
+        <file crc="4235682417" name="modules/org-glotaran-CoreSimulation.jar"/>
+    </module_version>
+</module>

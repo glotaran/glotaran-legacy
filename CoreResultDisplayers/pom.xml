@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.glotaran</groupId>
+        <artifactId>glotaran-parent</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+    <artifactId>CoreResultDisplayers</artifactId>
+    <packaging>nbm</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <extensions>true</extensions>
+		<configuration>
+                    <publicPackages>                        
+                    </publicPackages>    
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-annotations-common</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+	
+	
+	
+	
+	
+	
+	
+	
+	<dependency>
+	<groupId>org.netbeans.api</groupId>
+		<artifactId>org-netbeans-api-progress</artifactId>
+		<version>RELEASE80</version></dependency>
+	
+	
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-awt</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-dialogs</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-filesystems</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-loaders</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-nodes</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-util</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-util-lookup</artifactId>
+		<version>RELEASE80</version></dependency>
+	<dependency>
+		<groupId>org.netbeans.api</groupId>
+		<artifactId>org-openide-windows</artifactId>
+		<version>RELEASE80</version></dependency>
+	
+        <dependency>
+            <groupId>org.glotaran</groupId>
+            <artifactId>CoreMain</artifactId>
+            <version>1.4-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.19</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>JFreeChartCustom</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-settings</artifactId>
+            <version>RELEASE80</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.glotaran</groupId>
+            <artifactId>AnalysisOverviewFileSupport</artifactId>
+            <version>1.4-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <artifactId>CoreInterfaces</artifactId>
+            <groupId>org.glotaran</groupId>
+            <type>jar</type>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <artifactId>CoreMessages</artifactId>
+            <groupId>org.glotaran</groupId>
+            <type>jar</type>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <artifactId>CoreModels</artifactId>
+            <groupId>org.glotaran</groupId>
+            <type>jar</type>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <artifactId>UJMPwithdep</artifactId>
+            <groupId>org.glotaran</groupId>
+            <type>jar</type>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-projectapi</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+    </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+</project>

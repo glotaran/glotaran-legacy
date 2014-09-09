@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreModels">
+    <module_version install_time="1410230391417" last="true" origin="installer" specification_version="1.4">
+        <file crc="572631615" name="config/Modules/org-glotaran-CoreModels.xml"/>
+        <file crc="3468477893" name="modules/org-glotaran-CoreModels.jar"/>
+    </module_version>
+</module>

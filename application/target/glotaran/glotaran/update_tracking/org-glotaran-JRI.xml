@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.JRI">
+    <module_version install_time="1410230391984" last="true" origin="installer" specification_version="1.4">
+        <file crc="36172652" name="config/Modules/org-glotaran-JRI.xml"/>
+        <file crc="2736200" name="modules/org-glotaran-JRI.jar"/>
+        <file crc="825354858" name="update_tracking/org-glotaran-JRI.xml"/>
+    </module_version>
+</module>

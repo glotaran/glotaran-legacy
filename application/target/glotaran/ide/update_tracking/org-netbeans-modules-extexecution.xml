@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.extexecution/2">
+    <module_version install_time="1410230392152" last="true" origin="installer" specification_version="1.41.1">
+        <file crc="3522709403" name="config/Modules/org-netbeans-modules-extexecution.xml"/>
+        <file crc="3323476864" name="modules/locale/org-netbeans-modules-extexecution_ja.jar"/>
+        <file crc="885279887" name="modules/locale/org-netbeans-modules-extexecution_pt_BR.jar"/>
+        <file crc="79280303" name="modules/locale/org-netbeans-modules-extexecution_ru.jar"/>
+        <file crc="1096863810" name="modules/locale/org-netbeans-modules-extexecution_zh_CN.jar"/>
+        <file crc="902754804" name="modules/org-netbeans-modules-extexecution.jar"/>
+    </module_version>
+</module>

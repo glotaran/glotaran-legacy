@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreDataDisplayers">
+    <module_version install_time="1410230391952" last="true" origin="installer" specification_version="1.4">
+        <file crc="3242297301" name="config/Modules/org-glotaran-CoreDataDisplayers.xml"/>
+        <file crc="120346274" name="modules/org-glotaran-CoreDataDisplayers.jar"/>
+    </module_version>
+</module>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.JFreeChartCustom">
+    <module_version install_time="1410230391429" last="true" origin="installer" specification_version="1.4">
+        <file crc="441635932" name="config/Modules/org-glotaran-JFreeChartCustom.xml"/>
+        <file crc="1917567295" name="modules/ext/org.glotaran.JFreeChartCustom/org-jfree/jfreesvg.jar"/>
+        <file crc="3637854829" name="modules/org-glotaran-JFreeChartCustom.jar"/>
+    </module_version>
+</module>

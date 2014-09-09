@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+AutoUpdate-Essential-Module: true
+OpenIDE-Module-Layer: org/glotaran/core/messages/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/core/messages/Bundle.properties
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.CoreAnalysis">
+    <module_version install_time="1410230391065" last="true" origin="installer" specification_version="1.4">
+        <file crc="981560920" name="config/Modules/org-glotaran-CoreAnalysis.xml"/>
+        <file crc="4052624795" name="modules/org-glotaran-CoreAnalysis.jar"/>
+    </module_version>
+</module>

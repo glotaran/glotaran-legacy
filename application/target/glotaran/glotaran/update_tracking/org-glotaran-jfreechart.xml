@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.jfreechart">
+    <module_version install_time="1410230390601" last="true" origin="installer" specification_version="1.4">
+        <file crc="1964976912" name="config/Modules/org-glotaran-jfreechart.xml"/>
+        <file crc="4135575409" name="modules/ext/org.glotaran.jfreechart/org-jfree/jcommon.jar"/>
+        <file crc="2688481381" name="modules/ext/org.glotaran.jfreechart/org-jfree/jfreechart.jar"/>
+        <file crc="1751694561" name="modules/org-glotaran-jfreechart.jar"/>
+        <file crc="546424698" name="update_tracking/org-glotaran-jfreechart.xml"/>
+    </module_version>
+</module>

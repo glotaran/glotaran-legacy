@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.glotaran.REngine">
+    <module_version install_time="1410230392181" last="true" origin="installer" specification_version="1.4">
+        <file crc="4116422937" name="config/Modules/org-glotaran-REngine.xml"/>
+        <file crc="609758977" name="modules/org-glotaran-REngine.jar"/>
+        <file crc="2394901020" name="update_tracking/org-glotaran-REngine.xml"/>
+    </module_version>
+</module>

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Layer: org/glotaran/pqdataloader/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/pqdataloader/Bundle.properties
+

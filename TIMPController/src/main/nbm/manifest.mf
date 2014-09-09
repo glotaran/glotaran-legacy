@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: false
+OpenIDE-Module-Install: org/glotaran/timpcontroller/Installer.class
+OpenIDE-Module-Layer: org/glotaran/timpcontroller/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/glotaran/timpcontroller/Bundle.properties
+
