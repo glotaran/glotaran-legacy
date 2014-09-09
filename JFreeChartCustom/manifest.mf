@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: org.glotaran.jfreechartcustom/1
-OpenIDE-Module-Layer: org/glotaran/jfreechartcustom/layer.xml
-OpenIDE-Module-Localizing-Bundle: org/glotaran/jfreechartcustom/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.3
-

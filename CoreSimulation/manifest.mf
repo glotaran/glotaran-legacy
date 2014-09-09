@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: org.glotaran.simulation/1
-OpenIDE-Module-Layer: org/glotaran/simulation/layer.xml
-OpenIDE-Module-Localizing-Bundle: org/glotaran/simulation/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.0
-
