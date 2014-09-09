@@ -12,12 +12,18 @@
 package org.glotaran.core.main.common;
 
 import javax.swing.border.TitledBorder;
+import org.glotaran.core.messages.CoreErrorMessages;
 
 /**
  *
  * @author jsg210
  */
 public class DimensionPanel extends javax.swing.JPanel {
+    private double fromOld=0;
+    private double fromNew=0;
+    private double toOld=0;
+    private double toNew=0;
+    
 
     /** Creates new form selectDataDialog */
     public DimensionPanel() {
@@ -35,9 +41,9 @@ public class DimensionPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel2 = new javax.swing.JLabel();
-        jTFDim1To = new javax.swing.JTextField();
+        jTFDimTo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTFDim1From = new javax.swing.JTextField();
+        jTFDimFrom = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(DimensionPanel.class, "DimensionPanel.border.title"))); // NOI18N
         setMinimumSize(new java.awt.Dimension(110, 70));
@@ -53,8 +59,16 @@ public class DimensionPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(jLabel2, gridBagConstraints);
 
-        jTFDim1To.setText(org.openide.util.NbBundle.getMessage(DimensionPanel.class, "DimensionPanel.jTFDim1To.text")); // NOI18N
-        jTFDim1To.setPreferredSize(new java.awt.Dimension(20, 19));
+        jTFDimTo.setText(org.openide.util.NbBundle.getMessage(DimensionPanel.class, "DimensionPanel.jTFDimTo.text")); // NOI18N
+        jTFDimTo.setPreferredSize(new java.awt.Dimension(20, 19));
+        jTFDimTo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTFDimToFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTFDimToFocusLost(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -63,7 +77,7 @@ public class DimensionPanel extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 65;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 10, 0, 0);
-        add(jTFDim1To, gridBagConstraints);
+        add(jTFDimTo, gridBagConstraints);
 
         jLabel1.setText(org.openide.util.NbBundle.getMessage(DimensionPanel.class, "DimensionPanel.jLabel1.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -74,8 +88,16 @@ public class DimensionPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(jLabel1, gridBagConstraints);
 
-        jTFDim1From.setText(org.openide.util.NbBundle.getMessage(DimensionPanel.class, "DimensionPanel.jTFDim1From.text")); // NOI18N
-        jTFDim1From.setPreferredSize(new java.awt.Dimension(20, 19));
+        jTFDimFrom.setText(org.openide.util.NbBundle.getMessage(DimensionPanel.class, "DimensionPanel.jTFDimFrom.text")); // NOI18N
+        jTFDimFrom.setPreferredSize(new java.awt.Dimension(20, 19));
+        jTFDimFrom.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTFDimFromFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTFDimFromFocusLost(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -84,29 +106,60 @@ public class DimensionPanel extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 65;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 1, 0);
-        add(jTFDim1From, gridBagConstraints);
+        add(jTFDimFrom, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTFDimFromFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDimFromFocusLost
+        if (checkDouble(jTFDimFrom.getText())){
+            fromNew = Double.parseDouble(jTFDimFrom.getText());
+            firePropertyChange("from", fromOld, fromNew);
+        }
+        
+    }//GEN-LAST:event_jTFDimFromFocusLost
+
+    private void jTFDimToFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDimToFocusLost
+        if (checkDouble(jTFDimTo.getText())){
+            toNew = Double.parseDouble(jTFDimTo.getText());
+            firePropertyChange("to", toOld, toNew);
+        }
+        
+    }//GEN-LAST:event_jTFDimToFocusLost
+
+    private void jTFDimFromFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDimFromFocusGained
+        try {
+            Double.parseDouble(jTFDimFrom.getText());
+            fromOld = Double.parseDouble(jTFDimFrom.getText());
+        } catch (NumberFormatException e) {
+            fromOld = -1;
+        }
+    }//GEN-LAST:event_jTFDimFromFocusGained
+
+    private void jTFDimToFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDimToFocusGained
+        try {
+            Double.parseDouble(jTFDimTo.getText());
+            toOld = Double.parseDouble(jTFDimTo.getText()); 
+        } catch (NumberFormatException e) {
+           toOld=-1;
+        }  
+    }//GEN-LAST:event_jTFDimToFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTFDim1From;
-    private javax.swing.JTextField jTFDim1To;
+    private javax.swing.JTextField jTFDimFrom;
+    private javax.swing.JTextField jTFDimTo;
     // End of variables declaration//GEN-END:variables
 
-    public double getDim1From(){
-        return Double.parseDouble(jTFDim1From.getText());
+    public double getDimFrom(){
+        return fromNew;
     }
-    public double getDim1To(){
-        return Double.parseDouble(jTFDim1To.getText());
+    public double getDimTo(){
+        return toNew;
     }
 
     @Override
     public void setEnabled(boolean enabled) {
-        for (int i = 0; i < getComponentCount(); i++) {
-            getComponent(i).setEnabled(enabled);
-        }
         for (int i = 0; i < getComponentCount(); i++) {
             getComponent(i).setEnabled(enabled);
         }
@@ -117,4 +170,13 @@ public class DimensionPanel extends javax.swing.JPanel {
         ((TitledBorder)getBorder()).setTitle(name);
     }
     
+    private boolean checkDouble(String number) {
+        try {
+            Double.parseDouble(number);
+            return true;
+        } catch (Exception e) {
+            CoreErrorMessages.numberFormatException();
+            return false;
+        }
+    }
 }
