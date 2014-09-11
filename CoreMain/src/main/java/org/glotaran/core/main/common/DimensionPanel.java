@@ -11,6 +11,8 @@
 
 package org.glotaran.core.main.common;
 
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import org.glotaran.core.messages.CoreErrorMessages;
 
@@ -160,10 +162,10 @@ public class DimensionPanel extends javax.swing.JPanel {
 
     @Override
     public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
         for (int i = 0; i < getComponentCount(); i++) {
             getComponent(i).setEnabled(enabled);
         }
-        
     }
     
     public void setPanName(String name){
