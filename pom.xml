@@ -33,7 +33,8 @@
                     <extensions>true</extensions>
                     <configuration>
                         <brandingToken>${brandingToken}</brandingToken>
-                        <cluster>${brandingToken}</cluster>
+                        <cluster>${brandingToken}</cluster>    
+                        <additionalArguments>-J-Xmx786m </additionalArguments>                    
                     </configuration>
                 </plugin>
                 <plugin>
