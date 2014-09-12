@@ -48,6 +48,7 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPReplaceIndividualOutliers = new javax.swing.JPanel();
@@ -56,19 +57,36 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
         jSWindSize = new javax.swing.JSpinner();
         jTFFence = new javax.swing.JTextField();
         jPSetRegionToConstantValue = new javax.swing.JPanel();
-        jPreplacementValue = new javax.swing.JPanel();
-        jLConstValue = new javax.swing.JLabel();
-        jTFconstRepVal = new javax.swing.JTextField();
         dimPanel1 = new org.glotaran.core.main.common.DimensionPanel();
         dimPanel2 = new org.glotaran.core.main.common.DimensionPanel();
+        jLConstValue = new javax.swing.JLabel();
+        jTFconstRepVal = new javax.swing.JTextField();
         jRBReplaceIndividualOutliers = new javax.swing.JRadioButton();
         jRBSetRegionToConstantValue = new javax.swing.JRadioButton();
 
-        setMinimumSize(new java.awt.Dimension(200, 300));
+        setMinimumSize(new java.awt.Dimension(540, 130));
+        setPreferredSize(new java.awt.Dimension(540, 130));
+        setLayout(new java.awt.GridBagLayout());
+
+        jPReplaceIndividualOutliers.setMinimumSize(new java.awt.Dimension(180, 100));
+        jPReplaceIndividualOutliers.setPreferredSize(new java.awt.Dimension(200, 100));
+        jPReplaceIndividualOutliers.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jLabel1.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPReplaceIndividualOutliers.add(jLabel1, gridBagConstraints);
 
         jLabel2.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPReplaceIndividualOutliers.add(jLabel2, gridBagConstraints);
 
         jSWindSize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(4), Integer.valueOf(3), null, Integer.valueOf(1)));
         jSWindSize.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -76,6 +94,14 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
                 jSWindSizeStateChanged(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 31;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 1, 0);
+        jPReplaceIndividualOutliers.add(jSWindSize, gridBagConstraints);
 
         jTFFence.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTFFence.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jTFFence.text")); // NOI18N
@@ -84,41 +110,57 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
                 jTFFenceKeyReleased(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 10, 0, 0);
+        jPReplaceIndividualOutliers.add(jTFFence, gridBagConstraints);
 
-        javax.swing.GroupLayout jPReplaceIndividualOutliersLayout = new javax.swing.GroupLayout(jPReplaceIndividualOutliers);
-        jPReplaceIndividualOutliers.setLayout(jPReplaceIndividualOutliersLayout);
-        jPReplaceIndividualOutliersLayout.setHorizontalGroup(
-            jPReplaceIndividualOutliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPReplaceIndividualOutliersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPReplaceIndividualOutliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPReplaceIndividualOutliersLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTFFence, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPReplaceIndividualOutliersLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSWindSize, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPReplaceIndividualOutliersLayout.setVerticalGroup(
-            jPReplaceIndividualOutliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPReplaceIndividualOutliersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPReplaceIndividualOutliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1)
-                    .addComponent(jSWindSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPReplaceIndividualOutliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFFence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(24, 24, 24))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(jPReplaceIndividualOutliers, gridBagConstraints);
 
-        jPreplacementValue.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jPreplacementValue.border.title"))); // NOI18N
+        jPSetRegionToConstantValue.setMinimumSize(new java.awt.Dimension(310, 100));
+        jPSetRegionToConstantValue.setPreferredSize(new java.awt.Dimension(310, 100));
+        jPSetRegionToConstantValue.setLayout(new java.awt.GridBagLayout());
+
+        dimPanel1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dimPanel1PropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPSetRegionToConstantValue.add(dimPanel1, gridBagConstraints);
+
+        dimPanel2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dimPanel2PropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPSetRegionToConstantValue.add(dimPanel2, gridBagConstraints);
 
         jLConstValue.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jLConstValue.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jPSetRegionToConstantValue.add(jLConstValue, gridBagConstraints);
 
         jTFconstRepVal.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jTFconstRepVal.text")); // NOI18N
         jTFconstRepVal.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -126,63 +168,21 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
                 jTFconstRepValKeyReleased(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPSetRegionToConstantValue.add(jTFconstRepVal, gridBagConstraints);
 
-        javax.swing.GroupLayout jPreplacementValueLayout = new javax.swing.GroupLayout(jPreplacementValue);
-        jPreplacementValue.setLayout(jPreplacementValueLayout);
-        jPreplacementValueLayout.setHorizontalGroup(
-            jPreplacementValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPreplacementValueLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLConstValue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTFconstRepVal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
-        );
-        jPreplacementValueLayout.setVerticalGroup(
-            jPreplacementValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPreplacementValueLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPreplacementValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLConstValue)
-                    .addComponent(jTFconstRepVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        dimPanel1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dimPanel1PropertyChange(evt);
-            }
-        });
-
-        dimPanel2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dimPanel2PropertyChange(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPSetRegionToConstantValueLayout = new javax.swing.GroupLayout(jPSetRegionToConstantValue);
-        jPSetRegionToConstantValue.setLayout(jPSetRegionToConstantValueLayout);
-        jPSetRegionToConstantValueLayout.setHorizontalGroup(
-            jPSetRegionToConstantValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPSetRegionToConstantValueLayout.createSequentialGroup()
-                .addGroup(jPSetRegionToConstantValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPSetRegionToConstantValueLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(dimPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dimPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPreplacementValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(216, 216, 216))
-        );
-        jPSetRegionToConstantValueLayout.setVerticalGroup(
-            jPSetRegionToConstantValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPSetRegionToConstantValueLayout.createSequentialGroup()
-                .addGroup(jPSetRegionToConstantValueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dimPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dimPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addComponent(jPreplacementValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(jPSetRegionToConstantValue, gridBagConstraints);
 
         buttonGroup1.add(jRBReplaceIndividualOutliers);
         jRBReplaceIndividualOutliers.setSelected(true);
@@ -192,6 +192,12 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
                 jRBReplaceIndividualOutliersActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jRBReplaceIndividualOutliers, gridBagConstraints);
 
         buttonGroup1.add(jRBSetRegionToConstantValue);
         jRBSetRegionToConstantValue.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jRBSetRegionToConstantValue.text")); // NOI18N
@@ -200,33 +206,12 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
                 jRBSetRegionToConstantValueActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRBReplaceIndividualOutliers, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRBSetRegionToConstantValue)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPSetRegionToConstantValue, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPReplaceIndividualOutliers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(211, 211, 211))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jRBReplaceIndividualOutliers)
-                .addGap(0, 0, 0)
-                .addComponent(jPReplaceIndividualOutliers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jRBSetRegionToConstantValue)
-                .addGap(0, 0, 0)
-                .addComponent(jPSetRegionToConstantValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jRBSetRegionToConstantValue, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTFFenceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFFenceKeyReleased
@@ -288,7 +273,6 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPReplaceIndividualOutliers;
     private javax.swing.JPanel jPSetRegionToConstantValue;
-    private javax.swing.JPanel jPreplacementValue;
     private javax.swing.JRadioButton jRBReplaceIndividualOutliers;
     private javax.swing.JRadioButton jRBSetRegionToConstantValue;
     private javax.swing.JSpinner jSWindSize;
@@ -304,7 +288,7 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
             enableDisableControls();
         } else {
          for (int i = 0; i < getComponentCount(); i++) {
-             getComponent(i).setEnabled(enabled);
+             setEnabledRecursively(getComponent(i), enabled);
             }
         }
     }
@@ -312,8 +296,6 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
     private void enableDisableControls() {
         setEnabledRecursively(jPReplaceIndividualOutliers, jRBReplaceIndividualOutliers.isSelected());
         setEnabledRecursively(jPSetRegionToConstantValue, jRBSetRegionToConstantValue.isSelected());
-        dimPanel1.setEnabled(jRBSetRegionToConstantValue.isSelected());
-        dimPanel2.setEnabled(jRBSetRegionToConstantValue.isSelected());
         
         outlierParameters.setIndividualOutlierC(jRBReplaceIndividualOutliers.isSelected());
         outlierParameters.setRegionValueC(jRBSetRegionToConstantValue.isSelected());
