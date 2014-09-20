@@ -11,8 +11,6 @@
 
 package org.glotaran.core.main.common;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import org.glotaran.core.messages.CoreErrorMessages;
 

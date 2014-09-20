@@ -20,6 +20,11 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
     public BaselineCorrectionDialog() {
         initComponents();
         corrParameters = new BaseLineCorrectionParameters();
+        dimensionPanel1.setPanName("Dimension 1(Time)");
+        dimensionPanel2.setPanName("Dimension 2(Waves)");
+        dimensionPanel1.setEnabled(false);
+        dimensionPanel2.setEnabled(false);
+        
     }
 
     /** This method is called from within the constructor to
@@ -33,16 +38,6 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPDim1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTFRegBGDim1From = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTFRegBGDim1To = new javax.swing.JTextField();
-        jPDim2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTFRegBGDim2From = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTFRegBGDim2To = new javax.swing.JTextField();
         jRBSubSpec = new javax.swing.JRadioButton();
         jRBSubConstCalc = new javax.swing.JRadioButton();
         jTFNumSelSpec = new javax.swing.JTextField();
@@ -61,137 +56,12 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         jTFTimeTrBGFrom = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTFTimeTrBGTo = new javax.swing.JTextField();
+        dimensionPanel1 = new org.glotaran.core.main.common.DimensionPanel();
+        dimensionPanel2 = new org.glotaran.core.main.common.DimensionPanel();
 
+        setMinimumSize(new java.awt.Dimension(460, 290));
+        setPreferredSize(new java.awt.Dimension(460, 290));
         setLayout(new java.awt.GridBagLayout());
-
-        jPDim1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jPDim1.border.title"))); // NOI18N
-        jPDim1.setEnabled(false);
-        jPDim1.setPreferredSize(new java.awt.Dimension(150, 93));
-
-        jLabel1.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel1.text")); // NOI18N
-        jLabel1.setEnabled(false);
-
-        jTFRegBGDim1From.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jTFRegBGDim1From.text")); // NOI18N
-        jTFRegBGDim1From.setEnabled(false);
-        jTFRegBGDim1From.setPreferredSize(new java.awt.Dimension(20, 19));
-        jTFRegBGDim1From.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFRegBGDim1FromKeyReleased(evt);
-            }
-        });
-
-        jLabel2.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel2.text")); // NOI18N
-        jLabel2.setEnabled(false);
-
-        jTFRegBGDim1To.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jTFRegBGDim1To.text")); // NOI18N
-        jTFRegBGDim1To.setEnabled(false);
-        jTFRegBGDim1To.setPreferredSize(new java.awt.Dimension(20, 19));
-        jTFRegBGDim1To.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFRegBGDim1ToKeyReleased(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPDim1Layout = new javax.swing.GroupLayout(jPDim1);
-        jPDim1.setLayout(jPDim1Layout);
-        jPDim1Layout.setHorizontalGroup(
-            jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTFRegBGDim1To, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                    .addComponent(jTFRegBGDim1From, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPDim1Layout.setVerticalGroup(
-            jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim1Layout.createSequentialGroup()
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTFRegBGDim1From, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPDim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTFRegBGDim1To, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = -10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
-        add(jPDim1, gridBagConstraints);
-
-        jPDim2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jPDim2.border.title"))); // NOI18N
-        jPDim2.setEnabled(false);
-        jPDim2.setPreferredSize(new java.awt.Dimension(150, 93));
-
-        jLabel3.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel3.text")); // NOI18N
-        jLabel3.setEnabled(false);
-
-        jTFRegBGDim2From.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jTFRegBGDim2From.text")); // NOI18N
-        jTFRegBGDim2From.setEnabled(false);
-        jTFRegBGDim2From.setPreferredSize(new java.awt.Dimension(20, 19));
-        jTFRegBGDim2From.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFRegBGDim2FromKeyReleased(evt);
-            }
-        });
-
-        jLabel4.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel4.text")); // NOI18N
-        jLabel4.setEnabled(false);
-
-        jTFRegBGDim2To.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jTFRegBGDim2To.text")); // NOI18N
-        jTFRegBGDim2To.setEnabled(false);
-        jTFRegBGDim2To.setPreferredSize(new java.awt.Dimension(20, 19));
-        jTFRegBGDim2To.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFRegBGDim2ToKeyReleased(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPDim2Layout = new javax.swing.GroupLayout(jPDim2);
-        jPDim2.setLayout(jPDim2Layout);
-        jPDim2Layout.setHorizontalGroup(
-            jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTFRegBGDim2To, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                    .addComponent(jTFRegBGDim2From, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPDim2Layout.setVerticalGroup(
-            jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDim2Layout.createSequentialGroup()
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTFRegBGDim2From, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPDim2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTFRegBGDim2To, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = -10;
-        gridBagConstraints.insets = new java.awt.Insets(0, -25, 0, 0);
-        add(jPDim2, gridBagConstraints);
 
         buttonGroup1.add(jRBSubSpec);
         jRBSubSpec.setSelected(true);
@@ -204,10 +74,9 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jRBSubSpec, gridBagConstraints);
 
         buttonGroup1.add(jRBSubConstCalc);
@@ -220,10 +89,9 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jRBSubConstCalc, gridBagConstraints);
 
         jTFNumSelSpec.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -236,11 +104,12 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        gridBagConstraints.ipadx = 65;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
         add(jTFNumSelSpec, gridBagConstraints);
 
         jLabel5.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel5.text")); // NOI18N
@@ -250,7 +119,7 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         add(jLabel5, gridBagConstraints);
 
         buttonGroup1.add(jRBSubConst);
@@ -263,10 +132,9 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jRBSubConst, gridBagConstraints);
 
         jLabel6.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel6.text")); // NOI18N
@@ -276,7 +144,7 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         add(jLabel6, gridBagConstraints);
 
         jTFConstToSubtract.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -290,10 +158,12 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 65;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
         add(jTFConstToSubtract, gridBagConstraints);
         jTFConstToSubtract.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jTFNumSelSpec1.AccessibleContext.accessibleDescription")); // NOI18N
 
@@ -307,10 +177,9 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jRBSubFile, gridBagConstraints);
 
         jLabel7.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel7.text")); // NOI18N
@@ -319,9 +188,10 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         add(jLabel7, gridBagConstraints);
 
         jTFFileName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -330,22 +200,21 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         jTFFileName.setEnabled(false);
         jTFFileName.setPreferredSize(new java.awt.Dimension(20, 19));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, -100, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 0);
         add(jTFFileName, gridBagConstraints);
         jTFFileName.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jTFNumSelSpec2.AccessibleContext.accessibleDescription")); // NOI18N
 
         jButton2.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jButton2.text")); // NOI18N
         jButton2.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 9;
-        gridBagConstraints.ipadx = -20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         add(jButton2, gridBagConstraints);
 
         buttonGroup1.add(jRBSubTimeTr);
@@ -358,10 +227,9 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jRBSubTimeTr, gridBagConstraints);
 
         jLabel8.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel8.text")); // NOI18N
@@ -370,11 +238,12 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         add(jLabel8, gridBagConstraints);
 
         jPDimLine.setEnabled(false);
-        jPDimLine.setPreferredSize(new java.awt.Dimension(150, 93));
+        jPDimLine.setMinimumSize(new java.awt.Dimension(150, 20));
+        jPDimLine.setPreferredSize(new java.awt.Dimension(200, 20));
         jPDimLine.setLayout(new java.awt.GridBagLayout());
 
         jLabel9.setText(org.openide.util.NbBundle.getMessage(BaselineCorrectionDialog.class, "BaselineCorrectionDialog.jLabel9.text")); // NOI18N
@@ -433,13 +302,37 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         jPDimLine.add(jTFTimeTrBGTo, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipady = -74;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, -80, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(jPDimLine, gridBagConstraints);
+
+        dimensionPanel1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dimensionPanel1PropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(dimensionPanel1, gridBagConstraints);
+
+        dimensionPanel2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dimensionPanel2PropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(dimensionPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTFNumSelSpecKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFNumSelSpecKeyReleased
@@ -488,45 +381,35 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTFTimeTrBGToKeyReleased
 
-    private void jTFRegBGDim1FromKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim1FromKeyReleased
-        if (checkDouble(jTFRegBGDim1From.getText())){
-            corrParameters.setBgRegConstD1(0, Double.parseDouble(jTFRegBGDim1From.getText()));
+    private void dimensionPanel1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dimensionPanel1PropertyChange
+        if (evt.getPropertyName().equalsIgnoreCase("from")){
+            corrParameters.setBgRegConstD1(0,(double)evt.getNewValue());
         }
-    }//GEN-LAST:event_jTFRegBGDim1FromKeyReleased
+        if (evt.getPropertyName().equalsIgnoreCase("to")){
+            corrParameters.setBgRegConstD1(1,(double)evt.getNewValue());
+        }
+    }//GEN-LAST:event_dimensionPanel1PropertyChange
 
-    private void jTFRegBGDim1ToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim1ToKeyReleased
-        if (checkDouble(jTFRegBGDim1To.getText())) {
-            corrParameters.setBgRegConstD1(1, Double.parseDouble(jTFRegBGDim1To.getText()));
+    private void dimensionPanel2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dimensionPanel2PropertyChange
+        if (evt.getPropertyName().equalsIgnoreCase("from")){
+            corrParameters.setBgRegConstD2(0,(double)evt.getNewValue());
         }
-    }//GEN-LAST:event_jTFRegBGDim1ToKeyReleased
-
-    private void jTFRegBGDim2FromKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim2FromKeyReleased
-        if (checkDouble(jTFRegBGDim2From.getText())){
-            corrParameters.setBgRegConstD2(0, Double.parseDouble(jTFRegBGDim2From.getText()));
+        if (evt.getPropertyName().equalsIgnoreCase("to")){
+            corrParameters.setBgRegConstD2(1,(double)evt.getNewValue());
         }
-    }//GEN-LAST:event_jTFRegBGDim2FromKeyReleased
-
-    private void jTFRegBGDim2ToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFRegBGDim2ToKeyReleased
-        if (checkDouble(jTFRegBGDim2To.getText())){
-            corrParameters.setBgRegConstD2(1, Double.parseDouble(jTFRegBGDim2To.getText()));
-        }
-    }//GEN-LAST:event_jTFRegBGDim2ToKeyReleased
+    }//GEN-LAST:event_dimensionPanel2PropertyChange
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private org.glotaran.core.main.common.DimensionPanel dimensionPanel1;
+    private org.glotaran.core.main.common.DimensionPanel dimensionPanel2;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPDim1;
-    private javax.swing.JPanel jPDim2;
     private javax.swing.JPanel jPDimLine;
     private javax.swing.JRadioButton jRBSubConst;
     private javax.swing.JRadioButton jRBSubConstCalc;
@@ -536,10 +419,6 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
     private javax.swing.JTextField jTFConstToSubtract;
     private javax.swing.JTextField jTFFileName;
     private javax.swing.JTextField jTFNumSelSpec;
-    private javax.swing.JTextField jTFRegBGDim1From;
-    private javax.swing.JTextField jTFRegBGDim1To;
-    private javax.swing.JTextField jTFRegBGDim2From;
-    private javax.swing.JTextField jTFRegBGDim2To;
     private javax.swing.JTextField jTFTimeTrBGFrom;
     private javax.swing.JTextField jTFTimeTrBGTo;
     // End of variables declaration//GEN-END:variables
@@ -563,19 +442,12 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
         jLabel8.setEnabled(jRBSubSpec.isSelected());
         jLabel6.setEnabled(jRBSubConst.isSelected());
         jLabel7.setEnabled(jRBSubFile.isSelected());
-        jPDim1.setEnabled(jRBSubConstCalc.isSelected());
-        jPDim2.setEnabled(jRBSubConstCalc.isSelected());
-        for (int i = 0; i < jPDim1.getComponentCount(); i++){
-            jPDim1.getComponent(i).setEnabled(jRBSubConstCalc.isSelected());
-        }
-        for (int i = 0; i < jPDim2.getComponentCount(); i++){
-            jPDim2.getComponent(i).setEnabled(jRBSubConstCalc.isSelected());
-        }
         jPDimLine.setEnabled(jRBSubTimeTr.isSelected());
         for (int i = 0; i < jPDimLine.getComponentCount(); i++){
             jPDimLine.getComponent(i).setEnabled(jRBSubTimeTr.isSelected());
         }
-        
+        dimensionPanel1.setEnabled(jRBSubConstCalc.isSelected());
+        dimensionPanel2.setEnabled(jRBSubConstCalc.isSelected());
         corrParameters.setMeasuredBG(jRBSubFile.isSelected());
         corrParameters.setConstBG(jRBSubConst.isSelected());
         corrParameters.setTimetraceBG(jRBSubTimeTr.isSelected());
@@ -692,14 +564,8 @@ public class BaselineCorrectionDialog extends javax.swing.JPanel {
             for (int i = 0; i < getComponentCount(); i++) {
                 getComponent(i).setEnabled(false);
             }
-            for (int i = 0; i < jPDim1.getComponentCount(); i++) {
-                jPDim1.getComponent(i).setEnabled(false);
-            }          
-            for (int i = 0; i < jPDim2.getComponentCount(); i++) {
-                jPDim2.getComponent(i).setEnabled(false);
-            }
             for (int i = 0; i < jPDimLine.getComponentCount(); i++) {
-                jPDim1.getComponent(i).setEnabled(false);
+                jPDimLine.getComponent(i).setEnabled(false);
             }
         }
     }

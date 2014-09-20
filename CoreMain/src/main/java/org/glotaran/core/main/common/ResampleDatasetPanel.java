@@ -112,9 +112,9 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.ipadx = 55;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jTYnum, gridBagConstraints);
 
         jTXnum.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jTXnum.text")); // NOI18N
@@ -128,9 +128,9 @@ public class ResampleDatasetPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.ipadx = 55;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jTXnum, gridBagConstraints);
 
         jCbAveraging.setText(org.openide.util.NbBundle.getMessage(ResampleDatasetPanel.class, "ResampleDatasetPanel.jCbAveraging.text")); // NOI18N
