@@ -1797,8 +1797,17 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
 //        xAxis.setAxisLinePaint(Color.white);
 //        xAxis.setTickMarkPaint(Color.white);
 //        xAxis.setRange(res.getX()2[0], res.getX2()[res.getX2().length-1]);
+        
+          double[] x2values = data.getX2();
+        double x2range = Math.abs(x2values[0] - x2values[x2values.length - 1]);
+        if (x2range<=0) {
+            for (int i = 0; i < x2values.length; i++) {
+                x2values[i]=i;
+            }
+        }
+        
         int numberOfTicks = Math.min(data.getX2().length,MAX_NO_TICKS);
-        NonLinearNumberTickUnit xTickUnit = new NonLinearNumberTickUnit(data.getX2().length/numberOfTicks, formatter,data.getX2());
+        NonLinearNumberTickUnit xTickUnit = new NonLinearNumberTickUnit(x2values.length/numberOfTicks, formatter,x2values);
         xAxis.setTickUnit(xTickUnit);
         xAxis.setTickLabelsVisible(true);
         tempPlot.setDomainAxis(xAxis);

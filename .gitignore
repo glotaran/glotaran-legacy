@@ -219,3 +219,8 @@ nbproject/*
 /TIMPController/target/
 /RawDataloader/target/
 /SDTDataloader/target/
+/JAXBWizzardOutput/src/main/java/org/glotaran/core/models/tgm/
+/JAXBWizzardOutput/src/main/java/org/glotaran/core/models/tgd/
+/JAXBWizzardOutput/src/main/java/org/glotaran/core/models/results/
+/JAXBWizzardOutput/src/main/java/org/glotaran/core/models/sim/
+/JAXBWizzardOutput/src/main/java/org/glotaran/core/models/gta/

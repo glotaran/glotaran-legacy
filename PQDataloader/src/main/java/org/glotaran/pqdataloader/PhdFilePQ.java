@@ -65,8 +65,6 @@ public class PhdFilePQ implements TGDatasetInterface {
             ParamStruct[] params = new ParamStruct[3];
             header.fread(f);
 
-
-
             String temp = new String(header.Ident);
 
             if (temp.trim().equalsIgnoreCase("PicoHarp 300")) {
@@ -134,11 +132,12 @@ public class PhdFilePQ implements TGDatasetInterface {
         TxtHdr header = new TxtHdr();
         BinHdr1 binHead1 = new BinHdr1();
         BinHdr2 binHead2 = new BinHdr2();
-        //TTTRHdr ttHeader = new TTTRHdr();
+        //TTTRHdr ttHeader = new TTTRHdr();        
         CurveHdr[] curves;
         BoardHdr[] boards;
         CurveMapping[] dispCurves = new CurveMapping[8];
         ParamStruct[] params = new ParamStruct[3];
+        int numberOfRecordedCurves;
         double syncPeriod = 0;
         try {
             header.fread(f);
@@ -163,7 +162,7 @@ public class PhdFilePQ implements TGDatasetInterface {
 
             if (binHead1.MeasMode == 0 && binHead1.BitsPerRecord == 32) {
                 curves = new CurveHdr[binHead1.NumberOfCurves];
-                int numberOfTRES = 0,numberOfOSC =0, numberOfINT=0;
+                int numberOfTRES = 0, numberOfOSC = 0, numberOfINT = 0;
                 int totalChannels = 0, maxChannels = 0;
                 for (int i = 0; i < binHead1.NumberOfCurves; i++) {
                     curves[i] = new CurveHdr();
@@ -186,30 +185,37 @@ public class PhdFilePQ implements TGDatasetInterface {
                     }
                 }
 
+                if (numberOfTRES > 0) {
+                    numberOfRecordedCurves = binHead1.NumberOfCurves - 1;
+                } else {
+                    numberOfRecordedCurves = binHead1.NumberOfCurves;
+                }
+
                 dataset.setDatasetName(file.getName());
-                dataset.setNl(binHead1.NumberOfCurves - 1);
+                dataset.setNl(numberOfRecordedCurves);
                 dataset.setNt(maxChannels);
                 dataset.setType("spec");
-                
+
                 //The 0the curve (if measured) is always the IRF in a TRES measurement
-                dataset.setPsisim(new double[maxChannels * (binHead1.NumberOfCurves - 1)]); //perhaps change totalChannels to totalBins if data is set to be read in binned
+                dataset.setPsisim(new double[maxChannels * (numberOfRecordedCurves)]); //perhaps change totalChannels to totalBins if data is set to be read in binned
                 dataset.setX(new double[dataset.getNt()]); //timepoints
                 dataset.setX2(new double[dataset.getNl()]); //wavelengths
                 dataset.setMeasuredIRF(new double[maxChannels]);
                 dataset.setMeasuredIRFDomainAxis(new double[maxChannels]);
                 for (int i = 0; i < binHead1.NumberOfCurves; i++) { //skip IRF (curve=0)                    
                     f.seek(curves[i].DataOffset);
+                    int corr = numberOfTRES > 0 ? 1 : 0;
                     for (int j = 0; j < curves[i].Channels; j++) {
-                        if (i==0) {
+                        if (i == 0 && numberOfTRES > 0) {
                             dataset.getMeasuredIRF()[j] = f.readUnsignedInt();
                             dataset.getMeasuredIRFDomainAxis()[j] = curves[i].Resolution * j;
                         } else {
-                            dataset.getPsisim()[j + (i - 1) * maxChannels] = f.readUnsignedInt();
+                            dataset.getPsisim()[j + (i - corr) * maxChannels] = f.readUnsignedInt();
                             dataset.getX()[j] = curves[i].Resolution * j;
                         }
                     }
-                    if (i>0) {
-                        dataset.getX2()[i - 1] = (double) curves[i].P1;
+                    if (i > 0 || numberOfTRES == 0) {
+                        dataset.getX2()[i - corr] = (double) curves[i].P1;
                     }
                 }
                 dataset.calcRangeInt();
@@ -222,7 +228,6 @@ public class PhdFilePQ implements TGDatasetInterface {
         } catch (InstantiationException ex) {
             Logger.getLogger(PhdFilePQ.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
         return dataset;
     }

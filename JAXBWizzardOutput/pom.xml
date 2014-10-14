@@ -14,7 +14,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
                     </publicPackages>    
                 </configuration>
@@ -26,6 +26,72 @@
                     <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
+            <!-- JAXB xjc plugin that invokes the xjc compiler to compile XML schema into Java classes.-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>xjc-gta</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>gta/GlobalAndTargetAnalysisSchema.xsd</schemaFiles>
+                            <packageName>org.glotaran.core.models.gta</packageName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xjc-results</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>results/AnalysisResultsSchema.xsd</schemaFiles>
+                            <packageName>org.glotaran.core.models.results</packageName>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xjc-sim</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>sim/SpectralModelSchema.xsd</schemaFiles>
+                            <packageName>org.glotaran.core.models.sim</packageName>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xjc-tgd</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>tgd/TgdSchema.xsd</schemaFiles>
+                            <packageName>org.glotaran.core.models.tgd</packageName>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xjc-tgm</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>tgm/TgmSchema.xsd</schemaFiles>
+                            <packageName>org.glotaran.core.models.tgm</packageName>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>                  
+                </executions>
+                <configuration>
+                    <!-- The schema directory or xsd files. -->
+                    <schemaDirectory>${basedir}/src/main/resources/org/glotaran/core/models/</schemaDirectory>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -33,6 +99,16 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.7</version>
         </dependency>
     </dependencies>
     <properties>
