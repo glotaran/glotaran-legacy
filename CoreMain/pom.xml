@@ -122,6 +122,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
              <version>1.5.1-SNAPSHOT</version>         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Hdf5Interface</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

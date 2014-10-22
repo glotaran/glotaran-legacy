@@ -26,6 +26,7 @@ import org.glotaran.core.main.project.TGProject;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.messages.CoreInformationMessages;
 import org.glotaran.core.models.structures.DatasetTimp;
+import org.glotaran.hdf5interface.Hdf5DatasetTimp;
 import org.glotaran.jfreechartcustom.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -1030,6 +1031,12 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                     ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
                     stream.writeObject(newdataset);
                     stream.close();
+                    
+                    String hdfFile = writeTo.getPath();
+                    hdfFile = hdfFile.substring(0, hdfFile.lastIndexOf('.')) + ".h5";
+                    File file = new File(hdfFile);
+                    Hdf5DatasetTimp.save(file, newdataset);
+
                     if (!averaged) {
                         TimpDatasetDataObject dObj = (TimpDatasetDataObject) DataObject.find(writeTo);
                         TgdDataChildren chidrens;

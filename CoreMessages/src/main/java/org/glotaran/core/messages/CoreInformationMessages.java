@@ -20,5 +20,9 @@ public class CoreInformationMessages {
         DialogDisplayer.getDefault().notify(warningMessage);
     }
 
-    
+    public static void HDF5Info(String datasetname){
+        NotifyDescriptor.Message warningMessage =new NotifyDescriptor.Message(datasetname,
+                NotifyDescriptor.INFORMATION_MESSAGE);
+        DialogDisplayer.getDefault().notify(warningMessage);
+    }
 }

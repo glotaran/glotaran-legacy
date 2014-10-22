@@ -103,6 +103,7 @@
 	<module>UJMPwithdep</module>
         <module>CoreOptions</module>
         <module>ExampleDataloader</module>
+        <module>Hdf5Interface</module>
     </modules>
 
     <properties>
