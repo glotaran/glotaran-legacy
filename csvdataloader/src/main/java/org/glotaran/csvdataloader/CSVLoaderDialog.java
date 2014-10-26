@@ -158,7 +158,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
 
         jPSkip.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPSkip.border.title"))); // NOI18N
         jPSkip.setMinimumSize(new java.awt.Dimension(245, 22));
-        jPSkip.setPreferredSize(new java.awt.Dimension(245, 22));
+        jPSkip.setPreferredSize(new java.awt.Dimension(245, 40));
         jPSkip.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -338,6 +338,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         jPEnableLifetimeDensityMap.add(jPLifetimeDensityMapSettings, gridBagConstraints);
 
         jPSeparator.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPSeparator.border.title"))); // NOI18N
+        jPSeparator.setPreferredSize(new java.awt.Dimension(380, 40));
         jPSeparator.setLayout(new java.awt.GridBagLayout());
 
         JRBGDelimiter.add(jRBComma);
@@ -346,6 +347,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBComma, gridBagConstraints);
 
         JRBGDelimiter.add(jRBSemicolon);
@@ -354,6 +356,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBSemicolon, gridBagConstraints);
 
         JRBGDelimiter.add(jRBTab);
@@ -362,6 +365,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBTab, gridBagConstraints);
 
         JRBGDelimiter.add(jRBSpace);
@@ -370,13 +374,14 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBSpace, gridBagConstraints);
 
         jTFOtherSeparator.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTFOtherSeparator.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 81;
+        gridBagConstraints.ipadx = 50;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPSeparator.add(jTFOtherSeparator, gridBagConstraints);
 
@@ -402,7 +407,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpCalibration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cbLabelsInRows)
-                    .addComponent(jPSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
@@ -411,16 +416,15 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPSkip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(312, Short.MAX_VALUE))))
+                        .addContainerGap(311, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPSkip, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPSkip, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPSeparator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
