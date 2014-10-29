@@ -25,8 +25,9 @@ import org.glotaran.core.messages.CoreInformationMessages;
  */
 public class Hdf5DatasetTimp {
 
+    public static final long version = 1L;
     private static int init = 0;
-    
+
     private static void init() {
         try {
             Class fileclass = Class.forName("ncsa.hdf.object.h5.H5File");
@@ -39,12 +40,12 @@ public class Hdf5DatasetTimp {
             CoreInformationMessages.HDF5Info(err.getMessage());
         }
     }
-    
+
     public static DatasetTimp load(File file) throws FileNotFoundException {
         if (0 == init) {
             init();
         }
-        
+
         DatasetTimp dataset = new DatasetTimp();
 
         dataset.setDatasetName("Test HDF5");
@@ -54,7 +55,7 @@ public class Hdf5DatasetTimp {
 
     public static void save(File file, DatasetTimp dataset) throws IOException {
         H5File hdfFile = null;
-                
+
         if (0 == init) {
             init();
         }
@@ -65,7 +66,6 @@ public class Hdf5DatasetTimp {
             return;
         }
 
-        
         try {
             hdfFile = (H5File) fileFormat.createFile(file.getCanonicalPath(), FileFormat.FILE_CREATE_DELETE);
             // Check for error condition and report.
@@ -75,50 +75,112 @@ public class Hdf5DatasetTimp {
             }
             hdfFile.open();
         } catch (Exception ex) {
-            CoreInformationMessages.HDF5Info("Failed to open " + file.getName() +  ": " + ex.getMessage());
+            CoreInformationMessages.HDF5Info("Failed to open " + file.getName() + ": " + ex.getMessage());
             return;
-        } 
-        
+        }
+
         try {
-            Datatype dtype;
+            Dataset dsetPsisim, dset;
             Attribute attr;
             long[] data_dim;
-            int[] value_int;
+            long[] single_dim = new long[]{1};
+            double[] value_dbl;
+            long[] value_long;
             String[] value_str;
             Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) hdfFile.getRootNode()).getUserObject();
-            // create DatasetTimp group at the root
+            // create DatasetTimp group at the root, and 3 sub-groups: for spectra, FLIM image and instrument response function
             Group groupTimp = hdfFile.createGroup("DatasetTimp", root);
+            Group groupPsisim = hdfFile.createGroup("psisim", groupTimp);
+            Group groupFlim = hdfFile.createGroup("flim", groupTimp);
+            Group groupIRF = hdfFile.createGroup("measured_irf", groupTimp);
 
-            //create data type and store the data
-            data_dim = new long[] {dataset.getNl(), dataset.getNt()};
-            dtype = hdfFile.createDatatype(Datatype.CLASS_FLOAT, 8, Datatype.NATIVE, Datatype.NATIVE);
-            Dataset dset = hdfFile.createScalarDS("psisim", groupTimp, dtype, data_dim, data_dim, null, 0, dataset.getPsisim());
-            CoreInformationMessages.HDF5Info("psisim size " + data_dim[0] + ", " + data_dim[1]);
+            //datatypes
+            Datatype dtDouble = hdfFile.createDatatype(Datatype.CLASS_FLOAT, 8, Datatype.NATIVE, Datatype.NATIVE);
+            Datatype dtLong = hdfFile.createDatatype(Datatype.CLASS_INTEGER, 8, Datatype.NATIVE, Datatype.NATIVE);
+            Datatype dtVarString = hdfFile.createDatatype(Datatype.CLASS_STRING, -1, Datatype.NATIVE, Datatype.SIGN_NONE);
+
+            if (dataset.getPsisim() != null) {
+                //store psisim data, and corresponding min/max values as attributes
+                assert (dataset.getNl() * dataset.getNt() == dataset.getPsisim().length);
+                data_dim = new long[]{dataset.getNl(), dataset.getNt()};
+                dsetPsisim = hdfFile.createScalarDS("spectra", groupPsisim, dtDouble, data_dim, data_dim, null, 0, dataset.getPsisim());
+                value_dbl = new double[]{dataset.getMinInt()};
+                attr = new Attribute("min", dtDouble, single_dim, value_dbl);
+                dsetPsisim.writeMetadata(attr);
+                value_dbl = new double[]{dataset.getMaxInt()};
+                attr = new Attribute("max", dtDouble, single_dim, value_dbl);
+                dsetPsisim.writeMetadata(attr);
+
+                //store (inside Psisim group) time and wavelength vectors with corresponding labels and units as attributes
+                if (dataset.getX() != null) {
+                    assert (dataset.getNt() == dataset.getX().length);
+                    data_dim = new long[]{dataset.getNt()};
+                    dset = hdfFile.createScalarDS("time_scale", groupPsisim, dtDouble, data_dim, data_dim, null, 0, dataset.getX());
+                    value_str = new String[]{dataset.getX1label()};
+                    attr = new Attribute("label", dtVarString, single_dim, value_str);
+                    dset.writeMetadata(attr);
+                    value_str = new String[]{dataset.getX1unit()};
+                    attr = new Attribute("units", dtVarString, single_dim, value_str);
+                    dset.writeMetadata(attr);
+                }
+                if (dataset.getX2() != null) {
+                    assert (dataset.getNl() == dataset.getX2().length);
+                    data_dim = new long[]{dataset.getNl()};
+                    dset = hdfFile.createScalarDS("wavelength_scale", groupPsisim, dtDouble, data_dim, data_dim, null, 0, dataset.getX2());
+                    value_str = new String[]{dataset.getX2label()};
+                    attr = new Attribute("label", dtVarString, single_dim, value_str);
+                    dset.writeMetadata(attr);
+                    value_str = new String[]{dataset.getX2unit()};
+                    attr = new Attribute("units", dtVarString, single_dim, value_str);
+                    dset.writeMetadata(attr);
+                }
+            }
+
+            //store FLIM image
+            if (dataset.getIntenceIm() != null) {
+                assert (dataset.getOriginalHeight() * dataset.getOriginalWidth() == dataset.getIntenceIm().length);
+                data_dim = new long[]{dataset.getOriginalHeight(), dataset.getOriginalWidth()};
+                hdfFile.createScalarDS("image", groupFlim, dtDouble, data_dim, data_dim, null, 0, dataset.getIntenceIm());
+            }
             
-            //store data dimension as attributes (for testing - the size of the dataset is provided by HDF5 API)
-            dtype = hdfFile.createDatatype(Datatype.CLASS_INTEGER, 4, Datatype.NATIVE, Datatype.NATIVE);
-            data_dim = new long[] { 1 };
-            value_int = new int[] { dataset.getNl() };
-            attr = new Attribute("number of wavelength steps", dtype, data_dim, value_int );
-            dset.writeMetadata(attr);
-            value_int = new int[] { dataset.getNt() };
-            attr = new Attribute("number of time steps", dtype, data_dim, value_int );
-            dset.writeMetadata(attr);
+            //store IRF data
+            if (dataset.getMeasuredIRF() != null && dataset.getMeasuredIRFDomainAxis() != null) {
+                assert (dataset.getMeasuredIRF().length == dataset.getMeasuredIRFDomainAxis().length);
+                data_dim = new long[]{dataset.getMeasuredIRF().length};
+                hdfFile.createScalarDS("irf", groupIRF, dtDouble, data_dim, data_dim, null, 0, dataset.getMeasuredIRF());
+                data_dim = new long[]{dataset.getMeasuredIRFDomainAxis().length};
+                hdfFile.createScalarDS("axis", groupIRF, dtDouble, data_dim, data_dim, null, 0, dataset.getMeasuredIRFDomainAxis());
+            }
+            else if (dataset.getMeasuredIRF() != null || dataset.getMeasuredIRFDomainAxis() != null){
+                assert false : "Measured IRF must have both the response and axis data?";
+            }
             
-            //store dataset attributes
-            dtype = hdfFile.createDatatype(Datatype.CLASS_STRING, -1, Datatype.NATIVE, Datatype.SIGN_NONE);
-            value_str = new String[] { dataset.getDatasetName() };
-            attr = new Attribute("name", dtype, data_dim, value_str);
+            //store dataset attributes (name, type etc)
+            value_str = new String[]{ dataset.getDatasetName() };
+            attr = new Attribute("name", dtVarString, single_dim, value_str);
+            groupTimp.writeMetadata(attr);
+            value_str = new String[]{ dataset.getType() };
+            attr = new Attribute("type", dtVarString, single_dim, value_str);
+            groupTimp.writeMetadata(attr);
+            value_str = new String[]{ dataset.getDatalabel() };
+            attr = new Attribute("label", dtVarString, single_dim, value_str);
+            groupTimp.writeMetadata(attr);
+            value_str = new String[]{ dataset.getDataunit() };
+            attr = new Attribute("units", dtVarString, single_dim, value_str);
             groupTimp.writeMetadata(attr);
             
+            //DatasetTimp HDF5 version
+            value_long = new long[] { version };
+            attr = new Attribute("version", dtLong, single_dim, value_long);
+            groupTimp.writeMetadata(attr);
+
         } catch (Exception ex) {
-            CoreInformationMessages.HDF5Info(file.getName() +  ": " + ex.getMessage());
+            CoreInformationMessages.HDF5Info(file.getName() + ": " + ex.getMessage());
         } finally {
             try {
                 hdfFile.close();
-                CoreInformationMessages.HDF5Info("Saved TIMP dataset \"" + dataset.getDatasetName() + "\" to HDF5 file " + file.getCanonicalPath());
             } catch (HDF5Exception ex) {
-                CoreInformationMessages.HDF5Info(file.getName() +  ": " + ex.getMessage());
+                CoreInformationMessages.HDF5Info(file.getName() + ": " + ex.getMessage());
             }
         }
     }
