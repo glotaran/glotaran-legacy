@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
+import ncsa.hdf.object.Attribute;
 import ncsa.hdf.object.Dataset;
 import ncsa.hdf.object.Datatype;
 import ncsa.hdf.object.FileFormat;
@@ -79,14 +80,37 @@ public class Hdf5DatasetTimp {
         } 
         
         try {
+            Datatype dtype;
+            Attribute attr;
+            long[] data_dim;
+            int[] value_int;
+            String[] value_str;
             Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) hdfFile.getRootNode()).getUserObject();
             // create DatasetTimp group at the root
             Group groupTimp = hdfFile.createGroup("DatasetTimp", root);
 
             //create data type and store the data
-            long[] data_dim = {dataset.getNl(), dataset.getNt()};
-            Datatype dtype = hdfFile.createDatatype(Datatype.CLASS_FLOAT, 8, Datatype.NATIVE, Datatype.NATIVE);
+            data_dim = new long[] {dataset.getNl(), dataset.getNt()};
+            dtype = hdfFile.createDatatype(Datatype.CLASS_FLOAT, 8, Datatype.NATIVE, Datatype.NATIVE);
             Dataset dset = hdfFile.createScalarDS("psisim", groupTimp, dtype, data_dim, data_dim, null, 0, dataset.getPsisim());
+            CoreInformationMessages.HDF5Info("psisim size " + data_dim[0] + ", " + data_dim[1]);
+            
+            //store data dimension as attributes (for testing - the size of the dataset is provided by HDF5 API)
+            dtype = hdfFile.createDatatype(Datatype.CLASS_INTEGER, 4, Datatype.NATIVE, Datatype.NATIVE);
+            data_dim = new long[] { 1 };
+            value_int = new int[] { dataset.getNl() };
+            attr = new Attribute("number of wavelength steps", dtype, data_dim, value_int );
+            dset.writeMetadata(attr);
+            value_int = new int[] { dataset.getNt() };
+            attr = new Attribute("number of time steps", dtype, data_dim, value_int );
+            dset.writeMetadata(attr);
+            
+            //store dataset attributes
+            dtype = hdfFile.createDatatype(Datatype.CLASS_STRING, -1, Datatype.NATIVE, Datatype.SIGN_NONE);
+            value_str = new String[] { dataset.getDatasetName() };
+            attr = new Attribute("name", dtype, data_dim, value_str);
+            groupTimp.writeMetadata(attr);
+            
         } catch (Exception ex) {
             CoreInformationMessages.HDF5Info(file.getName() +  ": " + ex.getMessage());
         } finally {
