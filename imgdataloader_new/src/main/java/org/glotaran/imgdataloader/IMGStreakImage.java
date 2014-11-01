@@ -18,7 +18,7 @@ import org.openide.filesystems.FileUtil;
 
 /**
  *
- * @author daria.laptenok
+ * @author serlap
  */
 public class IMGStreakImage implements TGDatasetInterface {
 
@@ -154,13 +154,13 @@ public class IMGStreakImage implements TGDatasetInterface {
             for (int i = 0; i < strImage.getNt(); i++) {
                 x[i] = i;
             }
-            strImage.setX2(x);
+            strImage.setX(x);
         }
 
 //----------------
 
         strImage.calcRangeInt();
-        boolean invertedWaves = strImage.getX2()[0] < strImage.getX2()[1] ? false : true;
+        boolean invertedWaves = strImage.getX2()[0] >= strImage.getX2()[1];
         if (invertedWaves) {
             double[] x2t = new double[strImage.getNl()];
             double[] temp = new double[strImage.getNl() * strImage.getNt()];
