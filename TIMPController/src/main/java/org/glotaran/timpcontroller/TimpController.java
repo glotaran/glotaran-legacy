@@ -12,6 +12,7 @@ import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.core.models.structures.TimpResultDataset;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.tgm.Tgm;
+import org.openide.util.lookup.ServiceProvider;
 import org.rosuda.irconnect.IREXP;
 import org.rosuda.irconnect.IRList;
 import org.rosuda.irconnect.IRMap;
@@ -23,6 +24,7 @@ import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.ValueType;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 
+@org.openide.util.lookup.ServiceProvider(service = TimpControllerInterface.class)
 public class TimpController implements TimpControllerInterface {
 
     private ITwoWayConnection connection = null;
