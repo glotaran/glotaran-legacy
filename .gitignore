@@ -185,6 +185,40 @@ nbproject/*
 
 # /jide-oss/
 /jide-oss/build
+
+/AVGDataloader/nbproject/
+/CoreInterfaces/nbproject/
+/CoreAnalysis/nbproject/
+/CoreDataDisplayers/nbproject/
+/CoreModels/nbproject/
+/CoreMain/nbproject/
+/AnalysisOverviewFileSupport/nbproject/
+/ASCIIDataloader/nbproject/
+/CoreMessages/nbproject/
+/CoreAUC/nbproject/
+/CoreResultDisplayers/nbproject/
+/CoreUI/nbproject/
+/CoreSimulation/nbproject/
+/CoreVisualModelling/nbproject/
+/JRConnect/nbproject/
+/UJMPwithdep/nbproject/
+/TIMPController/nbproject/
+/SimSupport/nbproject/
+/JFreeChartCustom/nbproject/
+/TGMFileSupport/nbproject/
+/SDTDataloader/nbproject/
+/RawDataloader/nbproject/
+/GtaFileSupport/nbproject/
+/JAXBWizzardOutput/nbproject/
+/REngine/nbproject/
+/PQDataloader/nbproject/
+/JRI/nbproject/
+/csvdataloader/nbproject/
+/imgdataloader_new/nbproject/
+/jfreechart/nbproject/
+/jcommon/nbproject/
+/jide-oss/nbproject/
+
 /UJMPwithdep/target/
 /ASCIIDataloader/target/
 /CoreMessages/target/
@@ -224,3 +258,4 @@ nbproject/*
 /JAXBWizzardOutput/src/main/java/org/glotaran/core/models/results/
 /JAXBWizzardOutput/src/main/java/org/glotaran/core/models/sim/
 /JAXBWizzardOutput/src/main/java/org/glotaran/core/models/gta/
+
