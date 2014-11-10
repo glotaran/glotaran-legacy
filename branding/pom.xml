@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+      <groupId>org.glotaran</groupId>
+      <artifactId>glotaran-parent</artifactId>
+      <version>1.4-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>glotaran-branding</artifactId>
+  <packaging>nbm</packaging>
+
+  <name>glotaran-branding</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-netbeans-api-annotations-common</artifactId>
+      <version>${netbeans.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+      <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <!-- to have the jar plugin pickup the nbm generated manifest -->
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
+            </plugin>
+      </plugins>
+  </build>
+    <description>Glotaran is a free software program developed for global and target analysis of time-resolved spectroscopy and microscopy data. It serves as a graphical user interface (GUI) to the R-package TIMP. It works with any operating system that supports Java 6 and higher. The current version of Glotaran is 1.4; updates are automatically acquired by the program.
+
+A publication about Glotaran, with the title "Glotaran: a Java-based graphical user interface for the R-package TIMP" has been published in the Journal of Statistical Software, on July 1st 2012 and can be found here: http://www.jstatsoft.org/v49/i03/
+
+Glotaran is open-source software and therefore free to download and free to use. If you use the software for any scientific publication we do however request that you cite our JSS publication (see below). Also, if you use Glotaran in any way - in research, industry or education - we are always happy to hear how!
+
+Citation information:
+Snellenburg JJ, Laptenok SP, Seger R, Mullen KM, van Stokkum IHM (2012). “Glotaran: A Java-Based Graphical User Interface for the R Package TIMP.” Journal of Statistical Software, 49(3), 1–22. URL http://www.jstatsoft.org/v49/i03/.
+</description>
+</project>
