@@ -11,13 +11,19 @@
 package org.glotaran.csvdataloader;
 
 import java.awt.Component;
-import java.awt.LayoutManager;
+import java.awt.Container;
 import java.io.File;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
+import java.io.IOException;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
+import javax.swing.JRadioButton;
 import javax.swing.SpinnerNumberModel;
+import org.openide.util.Exceptions;
+import org.ujmp.core.Matrix;
+import org.ujmp.core.MatrixFactory;
+import org.ujmp.core.calculation.Calculation;
+import org.ujmp.core.enums.FileFormat;
+import org.ujmp.core.exceptions.MatrixException;
+import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.panels.MatrixTableEditorPanel;
 
 /**
@@ -26,6 +32,8 @@ import org.ujmp.gui.panels.MatrixTableEditorPanel;
  */
 public class CSVLoaderDialog extends javax.swing.JPanel {
 
+    private File file = null;
+    private Matrix dataMatrix=null;
     /**
      * Creates new form CSVLoaderDialog
      */
@@ -36,10 +44,13 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     public CSVLoaderDialog(MatrixTableEditorPanel matixEditor) {
         initComponents();
         jpMatrixEditor.add(matixEditor);
-        for (Component comp : jPLifetimeDensityMapSettings.getComponents()) {
-            comp.setVisible(cbLifetimeDensityMap.isSelected());
-        }
-        jPLifetimeDensityMapSettings.updateUI();
+
+        
+    }
+
+    CSVLoaderDialog(File file) {
+        initComponents();
+        this.file = file;
     }
 
     /**
@@ -52,8 +63,9 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        JRBGDelimiter = new javax.swing.ButtonGroup();
-        JRBGFileType = new javax.swing.ButtonGroup();
+        jRBGDelimiter = new javax.swing.ButtonGroup();
+        jRBGFileType = new javax.swing.ButtonGroup();
+        jGBGCalibrationType = new javax.swing.ButtonGroup();
         jpMatrixEditor = new javax.swing.JPanel();
         jPSkip = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -75,8 +87,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jFTFLastLifetimeMult = new javax.swing.JFormattedTextField();
         jFTFTimepoints = new javax.swing.JFormattedTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        cbLifetimeDensityMap = new javax.swing.JCheckBox();
+        jRBLifetimeDensityMap = new javax.swing.JRadioButton();
         jPSeparator = new javax.swing.JPanel();
         jRBComma = new javax.swing.JRadioButton();
         jRBSemicolon = new javax.swing.JRadioButton();
@@ -94,18 +105,39 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         rbLoadFromFile = new javax.swing.JRadioButton();
         tfFilename = new javax.swing.JTextField();
         bOpenFile = new javax.swing.JButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRBCaibrationByFun = new javax.swing.JRadioButton();
         cbWaveCalbration = new javax.swing.JCheckBox();
         cbspectraInRows = new javax.swing.JCheckBox();
-        jPMatrixStakSettings = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jPTimeGateMatrixSettings = new javax.swing.JPanel();
+        jRBTimeGatMat = new javax.swing.JRadioButton();
+        jPTimeGateMatSettings = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
 
-        setMinimumSize(new java.awt.Dimension(100, 100));
+        setMinimumSize(new java.awt.Dimension(950, 500));
+        setPreferredSize(new java.awt.Dimension(950, 500));
+        setLayout(new java.awt.GridBagLayout());
 
         jpMatrixEditor.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 600;
+        gridBagConstraints.ipady = 500;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(jpMatrixEditor, gridBagConstraints);
 
         jPSkip.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPSkip.border.title"))); // NOI18N
-        jPSkip.setMinimumSize(new java.awt.Dimension(245, 22));
+        jPSkip.setMinimumSize(new java.awt.Dimension(245, 40));
         jPSkip.setPreferredSize(new java.awt.Dimension(245, 40));
         jPSkip.setLayout(new java.awt.GridBagLayout());
 
@@ -148,155 +180,200 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPSkip.add(spSkipColums, gridBagConstraints);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPSkip, gridBagConstraints);
+
         jPEnableLifetimeDensityMap.setBackground(new java.awt.Color(223, 223, 223));
+        jPEnableLifetimeDensityMap.setMinimumSize(new java.awt.Dimension(260, 170));
+        jPEnableLifetimeDensityMap.setPreferredSize(new java.awt.Dimension(260, 170));
+        jPEnableLifetimeDensityMap.setLayout(new java.awt.GridBagLayout());
 
         jPLifetimeDensityMapSettings.setEnabled(false);
+        jPLifetimeDensityMapSettings.setLayout(new java.awt.GridBagLayout());
 
         jLabel4.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel4.text")); // NOI18N
+        jLabel4.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jLabel4, gridBagConstraints);
 
         jFTFFrom.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
         jFTFFrom.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFFrom.text")); // NOI18N
+        jFTFFrom.setEnabled(false);
         jFTFFrom.setPreferredSize(new java.awt.Dimension(60, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jFTFFrom, gridBagConstraints);
 
         jCBLinLogEnabeled.setSelected(true);
         jCBLinLogEnabeled.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jCBLinLogEnabeled.text")); // NOI18N
+        jCBLinLogEnabeled.setEnabled(false);
         jCBLinLogEnabeled.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBLinLogEnabeledActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jCBLinLogEnabeled, gridBagConstraints);
 
         jLabel5.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel5.text")); // NOI18N
+        jLabel5.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jLabel5, gridBagConstraints);
 
         jLabel6.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel6.text")); // NOI18N
+        jLabel6.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jLabel6, gridBagConstraints);
 
         jFTFTo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
         jFTFTo.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFTo.text")); // NOI18N
+        jFTFTo.setEnabled(false);
         jFTFTo.setPreferredSize(new java.awt.Dimension(60, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
+        jPLifetimeDensityMapSettings.add(jFTFTo, gridBagConstraints);
 
         jFTFLogFrom.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
         jFTFLogFrom.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFLogFrom.text")); // NOI18N
+        jFTFLogFrom.setEnabled(false);
         jFTFLogFrom.setPreferredSize(new java.awt.Dimension(60, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jFTFLogFrom, gridBagConstraints);
 
         jLabel3.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel3.text")); // NOI18N
+        jLabel3.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jLabel3, gridBagConstraints);
 
         jFTFLinearFraction.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jFTFLinearFraction.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFLinearFraction.text")); // NOI18N
+        jFTFLinearFraction.setEnabled(false);
         jFTFLinearFraction.setPreferredSize(new java.awt.Dimension(60, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPLifetimeDensityMapSettings.add(jFTFLinearFraction, gridBagConstraints);
 
         jLabel7.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel7.text")); // NOI18N
+        jLabel7.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jLabel7, gridBagConstraints);
 
         jLabel8.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel8.text")); // NOI18N
+        jLabel8.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jLabel8, gridBagConstraints);
 
         jFTFLastLifetimeMult.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
         jFTFLastLifetimeMult.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFLastLifetimeMult.text")); // NOI18N
+        jFTFLastLifetimeMult.setEnabled(false);
         jFTFLastLifetimeMult.setPreferredSize(new java.awt.Dimension(60, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jFTFLastLifetimeMult, gridBagConstraints);
 
         jFTFTimepoints.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
         jFTFTimepoints.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jFTFTimepoints.text")); // NOI18N
+        jFTFTimepoints.setEnabled(false);
         jFTFTimepoints.setPreferredSize(new java.awt.Dimension(60, 19));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPLifetimeDensityMapSettings.add(jFTFTimepoints, gridBagConstraints);
 
-        javax.swing.GroupLayout jPLifetimeDensityMapSettingsLayout = new javax.swing.GroupLayout(jPLifetimeDensityMapSettings);
-        jPLifetimeDensityMapSettings.setLayout(jPLifetimeDensityMapSettingsLayout);
-        jPLifetimeDensityMapSettingsLayout.setHorizontalGroup(
-            jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                        .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFTFTo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFTFFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFTFTimepoints, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                        .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFTFLinearFraction, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jCBLinLogEnabeled)
-                            .addComponent(jLabel6)
-                            .addComponent(jFTFLogFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(jFTFLastLifetimeMult, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 86, Short.MAX_VALUE))))
-        );
-        jPLifetimeDensityMapSettingsLayout.setVerticalGroup(
-            jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPLifetimeDensityMapSettingsLayout.createSequentialGroup()
-                        .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jFTFFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jFTFTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel5))
-                    .addComponent(jFTFTimepoints, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(jCBLinLogEnabeled)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFTFLogFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPLifetimeDensityMapSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jFTFLinearFraction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFTFLastLifetimeMult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        jPEnableLifetimeDensityMap.add(jPLifetimeDensityMapSettings, gridBagConstraints);
 
-        jRadioButton3.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRadioButton3.text")); // NOI18N
-
-        cbLifetimeDensityMap.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.cbLifetimeDensityMap.text")); // NOI18N
-        cbLifetimeDensityMap.addActionListener(new java.awt.event.ActionListener() {
+        jRBGFileType.add(jRBLifetimeDensityMap);
+        jRBLifetimeDensityMap.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBLifetimeDensityMap.text")); // NOI18N
+        jRBLifetimeDensityMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbLifetimeDensityMapActionPerformed(evt);
+                jRBLifetimeDensityMapActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        jPEnableLifetimeDensityMap.add(jRBLifetimeDensityMap, gridBagConstraints);
 
-        javax.swing.GroupLayout jPEnableLifetimeDensityMapLayout = new javax.swing.GroupLayout(jPEnableLifetimeDensityMap);
-        jPEnableLifetimeDensityMap.setLayout(jPEnableLifetimeDensityMapLayout);
-        jPEnableLifetimeDensityMapLayout.setHorizontalGroup(
-            jPEnableLifetimeDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPEnableLifetimeDensityMapLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPEnableLifetimeDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPLifetimeDensityMapSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbLifetimeDensityMap)
-                    .addComponent(jRadioButton3))
-                .addContainerGap())
-        );
-        jPEnableLifetimeDensityMapLayout.setVerticalGroup(
-            jPEnableLifetimeDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPEnableLifetimeDensityMapLayout.createSequentialGroup()
-                .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbLifetimeDensityMap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPLifetimeDensityMapSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPEnableLifetimeDensityMap, gridBagConstraints);
 
         jPSeparator.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPSeparator.border.title"))); // NOI18N
+        jPSeparator.setMinimumSize(new java.awt.Dimension(373, 40));
         jPSeparator.setPreferredSize(new java.awt.Dimension(380, 40));
         jPSeparator.setLayout(new java.awt.GridBagLayout());
 
-        JRBGDelimiter.add(jRBComma);
+        jRBGDelimiter.add(jRBComma);
+        jRBComma.setSelected(true);
         jRBComma.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBComma.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -305,7 +382,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBComma, gridBagConstraints);
 
-        JRBGDelimiter.add(jRBSemicolon);
+        jRBGDelimiter.add(jRBSemicolon);
         jRBSemicolon.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBSemicolon.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -314,7 +391,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBSemicolon, gridBagConstraints);
 
-        JRBGDelimiter.add(jRBTab);
+        jRBGDelimiter.add(jRBTab);
         jRBTab.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBTab.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -323,7 +400,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPSeparator.add(jRBTab, gridBagConstraints);
 
-        JRBGDelimiter.add(jRBSpace);
+        jRBGDelimiter.add(jRBSpace);
         jRBSpace.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBSpace.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -340,13 +417,21 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPSeparator.add(jTFOtherSeparator, gridBagConstraints);
 
-        JRBGDelimiter.add(jRBOther);
+        jRBGDelimiter.add(jRBOther);
         jRBOther.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBOther.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPSeparator.add(jRBOther, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPSeparator, gridBagConstraints);
 
         jPLabels.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPLabels.border.title"))); // NOI18N
         jPLabels.setMinimumSize(new java.awt.Dimension(220, 40));
@@ -368,19 +453,71 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPLabels.add(cbLabelsInColums, gridBagConstraints);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPLabels, gridBagConstraints);
+
         jBPreview.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jBPreview.text")); // NOI18N
+        jBPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBPreviewActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 0, 0, 0);
+        add(jBPreview, gridBagConstraints);
 
+        jPSingleMatrix.setMinimumSize(new java.awt.Dimension(260, 160));
+        jPSingleMatrix.setPreferredSize(new java.awt.Dimension(260, 160));
+        jPSingleMatrix.setLayout(new java.awt.GridBagLayout());
+
+        jRBGFileType.add(jRBSingleMatrix);
+        jRBSingleMatrix.setSelected(true);
         jRBSingleMatrix.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBSingleMatrix.text")); // NOI18N
+        jRBSingleMatrix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBSingleMatrixActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPSingleMatrix.add(jRBSingleMatrix, gridBagConstraints);
 
-        jpCalibration.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jpCalibration.border.title"))); // NOI18N
+        jpCalibration.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.border.title"))); // NOI18N
+        jpCalibration.setMinimumSize(new java.awt.Dimension(230, 90));
+        jpCalibration.setName(""); // NOI18N
+        jpCalibration.setPreferredSize(new java.awt.Dimension(230, 90));
+        jpCalibration.setLayout(new java.awt.GridBagLayout());
 
         rbLoadFromFile.setSelected(true);
         rbLoadFromFile.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.rbLoadFromFile.text")); // NOI18N
         rbLoadFromFile.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jpCalibration.add(rbLoadFromFile, gridBagConstraints);
 
         tfFilename.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tfFilename.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.tfFilename.text")); // NOI18N
         tfFilename.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 180;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
+        jpCalibration.add(tfFilename, gridBagConstraints);
 
         bOpenFile.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.bOpenFile.text")); // NOI18N
         bOpenFile.setEnabled(false);
@@ -389,35 +526,27 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
                 bOpenFileActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = -14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jpCalibration.add(bOpenFile, gridBagConstraints);
 
-        jRadioButton2.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRadioButton2.text")); // NOI18N
+        jRBCaibrationByFun.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBCaibrationByFun.text")); // NOI18N
+        jRBCaibrationByFun.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jpCalibration.add(jRBCaibrationByFun, gridBagConstraints);
 
-        javax.swing.GroupLayout jpCalibrationLayout = new javax.swing.GroupLayout(jpCalibration);
-        jpCalibration.setLayout(jpCalibrationLayout);
-        jpCalibrationLayout.setHorizontalGroup(
-            jpCalibrationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCalibrationLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jpCalibrationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addGroup(jpCalibrationLayout.createSequentialGroup()
-                        .addComponent(tfFilename, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(bOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(rbLoadFromFile))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jpCalibrationLayout.setVerticalGroup(
-            jpCalibrationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCalibrationLayout.createSequentialGroup()
-                .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbLoadFromFile)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpCalibrationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfFilename, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bOpenFile)))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        jPSingleMatrix.add(jpCalibration, gridBagConstraints);
 
         cbWaveCalbration.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.cbWaveCalbration.text")); // NOI18N
         cbWaveCalbration.addActionListener(new java.awt.event.ActionListener() {
@@ -425,111 +554,135 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
                 cbWaveCalbrationActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 29, 0, 0);
+        jPSingleMatrix.add(cbWaveCalbration, gridBagConstraints);
 
         cbspectraInRows.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.cbspectraInRows.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 29, 0, 0);
+        jPSingleMatrix.add(cbspectraInRows, gridBagConstraints);
 
-        javax.swing.GroupLayout jPSingleMatrixLayout = new javax.swing.GroupLayout(jPSingleMatrix);
-        jPSingleMatrix.setLayout(jPSingleMatrixLayout);
-        jPSingleMatrixLayout.setHorizontalGroup(
-            jPSingleMatrixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPSingleMatrixLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addGroup(jPSingleMatrixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRBSingleMatrix)
-                    .addGroup(jPSingleMatrixLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPSingleMatrixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jpCalibration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbspectraInRows)
-                            .addComponent(cbWaveCalbration)))))
-        );
-        jPSingleMatrixLayout.setVerticalGroup(
-            jPSingleMatrixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPSingleMatrixLayout.createSequentialGroup()
-                .addComponent(jRBSingleMatrix)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbWaveCalbration)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbspectraInRows)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jpCalibration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPSingleMatrix, gridBagConstraints);
 
-        jRadioButton1.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRadioButton1.text")); // NOI18N
+        jPTimeGateMatrixSettings.setMinimumSize(new java.awt.Dimension(260, 100));
+        jPTimeGateMatrixSettings.setPreferredSize(new java.awt.Dimension(260, 100));
+        jPTimeGateMatrixSettings.setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout jPMatrixStakSettingsLayout = new javax.swing.GroupLayout(jPMatrixStakSettings);
-        jPMatrixStakSettings.setLayout(jPMatrixStakSettingsLayout);
-        jPMatrixStakSettingsLayout.setHorizontalGroup(
-            jPMatrixStakSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPMatrixStakSettingsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton1)
-                .addContainerGap(178, Short.MAX_VALUE))
-        );
-        jPMatrixStakSettingsLayout.setVerticalGroup(
-            jPMatrixStakSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPMatrixStakSettingsLayout.createSequentialGroup()
-                .addComponent(jRadioButton1)
-                .addGap(0, 16, Short.MAX_VALUE))
-        );
+        jRBGFileType.add(jRBTimeGatMat);
+        jRBTimeGatMat.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jRBTimeGatMat.text")); // NOI18N
+        jRBTimeGatMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBTimeGatMatActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        jPTimeGateMatrixSettings.add(jRBTimeGatMat, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPSkip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jPLabels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPSingleMatrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPMatrixStakSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPEnableLifetimeDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jpMatrixEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPSkip, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPSeparator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPLabels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jBPreview)
-                        .addGap(19, 19, 19)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPSingleMatrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPMatrixStakSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPEnableLifetimeDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jpMatrixEditor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
+        jPTimeGateMatSettings.setLayout(new java.awt.GridBagLayout());
+
+        jTextField1.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTextField2.text")); // NOI18N
+        jTextField1.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jTextField1, gridBagConstraints);
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel9.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel9.text")); // NOI18N
+        jLabel9.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jLabel9, gridBagConstraints);
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel10.text")); // NOI18N
+        jLabel10.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jLabel10, gridBagConstraints);
+
+        jTextField2.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTextField2.text")); // NOI18N
+        jTextField2.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        jPTimeGateMatSettings.add(jTextField2, gridBagConstraints);
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel11.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel11.text")); // NOI18N
+        jLabel11.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jLabel11, gridBagConstraints);
+
+        jTextField3.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTextField2.text")); // NOI18N
+        jTextField3.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        jPTimeGateMatSettings.add(jTextField3, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        jPTimeGateMatrixSettings.add(jPTimeGateMatSettings, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(jPTimeGateMatrixSettings, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbWaveCalbrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbWaveCalbrationActionPerformed
         Component[] components = jpCalibration.getComponents();
-        for (int i = 0; i < components.length; i++) {
-            components[i].setEnabled(cbWaveCalbration.isSelected());
+        for (Component component : components) {
+            component.setEnabled(cbWaveCalbration.isSelected());
         }
         cbWaveCalbration.setEnabled(true);
     }//GEN-LAST:event_cbWaveCalbrationActionPerformed
@@ -545,25 +698,52 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bOpenFileActionPerformed
 
-    private void cbLifetimeDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLifetimeDensityMapActionPerformed
-//        for (Component comp : jPLifetimeDensityMapSettings.getComponents()) {
-//            comp.setVisible(cbLifetimeDensityMap.isSelected());
-//        }
-//        jPLifetimeDensityMapSettings.updateUI();
-    }//GEN-LAST:event_cbLifetimeDensityMapActionPerformed
-
     private void jCBLinLogEnabeledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBLinLogEnabeledActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBLinLogEnabeledActionPerformed
 
+    private void jRBLifetimeDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBLifetimeDensityMapActionPerformed
+        updateTypeUI();
+        cbLabelsInColums.setSelected(false);
+        cbLabelsInRows.setSelected(false);
+        setEnabledRecursively(jPLabels,true);
+    }//GEN-LAST:event_jRBLifetimeDensityMapActionPerformed
+
+    private void jRBTimeGatMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBTimeGatMatActionPerformed
+        updateTypeUI();
+        cbLabelsInColums.setSelected(true);
+        cbLabelsInRows.setSelected(true);
+        setEnabledRecursively(jPLabels,false);
+        
+    }//GEN-LAST:event_jRBTimeGatMatActionPerformed
+
+    private void jRBSingleMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBSingleMatrixActionPerformed
+        updateTypeUI();
+        cbLabelsInColums.setSelected(false);
+        cbLabelsInRows.setSelected(false);
+        setEnabledRecursively(jPLabels,true);
+    }//GEN-LAST:event_jRBSingleMatrixActionPerformed
+
+    private void jBPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPreviewActionPerformed
+        try {
+            dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file, getDelimiterString());
+            if ((getSkipRows() > 0) || (getSkipColums() > 0)) {
+                dataMatrix = dataMatrix.subMatrix(Calculation.Ret.NEW, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+            }
+            MatrixTableEditorPanel matPanel = new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix));
+            jpMatrixEditor.removeAll();
+            jpMatrixEditor.add(matPanel);
+            jpMatrixEditor.validate();
+        } catch (MatrixException | IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }//GEN-LAST:event_jBPreviewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup JRBGDelimiter;
-    private javax.swing.ButtonGroup JRBGFileType;
     private javax.swing.JButton bOpenFile;
     private javax.swing.JCheckBox cbLabelsInColums;
     private javax.swing.JCheckBox cbLabelsInRows;
-    private javax.swing.JCheckBox cbLifetimeDensityMap;
     private javax.swing.JCheckBox cbWaveCalbration;
     private javax.swing.JCheckBox cbspectraInRows;
     private javax.swing.JButton jBPreview;
@@ -574,7 +754,10 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jFTFLogFrom;
     private javax.swing.JFormattedTextField jFTFTimepoints;
     private javax.swing.JFormattedTextField jFTFTo;
+    private javax.swing.ButtonGroup jGBGCalibrationType;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -582,23 +765,30 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPEnableLifetimeDensityMap;
     private javax.swing.JPanel jPLabels;
     private javax.swing.JPanel jPLifetimeDensityMapSettings;
-    private javax.swing.JPanel jPMatrixStakSettings;
     private javax.swing.JPanel jPSeparator;
     private javax.swing.JPanel jPSingleMatrix;
     private javax.swing.JPanel jPSkip;
+    private javax.swing.JPanel jPTimeGateMatSettings;
+    private javax.swing.JPanel jPTimeGateMatrixSettings;
+    private javax.swing.JRadioButton jRBCaibrationByFun;
     private javax.swing.JRadioButton jRBComma;
+    private javax.swing.ButtonGroup jRBGDelimiter;
+    private javax.swing.ButtonGroup jRBGFileType;
+    private javax.swing.JRadioButton jRBLifetimeDensityMap;
     private javax.swing.JRadioButton jRBOther;
     private javax.swing.JRadioButton jRBSemicolon;
     private javax.swing.JRadioButton jRBSingleMatrix;
     private javax.swing.JRadioButton jRBSpace;
     private javax.swing.JRadioButton jRBTab;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRBTimeGatMat;
     private javax.swing.JTextField jTFOtherSeparator;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JPanel jpCalibration;
     private javax.swing.JPanel jpMatrixEditor;
     private javax.swing.JRadioButton rbLoadFromFile;
@@ -607,6 +797,20 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private javax.swing.JTextField tfFilename;
     // End of variables declaration//GEN-END:variables
 
+    public boolean isLifetimeDensityMap() {
+        return jRBLifetimeDensityMap.isSelected();
+    }
+
+    public boolean isSingleMatrix() {
+        return jRBSingleMatrix.isSelected();
+    }
+
+    public boolean isTimeGatedMattrix() {
+        return jRBTimeGatMat.isSelected();
+    }
+
+    
+    
     public boolean isLabelsInColums() {
         if (isSpectraInRows()) {
             return cbLabelsInRows.isSelected();
@@ -642,11 +846,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     public int getSkipColums() {
         return ((SpinnerNumberModel) spSkipColums.getModel()).getNumber().intValue();
     }
-
-    boolean isLifetimeDensityMap() {
-        return cbLifetimeDensityMap.isSelected();
-    }
-
+    
     public double getFrom() {
         return Double.valueOf(jFTFFrom.getText());
     }
@@ -680,5 +880,36 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     public boolean isLinLogEnabeled() {
         return jCBLinLogEnabeled.isSelected();
     }
+    
+    public Matrix getDtaMatrix(){
+        return dataMatrix;
+    }
 
+    private String getDelimiterString(){
+        String delim = "";
+        if (jRBComma.isSelected()) {delim = ",";}
+        if (jRBSemicolon.isSelected()) {delim = ";";}
+        if (jRBTab.isSelected()) {delim = "\t";}
+        if (jRBSpace.isSelected()) {delim = " ";}
+        if (jRBOther.isSelected()) {delim = jTFOtherSeparator.getText();}
+        return delim; 
+    }
+    private void updateTypeUI(){
+        setEnabledRecursively(jPLifetimeDensityMapSettings,jRBLifetimeDensityMap.isSelected());
+        setEnabledRecursively(jPTimeGateMatSettings,jRBTimeGatMat.isSelected());
+        setEnabledRecursively(jPSingleMatrix,jRBSingleMatrix.isSelected());
+        if (jRBSingleMatrix.isSelected()){
+        setEnabledRecursively(jpCalibration,cbWaveCalbration.isSelected());
+        }
+        jRBSingleMatrix.setEnabled(true);
+    }
+    
+    private void setEnabledRecursively(Component component, boolean enabled) {
+        component.setEnabled(enabled);
+        if (component instanceof Container) {
+            for (Component child : ((Container) component).getComponents()) {
+                setEnabledRecursively(child, enabled);
+            }
+        }
+    }
 }
