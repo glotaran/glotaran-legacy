@@ -294,11 +294,6 @@
             <version>1.2.0</version>
         </dependency>
         <dependency>
-            <groupId>org.ojalgo</groupId>
-            <artifactId>ojalgo</artifactId>
-            <version>31.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.sourceforge.parallelcolt</groupId>
             <artifactId>parallelcolt</artifactId>
             <version>0.10.1</version>
@@ -307,6 +302,11 @@
             <groupId>Jama</groupId>
             <artifactId>Jama</artifactId>
             <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo</artifactId>
+            <version>29.0</version>
         </dependency>
     </dependencies>
     <properties>
