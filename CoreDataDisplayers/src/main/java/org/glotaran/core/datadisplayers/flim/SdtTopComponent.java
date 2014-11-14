@@ -512,7 +512,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         jPanel5.add(jLabel3, gridBagConstraints);
 
-        jLNumSelPix.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLNumSelPix.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLNumSelPix, org.openide.util.NbBundle.getMessage(SdtTopComponent.class, "SdtTopComponent.jLNumSelPix.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -808,7 +808,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         gridBagConstraints.weighty = 2.0;
         jPanel10.add(jPRightSingVectors, gridBagConstraints);
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18));
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(SdtTopComponent.class, "SdtTopComponent.jLabel5.text")); // NOI18N
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -824,7 +824,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 1022, Short.MAX_VALUE)
-            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 1022, Short.MAX_VALUE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

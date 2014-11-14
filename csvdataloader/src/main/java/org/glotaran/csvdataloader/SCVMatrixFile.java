@@ -27,12 +27,14 @@ import org.ujmp.core.exceptions.MatrixException;
 import org.ujmp.gui.MatrixGUIObject;
 import org.ujmp.gui.panels.MatrixTableEditorPanel;
 import static java.lang.Math.floor;
+import org.glotaran.core.models.structures.FlimImageAbstract;
 
 /**
  *
  * @author Owner
  */
 public class SCVMatrixFile implements TGDatasetInterface {
+    private String filetype = "spec" ;
 
     @Override
     public String getExtention() {
@@ -46,7 +48,7 @@ public class SCVMatrixFile implements TGDatasetInterface {
 
     @Override
     public String getType(File file) throws FileNotFoundException {
-        return "spec";
+        return filetype;
     }
 
     @Override
@@ -54,11 +56,9 @@ public class SCVMatrixFile implements TGDatasetInterface {
         String ext = FileUtil.getExtension(file.getName());
         if (ext.equalsIgnoreCase("csv")) {
             try {
-                MatrixFactory.importFromFile(FileFormat.CSV, file);
+                //MatrixFactory.importFromFile(FileFormat.CSV, file);
                 return true;
-            } catch (MatrixException ex) {
-                return false;
-            } catch (IOException ex) {
+            } catch (MatrixException ex) { //| IOException
                 return false;
             }
         }
@@ -68,11 +68,10 @@ public class SCVMatrixFile implements TGDatasetInterface {
     @Override
     public org.glotaran.core.models.structures.DatasetTimp loadFile(File file) throws FileNotFoundException {
         DatasetTimp dataset = null;
-        Matrix dataMatrix;
+        Matrix dataMatrix = null;
         CSVLoaderDialog editorPanel;
         try {
-            dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file);
-            editorPanel = new CSVLoaderDialog(new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix)));
+            editorPanel = new CSVLoaderDialog(file);
             NotifyDescriptor cellEditor = new NotifyDescriptor(
                     editorPanel,
                     "table",
@@ -81,36 +80,183 @@ public class SCVMatrixFile implements TGDatasetInterface {
                     null,
                     NotifyDescriptor.CANCEL_OPTION);
             if (DialogDisplayer.getDefault().notify(cellEditor).equals(NotifyDescriptor.OK_OPTION)) {
-                if ((editorPanel.getSkipRows() > 0) || (editorPanel.getSkipColums() > 0)) {
-                    dataMatrix = dataMatrix.subMatrix(Ret.NEW, editorPanel.getSkipRows(), editorPanel.getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+                if (editorPanel.getDtaMatrix() == null) {
+//                    dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file);
+                    dataMatrix =MatrixFactory.importFromFile(FileFormat.CSV, file, editorPanel.getDelimiterString());
+                    if ((editorPanel.getSkipRows() > 0) || (editorPanel.getSkipColums() > 0)) {
+                        dataMatrix.subMatrix(Ret.ORIG, editorPanel.getSkipRows(), editorPanel.getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+                    }
+                } else {
+                    dataMatrix = editorPanel.getDtaMatrix();
                 }
+
                 dataset = new DatasetTimp();
-                dataset.setDatasetName(file.getName());                
-                if (editorPanel.isSpectraInRows()) {
-                    dataMatrix = dataMatrix.transpose();
+                if (editorPanel.isSingleMatrix()) {
+//load single matrix from file  
+                    filetype = "spec";
+                    dataset.setType("spec");
+                    dataset.setDatasetName(file.getName());
+                    if (editorPanel.isSpectraInRows()) {
+                        dataMatrix = dataMatrix.transpose();
+                    }
+                    if (editorPanel.isLabelsInColums()) {
+                        if (editorPanel.isLabelsInRows()) {
+                            dataset.setNl((int) dataMatrix.getRowCount() - 1);
+                            dataset.setNt((int) dataMatrix.getColumnCount() - 1);
+                            dataset.setX2(new double[dataset.getNl()]);
+                            dataset.setX(new double[dataset.getNt()]);
+                            for (int i = 0; i < dataset.getNt(); i++) {
+                                dataset.getX()[i] = dataMatrix.getAsDouble(0, i + 1);
+                            }
+                            for (int i = 0; i < dataset.getNl(); i++) {
+                                dataset.getX2()[i] = dataMatrix.getAsDouble(i + 1, 0);
+                            }
+                            dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                            for (int j = 0; j < dataset.getNl(); j++) {
+                                for (int i = 0; i < dataset.getNt(); i++) {
+                                    dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j + 1, i + 1);
+                                }
+                            }
+                        } else { //labels in colums but not in rows
+                            dataset.setNl((int) dataMatrix.getRowCount() - 1);
+                            dataset.setNt((int) dataMatrix.getColumnCount());
+                            dataset.setX2(new double[dataset.getNl()]);
+                            dataset.setX(new double[dataset.getNt()]);
+                            for (int i = 0; i < dataset.getNt(); i++) {
+                                dataset.getX()[i] = dataMatrix.getAsDouble(0, i);
+                            }
+                            for (int i = 0; i < dataset.getNl(); i++) {
+                                dataset.getX2()[i] = i;
+                            }
+                            dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                            for (int j = 0; j < dataset.getNl(); j++) {
+                                for (int i = 0; i < dataset.getNt(); i++) {
+                                    dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j + 1, i);
+                                }
+                            }
+                        }
+                    } else { //labels in rows but not in columns
+                        if (editorPanel.isLabelsInRows()) {
+                            dataset.setNl((int) dataMatrix.getRowCount());
+                            dataset.setNt((int) dataMatrix.getColumnCount() - 1);
+                            dataset.setX2(new double[dataset.getNl()]);
+                            dataset.setX(new double[dataset.getNt()]);
+                            for (int i = 0; i < dataset.getNt(); i++) {
+                                dataset.getX()[i] = i;
+                            }
+                            for (int i = 0; i < dataset.getNl(); i++) {
+                                dataset.getX2()[i] = dataMatrix.getAsDouble(i, 0);
+                            }
+                            dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                            for (int j = 0; j < dataset.getNl(); j++) {
+                                for (int i = 0; i < dataset.getNt(); i++) {
+                                    dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j, i + 1);
+                                }
+                            }
+                        } else {
+                            dataset.setNl((int) dataMatrix.getRowCount());
+                            dataset.setNt((int) dataMatrix.getColumnCount());
+                            dataset.setX2(new double[dataset.getNl()]);
+                            dataset.setX(new double[dataset.getNt()]);
+                            for (int i = 0; i < dataset.getNt(); i++) {
+                                dataset.getX()[i] = i;
+                            }
+                            for (int i = 0; i < dataset.getNl(); i++) {
+                                dataset.getX2()[i] = i;
+                            }
+                            dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                            for (int j = 0; j < dataset.getNl(); j++) {
+                                for (int i = 0; i < dataset.getNt(); i++) {
+                                    dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j, i);
+                                }
+                            }
+                        }
+                    }
+
+                    if (editorPanel.isWaveCalbrationEnabled()) {
+                        ArrayList<Double> calibration = new ArrayList<Double>();
+                        if (!editorPanel.getFilename().isEmpty()) {
+                            Scanner sc = new Scanner(new File(editorPanel.getFilename()));
+                            while (sc.hasNext()) {
+                                calibration.add(Double.parseDouble(sc.next()));
+                            }
+
+                            if (calibration.size() != dataset.getNl()) {
+                                NotifyDescriptor.Message infoMessage = new NotifyDescriptor.Message(
+                                        NbBundle.getBundle("org/glotaran/csvdataloader/Bundle").getString("wrongCalibrationSize"),
+                                        NotifyDescriptor.INFORMATION_MESSAGE);
+                                DialogDisplayer.getDefault().notify(infoMessage);
+                                return dataset;
+                            }
+
+                            int splitIndex = 0;
+                            int overlapStartindex = 0;
+                            int i = 1;
+                            double splitValue = 0;
+
+                            if (calibration.get(1) > calibration.get(0)) {
+                                while ((i < calibration.size()) && (calibration.get(i) > calibration.get(i - 1))) {
+                                    i++;
+                                }
+                                if (i < calibration.size() - 1) {
+                                    splitIndex = i;
+                                    splitValue = calibration.get(i);
+                                    i--;
+                                    while (splitValue < calibration.get(i)) {
+                                        i--;
+                                    }
+                                    overlapStartindex = (int) (i + floor((splitIndex - i) * 0.5));
+                                    splitIndex = (int) (splitIndex + floor((splitIndex - i) * 0.5));
+                                }
+                                dataset.setPsisim(updateDatamatrix(dataset, overlapStartindex, splitIndex));
+                                dataset.setNl((dataset.getNl() - splitIndex + overlapStartindex));
+                            } else {
+                                while ((calibration.get(i) < calibration.get(i - 1)) && (i < calibration.size())) {
+                                    i++;
+                                }
+                                if (i < calibration.size() - 1) {
+                                    splitIndex = i;
+                                    splitValue = calibration.get(i);
+                                    i--;
+                                    while (splitValue > calibration.get(i)) {
+                                        i--;
+                                    }
+                                    overlapStartindex = (int) (i + floor((splitIndex - i) * 0.25));
+                                    splitIndex = (int) (splitIndex + floor((splitIndex - i) * 0.25));
+                                    dataset.setPsisim(updateDatamatrix(dataset, overlapStartindex, splitIndex));
+                                    dataset.setNl((dataset.getNl() - splitIndex + overlapStartindex));
+                                }
+                            }
+                            dataset.setX2(updateWaves(calibration, overlapStartindex, splitIndex));
+                        }
+                    }
+                    dataset.calcRangeInt();
                 }
-                
-                if (editorPanel.isLifetimeDensityMap()) { 
+
+                if (editorPanel.isLifetimeDensityMap()) {
+//load and generate data from lifetimedensitymap                    
                     // set number of reconstructed timepoints
+                    filetype = "spec";
+                    dataset.setType("spec");
                     int numberOfTimepoints = editorPanel.getTimepoints();
                     double fromValue = editorPanel.getFrom();
                     double toValue = editorPanel.getTo();
                     double logFromValue = editorPanel.getLogFrom();
-                    double linFracValue = editorPanel.getLinearFraction();                                                
+                    double linFracValue = editorPanel.getLinearFraction();
                     // set number of recorded wavelengths
                     dataset.setNl((int) dataMatrix.getRowCount() - 1);
                     dataset.setX2(new double[dataset.getNl()]);
                     double excitationWavelength = dataMatrix.getAsDouble(0, 0);
                     double[] exponents = new double[((int) dataMatrix.getColumnCount() - 1)];
                     for (int i = 0; i < exponents.length; i++) {
-                            exponents[i] = dataMatrix.getAsDouble(0, i + 1);
+                        exponents[i] = dataMatrix.getAsDouble(0, i + 1);
                     }
                     for (int i = 0; i < dataset.getNl(); i++) {
-                            dataset.getX2()[i] = dataMatrix.getAsDouble(i + 1, 0);
+                        dataset.getX2()[i] = dataMatrix.getAsDouble(i + 1, 0);
                     }
                     // set number of timepoint based on desired time resolution
-                    
-                    dataset.setNt(numberOfTimepoints+1);
+
+                    dataset.setNt(numberOfTimepoints + 1);
                     dataset.setX(new double[dataset.getNt()]);
                     if (editorPanel.isLinLogEnabeled()) {
                         int linpoints, logpoints;
@@ -123,7 +269,7 @@ public class SCVMatrixFile implements TGDatasetInterface {
                                 dataset.getX()[i] = (logFromValue - fromValue) / linpoints * i;
                             }
                             for (int i = 0; i <= logpoints; i++) {
-                                dataset.getX()[i+linpoints] = Math.exp(Math.log(logFromValue) + (Math.log(toValue) - Math.log(logFromValue)) / logpoints * i);
+                                dataset.getX()[i + linpoints] = Math.exp(Math.log(logFromValue) + (Math.log(toValue) - Math.log(logFromValue)) / logpoints * i);
                             }
                         } else {
                             for (int i = 0; i <= numberOfTimepoints; i++) {
@@ -139,157 +285,82 @@ public class SCVMatrixFile implements TGDatasetInterface {
 
                     //for every wavelength (row) calculate, for every timepoint
                     //pre_exponential_amplitudes[k]*Exp[-1/Exp[exponential_amplitude[k]] * t]
-                     double[] timepoints = dataset.getX();
-                     dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
-                        for (int j = 0; j < dataset.getNl(); j++) {
-                            for (int i = 0; i < dataset.getNt(); i++) {
-                                for (int k = 0; k < exponents.length; k++) {
-                                   double mult = (k==(exponents.length-1)) ? editorPanel.getLastLifetimeMult() : 1;
-                                   dataset.getPsisim()[j * dataset.getNt() + i] = dataset.getPsisim()[j * dataset.getNt() + i] + 
-                                           dataMatrix.getAsDouble(j + 1, k + 1)*Math.exp(-1/(mult*Math.pow(10,exponents[k]))*timepoints[i]); 
-                                }
-                                
-                            }
-                        }
-                    
-                
-                } else {
-                
-                if (editorPanel.isLabelsInColums()) {
-                    if (editorPanel.isLabelsInRows()) {
-                        dataset.setNl((int) dataMatrix.getRowCount() - 1);
-                        dataset.setNt((int) dataMatrix.getColumnCount() - 1);
-                        dataset.setX2(new double[dataset.getNl()]);
-                        dataset.setX(new double[dataset.getNt()]);
+                    double[] timepoints = dataset.getX();
+                    dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                    for (int j = 0; j < dataset.getNl(); j++) {
                         for (int i = 0; i < dataset.getNt(); i++) {
-                            dataset.getX()[i] = dataMatrix.getAsDouble(0, i + 1);
-                        }
-                        for (int i = 0; i < dataset.getNl(); i++) {
-                            dataset.getX2()[i] = dataMatrix.getAsDouble(i + 1, 0);
-                        }
-                        dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
-                        for (int j = 0; j < dataset.getNl(); j++) {
-                            for (int i = 0; i < dataset.getNt(); i++) {
-                                dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j + 1, i + 1);
+                            for (int k = 0; k < exponents.length; k++) {
+                                double mult = (k == (exponents.length - 1)) ? editorPanel.getLastLifetimeMult() : 1;
+                                dataset.getPsisim()[j * dataset.getNt() + i] = dataset.getPsisim()[j * dataset.getNt() + i]
+                                        + dataMatrix.getAsDouble(j + 1, k + 1) * Math.exp(-1 / (mult * Math.pow(10, exponents[k])) * timepoints[i]);
                             }
-                        }
-                    } else { //labels in colums but not in rows
-                        dataset.setNl((int) dataMatrix.getRowCount() - 1);
-                        dataset.setNt((int) dataMatrix.getColumnCount());
-                        dataset.setX2(new double[dataset.getNl()]);
-                        dataset.setX(new double[dataset.getNt()]);
-                        for (int i = 0; i < dataset.getNt(); i++) {
-                            dataset.getX()[i] = dataMatrix.getAsDouble(0, i);
-                        }
-                        for (int i = 0; i < dataset.getNl(); i++) {
-                            dataset.getX2()[i] = i;
-                        }
-                        dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
-                        for (int j = 0; j < dataset.getNl(); j++) {
-                            for (int i = 0; i < dataset.getNt(); i++) {
-                                dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j + 1, i);
-                            }
+
                         }
                     }
-                } else { //labels in rows but not in columns
-                    if (editorPanel.isLabelsInRows()) {
-                        dataset.setNl((int) dataMatrix.getRowCount());
-                        dataset.setNt((int) dataMatrix.getColumnCount() - 1);
-                        dataset.setX2(new double[dataset.getNl()]);
-                        dataset.setX(new double[dataset.getNt()]);
-                        for (int i = 0; i < dataset.getNt(); i++) {
-                            dataset.getX()[i] = i;
-                        }
-                        for (int i = 0; i < dataset.getNl(); i++) {
-                            dataset.getX2()[i] = dataMatrix.getAsDouble(i, 0);
-                        }
-                        dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
-                        for (int j = 0; j < dataset.getNl(); j++) {
-                            for (int i = 0; i < dataset.getNt(); i++) {
-                                dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j, i + 1);
-                            }
-                        }
-                    } else {
-                        dataset.setNl((int) dataMatrix.getRowCount());
-                        dataset.setNt((int) dataMatrix.getColumnCount());
-                        dataset.setX2(new double[dataset.getNl()]);
-                        dataset.setX(new double[dataset.getNt()]);
-                        for (int i = 0; i < dataset.getNt(); i++) {
-                            dataset.getX()[i] = i;
-                        }
-                        for (int i = 0; i < dataset.getNl(); i++) {
-                            dataset.getX2()[i] = i;
-                        }
-                        dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
-                        for (int j = 0; j < dataset.getNl(); j++) {
-                            for (int i = 0; i < dataset.getNt(); i++) {
-                                dataset.getPsisim()[j * dataset.getNt() + i] = dataMatrix.getAsDouble(j, i);
-                            }
-                        }
-                    }
+
                 }
-                
-                }
-
-                if (editorPanel.isWaveCalbrationEnabled()) {
-                    ArrayList<Double> calibration = new ArrayList<Double>();
-                    if (!editorPanel.getFilename().isEmpty()) {
-                        Scanner sc = new Scanner(new File(editorPanel.getFilename()));
-                        while (sc.hasNext()) {
-                            calibration.add(Double.parseDouble(sc.next()));
-                        }
-
-                        if (calibration.size() != dataset.getNl()) {
-                            NotifyDescriptor.Message infoMessage = new NotifyDescriptor.Message(
-                                    NbBundle.getBundle("org/glotaran/csvdataloader/Bundle").getString("wrongCalibrationSize"),
-                                    NotifyDescriptor.INFORMATION_MESSAGE);
-                            DialogDisplayer.getDefault().notify(infoMessage);
-                            return dataset;
-                        }
-
-                        int splitIndex = 0;
-                        int overlapStartindex = 0;
-                        int i = 1;
-                        double splitValue = 0;
-
-                        if (calibration.get(1) > calibration.get(0)) {
-                            while ((i < calibration.size()) && (calibration.get(i) > calibration.get(i - 1))) {
-                                i++;
-                            }
-                            if (i < calibration.size() - 1) {
-                                splitIndex = i;
-                                splitValue = calibration.get(i);
-                                i--;
-                                while (splitValue < calibration.get(i)) {
-                                    i--;
-                                }
-                                overlapStartindex = (int) (i + floor((splitIndex - i) * 0.5));
-                                splitIndex = (int) (splitIndex + floor((splitIndex - i) * 0.5));
-                            }
-                            dataset.setPsisim(updateDatamatrix(dataset, overlapStartindex, splitIndex));
-                            dataset.setNl((dataset.getNl() - splitIndex + overlapStartindex));
-                        } else {
-                            while ((calibration.get(i) < calibration.get(i - 1)) && (i < calibration.size())) {
-                                i++;
-                            }
-                            if (i < calibration.size() - 1) {
-                                splitIndex = i;
-                                splitValue = calibration.get(i);
-                                i--;
-                                while (splitValue > calibration.get(i)) {
-                                    i--;
-                                }
-                                overlapStartindex = (int) (i + floor((splitIndex - i) * 0.25));
-                                splitIndex = (int) (splitIndex + floor((splitIndex - i) * 0.25));
-                                dataset.setPsisim(updateDatamatrix(dataset, overlapStartindex, splitIndex));
-                                dataset.setNl((dataset.getNl() - splitIndex + overlapStartindex));
-                            }
-                        }
-                        dataset.setX2(updateWaves(calibration, overlapStartindex, splitIndex));
-                    }
-                }
-                dataset.calcRangeInt();
             }
+
+            if (editorPanel.isTimeGatedMattrix()) {
+                filetype = "multispec";
+//load data from timegated matrises assuming each matrix have labels and timesteps set in the corner
+                long ySize = 1;
+                long zSize = 1;
+                long xSize = dataMatrix.getColumnCount();
+                int index;
+                while (ySize < dataMatrix.getRowCount()) {
+                    index = 1;
+                    while (index < xSize && dataMatrix.getAsDouble(ySize, index) == dataMatrix.getAsDouble(0, index)) {
+                        index++;
+                    }
+                    if (index == xSize) {
+                        break;
+                    }
+                    ySize++;
+                }
+                if (ySize < dataMatrix.getRowCount()) {
+                    zSize = dataMatrix.getRowCount() / ySize;
+                }
+//                dataMatrix=dataMatrix.reshape(Ret.NEW, ySize, zSize, xSize);
+                
+                dataset.setDatasetName(file.getName());
+                dataset.setNt((int) zSize);
+                dataset.setNl((int) ((int) (xSize - 1) * (ySize - 1)));
+                dataset.setOrigHeigh((int) (ySize - 1));
+                dataset.setOrigWidth((int) (xSize - 1));
+                dataset.setX2(new double[dataset.getNl()]);
+                dataset.getIntenceImX(new double[dataset.getOriginalHeight()]);
+                dataset.getIntenceImY(new double[dataset.getOriginalWidth()]);
+                dataset.setX(new double[dataset.getNt()]);
+                dataset.setType("multispec");
+
+                for (int i = 0; i < dataset.getNt(); i++) {
+                    dataset.getX()[i] = dataMatrix.getAsDouble(i*ySize,0);
+                }
+                for (int i = 0; i < dataset.getOriginalWidth(); i++) {
+                    dataset.getIntenceImY()[i] = dataMatrix.getAsDouble(0, i+1);
+                }
+                
+                for (int i = 0; i < dataset.getOriginalHeight(); i++) {
+                    dataset.getIntenceImX()[i] = dataMatrix.getAsDouble(i + 1, 0);
+                }
+                           
+                dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
+                int counter = 0;
+                for (int j = 0; j < dataset.getOriginalHeight(); j++) {
+                    for (int i = 0; i < dataset.getOriginalWidth(); i++) {
+                        for (int k = 0; k<dataset.getNt(); k++){
+                            dataset.getPsisim()[(j*dataset.getOriginalWidth()+i)*dataset.getNt()+k] = dataMatrix.getAsDouble(1+j+k*ySize,i+1);
+                        }
+                        dataset.getX2()[j*dataset.getOriginalWidth()+i] = counter;
+                        counter ++;
+                    }
+                }
+                dataset.buildIntMap(0);
+                
+
+            }
+
         } catch (MatrixException ex) {
             Logger.getLogger(SCVMatrixFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
