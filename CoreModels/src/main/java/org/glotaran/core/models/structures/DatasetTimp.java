@@ -12,9 +12,10 @@ public final class DatasetTimp implements Serializable {
     private double[] psisim;    //matrix with data stored as vector timetraces in row
     private double maxInt;      //max(psisim)
     private double minInt;      //min(psysim)
-    private double[] x;         //vector with timesteps (x-dimension)
-    private double[] x2;        //vector with wavelengts (y-dimension)
-    private double[] x3;        //vector with wavelengts  (z-dimention)
+    private double[] x;         //vector with timesteps (time-dimension)
+    private double[] x2;        //vector with wavelengts (x-dimension)
+    private double[] intenceImX;        //vector with wavelengts  (z-dimention)
+    private double[] intenceImY;        //vector with wavelengts  (z-dimention)
     private int nt;             //length of x
     private int nl;             //length of x2
     private int orheight;       //original height of flim image
@@ -32,6 +33,7 @@ public final class DatasetTimp implements Serializable {
     private String dataunit;    // ("counts", "intensity", "V", "a.u.")
     private double[] measuredIRF; // vector with measured IRF
     private double[] measuredIRFDomainAxis; //(calibrated) time axis
+    private int binned;         //binning factor used for 3d data (flim,multispec)
 
     /**
      *
@@ -86,16 +88,28 @@ public final class DatasetTimp implements Serializable {
      *
      * @return
      */
-    public double[] getX3() {
-        return x3;
+    public double[] getIntenceImX() {
+        return intenceImX;
     }
 
     /**
      *
-     * @param x3
+     * @param x
      */
-    public void setX3(double[] x3) {
-        this.x3 = x3;
+    public void getIntenceImX(double[] x) {
+        this.intenceImX = x;
+    }
+    
+    public double[] getIntenceImY() {
+        return intenceImY;
+    }
+
+    /**
+     *
+     * @param x
+     */
+    public void getIntenceImY(double[] x) {
+        this.intenceImY = x;
     }
 
     /**
@@ -465,4 +479,101 @@ public final class DatasetTimp implements Serializable {
             }
         }
     }
+    
+    public void buildIntMap(int mode) {
+// mode = 1 - integral intensity (number of photons in decay) 
+// mode =-1 - amplitude of signal (number of photons in max)
+// mode = 0 - take the first time point map;
+
+        intenceIm = new double[nl];
+        double tmp = 0;
+        minInt = psisim[0];
+        maxInt = psisim[0];
+        switch (mode){
+            case 1: {
+                for (int i = 0; i < nl; i++) {
+                    tmp = getDataPoint(i * nt);
+                    for (int j = 1; j < nt; j++) {
+                        tmp += this.getDataPoint(i * nt + j);
+                    }
+                    intenceIm[i] = tmp;
+                    if (minInt > tmp) {
+                        minInt = tmp;
+                    }
+                    if (maxInt < tmp) {
+                        maxInt = tmp;
+                    }
+                }
+                break;
+            }
+            case 0: {
+                for (int j = 0; j < orheight; j++) {
+                    for (int i = 0; i < orwidth; i++) {
+                        intenceIm[j * orwidth + i] = psisim[j * orwidth + i];
+                    }
+                }
+                calcRangeInt();
+            }
+
+            case -1: {
+                for (int i = 0; i < nl; i++) {
+                    tmp = getDataPoint(i * nt);
+                    for (int j = 1; j < nt; j++) {   
+                        if (this.getDataPoint(i * nt + j) > tmp) {
+                            tmp = this.getDataPoint(i * nt + j);
+                        }
+                    }
+                    intenceIm[i] = tmp;
+                    if (minInt > tmp) {
+                        minInt = tmp;
+                    }
+                    if (maxInt < tmp) {
+                        maxInt = tmp;
+                    }
+                }
+
+            }
+        }
+
+    }
+    
+    /**
+     * Return value based on the binning factor  
+     * @param index global index in data matrix 
+     * @return value from selected point
+     */
+    public double getDataPoint(int index) {
+        int i, j, t;
+        t = index % nt;
+        j = ((index - t) / nt) % orwidth;
+        i = (((index - t) / nt) - j) / orwidth;
+        
+        return getDataPoint(i, j, t);
+    }
+    
+        /**
+     * Return value based on the binning factor  
+     * @param i row index
+     * @param j column index
+     * @param t time index
+     * @return value from selected point  
+     */
+    public double getDataPoint(int i, int j, int t) {
+        double temp = 0;
+        if (binned == 0) {
+            return psisim[(i * orwidth + j) * nt + t];
+        } else {
+            if (i < binned || j < binned || i >= orheight - binned || j >= orwidth - binned) {
+                temp = 0;
+            } else {
+                for (int m = i - binned; m <= i + binned; m++) {
+                    for (int n = j - binned; n <= j + binned; n++) {
+                        temp += psisim[(m * orwidth + n) * nt + t];
+                    }
+                }
+            }
+            return temp;
+        }
+    }
+       
 }

@@ -176,6 +176,7 @@ public class ASCIIImage implements TGDatasetInterface {
             dataset.setPsisim(psisim);
             dataset.setMaxInt(maxInt);
             dataset.setMinInt(minInt);
+            dataset.setType("spec");                                        
         } else {
             if (loadedString.trim().equalsIgnoreCase("Wavelength explicit")) {
                 sc.skip(Pattern.compile(" *Intervalnr", 2));
@@ -237,13 +238,16 @@ public class ASCIIImage implements TGDatasetInterface {
                 dataset.setPsisim(psisim);
                 dataset.setMaxInt(maxInt);
                 dataset.setMinInt(minInt);
+                dataset.setType("spec");
             } else {
                 if (loadedString.trim().equalsIgnoreCase("FLIM image")) {
+                    dataset.setType("spec");
                     System.out.println("flim");
 //TODO implement loading FLIM ASCII file
                 }
             }
         }
+
         return dataset;
     }
 

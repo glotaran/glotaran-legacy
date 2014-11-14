@@ -9,6 +9,7 @@ import org.glotaran.core.datadisplayers.spec.SpecEditorTopCompNew;
 import org.glotaran.core.main.interfaces.DatasetLoaderInterface;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
+import org.glotaran.core.models.structures.DatasetTimp;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
@@ -23,24 +24,6 @@ public class ShowSpecEditor implements DatasetLoaderInterface {
         return "spec";
     }
 
-    @Override
-    public void openDatasetEditor(TgdDataObject dataObj) {
-        Set<TopComponent> tset = WindowManager.getDefault().getRegistry().getOpened();
-        for (TopComponent t : tset) {
-            if (t instanceof SpecEditorTopCompNew) {
-                SpecEditorTopCompNew srtc = (SpecEditorTopCompNew) t;
-                if (srtc.getDataObject() != null) {
-                    if (srtc.getDataObject().equals(dataObj)) {
-                        srtc.requestActive();
-                        return;
-                    }
-                }
-            }
-        }
-        SpecEditorTopCompNew tc = new SpecEditorTopCompNew(dataObj);
-        tc.open();
-        tc.requestActive();
-    }
 
     @Override
     public void openDatasetEditor(TimpDatasetDataObject dataObj) {
@@ -57,6 +40,25 @@ public class ShowSpecEditor implements DatasetLoaderInterface {
             }
         }
         SpecEditorTopCompNew tc = new SpecEditorTopCompNew(dataObj);
+        tc.open();
+        tc.requestActive();
+    }
+
+    @Override
+    public void openDatasetEditor(DatasetTimp data, TgdDataObject dataObj) {
+        Set<TopComponent> tset = WindowManager.getDefault().getRegistry().getOpened();
+        for (TopComponent t : tset) {
+            if (t instanceof SpecEditorTopCompNew) {
+                SpecEditorTopCompNew srtc = (SpecEditorTopCompNew) t;
+                if (srtc.getDataObject2() != null) {
+                    if (srtc.getDataObject().equals(dataObj)) {
+                        srtc.requestActive();
+                        return;
+                    }
+                }
+            }
+        }
+        SpecEditorTopCompNew tc = new SpecEditorTopCompNew(data,dataObj);
         tc.open();
         tc.requestActive();
     }

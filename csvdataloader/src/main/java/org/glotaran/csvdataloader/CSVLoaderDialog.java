@@ -117,6 +117,12 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         jTextField2 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
 
         setMinimumSize(new java.awt.Dimension(950, 500));
         setPreferredSize(new java.awt.Dimension(950, 500));
@@ -607,8 +613,8 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         jPTimeGateMatSettings.add(jTextField1, gridBagConstraints);
 
@@ -638,8 +644,8 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         jPTimeGateMatSettings.add(jTextField2, gridBagConstraints);
@@ -659,11 +665,70 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         jPTimeGateMatSettings.add(jTextField3, gridBagConstraints);
+
+        jLabel12.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel12.text")); // NOI18N
+        jLabel12.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jLabel12, gridBagConstraints);
+
+        jLabel13.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel13.text")); // NOI18N
+        jLabel13.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jLabel13, gridBagConstraints);
+
+        jTextField4.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTextField4.text")); // NOI18N
+        jTextField4.setEnabled(false);
+        jTextField4.setPreferredSize(new java.awt.Dimension(6, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jTextField4, gridBagConstraints);
+
+        jLabel14.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel14.text")); // NOI18N
+        jLabel14.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 1.0;
+        jPTimeGateMatSettings.add(jLabel14, gridBagConstraints);
+
+        jTextField5.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTextField5.text")); // NOI18N
+        jTextField5.setEnabled(false);
+        jTextField5.setPreferredSize(new java.awt.Dimension(6, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        jPTimeGateMatSettings.add(jTextField5, gridBagConstraints);
+
+        jTextField6.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTextField6.text")); // NOI18N
+        jTextField6.setEnabled(false);
+        jTextField6.setPreferredSize(new java.awt.Dimension(6, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        jPTimeGateMatSettings.add(jTextField6, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -728,7 +793,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         try {
             dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file, getDelimiterString());
             if ((getSkipRows() > 0) || (getSkipColums() > 0)) {
-                dataMatrix = dataMatrix.subMatrix(Calculation.Ret.NEW, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+                dataMatrix.subMatrix(Calculation.Ret.ORIG, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
             }
             MatrixTableEditorPanel matPanel = new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix));
             jpMatrixEditor.removeAll();
@@ -758,6 +823,9 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -789,6 +857,9 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private javax.swing.JPanel jpCalibration;
     private javax.swing.JPanel jpMatrixEditor;
     private javax.swing.JRadioButton rbLoadFromFile;
@@ -885,7 +956,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         return dataMatrix;
     }
 
-    private String getDelimiterString(){
+    public String getDelimiterString(){
         String delim = "";
         if (jRBComma.isSelected()) {delim = ",";}
         if (jRBSemicolon.isSelected()) {delim = ";";}

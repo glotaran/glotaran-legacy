@@ -34,6 +34,7 @@ import org.glotaran.core.models.structures.FlimImageAbstract;
  * @author Owner
  */
 public class SCVMatrixFile implements TGDatasetInterface {
+    private String filetype = "spec" ;
 
     @Override
     public String getExtention() {
@@ -47,7 +48,7 @@ public class SCVMatrixFile implements TGDatasetInterface {
 
     @Override
     public String getType(File file) throws FileNotFoundException {
-        return "spec";
+        return filetype;
     }
 
     @Override
@@ -80,9 +81,10 @@ public class SCVMatrixFile implements TGDatasetInterface {
                     NotifyDescriptor.CANCEL_OPTION);
             if (DialogDisplayer.getDefault().notify(cellEditor).equals(NotifyDescriptor.OK_OPTION)) {
                 if (editorPanel.getDtaMatrix() == null) {
-                    dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file);
+//                    dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file);
+                    dataMatrix =MatrixFactory.importFromFile(FileFormat.CSV, file, editorPanel.getDelimiterString());
                     if ((editorPanel.getSkipRows() > 0) || (editorPanel.getSkipColums() > 0)) {
-                        dataMatrix = dataMatrix.subMatrix(Ret.NEW, editorPanel.getSkipRows(), editorPanel.getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+                        dataMatrix.subMatrix(Ret.ORIG, editorPanel.getSkipRows(), editorPanel.getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
                     }
                 } else {
                     dataMatrix = editorPanel.getDtaMatrix();
@@ -90,7 +92,9 @@ public class SCVMatrixFile implements TGDatasetInterface {
 
                 dataset = new DatasetTimp();
                 if (editorPanel.isSingleMatrix()) {
-//load single matrix from file                    
+//load single matrix from file  
+                    filetype = "spec";
+                    dataset.setType("spec");
                     dataset.setDatasetName(file.getName());
                     if (editorPanel.isSpectraInRows()) {
                         dataMatrix = dataMatrix.transpose();
@@ -232,6 +236,8 @@ public class SCVMatrixFile implements TGDatasetInterface {
                 if (editorPanel.isLifetimeDensityMap()) {
 //load and generate data from lifetimedensitymap                    
                     // set number of reconstructed timepoints
+                    filetype = "spec";
+                    dataset.setType("spec");
                     int numberOfTimepoints = editorPanel.getTimepoints();
                     double fromValue = editorPanel.getFrom();
                     double toValue = editorPanel.getTo();
@@ -296,6 +302,7 @@ public class SCVMatrixFile implements TGDatasetInterface {
             }
 
             if (editorPanel.isTimeGatedMattrix()) {
+                filetype = "multispec";
 //load data from timegated matrises assuming each matrix have labels and timesteps set in the corner
                 long ySize = 1;
                 long zSize = 1;
@@ -314,36 +321,43 @@ public class SCVMatrixFile implements TGDatasetInterface {
                 if (ySize < dataMatrix.getRowCount()) {
                     zSize = dataMatrix.getRowCount() / ySize;
                 }
-                dataMatrix = dataMatrix.reshape(Ret.NEW, ySize, zSize, xSize);
-
+//                dataMatrix=dataMatrix.reshape(Ret.NEW, ySize, zSize, xSize);
+                
+                dataset.setDatasetName(file.getName());
                 dataset.setNt((int) zSize);
                 dataset.setNl((int) ((int) (xSize - 1) * (ySize - 1)));
                 dataset.setOrigHeigh((int) (ySize - 1));
                 dataset.setOrigWidth((int) (xSize - 1));
-                dataset.setX2(new double[dataset.getOriginalWidth()]);
-                dataset.setX3(new double[dataset.getOriginalHeight()]);
+                dataset.setX2(new double[dataset.getNl()]);
+                dataset.getIntenceImX(new double[dataset.getOriginalHeight()]);
+                dataset.getIntenceImY(new double[dataset.getOriginalWidth()]);
                 dataset.setX(new double[dataset.getNt()]);
-                dataset.setType("2dSpec");
+                dataset.setType("multispec");
 
                 for (int i = 0; i < dataset.getNt(); i++) {
-                    dataset.getX()[i] = dataMatrix.getAsDouble(0, i, 0);
+                    dataset.getX()[i] = dataMatrix.getAsDouble(i*ySize,0);
                 }
                 for (int i = 0; i < dataset.getOriginalWidth(); i++) {
-                    dataset.getX2()[i] = dataMatrix.getAsDouble(0, 0, i + 1);
+                    dataset.getIntenceImY()[i] = dataMatrix.getAsDouble(0, i+1);
                 }
                 
                 for (int i = 0; i < dataset.getOriginalHeight(); i++) {
-                    dataset.getX3()[i] = dataMatrix.getAsDouble(i + 1, 0, 0);
+                    dataset.getIntenceImX()[i] = dataMatrix.getAsDouble(i + 1, 0);
                 }
                            
                 dataset.setPsisim(new double[dataset.getNl() * dataset.getNt()]);
-                for (int j = 0; j < ySize; j++) {
-                    for (int i = 0; i < xSize; i++) {
-                        for (int k = 0; k<zSize; k++){
-                            dataset.getPsisim()[k+(int)zSize*(j*(int)xSize+i)] = dataMatrix.getAsDouble(j, k, i);
+                int counter = 0;
+                for (int j = 0; j < dataset.getOriginalHeight(); j++) {
+                    for (int i = 0; i < dataset.getOriginalWidth(); i++) {
+                        for (int k = 0; k<dataset.getNt(); k++){
+                            dataset.getPsisim()[(j*dataset.getOriginalWidth()+i)*dataset.getNt()+k] = dataMatrix.getAsDouble(1+j+k*ySize,i+1);
                         }
+                        dataset.getX2()[j*dataset.getOriginalWidth()+i] = counter;
+                        counter ++;
                     }
                 }
+                dataset.buildIntMap(0);
+                
 
             }
 

@@ -24,7 +24,9 @@ public interface TGDatasetInterface {
 
     /**
      * Get the file type.
+     * @param file
      * @return A {@code String} containing the type of the file for loaders.
+     * @throws java.io.FileNotFoundException
      */
     public String getType(File file) throws FileNotFoundException;
 

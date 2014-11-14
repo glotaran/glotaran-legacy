@@ -113,56 +113,78 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         setToolTipText(NbBundle.getMessage(SpecEditorTopCompNew.class, "HINT_StreakLoaderTopComponent"));
     }
 
-    public SpecEditorTopCompNew(TgdDataObject dataObj) {
-        File tgdFile;
+    public SpecEditorTopCompNew(DatasetTimp timpDataFile, TgdDataObject dataObj) {
+        svdFilter = new ArrayList<>();
         dataObject = dataObj;
-        svdFilter = new ArrayList<Integer>();
         initComponents();
-        setName(dataObject.getTgd().getFilename());
-
-        //try to get the file from local cache
-        project = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
-        if (dataObject.getTgd().getRelativePath() != null) {
-            tgdFile = new File(project.getProjectDirectory().getPath() + File.separator + dataObject.getTgd().getRelativePath());
-        } else { //try the orginal location
-            tgdFile = new File(dataObject.getTgd().getPath());
-        }
-
-        // setName(NbBundle.getMessage(SpecEditorTopCompNew.class, "CTL_StreakLoaderTopComponent"));
+        setName(timpDataFile.getDatasetName());
         setToolTipText(NbBundle.getMessage(SpecEditorTopCompNew.class, "HINT_StreakLoaderTopComponent"));
-        // setIcon(Utilities.loadImage(ICON_PATH, true));
-        data = new DatasetTimp();
+        data = timpDataFile;
 
-        //get loaders from lookup
-        Collection<? extends TGDatasetInterface> services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
-        for (final TGDatasetInterface service : services) {
-            try {
-                if (service.Validator(tgdFile)) {
-                    data = service.loadFile(tgdFile);
-                    if (service.getExtention().equalsIgnoreCase("raw")) {
-                        jBConvertToAbs.setEnabled(true);
-                    }
-                    if (data != null) {
-                        if (data.getIntenceIm() != null) {
-                            jBTICorrection.setEnabled(true);
-                        }
-                        MakeImageChart(MakeXYZDataset());
-                        updateFileInfo();
-                    }
-                    break;
-                }
-            } catch (FileNotFoundException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (IllegalAccessException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (InstantiationException ex) {
-                Exceptions.printStackTrace(ex);
-            }
+        if (dataObj.getTgd().getExtension().equalsIgnoreCase("raw")) {
+            jBConvertToAbs.setEnabled(true);
         }
+
+        if (data.getIntenceIm() != null) {
+            jBTICorrection.setEnabled(true);
+        }
+        
+        MakeImageChart(MakeXYZDataset());
+        updateFileInfo();
+
         setActivatedNodes(new Node[]{dataObject.getNodeDelegate()});
+        
     }
+//    public SpecEditorTopCompNew(TgdDataObject dataObj) {
+//        File tgdFile;
+//        dataObject = dataObj;
+//        svdFilter = new ArrayList<Integer>();
+//        initComponents();
+//        setName(dataObject.getTgd().getFilename());
+//
+//        //try to get the file from local cache
+//        project = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
+//        if (dataObject.getTgd().getRelativePath() != null) {
+//            tgdFile = new File(project.getProjectDirectory().getPath() + File.separator + dataObject.getTgd().getRelativePath());
+//        } else { //try the orginal location
+//            tgdFile = new File(dataObject.getTgd().getPath());
+//        }
+//
+//        // setName(NbBundle.getMessage(SpecEditorTopCompNew.class, "CTL_StreakLoaderTopComponent"));
+//        setToolTipText(NbBundle.getMessage(SpecEditorTopCompNew.class, "HINT_StreakLoaderTopComponent"));
+//        // setIcon(Utilities.loadImage(ICON_PATH, true));
+//        data = new DatasetTimp();
+//
+//        //get loaders from lookup
+//        Collection<? extends TGDatasetInterface> services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
+//        for (final TGDatasetInterface service : services) {
+//            try {
+//                if (service.Validator(tgdFile)) {
+//                    data = service.loadFile(tgdFile);
+//                    if (service.getExtention().equalsIgnoreCase("raw")) {
+//                        jBConvertToAbs.setEnabled(true);
+//                    }
+//                    if (data != null) {
+//                        if (data.getIntenceIm() != null) {
+//                            jBTICorrection.setEnabled(true);
+//                        }
+//                        MakeImageChart(MakeXYZDataset());
+//                        updateFileInfo();
+//                    }
+//                    break;
+//                }
+//            } catch (FileNotFoundException ex) {
+//                Exceptions.printStackTrace(ex);
+//            } catch (IOException ex) {
+//                Exceptions.printStackTrace(ex);
+//            } catch (IllegalAccessException ex) {
+//                Exceptions.printStackTrace(ex);
+//            } catch (InstantiationException ex) {
+//                Exceptions.printStackTrace(ex);
+//            }
+//        }
+//        setActivatedNodes(new Node[]{dataObject.getNodeDelegate()});
+//    }
 
     public SpecEditorTopCompNew(TimpDatasetDataObject dataObj) {
         svdFilter = new ArrayList<Integer>();
@@ -542,11 +564,11 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 201, Short.MAX_VALUE)
+            .addGap(0, 203, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+            .addGap(0, 363, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -593,15 +615,15 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rangeSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                    .addComponent(rangeSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFMaxIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(jTFMinIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                            .addComponent(jTFMaxIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(jTFMinIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -621,7 +643,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(rangeSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -778,7 +800,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 270, Short.MAX_VALUE)
+            .addGap(0, 272, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -800,7 +822,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 270, Short.MAX_VALUE)
+            .addGap(0, 272, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -864,7 +886,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jPanel2.TabConstraints.tabTitle_1"), jPanel2); // NOI18N
@@ -882,7 +904,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1067, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
