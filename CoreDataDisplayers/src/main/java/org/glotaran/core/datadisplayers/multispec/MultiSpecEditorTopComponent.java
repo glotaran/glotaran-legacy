@@ -191,7 +191,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jpDataPanelInner.setPreferredSize(new java.awt.Dimension(1000, 570));
         jpDataPanelInner.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(10, 10));
+        jPanel1.setMinimumSize(new java.awt.Dimension(960, 280));
         jPanel1.setPreferredSize(new java.awt.Dimension(960, 280));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -274,8 +274,8 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jpDataPanelInner.add(jPanel1, gridBagConstraints);
 
         jpMultiSpecImage.setBackground(new java.awt.Color(0, 0, 0));
@@ -413,9 +413,6 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jpDataPanelInner.add(jPanel2, gridBagConstraints);
 
-        jPanel4.setMinimumSize(new java.awt.Dimension(10, 10));
-        jPanel4.setPreferredSize(new java.awt.Dimension(10, 10));
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -435,9 +432,6 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         jpDataPanelInner.add(jPanel4, gridBagConstraints);
-
-        jPanel5.setMinimumSize(new java.awt.Dimension(10, 10));
-        jPanel5.setPreferredSize(new java.awt.Dimension(10, 10));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -647,19 +641,6 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         if (newMinAmpl < newMaxAmpl) {
             try {
                 updateImagePlot(newMinAmpl, newMaxAmpl);
-//                PaintScale ps = new RainbowPaintScale(newMinAmpl, newMaxAmpl);
-//                //                PaintScale ps = new RedGreenPaintScale(newMinAmpl, newMaxAmpl);
-//
-//                BufferedImage image = ImageUtilities.createColorCodedImage(this.dataset, ps);
-//                XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
-//                    dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
-//
-//                XYPlot plot = (XYPlot) chartMultiSpec.getPlot();
-//                plot.getRenderer().removeAnnotations();
-//                plot.getRenderer().addAnnotation(ann, Layer.BACKGROUND);
-//
-//                ((PaintScaleLegend) chartMultiSpec.getSubtitle(0)).setScale(ps);
-//                ((PaintScaleLegend) chartMultiSpec.getSubtitle(0)).getAxis().setRange(newMinAmpl, newMaxAmpl);
 
                 jTFMinIntence.setText(String.valueOf(newMinAmpl));
                 jTFMaxIntence.setText(String.valueOf(newMaxAmpl));
@@ -704,15 +685,21 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }//GEN-LAST:event_jsTimeSliceStateChanged
 
     private void jtbIntegrateMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbIntegrateMapActionPerformed
-       
-        if (jtbIntegrateMap.isSelected()){
+        jsTimeSlice.setEnabled(!jtbIntegrateMap.isSelected());
+        if (jtbIntegrateMap.isSelected()) {
             data.buildIntMap(1);
         } else {
             data.buildIntMap(0);
         }
-        MakeXYZDataset();    
-        updateImagePlot(data.getMinInt(),data.getMaxInt()); 
+        MakeXYZDataset();
+        updateImagePlot(data.getMinInt(), data.getMaxInt());
+      
+        XYDataset d = ImageUtilities.extractColumnFromImageDataset(dataset, jSVerticalCut.getValue(), "Spec");
+        subchartVerticalCutTrace.getXYPlot().setDataset(d);
+        d = ImageUtilities.extractRowFromImageDataset(dataset, jsHorisontalCut.getValue(), "Spec");
+        subchartHorisontalTrace.getXYPlot().setDataset(d);
         
+
     }//GEN-LAST:event_jtbIntegrateMapActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -996,8 +983,8 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jTFMinIntence.setText(String.valueOf(data.getMinInt()));
         rangeSlider.setMinimum(0);
         rangeSlider.setMaximum(99);
-//        rangeSlider.setLowValue(0);
-//        rangeSlider.setHighValue(99);
+        rangeSlider.setLowValue(0);
+        rangeSlider.setHighValue(99);
         rangeSlider.setRangeDraggable(true);
 
         rangeSlider.setPaintLabels(true);
