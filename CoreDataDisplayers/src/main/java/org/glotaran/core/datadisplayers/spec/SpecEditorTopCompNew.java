@@ -1189,7 +1189,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
     }//GEN-LAST:event_jBConvertToAbsActionPerformed
 
     private void jBSelectDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSelectDataActionPerformed
-        SelectDataDialog selectDataDialogPanel = new SelectDataDialog();
+        double[] selectRange = {data.getX()[0],data.getX()[data.getX().length-1],data.getX2()[0],data.getX2()[data.getX2().length-1]};
+        SelectDataDialog selectDataDialogPanel = new SelectDataDialog(selectRange);
         //selectDataDialog.setInitialNumbers(data.getNl(), data.getNt());
         NotifyDescriptor selectDataDialog = new NotifyDescriptor(
                 selectDataDialogPanel,

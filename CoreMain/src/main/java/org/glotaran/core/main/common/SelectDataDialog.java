@@ -23,6 +23,16 @@ public class SelectDataDialog extends javax.swing.JPanel {
         dimensionPanel2.setPanName("Dimension 2(Time)");
         dimensionPanel1.setPanName("Dimension 1(Waves)");
     }
+    
+    public SelectDataDialog(double[] selectRange) {
+        initComponents();
+        dimensionPanel2.setPanName("Dimension 2(Time)");
+        dimensionPanel2.setFromText(selectRange[0]);
+        dimensionPanel2.setToText(selectRange[1]);        
+        dimensionPanel1.setPanName("Dimension 1(Waves)");
+        dimensionPanel1.setFromText(selectRange[2]);
+        dimensionPanel1.setToText(selectRange[3]);
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
