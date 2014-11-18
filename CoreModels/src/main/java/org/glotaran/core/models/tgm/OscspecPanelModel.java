@@ -13,22 +13,21 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for OscspecPanelModel complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="OscspecPanelModel">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="dat" type="{http://www.nat.vu.nl/~jsnel/Schema/TgmSchema}Dat"/>
- *         &lt;element name="panelStates" type="{http://www.w3.org/2001/XMLSchema}boolean" maxOccurs="unbounded"/>
+ *         &lt;element name="oscspec" type="{http://www.nat.vu.nl/~jsnel/Schema/TgmSchema}Cohspec"/>
+ *         &lt;element name="oscpar" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,69 +37,68 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "dat",
-    "panelStates"
+@XmlType(name = "OscspecPanelModel", propOrder = {
+    "oscspec",
+    "oscpar"
 })
-@XmlRootElement(name = "tgm")
-public class Tgm {
+public class OscspecPanelModel {
 
     @XmlElement(required = true, nillable = true)
-    protected Dat dat;
+    protected Cohspec oscspec;
     @XmlElement(required = true, nillable = true)
-    protected List<Boolean> panelStates;
+    protected List<Double> oscpar;
 
     /**
-     * Gets the value of the dat property.
+     * Gets the value of the oscspec property.
      * 
      * @return
      *     possible object is
-     *     {@link Dat }
+     *     {@link Cohspec }
      *     
      */
-    public Dat getDat() {
-        return dat;
+    public Cohspec getOscspec() {
+        return oscspec;
     }
 
     /**
-     * Sets the value of the dat property.
+     * Sets the value of the oscspec property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Dat }
+     *     {@link Cohspec }
      *     
      */
-    public void setDat(Dat value) {
-        this.dat = value;
+    public void setOscspec(Cohspec value) {
+        this.oscspec = value;
     }
 
     /**
-     * Gets the value of the panelStates property.
+     * Gets the value of the oscpar property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the panelStates property.
+     * This is why there is not a <CODE>set</CODE> method for the oscpar property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPanelStates().add(newItem);
+     *    getOscpar().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Boolean }
+     * {@link Double }
      * 
      * 
      */
-    public List<Boolean> getPanelStates() {
-        if (panelStates == null) {
-            panelStates = new ArrayList<Boolean>();
+    public List<Double> getOscpar() {
+        if (oscpar == null) {
+            oscpar = new ArrayList<Double>();
         }
-        return this.panelStates;
+        return this.oscpar;
     }
 
 }

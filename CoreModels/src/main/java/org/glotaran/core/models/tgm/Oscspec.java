@@ -17,19 +17,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Cohspec complex type.
+ * <p>Java class for Oscspec complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Cohspec">
+ * &lt;complexType name="Oscspec">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="set" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="start" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
- *         &lt;element name="fixed" type="{http://www.w3.org/2001/XMLSchema}boolean" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,13 +38,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Cohspec", propOrder = {
+@XmlType(name = "Oscspec", propOrder = {
     "type",
     "set",
-    "start",
-    "fixed"
+    "start"
 })
-public class Cohspec {
+public class Oscspec {
 
     @XmlElement(required = true)
     protected String type;
@@ -53,8 +51,6 @@ public class Cohspec {
     protected boolean set;
     @XmlElement(required = true, nillable = true)
     protected List<Double> start;
-    @XmlElement(required = true, nillable = true)
-    protected List<Boolean> fixed;
 
     /**
      * Gets the value of the type property.
@@ -123,35 +119,6 @@ public class Cohspec {
             start = new ArrayList<Double>();
         }
         return this.start;
-    }
-
-    /**
-     * Gets the value of the fixed property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the fixed property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFixed().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Boolean }
-     * 
-     * 
-     */
-    public List<Boolean> getFixed() {
-        if (fixed == null) {
-            fixed = new ArrayList<Boolean>();
-        }
-        return this.fixed;
     }
 
 }
