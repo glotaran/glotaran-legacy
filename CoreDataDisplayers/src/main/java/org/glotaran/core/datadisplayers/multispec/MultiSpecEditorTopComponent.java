@@ -5,14 +5,18 @@
  */
 package org.glotaran.core.datadisplayers.multispec;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
+import org.glotaran.core.datadisplayers.common.CommonDataDispTools;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
 import org.glotaran.core.messages.CoreErrorMessages;
@@ -23,6 +27,7 @@ import org.glotaran.jfreechartcustom.GrayPaintScalePlus;
 import org.glotaran.jfreechartcustom.HeightMapPanel;
 import org.glotaran.jfreechartcustom.ImageCrosshairLabelGenerator;
 import org.glotaran.jfreechartcustom.ImageUtilities;
+import org.glotaran.jfreechartcustom.IntensImageDataset;
 import org.glotaran.jfreechartcustom.LinLogFormat;
 import org.glotaran.jfreechartcustom.NonLinearNumberTickUnit;
 import org.glotaran.jfreechartcustom.RainbowPaintScale;
@@ -32,6 +37,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYDataImageAnnotation;
 import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
@@ -41,6 +47,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
@@ -56,6 +63,7 @@ import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.CloneableTopComponent;
+import org.ujmp.core.Matrix;
 
 /**
  * Top component which displays something.
@@ -105,6 +113,9 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     private Range lastYRange;
     private Range wholeXRange;
     private Range wholeYRange;
+    private Matrix[] svdResult;    
+    private JFreeChart leftSVChart;
+    private JFreeChart rightSVChart;
 
     public MultiSpecEditorTopComponent() {
         initComponents();
@@ -1079,6 +1090,159 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         
         
     }
+    
+    private void updateSVDPlots() {
+        XYSeriesCollection lSVCollection = new XYSeriesCollection();
+        XYSeries seria;
+        for (int j = 0; j < (Integer) jSnumSV.getValue(); j++) {
+            seria = new XYSeries("LSV" + j + 1);
+            for (int i = 0; i < data.getNt(); i++) {
+                seria.add(data.getX()[i], svdResult[0].getAsDouble((long) i, j));
+            }
+            lSVCollection.addSeries(seria);
+        }
+        leftSVChart.getXYPlot().setDataset(lSVCollection);
+        
+        double[] tempRsingVec = null;
+        double minVal = 0;
+        double maxVal = 0;
+        
+        if (jPRightSingVectors.getComponentCount()<(Integer)jSnumSV.getValue()){
+            double tempValue;
+            for (int i = jPRightSingVectors.getComponentCount(); i < (Integer) jSnumSV.getValue(); i++) {
+                tempRsingVec = new double[data.getNl()];
+                for (int j = 0; j < data.getNl(); j++) {
+                    tempValue = svdResult[2].getAsDouble(j, i);
+                    tempRsingVec[j] = tempValue;
+                    minVal = minVal > tempValue ? tempValue : minVal;
+                    maxVal = maxVal < tempValue ? tempValue : maxVal;
+                }
+                IntensImageDataset rSingVec = new IntensImageDataset(data.getOriginalWidth(), data.getOriginalHeight(), tempRsingVec);
+                PaintScale ps = new RedGreenPaintScale(minVal, maxVal);
+                JFreeChart rSingVect = CommonDataDispTools.createScatChart(ImageUtilities.createColorCodedImage(rSingVec, ps), ps, data.getOriginalWidth(), data.getOriginalHeight());
+//            rSingVect.setTitle("R Singular vector " + String.valueOf(j + 1));
+                //rSingVect.getTitle().setFont(new Font(tracechart.getTitle().getFont().getFontName(), Font.PLAIN, 12));
+                ChartPanel rSingVectPanel = new ChartPanel(rSingVect);
+                rSingVectPanel.setFillZoomRectangle(true);
+                rSingVectPanel.setMouseWheelEnabled(true);
+                jPRightSingVectors.add(rSingVectPanel);
+            }
+            
+        } 
+        else {
+            for (int i = jPRightSingVectors.getComponentCount()-1; i >= (Integer) jSnumSV.getValue(); i--) {
+                jPRightSingVectors.remove(i);
+                jPRightSingVectors.repaint();                
+            }
+        }  
+    jPRightSingVectors.validate();
+    }
+    
+    private void createSVDPlots() {
+
+        int maxSpinnerNumberModel = Math.min(MAX_NUMBER_SINGULAR_VALUES, (int) svdResult[1].getRowCount());
+        jTFtotalNumSV.setText("Max " + maxSpinnerNumberModel + " of  " + String.valueOf(svdResult[1].getRowCount()));
+        jSnumSV.setModel(new SpinnerNumberModel((int) 1, (int) 0, maxSpinnerNumberModel, (int) 1));
+
+        //creare collection with first 2 LSV
+
+        XYSeriesCollection lSVCollection = new XYSeriesCollection();
+        XYSeries seria;
+        seria = new XYSeries("LSV1");
+        for (int i = 0; i < data.getNt(); i++) {
+            seria.add(data.getX()[i], svdResult[0].getAsDouble((long) i, 0));
+        }
+        lSVCollection.addSeries(seria);
+
+
+
+        //creare chart for 2 LSV
+        leftSVChart = ChartFactory.createXYLineChart(
+                "Left singular vectors",
+                "Time (~s)",
+                null,
+                lSVCollection,
+                PlotOrientation.VERTICAL,
+                false,
+                false,
+                false);
+        //leftSVChart.getTitle().setFont(new Font(leftSVChart.getTitle().getFont().getFontName(), Font.PLAIN, 12));
+        leftSVChart.setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);        
+        GraphPanel chpan = new GraphPanel(leftSVChart);
+        jPLeftSingVectors.removeAll();
+        jPLeftSingVectors.add(chpan);
+
+        //creare collection with first RSV
+               
+        double[] tempRsingVec = null;
+        double minVal = 0;
+        double maxVal = 0;
+
+//            seria = new XYSeries("RSV" + (j + 1));
+        tempRsingVec = new double[data.getNl()];
+        double tempValue;
+        for (int i = 0; i < data.getNl(); i++) {
+            tempValue =  svdResult[2].getAsDouble(i, 0);
+            tempRsingVec[i] =tempValue;
+            minVal = minVal > tempValue ? tempValue : minVal;
+            maxVal = maxVal < tempValue ? tempValue : maxVal;
+        }
+
+        IntensImageDataset rSingVec = new IntensImageDataset(data.getOriginalWidth(), data.getOriginalHeight(), tempRsingVec);
+        PaintScale ps = new RedGreenPaintScale(minVal, maxVal);
+        JFreeChart rSingVect = CommonDataDispTools.createScatChart(ImageUtilities.createColorCodedImage(rSingVec, ps), ps, data.getOriginalWidth(), data.getOriginalHeight());
+//            rSingVect.setTitle("R Singular vector " + String.valueOf(j + 1));
+        //rSingVect.getTitle().setFont(new Font(tracechart.getTitle().getFont().getFontName(), Font.PLAIN, 12));
+        ChartPanel rSingVectPanel = new ChartPanel(rSingVect);
+        rSingVectPanel.setFillZoomRectangle(true);
+        rSingVectPanel.setMouseWheelEnabled(true);
+
+        jPRightSingVectors.removeAll();
+        jPRightSingVectors.add(rSingVectPanel);
+
+
+//creare collection with singular values
+        XYSeriesCollection sVCollection = new XYSeriesCollection();
+        seria = new XYSeries("SV");
+        for (int i = 0; i < maxSpinnerNumberModel; i++) {
+            seria.add(i + 1, svdResult[1].getAsDouble((long) i, (long) i));
+        }
+        sVCollection.addSeries(seria);
+
+
+        //create chart for singular values
+        JFreeChart tracechart = ChartFactory.createXYLineChart(
+                "Screeplot",
+                "Singular Value index (n)",
+                null,
+                sVCollection,
+                PlotOrientation.VERTICAL,
+                false,
+                false,
+                false);
+        LogAxis logAxe = new LogAxis("Log(SVn)");
+        final NumberAxis domainAxis = (NumberAxis) tracechart.getXYPlot().getDomainAxis();
+        domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+        tracechart.getXYPlot().setRangeAxis(logAxe);
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) tracechart.getXYPlot().getRenderer();
+        renderer.setBaseShapesVisible(true);
+        renderer.setDrawOutlines(true);
+        renderer.setUseFillPaint(true);
+        renderer.setBaseFillPaint(Color.white);
+        renderer.setSeriesStroke(0, new BasicStroke(1.0f));
+        renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
+        renderer.setSeriesShape(0, new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));
+
+        //tracechart.getTitle().setFont(new Font(tracechart.getTitle().getFont().getFontName(), Font.PLAIN, 12));
+        tracechart.setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
+
+        chpan = new GraphPanel(tracechart);
+        //add chart with 2 RSV to JPannel
+        jPSingValues.removeAll();
+        jPSingValues.add(chpan);
+    }
+    
 
     @Override
     public void chartChanged(ChartChangeEvent cce) {
