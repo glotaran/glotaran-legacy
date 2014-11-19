@@ -19,6 +19,7 @@ import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.jfreechartcustom.ColorCodedImageDataset;
 import org.glotaran.jfreechartcustom.GraphPanel;
+import org.glotaran.jfreechartcustom.GrayPaintScalePlus;
 import org.glotaran.jfreechartcustom.HeightMapPanel;
 import org.glotaran.jfreechartcustom.ImageCrosshairLabelGenerator;
 import org.glotaran.jfreechartcustom.ImageUtilities;
@@ -38,6 +39,7 @@ import org.jfree.chart.panel.CrosshairOverlay;
 import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.Range;
@@ -160,6 +162,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jPanel5 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jtbIntegrateMap = new javax.swing.JToggleButton();
+        jcbColorScale = new javax.swing.JComboBox();
         jpSVDResults = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
         jLabel10 = new javax.swing.JLabel();
@@ -482,6 +485,15 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         });
         jToolBar1.add(jtbIntegrateMap);
 
+        jcbColorScale.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rainbow Scale", "RedGrin Scale", "Gray Scale" }));
+        jcbColorScale.setMaximumSize(new java.awt.Dimension(100, 20));
+        jcbColorScale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbColorScaleActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jcbColorScale);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -699,6 +711,11 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
 
     }//GEN-LAST:event_jtbIntegrateMapActionPerformed
 
+    private void jcbColorScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbColorScaleActionPerformed
+        updateImagePlot(data.getMinInt(), data.getMaxInt());
+        
+    }//GEN-LAST:event_jcbColorScaleActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -727,6 +744,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JComboBox jcbColorScale;
     private javax.swing.JPanel jpDataPanelInner;
     private javax.swing.JPanel jpDataPannel;
     private javax.swing.JPanel jpHorisontalCut;
@@ -1024,7 +1042,26 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }
     
     private void updateImagePlot(double minAmp, double maxAmp) {
-        PaintScale ps = new RainbowPaintScale(minAmp, maxAmp);
+        PaintScale ps;
+        switch (jcbColorScale.getSelectedIndex()){
+            case 0: {
+                ps = new RainbowPaintScale(minAmp, maxAmp);
+                break;
+            }
+            case 1: {
+                ps = new RedGreenPaintScale(data.getMinInt(), data.getMaxInt());
+                break;
+            }
+            case 2: {
+                ps = new GrayPaintScale();
+                break;
+            }
+            default: {
+                ps = new RainbowPaintScale(minAmp, maxAmp);
+                break;
+            }
+        }
+         
                              
 //        PaintScale ps = new RedGreenPaintScale(data.getMinInt(), data.getMaxInt());
 
