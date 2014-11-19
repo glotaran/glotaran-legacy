@@ -10,7 +10,7 @@
             <xsd:element name="modType" type="xsd:string" default="kin" nillable="true"></xsd:element>
             <xsd:element name="irfparPanel" type="tns:IrfparPanelModel" nillable="true"></xsd:element>
             <xsd:element name="cohspecPanel" type="tns:CohspecPanelModel" nillable="true"></xsd:element>
-            <xsd:element name="oscspecPanel" type="tns:CohspecPanelModel" nillable="true"></xsd:element>
+            <xsd:element name="oscspecPanel" type="tns:OscspecPanelModel" nillable="true"></xsd:element>
             <xsd:element name="kMatrixPanel" type="tns:KMatrixPanelModel" nillable="true"/>
             <xsd:element name="weightParPanel" type="tns:WeightParPanelModel" nillable="true"/>
         </xsd:sequence>
