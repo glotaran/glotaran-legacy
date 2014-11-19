@@ -246,7 +246,6 @@
                       <Properties>
                         <Property name="orientation" type="int" value="1"/>
                         <Property name="value" type="int" value="0"/>
-                        <Property name="inverted" type="boolean" value="true"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[23, 400]"/>
                         </Property>

@@ -63,16 +63,16 @@ public abstract class ImageUtilities {
 
     /**
      * Creates an image that displays the values from the specified dataset.
-     *
-     * @param dataset  the dataset (<code>null</code> not permitted).
-     * @param paintScale  the paint scale for the z-values (<code>null</code>
-     *         not permitted).
-     *
-     * @return A buffered image.
+     * 
+     * @param dataset the dataset (<code>null</code> not permitted).
+     * @param paintScale the paint scale for the z-values (<code>null</code> not permitted).
+     * @param invertX invert X dimension
+     * @param invertY invert Y dimension
+     * @return  A buffered image.
      */
-    public static BufferedImage createColorCodedImage(ColorCodedImageDataset dataset,
-            PaintScale paintScale) {
-
+    
+    public static BufferedImage createColorCodedImage(ColorCodedImageDataset dataset, 
+            PaintScale paintScale, boolean invertX, boolean invertY) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -84,15 +84,43 @@ public abstract class ImageUtilities {
         BufferedImage image = new BufferedImage(xCount, yCount,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
+        int yIndOr;
+        int xIndOr; 
         for (int yIndex = 0; yIndex < yCount; yIndex++) {
             for (int xIndex = 0; xIndex < xCount; xIndex++) {
-                double z = dataset.getZValue(0, yIndex * xCount + xIndex);
+                if (invertY){
+                    yIndOr=yCount-yIndex-1;
+                } else {
+                    yIndOr=yIndex;
+                }
+                if (invertX){
+                    xIndOr=xCount-xIndex-1;
+                } else {
+                    xIndOr=xIndex;
+                }
+                
+                double z = dataset.getZValue(0, yIndOr * xCount + xIndOr);
                 Paint p = paintScale.getPaint(z);
                 g2.setPaint(p);
                 g2.fillRect(xIndex, yIndex, 1, 1);
             }
         }
         return image;
+        
+    }
+    
+    /**
+     * Creates an image that displays the values from the specified dataset.
+     *
+     * @param dataset  the dataset (<code>null</code> not permitted).
+     * @param paintScale  the paint scale for the z-values (<code>null</code>
+     *         not permitted).
+     *
+     * @return A buffered image.
+     */
+    public static BufferedImage createColorCodedImage(ColorCodedImageDataset dataset,
+            PaintScale paintScale) {
+        return createColorCodedImage(dataset, paintScale, false, false);
     }
 
     public static BufferedImage createColorCodedImage(IntensImageDataset dataset,

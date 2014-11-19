@@ -96,7 +96,7 @@ public final class DatasetTimp implements Serializable {
      *
      * @param x
      */
-    public void getIntenceImX(double[] x) {
+    public void setIntenceImX(double[] x) {
         this.intenceImX = x;
     }
     
@@ -108,7 +108,7 @@ public final class DatasetTimp implements Serializable {
      *
      * @param x
      */
-    public void getIntenceImY(double[] x) {
+    public void setIntenceImY(double[] x) {
         this.intenceImY = x;
     }
 

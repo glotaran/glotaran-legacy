@@ -329,8 +329,8 @@ public class SCVMatrixFile implements TGDatasetInterface {
                 dataset.setOrigHeigh((int) (ySize - 1));
                 dataset.setOrigWidth((int) (xSize - 1));
                 dataset.setX2(new double[dataset.getNl()]);
-                dataset.getIntenceImX(new double[dataset.getOriginalHeight()]);
-                dataset.getIntenceImY(new double[dataset.getOriginalWidth()]);
+                dataset.setIntenceImX(new double[dataset.getOriginalHeight()]);
+                dataset.setIntenceImY(new double[dataset.getOriginalWidth()]);
                 dataset.setX(new double[dataset.getNt()]);
                 dataset.setType("multispec");
 
