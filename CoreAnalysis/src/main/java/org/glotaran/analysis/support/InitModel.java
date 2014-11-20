@@ -11,6 +11,7 @@ import org.glotaran.core.models.tgm.CohspecPanelModel;
 import org.glotaran.core.models.tgm.IrfparPanelModel;
 import org.glotaran.core.models.tgm.KMatrixPanelModel;
 import org.glotaran.core.models.tgm.KinparPanelModel;
+import org.glotaran.core.models.tgm.OscspecPanelModel;
 import org.glotaran.core.models.tgm.Tgm;
 import org.glotaran.core.models.tgm.WeightPar;
 import org.glotaran.core.models.tgm.WeightParPanelModel;
@@ -62,13 +63,17 @@ public class InitModel {
 //       tempStr = get_disptaufun(tgm);
 //       if (tempStr!=null)
 //           initModel=initModel.concat(tempStr+",");
-
         tempStr = get_positivepar(tgm);
         if (tempStr != null) {
             initModel = initModel.concat(tempStr + ",");
         }
 
         tempStr = get_cohArtefact(tgm);
+        if (tempStr != null) {
+            initModel = initModel.concat(tempStr + ",");
+        }
+
+        tempStr = get_oscillations(tgm);
         if (tempStr != null) {
             initModel = initModel.concat(tempStr + ",");
         }
@@ -101,7 +106,6 @@ public class InitModel {
         tempStr = get_seqmod(tgm);
         initModel = initModel.concat(tempStr + ")");
 
-
         return initModel;
     }
 
@@ -109,7 +113,7 @@ public class InitModel {
         String cohSpecStr = null;
         CohspecPanelModel cohspecPanel = tgm.getDat().getCohspecPanel();
         String typeCoh = cohspecPanel.getCohspec().getType();
-        
+
         if (typeCoh != null) {
             cohSpecStr = "cohspec = list(type = \"" + typeCoh + "\"";
             if (typeCoh.equalsIgnoreCase("seq") || typeCoh.equalsIgnoreCase("mix")) {
@@ -128,13 +132,44 @@ public class InitModel {
             }
             if (typeCoh.equalsIgnoreCase("freeirfdisp")) {
                 //TODO: implement freeirfdisp etc.
-                System.out.println("coh = c( " + cohspecPanel.getCoh() +")");
+                System.out.println("coh = c( " + cohspecPanel.getCoh() + ")");
             }
         }
         if (cohSpecStr != null) {
             cohSpecStr = cohSpecStr + ")";
         }
         return cohSpecStr;
+    }
+
+    private static String get_oscillations(Tgm tgm) {
+        String oscSpecStr = null;
+        if (tgm.getDat().getOscspecPanel() != null) {
+            OscspecPanelModel oscspecPanel = tgm.getDat().getOscspecPanel();
+            String typeOsc = oscspecPanel.getOscspec().getType();
+
+            if (typeOsc != null) {
+                oscSpecStr = "oscspec = list(type = \"" + typeOsc + "\"";
+                if (typeOsc.equalsIgnoreCase("harmonic")) {
+                    oscSpecStr = oscSpecStr + ",";
+                    ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getOscspecPanel().getOscpar();
+                    if (seqstart != null && !seqstart.isEmpty()) {
+                        oscSpecStr = oscSpecStr + "start = c(";
+                        for (int i = 0; i < seqstart.size(); i++) {
+                            if (i > 0) {
+                                oscSpecStr = oscSpecStr + ",";
+                            }
+                            oscSpecStr = oscSpecStr + seqstart.get(i);
+                        }
+                        oscSpecStr = oscSpecStr + ")";
+                    }
+                }
+            }
+            if (oscSpecStr != null) {
+                oscSpecStr = oscSpecStr + ")";
+            }
+        } else {
+        }
+        return oscSpecStr;
     }
 
     // Private classes
@@ -278,16 +313,16 @@ public class InitModel {
             IrfparPanelModel irfPanel = tgm.getDat().getIrfparPanel();
             int count = 0;
             if (irfPanel.getIrf().size() > 0) {
-                if (irfPanel.getIrf().size()==2){
-                        irfStr =  "irffun = \"gaus\",";
+                if (irfPanel.getIrf().size() == 2) {
+                    irfStr = "irffun = \"gaus\",";
                 } else {
-                    if (irfPanel.getIrf().size()==4){
-                        irfStr =  "irffun = \"doublegaus\",";
+                    if (irfPanel.getIrf().size() == 4) {
+                        irfStr = "irffun = \"doublegaus\",";
                     } else {
-                        irfStr =  "irffun = \"multiplegaus\",";
+                        irfStr = "irffun = \"multiplegaus\",";
                     }
                 }
-                    
+
                 irfStr = irfStr + "irfpar = ";
                 for (int i = 0; i < irfPanel.getIrf().size(); i++) {
                     if (count > 0) {
@@ -495,6 +530,49 @@ public class InitModel {
                 fixedStr = fixedStr + ")";
             }
         }
+        count = 0;
+        for (int i = 0; i < tgm.getDat().getCohspecPanel().getCohspec().getFixed().size(); i++) {
+            if (tgm.getDat().getCohspecPanel().getCohspec().getFixed().get(i)) {
+                if (count > 0) {
+                    fixedStr = fixedStr + ",";
+                } else {
+                    if (fixedStr != null) {
+                        fixedStr = fixedStr + ", coh=c(";
+                    } else {
+                        fixedStr = "fixed = list(coh=c(";
+                    }
+                }
+                fixedStr = fixedStr + String.valueOf(i + 1);
+                count++;
+            }
+        }
+        if (count > 0) {
+            fixedStr = fixedStr + ")";
+        }
+
+        if (tgm.getDat().getOscspecPanel() != null) {
+            if (tgm.getDat().getOscspecPanel().getOscspec() != null) {
+                count = 0;
+                for (int i = 0; i < tgm.getDat().getOscspecPanel().getOscspec().getFixed().size(); i++) {
+                    if (tgm.getDat().getOscspecPanel().getOscspec().getFixed().get(i)) {
+                        if (count > 0) {
+                            fixedStr = fixedStr + ",";
+                        } else {
+                            if (fixedStr != null) {
+                                fixedStr = fixedStr + ", oscpar=c(";
+                            } else {
+                                fixedStr = "fixed = list(oscpar=c(";
+                            }
+                        }
+                        fixedStr = fixedStr + String.valueOf(i + 1);
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    fixedStr = fixedStr + ")";
+                }
+            }
+        }
 
         count = 0;
         KMatrixPanelModel kMatrix = tgm.getDat().getKMatrixPanel();
@@ -519,8 +597,6 @@ public class InitModel {
         // TODO: add additional paramters for fixed here:
 
         // This closes the "fixed" argument
-
-
         if (fixedStr != null) {
             if (addToFixed != null) {
                 fixedStr = fixedStr + "," + addToFixed + ")";

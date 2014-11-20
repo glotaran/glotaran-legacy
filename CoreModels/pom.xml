@@ -55,10 +55,9 @@
             <version>RELEASE80</version>
         </dependency>
         <dependency>
-            <artifactId>jama</artifactId>
-            <groupId>gov.nist.math</groupId>
-            <type>jar</type>
-            <version>1.0.2</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>UJMPwithdep</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>

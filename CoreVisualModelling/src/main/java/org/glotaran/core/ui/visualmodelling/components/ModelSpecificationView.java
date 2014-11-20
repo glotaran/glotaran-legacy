@@ -163,10 +163,11 @@ public class ModelSpecificationView extends TreeTableView {
                             if (obj != null) {
                                 if(obj.getTgm().getDat().getOscspecPanel()==null) {
                                     obj.getTgm().getDat().setOscspecPanel(new OscspecPanelModel());
-                                    obj.getTgm().getDat().getOscspecPanel().setOscspec(new Oscspec());
-                                    obj.getTgm().getDat().getOscspecPanel().getOscspec().setSet(Boolean.TRUE);
+                                    obj.getTgm().getDat().getOscspecPanel().setOscspec(new Oscspec());                     
                                 }
-                                obj.getTgm().getDat().getOscspecPanel().getOscspec().setSet(Boolean.TRUE);                                
+                                if(obj.getTgm().getDat().getOscspecPanel().getOscspec().getType().isEmpty()) {
+                                    obj.getTgm().getDat().getOscspecPanel().getOscspec().setType(EnumTypes.OscSpecTypes.HARMONIC.toString());
+                                }
                                 nodes.add(new Node[]{new OscspecParametersNode(obj, listn)});
                                 obj.setModified(true);
                             } else {

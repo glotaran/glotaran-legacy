@@ -38,9 +38,9 @@ public class OscspecParametersNode extends PropertiesAbstractNode {
     }
 
     public OscspecParametersNode(TgmDataObject tgmDO, PropertyChangeListener listn) {
-        super("Oscpar", new OscParametersKeys(tgmDO.getTgm().getDat().getOscspecPanel().getOscpar(), tgmDO.getTgm().getDat().getOscspecPanel().getOscspec().getFixed()), Lookups.singleton(tgmDO));
+        super("Oscpar", new OscParametersKeys(tgmDO.getTgm().getDat().getOscspecPanel().getOscpar(), tgmDO.getTgm().getDat().getOscspecPanel().getOscspec().getFixed()), Lookups.singleton(tgmDO));        
         this.oscspecPanelModel = tgmDO.getTgm().getDat().getOscspecPanel();         
-        if (oscspecPanelModel.getOscspec().getType() == null) {
+        if (oscspecPanelModel.getOscspec().getType() == null || oscspecPanelModel.getOscspec().getType().isEmpty()) {
             setOscSpecType(EnumTypes.OscSpecTypes.HARMONIC);
             oscNumber = 1;
         } else {
