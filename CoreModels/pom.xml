@@ -32,6 +32,15 @@
                     <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -44,11 +53,6 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId>
             <version>RELEASE80</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>UJMPwithdep</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <artifactId>jama</artifactId>

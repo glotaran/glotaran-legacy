@@ -26,6 +26,7 @@ import org.glotaran.core.ui.visualmodelling.nodes.DispersionModelingNode;
 import org.glotaran.core.ui.visualmodelling.nodes.IrfParametersNode;
 import org.glotaran.core.ui.visualmodelling.nodes.KineticParametersNode;
 import org.glotaran.core.ui.visualmodelling.nodes.KmatrixNode;
+import org.glotaran.core.ui.visualmodelling.nodes.OscspecParametersNode;
 import org.glotaran.core.ui.visualmodelling.nodes.PropertiesAbstractNode;
 import org.glotaran.core.ui.visualmodelling.nodes.WeightParametersNode;
 import org.glotaran.tgmfilesupport.TgmDataObject;
@@ -299,6 +300,13 @@ public class ModelContainer
                 if (model.getTgm().getDat().getCohspecPanel().getCohspec().isSet()) {
                     manager.getRootContext().getChildren().add(
                             new Node[]{new CohSpecNode(model.getTgm().getDat().getCohspecPanel(), this)});
+                }
+            }
+            
+            if (model.getTgm().getDat().getOscspecPanel().getOscspec() != null) {
+                if (model.getTgm().getDat().getOscspecPanel().getOscspec().isSet()) {
+                    manager.getRootContext().getChildren().add(
+                            new Node[]{new OscspecParametersNode(model, this)});
                 }
             }
         }

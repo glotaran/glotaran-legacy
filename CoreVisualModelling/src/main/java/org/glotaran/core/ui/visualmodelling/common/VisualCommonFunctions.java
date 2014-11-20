@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.glotaran.core.models.tgm.Cohspec;
 import org.glotaran.core.models.tgm.CohspecPanelModel;
+import org.glotaran.core.models.tgm.OscspecPanelModel;
 import org.glotaran.core.models.tgm.Dat;
 import org.glotaran.core.models.tgm.Double2BoolMatrix;
 import org.glotaran.core.models.tgm.Double2Matrix;
@@ -39,6 +40,9 @@ import org.glotaran.core.ui.visualmodelling.nodes.WeightParametersNode;
 import org.glotaran.core.ui.visualmodelling.palette.PaletteItem;
 import org.openide.nodes.Children;
 import static java.lang.Math.floor;
+import org.glotaran.core.models.tgm.Oscspec;
+import org.glotaran.core.ui.visualmodelling.common.EnumTypes.OscSpecTypes;
+import org.glotaran.core.ui.visualmodelling.nodes.OscspecParametersNode;
 
 /**
  *
@@ -52,6 +56,7 @@ public class VisualCommonFunctions {
         tgm.getDat().setModType(type);
         tgm.getDat().setModelName(file.getName());
         tgm.getDat().setCohspecPanel(new CohspecPanelModel());
+        tgm.getDat().setOscspecPanel(new OscspecPanelModel());
         tgm.getDat().setIrfparPanel(new IrfparPanelModel());
         tgm.getDat().setKMatrixPanel(new KMatrixPanelModel());
         tgm.getDat().setKinparPanel(new KinparPanelModel());
@@ -65,6 +70,7 @@ public class VisualCommonFunctions {
         tgm.getDat().getIrfparPanel().setPartau(null);
         tgm.getDat().getWeightParPanel().getWeightpar().clear();
         tgm.getDat().getCohspecPanel().setCohspec(new Cohspec());
+        tgm.getDat().getOscspecPanel().setOscspec(new Oscspec());
 
         try {
             javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(tgm.getClass().getPackage().getName());
@@ -101,7 +107,7 @@ public class VisualCommonFunctions {
         return paramList;
     }
 
-    public static String paramsToStr(List<Double> paramList){
+    public static String paramsToStr(List<Double> paramList) {
         String paramString = null;
         for (int i = 0; i < paramList.size(); i++) {
             if (i > 0) {
@@ -113,177 +119,239 @@ public class VisualCommonFunctions {
 
         return paramString;
     }
-    
+
     public static boolean modelParametersChange(Dat model, PropertyChangeEvent evt) {
 //        System.out.println("evt.getPropertyName() = " + evt.getPropertyName());
-        
-        
+
         if (evt.getSource().getClass().equals(KmatrixNode.class)) {
             if (evt.getPropertyName().equalsIgnoreCase("Positive rates")) {
                 model.getKinparPanel().setPositivepar((Boolean) evt.getNewValue());
                 return true;
             }
-              if (evt.getPropertyName().equalsIgnoreCase("NNLS")) {
+            if (evt.getPropertyName().equalsIgnoreCase("NNLS")) {
                 model.getKinparPanel().setNnls((Boolean) evt.getNewValue());
                 return true;
             }
         }
-        
+
         if (evt.getSource().getClass().equals(KineticParametersNode.class)) {
             if (model.getKinparPanel() == null) {
                 model.setKinparPanel(new KinparPanelModel());
             }
             return handleKinParSignals(model.getKinparPanel(), evt);
         }
-        
+
         if (evt.getSource().getClass().equals(IrfParametersNode.class)) {
             if (model.getIrfparPanel() == null) {
                 model.setIrfparPanel(new IrfparPanelModel());
             }
             return handleIRFSignals(model.getIrfparPanel(), evt);
         }
-        
+
+        if (evt.getSource().getClass().equals(OscspecParametersNode.class)) {
+            if (model.getOscspecPanel() == null) {
+                model.setOscspecPanel(new OscspecPanelModel());
+            }
+            return handleOscspsecSignals(model.getOscspecPanel(), evt);
+        }
+
         if (evt.getSource().getClass().equals(CohSpecNode.class)) {
             if (model.getCohspecPanel() == null) {
                 model.setCohspecPanel(new CohspecPanelModel());
             }
             return handleCohSpecSignals(model.getCohspecPanel(), evt);
         }
-       
+
         if (evt.getSource().getClass().equals(DispersionModelingNode.class)) {
             if (model.getIrfparPanel() == null) {
                 model.setIrfparPanel(new IrfparPanelModel());
-            }    
+            }
             return handleDispersionSignals(model.getIrfparPanel(), evt);
         }
-        
+
         if (evt.getSource().getClass().equals(WeightParametersNode.class)) {
             if (model.getWeightParPanel() == null) {
                 model.setWeightParPanel(new WeightParPanelModel());
-            }   
+            }
             return handleWeightSignals(model.getWeightParPanel(), evt);
         }
         return false;
     }
-    
-    
+
     private static boolean handleKinParSignals(KinparPanelModel kinParModel, PropertyChangeEvent evt) {
-         if (evt.getPropertyName().equalsIgnoreCase("Number of components")) {
-                if ((Integer) evt.getNewValue() > (Integer) evt.getOldValue()) {
-                    for (int i = 0; i < (Integer) evt.getNewValue() - (Integer) evt.getOldValue(); i++) {
-                        KinPar newkp = new KinPar();
-                        newkp.setFixed(Boolean.FALSE);
-                        newkp.setConstrained(Boolean.FALSE);
-                        kinParModel.getKinpar().add(newkp);
-                    }
-                } else {
-                    for (int i = 0; i < (Integer) evt.getOldValue() - (Integer) evt.getNewValue(); i++) {
-                        kinParModel.getKinpar().remove(
-                                kinParModel.getKinpar().size() - 1);
-                    }
+        if (evt.getPropertyName().equalsIgnoreCase("Number of components")) {
+            if ((Integer) evt.getNewValue() > (Integer) evt.getOldValue()) {
+                for (int i = 0; i < (Integer) evt.getNewValue() - (Integer) evt.getOldValue(); i++) {
+                    KinPar newkp = new KinPar();
+                    newkp.setFixed(Boolean.FALSE);
+                    newkp.setConstrained(Boolean.FALSE);
+                    kinParModel.getKinpar().add(newkp);
+                }
+            } else {
+                for (int i = 0; i < (Integer) evt.getOldValue() - (Integer) evt.getNewValue(); i++) {
+                    kinParModel.getKinpar().remove(
+                            kinParModel.getKinpar().size() - 1);
                 }
             }
-            if (evt.getPropertyName().equalsIgnoreCase("Positive rates")) {
-                kinParModel.setPositivepar((Boolean) evt.getNewValue());
-            }
-              if (evt.getPropertyName().equalsIgnoreCase("NNLS")) {
-                kinParModel.setNnls((Boolean) evt.getNewValue());
-                return true;
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("Sequential model")) {
-                kinParModel.setSeqmod((Boolean) evt.getNewValue());
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("start")) {
-                int index;
-                if (evt.getOldValue() == null) {
-                    index = (int) floor((Double) evt.getNewValue());
-                } else {
-                    index = (int) floor((Double) evt.getOldValue());
-                }
-                kinParModel.getKinpar().get(index).setStart((Double) evt.getNewValue());
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
-                int index;
-                if (evt.getOldValue() == null) {
-                    index = (int) floor((Double) evt.getNewValue());
-                } else {
-                    index = (int) floor((Double) evt.getOldValue());
-                }
-                kinParModel.getKinpar().get(index).setFixed((Boolean) evt.getNewValue());
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("delete")) {
-                int index = (Integer) evt.getNewValue();
-                kinParModel.getKinpar().remove(index);
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
-                kinParModel.getKinpar().clear();
-                kinParModel.setPositivepar(false);
-                kinParModel.setSeqmod(false);
-            }
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("Positive rates")) {
+            kinParModel.setPositivepar((Boolean) evt.getNewValue());
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("NNLS")) {
+            kinParModel.setNnls((Boolean) evt.getNewValue());
             return true;
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("Sequential model")) {
+            kinParModel.setSeqmod((Boolean) evt.getNewValue());
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("start")) {
+            int index;
+            if (evt.getOldValue() == null) {
+                index = (int) floor((Double) evt.getNewValue());
+            } else {
+                index = (int) floor((Double) evt.getOldValue());
+            }
+            kinParModel.getKinpar().get(index).setStart((Double) evt.getNewValue());
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
+            int index;
+            if (evt.getOldValue() == null) {
+                index = (int) floor((Double) evt.getNewValue());
+            } else {
+                index = (int) floor((Double) evt.getOldValue());
+            }
+            kinParModel.getKinpar().get(index).setFixed((Boolean) evt.getNewValue());
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("delete")) {
+            int index = (Integer) evt.getNewValue();
+            kinParModel.getKinpar().remove(index);
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
+            kinParModel.getKinpar().clear();
+            kinParModel.setPositivepar(false);
+            kinParModel.setSeqmod(false);
+        }
+        return true;
     }
-    
+
     private static boolean handleIRFSignals(IrfparPanelModel irfModel, PropertyChangeEvent evt) {
-                   if (evt.getPropertyName().equalsIgnoreCase("SetBackSweep")) {
-                irfModel.setBacksweepEnabled((Boolean) evt.getNewValue());
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("SetBackSweepPeriod")) {
-                irfModel.setBacksweepPeriod((Double) evt.getNewValue());
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
-                irfModel.getIrf().clear();
-                irfModel.getFixed().clear();
-                irfModel.setParmufixed(Boolean.FALSE);
-                irfModel.setPartaufixed(Boolean.FALSE);
-                irfModel.setBacksweepEnabled(Boolean.FALSE);
-                irfModel.setMirf(Boolean.FALSE);
-            }
-            if (evt.getPropertyName().equalsIgnoreCase("SetIRFType")) {
-                setIrfType(irfModel, evt, (IRFTypes) evt.getNewValue());
-            }
-            
-            if (evt.getPropertyName().equalsIgnoreCase("multiGausNum")) {
-                Integer oldVal = (Integer)evt.getOldValue();
-                Integer newVal = (Integer)evt.getNewValue();
-                if (oldVal < newVal){
-                    for (int i = 0; i < (newVal-oldVal)*3; i++) {
-                        irfModel.getIrf().add(
+        if (evt.getPropertyName().equalsIgnoreCase("SetBackSweep")) {
+            irfModel.setBacksweepEnabled((Boolean) evt.getNewValue());
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("SetBackSweepPeriod")) {
+            irfModel.setBacksweepPeriod((Double) evt.getNewValue());
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
+            irfModel.getIrf().clear();
+            irfModel.getFixed().clear();
+            irfModel.setParmufixed(Boolean.FALSE);
+            irfModel.setPartaufixed(Boolean.FALSE);
+            irfModel.setBacksweepEnabled(Boolean.FALSE);
+            irfModel.setMirf(Boolean.FALSE);
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("SetIRFType")) {
+            setIrfType(irfModel, evt, (IRFTypes) evt.getNewValue());
+        }
+
+        if (evt.getPropertyName().equalsIgnoreCase("multiGausNum")) {
+            Integer oldVal = (Integer) evt.getOldValue();
+            Integer newVal = (Integer) evt.getNewValue();
+            if (oldVal < newVal) {
+                for (int i = 0; i < (newVal - oldVal) * 3; i++) {
+                    irfModel.getIrf().add(
                             ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
-                        irfModel.getFixed().add(
+                    irfModel.getFixed().add(
                             ((ParametersSubNode) ((IrfParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());
-                    }
-                } else {
-                    for (int i = 0; i < (oldVal-newVal)*3; i++) {
-                        irfModel.getIrf().remove(irfModel.getIrf().size() - 1);
-                        irfModel.getFixed().remove(irfModel.getFixed().size() - 1);
                 }
-                    
+            } else {
+                for (int i = 0; i < (oldVal - newVal) * 3; i++) {
+                    irfModel.getIrf().remove(irfModel.getIrf().size() - 1);
+                    irfModel.getFixed().remove(irfModel.getFixed().size() - 1);
                 }
+
+            }
 //                setIrfType(irfModel, evt, (IRFTypes) evt.getNewValue());
-            }
+        }
 
-            if (evt.getPropertyName().equalsIgnoreCase("start")) {
-                if (irfModel.getIrf().isEmpty()) {
-                    setIrfType(irfModel, evt, ((IrfParametersNode) evt.getSource()).getIRFType());
-                }
-                int index;
-                if (evt.getOldValue() == null) {
-                    index = (int) floor((Double) evt.getNewValue());
-                } else {
-                    index = (int) floor((Double) evt.getOldValue());
-                }
-                irfModel.getIrf().set(index, (Double) evt.getNewValue());
+        if (evt.getPropertyName().equalsIgnoreCase("start")) {
+            if (irfModel.getIrf().isEmpty()) {
+                setIrfType(irfModel, evt, ((IrfParametersNode) evt.getSource()).getIRFType());
+            }
+            int index;
+            if (evt.getOldValue() == null) {
+                index = (int) floor((Double) evt.getNewValue());
+            } else {
+                index = (int) floor((Double) evt.getOldValue());
+            }
+            irfModel.getIrf().set(index, (Double) evt.getNewValue());
 
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
+            if (irfModel.getIrf().isEmpty()) {
+                setIrfType(irfModel, evt, ((IrfParametersNode) evt.getSource()).getIRFType());
             }
-            if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
-                if (irfModel.getIrf().isEmpty()) {
-                    setIrfType(irfModel, evt, ((IrfParametersNode) evt.getSource()).getIRFType());
-                }
-                irfModel.getFixed().set((int) floor((Double) evt.getOldValue()), (Boolean) evt.getNewValue());
-            }
-            return true;
+            irfModel.getFixed().set((int) floor((Double) evt.getOldValue()), (Boolean) evt.getNewValue());
+        }
+        return true;
     }
-    
+
+    private static boolean handleOscspsecSignals(OscspecPanelModel oscModel, PropertyChangeEvent evt) {
+
+        if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
+            oscModel.getOscpar().clear();
+            oscModel.getOscspec().getFixed().clear();
+            oscModel.getOscspec().getStart().clear();
+            oscModel.getOscspec().setSet(Boolean.FALSE);
+            oscModel.getOscspec().setType("");
+        }
+
+        if (evt.getPropertyName().equalsIgnoreCase("setOscSpecType")) {
+            oscModel.getOscspec().setSet(Boolean.TRUE);
+            setOscType(oscModel, evt, (OscSpecTypes) evt.getNewValue());
+        }
+
+        if (evt.getPropertyName().equalsIgnoreCase("oscNumber")) {
+            Integer oldVal = (Integer) evt.getOldValue();
+            Integer newVal = (Integer) evt.getNewValue();
+            if (oldVal < newVal) {
+                for (int i = 0; i < (newVal - oldVal) * 3; i++) {
+                    oscModel.getOscpar().add(
+                            ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
+                    oscModel.getOscspec().getFixed().add(
+                            ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());
+                }
+            } else {
+                for (int i = 0; i < (oldVal - newVal) * 3; i++) {
+                    oscModel.getOscpar().remove(oscModel.getOscpar().size() - 1);
+                    oscModel.getOscspec().getFixed().remove(oscModel.getOscspec().getFixed().size() - 1);
+                }
+
+            }
+//                setIrfType(irfModel, evt, (IRFTypes) evt.getNewValue());
+        }
+
+        if (evt.getPropertyName().equalsIgnoreCase("start")) {
+            if (oscModel.getOscpar().isEmpty()) {
+                setOscType(oscModel, evt, ((OscspecParametersNode) evt.getSource()).getOscSpecType());
+            }
+            int index;
+            if (evt.getOldValue() == null) {
+                index = (int) floor((Double) evt.getNewValue());
+            } else {
+                index = (int) floor((Double) evt.getOldValue());
+            }
+            oscModel.getOscpar().set(index, (Double) evt.getNewValue());
+
+        }
+        if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
+            if (oscModel.getOscspec().getFixed().isEmpty()) {
+                setOscType(oscModel, evt, ((OscspecParametersNode) evt.getSource()).getOscSpecType());
+            }
+            oscModel.getOscspec().getFixed().set((int) floor((Double) evt.getOldValue()), (Boolean) evt.getNewValue());
+        }
+        return true;
+    }
+
     private static boolean handleWeightSignals(WeightParPanelModel weightModel, PropertyChangeEvent evt) {
         if (evt.getPropertyName().equalsIgnoreCase("Number of components")) {
             if ((Integer) evt.getNewValue() > (Integer) evt.getOldValue()) {
@@ -324,7 +392,7 @@ public class VisualCommonFunctions {
         }
         return true;
     }
-    
+
     private static boolean handleDispersionSignals(IrfparPanelModel irfModel, PropertyChangeEvent evt) {
         boolean parMu = evt.getOldValue().equals(EnumTypes.DispersionTypes.PARMU);
         if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
@@ -481,7 +549,7 @@ public class VisualCommonFunctions {
         }
         return true;
     }
-    
+
     private static boolean handleCohSpecSignals(CohspecPanelModel cohSpecModel, PropertyChangeEvent evt) {
         //{"cohSpecName", "cohSpecModelType", "cohSpecClpZero", "cohSpecClpMin", "cohSpecClpMax"}
         if (evt.getPropertyName().equalsIgnoreCase("cohSpecClpMax")) {
@@ -559,7 +627,7 @@ public class VisualCommonFunctions {
         }
         return true;
     }
-            
+
     private static void setIrfType(IrfparPanelModel irfModel, PropertyChangeEvent evt, EnumTypes.IRFTypes type) {
         EnumTypes.IRFTypes irfType = type;
         irfModel.setIrftype(type.toString());
@@ -616,6 +684,31 @@ public class VisualCommonFunctions {
                 //todo finish measured IRF implementation
                 break;
             }
+        }
+    }
+
+    private static void setOscType(OscspecPanelModel oscModel, PropertyChangeEvent evt, EnumTypes.OscSpecTypes type) {
+        EnumTypes.OscSpecTypes oscType = type;
+        oscModel.getOscspec().setType(type.toString());
+        switch (oscType) {
+            case HARMONIC: {
+
+                if (oscModel.getOscspec() != null) {
+                    oscModel.getOscspec().setSet(Boolean.TRUE);
+                    oscModel.getOscspec().setType(oscType.toString());
+
+                    int nodeCount = ((OscspecParametersNode) evt.getSource()).getChildren().getNodesCount();
+                    for (int i = 0; i < nodeCount; i++) {
+                        oscModel.getOscpar().add(
+                                ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
+                        oscModel.getOscspec().getFixed().add(
+                                ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());
+                    }
+                    
+                }
+                break;
+            }
+
         }
 
     }

@@ -171,6 +171,11 @@ final public class VisualModellingTopComponent extends CloneableTopComponent imp
     }
 
     @Override
+    protected void componentOpened() {
+        initializePalette();
+    }
+
+    @Override
     protected void componentShowing() {
         super.componentShowing();
         TopComponent t = WindowManager.getDefault().findTopComponent("properties");

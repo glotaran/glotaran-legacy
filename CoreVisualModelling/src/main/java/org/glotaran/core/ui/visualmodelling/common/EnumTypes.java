@@ -210,6 +210,37 @@ public class EnumTypes {
             }
         }
     };
+    
+    public enum OscSpecTypes {
+
+        HARMONIC, ;
+        private final String[] strNames = new String[]{"Harmonic", "Cosine", "Sine"};
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case HARMONIC:
+                    return strNames[0];             
+                default:
+                    return strNames[0];
+            }
+        }
+
+        public OscSpecTypes setFromStr(String str) {
+            int index = 0;
+            for (int i = 0; i < strNames.length; i++) {
+                if (strNames[i].equalsIgnoreCase(str)) {
+                    index = i;
+                }
+            }
+            switch (index) {
+                case 0:
+                    return HARMONIC;         
+                default:
+                    return HARMONIC;
+            }
+        }
+    };
 
     public static String[] getStrNames(Object obj) {
         if (obj.getClass().equals(DispersionTypes.class)) {
@@ -221,7 +252,11 @@ public class EnumTypes {
         }
 
         if (obj.getClass().equals(CohSpecTypes.class)) {
-            return ((CohSpecTypes) obj).strNames;
+            return CohSpecTypes.strNames;
+        }
+        
+         if (obj.getClass().equals(OscSpecTypes.class)) {
+            return ((OscSpecTypes) obj).strNames;
         }
         
         if (obj.getClass().equals(ConvolutionTypes.class)) {
@@ -233,21 +268,25 @@ public class EnumTypes {
 
     public static Object[] getTagsNames(Object obj) {
         if (obj.getClass().equals(DispersionTypes.class)) {
-            return ((DispersionTypes) obj).values();
+            return DispersionTypes.values();
         }
 
         if (obj.getClass().equals(IRFTypes.class)) {
-            return ((IRFTypes) obj).values();
+            return IRFTypes.values();
         }
 
         if (obj.getClass().equals(CohSpecTypes.class)) {
-            return ((CohSpecTypes) obj).values();
+            return CohSpecTypes.values();
+        }
+        
+        if (obj.getClass().equals(OscSpecTypes.class)) {
+            return OscSpecTypes.values();
         }
         
         if (obj.getClass().equals(ConvolutionTypes.class)) {
-            return ((ConvolutionTypes) obj).values();
+            return ConvolutionTypes.values();
         }
         
-        return new String[]{};
+        return new String[]{"unknown type"};
     }
 };
