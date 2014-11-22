@@ -23,7 +23,7 @@ import org.openide.util.lookup.Lookups;
  */
 public class OscspecParametersNode extends PropertiesAbstractNode {
 
-    private final Image ICON = ImageUtilities.loadImage("org/glotaran/core/ui/visualmodelling/resources/IRFpar_16.png", true);
+    private final Image ICON = ImageUtilities.loadImage("org/glotaran/core/ui/visualmodelling/resources/OscParam_16.png", true);
     private EnumTypes.OscSpecTypes cohspecTypeProperty = EnumTypes.OscSpecTypes.HARMONIC;
     OscspecPanelModel oscspecPanelModel;
     private Integer oscNumber = 1;
