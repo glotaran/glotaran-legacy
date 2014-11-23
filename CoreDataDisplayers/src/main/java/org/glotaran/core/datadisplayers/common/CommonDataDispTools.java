@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.glotaran.core.datadisplayers.common;
 
 import org.jfree.ui.RectangleEdge;
@@ -39,7 +34,7 @@ import static java.lang.Math.pow;
 
 /**
  *
- * @author daria.laptenok
+ * @author Sergey
  */
 public class CommonDataDispTools {
 

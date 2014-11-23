@@ -21,7 +21,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTPFlimTabs" alignment="0" pref="1027" max="32767" attributes="0"/>
+          <Component id="jTPFlimTabs" alignment="0" pref="1126" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -668,7 +668,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jToolBar3" alignment="0" pref="1022" max="32767" attributes="1"/>
+                  <Component id="jToolBar3" alignment="0" pref="1121" max="32767" attributes="1"/>
                   <Component id="jPanel10" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
