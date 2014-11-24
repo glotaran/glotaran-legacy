@@ -302,7 +302,7 @@ public class VisualCommonFunctions {
             oscModel.getOscspec().getFixed().clear();
             oscModel.getOscspec().getStart().clear();
             oscModel.getOscspec().setSet(Boolean.FALSE);
-            oscModel.getOscspec().setType("");
+            oscModel.getOscspec().setType(null);
         }
 
         if (evt.getPropertyName().equalsIgnoreCase("setOscSpecType")) {
@@ -589,6 +589,11 @@ public class VisualCommonFunctions {
                     cohSpecModel.getCohspec().setSet(true);
                     break;
                 }
+                case XPM: {
+                    cohSpecModel.getCohspec().setType("xpm");
+                    cohSpecModel.getCohspec().setSet(true);
+                    break;
+                }
             }
         }
         if (evt.getPropertyName().equalsIgnoreCase("mainNodeDeleted")) {
@@ -597,7 +602,7 @@ public class VisualCommonFunctions {
             cohSpecModel.setClp0Min(null);
             cohSpecModel.setCoh("");
             cohSpecModel.getCohspec().setSet(false);
-            cohSpecModel.getCohspec().setType("");
+            cohSpecModel.getCohspec().setType(null);
         }
 
         if (evt.getPropertyName().equalsIgnoreCase("Number of components")) {
@@ -625,6 +630,14 @@ public class VisualCommonFunctions {
                 cohSpecModel.getCohspec().getSeqstart().add(paramSubNode.getDataObj().getStart());
             }
         }
+         if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
+            if (cohSpecModel.getCohspec().getFixed().isEmpty()) {
+                for (int i = 0; i < cohSpecModel.getCohspec().getSeqstart().size(); i++) {
+                    cohSpecModel.getCohspec().getFixed().add(Boolean.FALSE);                    
+                }
+            }
+            cohSpecModel.getCohspec().getFixed().set((int) floor((Double) evt.getOldValue()), (Boolean) evt.getNewValue());
+        }        
         return true;
     }
 

@@ -301,35 +301,37 @@ public class ModelContainer
                 }
             }
             if (model.getTgm().getDat().getCohspecPanel().getCohspec() != null) {
-                if (model.getTgm().getDat().getCohspecPanel().getCohspec().isSet()) {
+                if (model.getTgm().getDat().getCohspecPanel().getCohspec().getType() != null) {
                     manager.getRootContext().getChildren().add(
                             new Node[]{new CohSpecNode(model.getTgm().getDat().getCohspecPanel(), this)});
                 }
             }
-            if (model.getTgm().getDat().getOscspecPanel() != null) {
-                if (model.getTgm().getDat().getOscspecPanel().getOscspec() != null) {
-                    if (model.getTgm().getDat().getOscspecPanel().getOscspec().isSet()) {
-                        manager.getRootContext().getChildren().add(
-                                new Node[]{new OscspecParametersNode(model, this)});
-                    }
+        
+        if (model.getTgm().getDat().getOscspecPanel() != null) {
+            if (model.getTgm().getDat().getOscspecPanel().getOscspec() != null) {
+                if(model.getTgm().getDat().getOscspecPanel().getOscspec().getType() != null) {
+                manager.getRootContext().getChildren().add(
+                        new Node[]{new OscspecParametersNode(model, this)});
                 }
+            
             }
         }
     }
+}
 
-    @Override
-    public ExplorerManager getExplorerManager() {
+@Override
+        public ExplorerManager getExplorerManager() {
         return manager;
     }
 
     @Override
-    public Lookup getLookup() {
+        public Lookup getLookup() {
         return lookup;
     }
 
     @SuppressWarnings("element-type-mismatch")
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getSource() == manager
                 && ExplorerManager.PROP_SELECTED_NODES.equals(evt.getPropertyName())) {
             WindowManager.getDefault().getRegistry().getActivated().setActivatedNodes(manager.getSelectedNodes());
@@ -337,9 +339,15 @@ public class ModelContainer
         }
         if (!evt.getPropertyName().equals("nodeChange")) {
             model.setModified(VisualCommonFunctions.modelParametersChange(model.getTgm().getDat(), evt));
-        }
-        if (evt.getSource().getClass().equals(KmatrixNode.class)) {
-            System.out.println("KMatrix Added");
+        
+
+}
+        if (evt.getSource().getClass().equals(KmatrixNode.class  
+
+    )) {
+    System.out.println (
+
+"KMatrix Added");
         }
     }
 }

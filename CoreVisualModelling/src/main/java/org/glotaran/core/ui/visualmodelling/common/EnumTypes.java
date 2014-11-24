@@ -166,8 +166,8 @@ public class EnumTypes {
 
     public enum CohSpecTypes {
 
-        IRF, FREE_IRF, IRF_MULTY, SEQ, MIXED;
-        private static String[] strNames = new String[]{"Irf", "FreeIrfDisp", "IrfMulti", "Seq", "Mix"};
+        IRF, FREE_IRF, IRF_MULTY, SEQ, MIXED, XPM;
+        private static final String[] strNames = new String[]{"Irf", "FreeIrfDisp", "IrfMulti", "Seq", "Mix","XPM"};
 
         @Override
         public String toString() {
@@ -182,6 +182,8 @@ public class EnumTypes {
                     return strNames[3];
                 case MIXED:
                     return strNames[4];
+                case XPM:
+                    return strNames[5];
                 default:
                     return strNames[0];
             }
@@ -205,6 +207,8 @@ public class EnumTypes {
                     return SEQ;
                 case 4:
                     return MIXED;
+                case 5:
+                    return XPM;
                 default:
                     return IRF;
             }
@@ -214,7 +218,7 @@ public class EnumTypes {
     public enum OscSpecTypes {
 
         HARMONIC, ;
-        private final String[] strNames = new String[]{"Harmonic", "Cosine", "Sine"};
+        private final String[] strNames = new String[]{"Harmonic"};
 
         @Override
         public String toString() {

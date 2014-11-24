@@ -116,7 +116,7 @@ public class InitModel {
 
         if (typeCoh != null) {
             cohSpecStr = "cohspec = list(type = \"" + typeCoh + "\"";
-            if (typeCoh.equalsIgnoreCase("seq") || typeCoh.equalsIgnoreCase("mix")) {
+            if (typeCoh.equalsIgnoreCase("seq") || typeCoh.equalsIgnoreCase("mix") || typeCoh.equalsIgnoreCase("xpm")) {
                 cohSpecStr = cohSpecStr + ",";
                 ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getCohspecPanel().getCohspec().getSeqstart();
                 if (seqstart != null && !seqstart.isEmpty()) {

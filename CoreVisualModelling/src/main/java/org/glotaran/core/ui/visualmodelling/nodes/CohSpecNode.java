@@ -38,7 +38,7 @@ public final class CohSpecNode extends PropertiesAbstractNode {
     private String[] propertyShortDescription = new String[]{
         "Coherent artifact/scatter component(s)",
         "The type of the time profile for the coherent artifact/scatter components(s). <br>"
-        + "Currently only the <b>Irf</b> type is implemented.",
+        + "Currently only the <b>Irf</b>, <b>Seq</b> and <b>Mix</b> types are implemented.",
         "Constrains the spectrum of the coherent artifact/scatter component(s) to <b>zero</b> from and to a certain value.",
         "The value <b>from</b> which to contrain the coherent artifact/scatter component(s) to zero",
         "The value <b>to</b> which to contrain the coherent artifact/scatter component(s) to zero",
@@ -231,16 +231,16 @@ public final class CohSpecNode extends PropertiesAbstractNode {
         firePropertyChange("Number of components", new Integer(currCompNum), compNum);
     }
 
-    @Override
-    public void fire(int index, PropertyChangeEvent evt) {
-        if ("start".equals(evt.getPropertyName())) {
-            firePropertyChange("start", propertyNames[1], evt.getNewValue());
-        }
-        if ("fixed".equals(evt.getPropertyName())) {
-            firePropertyChange("fixed", propertyNames[1], evt.getNewValue());
-        }
-        if ("delete".equals(evt.getPropertyName())) {
-            firePropertyChange("delete", propertyNames[1], evt.getNewValue());
-        }
-    }
+//    @Override
+//    public void fire(int index, PropertyChangeEvent evt) {
+//        if ("start".equals(evt.getPropertyName())) {
+//            firePropertyChange("start", propertyNames[1], evt.getNewValue());
+//        }
+//        if ("fixed".equals(evt.getPropertyName())) {
+//            firePropertyChange("fixed", propertyNames[1], evt.getNewValue());
+//        }
+//        if ("delete".equals(evt.getPropertyName())) {
+//            firePropertyChange("delete", propertyNames[1], evt.getNewValue());
+//        }
+//    }
 }

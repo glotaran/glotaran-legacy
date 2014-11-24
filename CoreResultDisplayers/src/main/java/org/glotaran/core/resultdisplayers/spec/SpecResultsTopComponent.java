@@ -101,7 +101,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private Crosshair crosshair2;
     private JFreeChart chartMain;
     private ColorCodedImageDataset dataset;
-    private int numberOfComponents;
+    private int numberOfRates;
     private Matrix leftSingVec;
     private Matrix leftSingVecPart;
     private double[] timePart;
@@ -124,12 +124,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         spectraMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix) res.getSpectra());
         concentrationsMatrix = new JamaDenseDoubleMatrix2D((Jama.Matrix) res.getConcentrations());
         if (res.getJvec() != null) {
-            numberOfComponents = res.getJvec().length / 2;
+            numberOfRates = res.getJvec().length / 2;
         } else {
-            numberOfComponents = res.getKineticParameters().length / 2;
+            numberOfRates = res.getKineticParameters().length / 2;
         }
 
-        ArrayList<String> paramsList = new ArrayList<String>(numberOfComponents);
+        ArrayList<String> paramsList = new ArrayList<String>(numberOfRates);
 
         for (int i = 0; i < (res.getKineticParameters().length / 2); i++) {
             //TODO: add errors
@@ -162,7 +162,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         }
         DecimalFormat lifeTimesFormat = new DecimalFormat("##0.0##E0");
         String lifeTime;
-        for (int i = 0; i < numberOfComponents; i++) {
+        for (int i = 0; i < numberOfRates; i++) {
             if (useKMatrix) {
                 lifeTime = lifeTimesFormat.format(1 / -eigenValues[i]);
             } else {
@@ -183,12 +183,12 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 //first tab
         t0Curve = CommonResDispTools.calculateDispersionTrace(res);
         timePart = res.getX();
-        if (spectraMatrix.getRowCount() > numberOfComponents * 2) {
-            jTBShowChohSpec.setEnabled(true);
+        if (res.getCoh()!=null || res.getOscpar()!=null) {
+            jTBShowCohSpec.setEnabled(true);
         }
         plotSpectrTrace();
         GraphPanel conc;
-        if (numberOfComponents < res.getConcentrations().getColumnDimension()) {
+        if (numberOfRates < res.getConcentrations().getColumnDimension()) {
             conc = createLinTimePlot(concentrationsMatrix, res.getX(), true); 
         } else {
             conc = createLinTimePlot(concentrationsMatrix, res.getX());
@@ -275,7 +275,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jTFLinPart = new javax.swing.JTextField();
         jBUpdLinLog = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jTBShowChohSpec = new javax.swing.JToggleButton();
+        jTBShowCohSpec = new javax.swing.JToggleButton();
         jTBNormToMax = new javax.swing.JToggleButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -387,17 +387,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar1.add(jBUpdLinLog);
         jToolBar1.add(jSeparator1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jTBShowChohSpec, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBShowChohSpec.text")); // NOI18N
-        jTBShowChohSpec.setEnabled(false);
-        jTBShowChohSpec.setFocusable(false);
-        jTBShowChohSpec.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jTBShowChohSpec.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jTBShowChohSpec.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(jTBShowCohSpec, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBShowCohSpec.text")); // NOI18N
+        jTBShowCohSpec.setEnabled(false);
+        jTBShowCohSpec.setFocusable(false);
+        jTBShowCohSpec.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTBShowCohSpec.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jTBShowCohSpec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTBShowChohSpecActionPerformed(evt);
+                jTBShowCohSpecActionPerformed(evt);
             }
         });
-        jToolBar1.add(jTBShowChohSpec);
+        jToolBar1.add(jTBShowCohSpec);
 
         org.openide.awt.Mnemonics.setLocalizedText(jTBNormToMax, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBNormToMax.text")); // NOI18N
         jTBNormToMax.setFocusable(false);
@@ -1336,7 +1336,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             jTBLinLogTraces.setSelected(false);
             updateTrace(jSColum.getValue());
             ChartPanel conc;
-            if (numberOfComponents < res.getConcentrations().getColumnDimension()) {
+            if (numberOfRates < res.getConcentrations().getColumnDimension()) {
                 conc = createLinTimePlot(concentrationsMatrix, res.getX(), true);
             } else {
                 conc = createLinTimePlot(concentrationsMatrix, res.getX());
@@ -1376,13 +1376,13 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         }
     }//GEN-LAST:event_jTBLinLogTracesActionPerformed
 
-    private void jTBShowChohSpecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBShowChohSpecActionPerformed
+    private void jTBShowCohSpecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBShowCohSpecActionPerformed
         plotSpectrTrace();
         jPSAS.validate();
         jPDAS.validate();
         jPDASnorm.validate();
         jPSASnorm.validate();
-    }//GEN-LAST:event_jTBShowChohSpecActionPerformed
+    }//GEN-LAST:event_jTBShowCohSpecActionPerformed
 
     private void jTBNormToMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBNormToMaxActionPerformed
         plotSpectrTrace();
@@ -1792,7 +1792,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private javax.swing.JToggleButton jTBNormToMax;
     private javax.swing.JToggleButton jTBOverlayTimeTracess;
     private javax.swing.JToggleButton jTBOverlayWaveTracess;
-    private javax.swing.JToggleButton jTBShowChohSpec;
+    private javax.swing.JToggleButton jTBShowCohSpec;
     private javax.swing.JTextField jTFCentrWave;
     private javax.swing.JTextField jTFCurvParam;
     private javax.swing.JTextField jTFLinPart;
@@ -2014,10 +2014,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private void plotSpectrTrace() {
         String specName = res.getJvec() != null ? "SAS" : "EAS";
         boolean errorBars = res.getSpectraErr() != null ? true : false;
-        int compNumFull = jTBShowChohSpec.isEnabled() ? numberOfComponents + 1 : numberOfComponents;
-        int compNum = jTBShowChohSpec.isSelected() ? numberOfComponents + 1 : numberOfComponents;
+        int numberOfComponents = res.getSpectra().getRowDimension()/2;        
+        int componentsToPlot = jTBShowCohSpec.isSelected()? numberOfComponents : numberOfRates;
         double maxAmpl;
-        double maxDasAmpl;
+        double maxDasAmpl; 
+        
 
         YIntervalSeriesCollection realSasCollection = new YIntervalSeriesCollection();
         YIntervalSeriesCollection normSasCollection = new YIntervalSeriesCollection();
@@ -2027,7 +2028,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         XYSeries dasSeria;
 
 //create collection of real sas and normalizes all of them to max or abs(max) and creates collection with normSAS
-        for (int j = 0; j < compNum; j++) {
+        for (int j = 0; j < componentsToPlot; j++) {
             seria = new YIntervalSeries(specName + (j + 1));// new XYSeries(specName + (j + 1));
             dasSeria = new XYSeries("DAS" + (j + 1));
             maxAmpl = 0;
@@ -2042,29 +2043,29 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                             res.getSpectra().get(j, i),
                             res.getSpectra().get(j, i));
                 }
-                dasSeria.add(res.getX2()[i], res.getSpectra().get(j + compNumFull, i));
+                dasSeria.add(res.getX2()[i], res.getSpectra().get(j + numberOfComponents, i));
                 if (jTBNormToMax.isSelected()) {
                     if (maxAmpl < (res.getSpectra().get(j, i))) {
                         maxAmpl = (res.getSpectra().get(j, i));
                     }
-                    if (res.getSpectra().getRowDimension() > compNum) {
-                        if (maxDasAmpl < (res.getSpectra().get(j + compNumFull, i))) {
-                            maxDasAmpl = (res.getSpectra().get(j + compNumFull, i));
+                    //if (res.getSpectra().getRowDimension() > componentsToPlot) {
+                        if (maxDasAmpl < (res.getSpectra().get(j + componentsToPlot, i))) {
+                            maxDasAmpl = (res.getSpectra().get(j + componentsToPlot, i));
                         }
-                    }
+                   // }
                 } else {
                     if (maxAmpl < abs(res.getSpectra().get(j, i))) {
                         maxAmpl = abs(res.getSpectra().get(j, i));
                     }
-                    if (res.getSpectra().getRowDimension() > compNum) {
-                        if (maxDasAmpl < abs(res.getSpectra().get(j + compNumFull, i))) {
-                            maxDasAmpl = abs(res.getSpectra().get(j + compNumFull, i));
+                   //if (res.getSpectra().getRowDimension() > componentsToPlot) {
+                        if (maxDasAmpl < abs(res.getSpectra().get(j + numberOfComponents, i))) {
+                            maxDasAmpl = abs(res.getSpectra().get(j + numberOfComponents, i));
                         }
-                    }
+                    //}
                 }
             }
             realSasCollection.addSeries(seria);
-            if (j < numberOfComponents) {
+            if (j < componentsToPlot) {
                 realDasCollection.addSeries(dasSeria);
             }
 
@@ -2089,10 +2090,10 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
                     }
                 }
 
-                dasSeria.add(res.getX2()[i], res.getSpectra().get(j + compNumFull, i) / maxDasAmpl);
+                dasSeria.add(res.getX2()[i], res.getSpectra().get(j + numberOfComponents, i) / maxDasAmpl);
             }
             normSasCollection.addSeries(seria);
-            if (j < numberOfComponents) {
+            if (j < componentsToPlot) {
                 normDasCollection.addSeries(dasSeria);
             }
         }
