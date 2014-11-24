@@ -50,7 +50,7 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             if (irfparPanel.isMirf()) {
                 setIRFType(EnumTypes.IRFTypes.MEASURED_IRF);
             } else {
-                if (irfparPanel.getIrftype()==null) {
+                if (irfparPanel.getIrftype() == null) {
                     if (irfparPanel.getIrf().size() == 2) {
                         setIRFType(EnumTypes.IRFTypes.GAUSSIAN);
                     } else {
@@ -58,15 +58,14 @@ public class IrfParametersNode extends PropertiesAbstractNode {
                     }
                 } else {
                     this.irfTypeProperty = irfTypeProperty.setFromStr(irfparPanel.getIrftype());
-                    if (irfTypeProperty.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)){
-                        multiGaussNum = (irfparPanel.getIrf().size()-2)/3;
-                        
+                    if (irfTypeProperty.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)) {
+                        multiGaussNum = (irfparPanel.getIrf().size() - 2) / 3;
+
                     }
-                    setIRFType(irfTypeProperty);   
+                    setIRFType(irfTypeProperty);
                 }
             }
         }
-        //tgmDO.setModified(true);
         addPropertyChangeListener(listn);
     }
 
@@ -90,24 +89,29 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         firePropertyChange("SetBackSweep", null, backSweep);
     }
 
-    public Integer getMultiGaussNum(){
+    public Integer getMultiGaussNum() {
         return multiGaussNum;
-        
+
     }
-    
-    public void setMultiGaussNum(Integer multiGaussNum){
+
+    public void setMultiGaussNum(Integer newMultiGaussNum) {
         int oldVal = this.multiGaussNum;
         IrfParametersKeys childColection = (IrfParametersKeys) getChildren();
-        if (this.multiGaussNum < multiGaussNum){
-            childColection.addDefaultObj((multiGaussNum-this.multiGaussNum)*3);
+        if (newMultiGaussNum < 0) {
+             childColection.removeParams(childColection.getNodesCount());
+            this.multiGaussNum = 0;
         } else {
-            childColection.removeParams((this.multiGaussNum-multiGaussNum)*3);
-            
+            if (this.multiGaussNum < newMultiGaussNum) {
+                childColection.addDefaultObj((newMultiGaussNum - this.multiGaussNum) * 3);
+            } else {
+                childColection.removeParams((this.multiGaussNum - newMultiGaussNum) * 3);
+
+            }
+            this.multiGaussNum = newMultiGaussNum;
         }
-        this.multiGaussNum = multiGaussNum;
-        firePropertyChange("multiGausNum", oldVal, multiGaussNum);
+        firePropertyChange("multiGausNum", oldVal, this.multiGaussNum);
     }
-    
+
     public Double getSweepPeriod() {
         return sweepPeriod;
     }
@@ -193,19 +197,19 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             getSheet().get(Sheet.PROPERTIES).remove(propNames[5]);
             addStreackProp();
         }
-        
-        if (irfType.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)){
+
+        if (irfType.equals(EnumTypes.IRFTypes.MULTIPLE_GAUSSIAN)) {
             if (irfTypeProperty == EnumTypes.IRFTypes.MEASURED_IRF) {
                 childColection.backFromMeasuredIrf();
                 childColection = (IrfParametersKeys) getChildren();
                 currCompNum = childColection.getNodesCount();
             }
-            if (currCompNum == 2) { 
-                childColection.addDefaultObj(multiGaussNum*3);
+            if (currCompNum == 2) {
+                childColection.addDefaultObj(multiGaussNum * 3);
             }
             if (currCompNum == 4) {
                 childColection.removeParams(2);
-                childColection.addDefaultObj(multiGaussNum*3);
+                childColection.addDefaultObj(multiGaussNum * 3);
             }
             if (backSweep) {
                 getSheet().get(Sheet.PROPERTIES).remove(propNames[3]);
@@ -230,12 +234,11 @@ public class IrfParametersNode extends PropertiesAbstractNode {
 //    public TgmDataObject getTgmDataObject() {
 //        return getLookup().lookup(TgmDataObject.class);
 //    }
-
     public EnumTypes.IRFTypes getIRFType() {
         return irfTypeProperty;
     }
 
-    private void addMultipleGaussianProperties(){
+    private void addMultipleGaussianProperties() {
         try {
             Property<Integer> extraGaussNumber = new PropertySupport.Reflection<Integer>(this, Integer.class, "multiGaussNum");
             extraGaussNumber.setName(propNames[5]);
@@ -276,8 +279,6 @@ public class IrfParametersNode extends PropertiesAbstractNode {
 //            Exceptions.printStackTrace(ex);
 //        }
 //    }
-    
-    
 //    @Override
 //    public void fire(int index, PropertyChangeEvent evt){
 //        if ("start".equals(evt.getPropertyName())) {

@@ -380,8 +380,8 @@ public final class AnalysisResultFileViewerTopComponent extends CloneableTopComp
             String tmpString = "### Results for " + timpResultDataset.getDatasetName() + " ###";
             outputString.append(tmpString);
 
-            String[] slots = {"getKineticParameters", "getSpectralParameters", "getIrfpar", "getSpecdisppar", "getParmu", "getPartau", "getKinscal", "getPrel", "getJvec"};
-            String[] slotsName = {"Kinetic parameters", "Spectral parameters", "Irf parameters", "Specdisppar", "Parmu", "Partau", "Kinscal", "Prel", "J vector"};
+            String[] slots = {"getKineticParameters", "getSpectralParameters", "getIrfpar", "getCoh","getOscpar", "getSpecdisppar", "getParmu", "getPartau", "getKinscal", "getPrel", "getJvec"};
+            String[] slotsName = {"Kinetic parameters", "Spectral parameters", "Irf parameters", "Cohspec parameters", "Oscspec parameters", "Specdisppar", "Parmu", "Partau", "Kinscal", "Prel", "J vector"};
             double[] params = null;
 
             for (int k = 0; k < slots.length; k++) {

@@ -183,6 +183,8 @@ public class TimpController implements TimpControllerInterface {
         result.setKineticParameters(getParEst(NAME_OF_RESULT_OBJECT, datasetNumber, "kinpar"));
         result.setSpectralParameters(getParEst(NAME_OF_RESULT_OBJECT, datasetNumber, "specpar"));
         result.setIrfpar(getParEst(NAME_OF_RESULT_OBJECT, datasetNumber, "irfpar"));
+        result.setCoh(getParEst(NAME_OF_RESULT_OBJECT, datasetNumber, "coh"));
+        result.setOscpar(getParEst(NAME_OF_RESULT_OBJECT, datasetNumber, "oscpar"));
 //        result.setIrfpar(getIrfpar(NAME_OF_RESULT_OBJECT, datasetNumber));
         result.setParmu(getParEst(NAME_OF_RESULT_OBJECT, datasetNumber, "parmu"));
 //        result.setParmu(getParmu(NAME_OF_RESULT_OBJECT, datasetNumber));

@@ -980,7 +980,7 @@ public class AnalysisWorker implements Runnable {
         outputWriter.newLine();
         outputWriter.newLine();
 
-        outputWriter.append("R Call for the TIMP function \"initModel\": ");
+        outputWriter.append("# R Call for the TIMP function \"initModel\": ");
         outputWriter.newLine();
         ArrayList<String> list = modelCalls;
         for (String string : list) {
@@ -988,7 +988,7 @@ public class AnalysisWorker implements Runnable {
             outputWriter.newLine();
         }
         outputWriter.newLine();
-        outputWriter.append("R Call for the TIMP function \"fitModel\": ");
+        outputWriter.append("# R Call for the TIMP function \"fitModel\": ");
         outputWriter.newLine();
         outputWriter.write(fitModelCall);
         outputWriter.newLine();
@@ -1001,8 +1001,8 @@ public class AnalysisWorker implements Runnable {
             outputWriter.newLine();
             outputWriter.newLine();
 
-            String[] slots = {"getKineticParameters", "getSpectralParameters", "getIrfpar", "getSpecdisppar", "getParmu", "getPartau", "getKinscal", "getPrel", "getJvec"};
-            String[] slotsName = {"Kinetic parameters", "Spectral parameters", "Irf parameters", "Specdisppar", "Parmu", "Partau", "Kinscal", "Prel", "J vector"};
+            String[] slots = {"getKineticParameters", "getSpectralParameters", "getIrfpar", "getCoh","getOscpar","getSpecdisppar", "getParmu", "getPartau", "getKinscal", "getPrel", "getJvec"};
+            String[] slotsName = {"Kinetic parameters", "Spectral parameters", "Irf parameters", "Cohspec parameters", "Oscspec parameters", "Specdisppar", "Parmu", "Partau", "Kinscal", "Prel", "J vector"};
             double[] params = null;
 
             for (int k = 0; k < slots.length; k++) {

@@ -22,6 +22,8 @@ public class TimpResultDataset implements Serializable {
     private double[] prel;          //parameters for relations
     private double[] kinscal;       //branching scaling factors
     private double[] clpequ;        //equality of the spectra coeficcient
+    private double[] coh;           //cohspec parameters
+    private double[] oscpar;        //oscspec parameters
     private Matrix concentrations;  //matrix with concentrations
     private Matrix spectra;         //matrix with CLP
     private Matrix spectraErr;      //errors of the CLP
@@ -263,6 +265,22 @@ public class TimpResultDataset implements Serializable {
 
     public void setEigenvaluesK(double[] eigenvaluesK) {
         this.eigenvaluesK = eigenvaluesK;
+    }
+
+    public double[] getCoh() {
+        return coh;
+    }
+
+    public void setCoh(double[] coh) {
+        this.coh = coh;
+    }
+
+    public double[] getOscpar() {
+        return oscpar;
+    }
+
+    public void setOscpar(double[] oscpar) {
+        this.oscpar = oscpar;
     }
 
     public TimpResultDataset() {

@@ -17,18 +17,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Cohspec complex type.
+ * <p>Java class for Oscspec complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Cohspec">
+ * &lt;complexType name="Oscspec">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="set" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="seqstart" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
+ *         &lt;element name="start" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
  *         &lt;element name="fixed" type="{http://www.w3.org/2001/XMLSchema}boolean" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -39,20 +39,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Cohspec", propOrder = {
+@XmlType(name = "Oscspec", propOrder = {
     "type",
     "set",
-    "seqstart",
+    "start",
     "fixed"
 })
-public class Cohspec {
+public class Oscspec {
 
     @XmlElement(required = true)
     protected String type;
     @XmlElement(defaultValue = "false")
     protected boolean set;
     @XmlElement(required = true, nillable = true)
-    protected List<Double> seqstart;
+    protected List<Double> start;
     @XmlElement(required = true, nillable = true)
     protected List<Boolean> fixed;
 
@@ -97,18 +97,18 @@ public class Cohspec {
     }
 
     /**
-     * Gets the value of the seqstart property.
+     * Gets the value of the start property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the seqstart property.
+     * This is why there is not a <CODE>set</CODE> method for the start property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSeqstart().add(newItem);
+     *    getStart().add(newItem);
      * </pre>
      * 
      * 
@@ -118,11 +118,11 @@ public class Cohspec {
      * 
      * 
      */
-    public List<Double> getSeqstart() {
-        if (seqstart == null) {
-            seqstart = new ArrayList<Double>();
+    public List<Double> getStart() {
+        if (start == null) {
+            start = new ArrayList<Double>();
         }
-        return this.seqstart;
+        return this.start;
     }
 
     /**

@@ -17,17 +17,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SpectralConstraints complex type.
+ * <p>Java class for OscspecPanelModel complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SpectralConstraints">
+ * &lt;complexType name="OscspecPanelModel">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="min" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
- *         &lt;element name="max" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
+ *         &lt;element name="oscspec" type="{http://www.nat.vu.nl/~jsnel/Schema/TgmSchema}Oscspec"/>
+ *         &lt;element name="oscpar" type="{http://www.w3.org/2001/XMLSchema}double" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,59 +37,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SpectralConstraints", propOrder = {
-    "min",
-    "max"
+@XmlType(name = "OscspecPanelModel", propOrder = {
+    "oscspec",
+    "oscpar"
 })
-public class SpectralConstraints {
+public class OscspecPanelModel {
 
     @XmlElement(required = true, nillable = true)
-    protected List<Double> min;
+    protected Oscspec oscspec;
     @XmlElement(required = true, nillable = true)
-    protected List<Double> max;
+    protected List<Double> oscpar;
 
     /**
-     * Gets the value of the min property.
+     * Gets the value of the oscspec property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the min property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getMin().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Double }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Oscspec }
+     *     
      */
-    public List<Double> getMin() {
-        if (min == null) {
-            min = new ArrayList<Double>();
-        }
-        return this.min;
+    public Oscspec getOscspec() {
+        return oscspec;
     }
 
     /**
-     * Gets the value of the max property.
+     * Sets the value of the oscspec property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Oscspec }
+     *     
+     */
+    public void setOscspec(Oscspec value) {
+        this.oscspec = value;
+    }
+
+    /**
+     * Gets the value of the oscpar property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the max property.
+     * This is why there is not a <CODE>set</CODE> method for the oscpar property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMax().add(newItem);
+     *    getOscpar().add(newItem);
      * </pre>
      * 
      * 
@@ -99,11 +94,11 @@ public class SpectralConstraints {
      * 
      * 
      */
-    public List<Double> getMax() {
-        if (max == null) {
-            max = new ArrayList<Double>();
+    public List<Double> getOscpar() {
+        if (oscpar == null) {
+            oscpar = new ArrayList<Double>();
         }
-        return this.max;
+        return this.oscpar;
     }
 
 }
