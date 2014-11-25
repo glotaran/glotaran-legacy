@@ -57,6 +57,7 @@ import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.main.common.CommonActionFunctions;
 import org.glotaran.core.main.common.ExportPanelForm;
 import org.glotaran.core.models.structures.FlimImageAbstract;
+import org.glotaran.hdf5interface.Hdf5DatasetTimp;
 import org.glotaran.jfreechartcustom.HeightMapPanel;
 import org.glotaran.jfreechartcustom.ImageUtilities;
 import org.glotaran.jfreechartcustom.RedGreenPaintScale;
@@ -71,6 +72,7 @@ import org.netbeans.api.project.FileOwnerQuery;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
@@ -895,7 +897,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
         if (res.equals(NotifyDescriptor.OK_OPTION)) {
             DatasetTimp timpDat = createTimpDataset(datasetNameDialog.getInputText(), flimImage, numSelPix, dataset);
    timpDat.getMaxInt();
-//create serfile
+//create cache file
             FileObject cachefolder = null;
             final TGProject proj = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
             if (proj != null) {
@@ -904,9 +906,7 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
                 FileObject writeTo;
                 try {
                     writeTo = cachefolder.createData(timpDat.getDatasetName(), "timpdataset");
-                    ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
-                    stream.writeObject(timpDat);
-                    stream.close();
+                    Hdf5DatasetTimp.save(FileUtil.toFile(writeTo), timpDat);
                     TimpDatasetDataObject dObj = (TimpDatasetDataObject) DataObject.find(writeTo);
                     TgdDataChildren chidrens = (TgdDataChildren) dataObject.getNodeDelegate().getChildren();
                     chidrens.addObj(dObj);

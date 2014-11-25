@@ -6,6 +6,7 @@ package org.glotaran.core.main.nodes.dataobjects;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import org.glotaran.core.messages.CoreErrorMessages;
@@ -48,27 +49,34 @@ public class TimpDatasetDataObject extends InstanceDataObject {
 
     public DatasetTimp getDatasetTimp() {
         DatasetTimp dataset = null;
-        DatasetTimp tmpData = null;
-        ObjectInputStream ois = null;
+        File file = FileUtil.toFile(this.getPrimaryFile());
         try {
-            File file = FileUtil.toFile(this.getPrimaryFile());
-            File tmpFile = new File(this.getPrimaryFile().getName() + ".h5");
-            ois = new ObjectInputStream(new FileInputStream(file));
-            try {
-                dataset = (DatasetTimp) ois.readObject();
-                tmpData = Hdf5DatasetTimp.load(tmpFile);
-                CoreInformationMessages.HDF5Info(tmpData.getDatasetName());
-            } catch (ClassNotFoundException ex) {
-                CoreErrorMessages.oldClassException();
+            dataset = Hdf5DatasetTimp.load(file);
+            // for back compatibility, if fail to load the dataset from the HDF5,
+            // try to load it from Java object serialisation binary file
+            if (dataset == null) {
+                try {
+                    ObjectInputStream ois = null;
+                    try {
+                        ois = new ObjectInputStream(new FileInputStream(file));
+                        dataset = (DatasetTimp) ois.readObject();
+                    } catch (IOException ex) {
+                        CoreErrorMessages.IOException(null);
+                    } finally {
+                        try {
+                            if(ois != null)
+                                ois.close();
+                        } catch (IOException ex) {
+                            CoreErrorMessages.IOException(null);
+                        }
+                    }
+
+                } catch (ClassNotFoundException ex) {
+                    CoreErrorMessages.oldClassException();
+                }
             }
-        } catch (IOException ex) {
-            CoreErrorMessages.IOException(null);
-        } finally {
-            try {
-                ois.close();
-            } catch (IOException ex) {
-                CoreErrorMessages.IOException(null);
-            }
+        } catch (FileNotFoundException ex) {
+            CoreErrorMessages.fileNotFound();
         }
         return dataset;
     }

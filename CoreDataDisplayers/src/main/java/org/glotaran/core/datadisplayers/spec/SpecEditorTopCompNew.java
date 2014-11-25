@@ -60,6 +60,7 @@ import org.netbeans.api.project.FileOwnerQuery;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
@@ -1028,15 +1029,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
                 FileObject writeTo;
                 try {
                     writeTo = cachefolder.createData(newdataset.getDatasetName(), "timpdataset");
-                    ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
-                    stream.writeObject(newdataset);
-                    stream.close();
+                    Hdf5DatasetTimp.save(FileUtil.toFile(writeTo), newdataset);
                     
-                    String hdfFile = writeTo.getPath();
-                    hdfFile = hdfFile.substring(0, hdfFile.lastIndexOf('.')) + ".h5";
-                    File file = new File(hdfFile);
-                    Hdf5DatasetTimp.save(file, newdataset);
-
                     if (!averaged) {
                         TimpDatasetDataObject dObj = (TimpDatasetDataObject) DataObject.find(writeTo);
                         TgdDataChildren chidrens;

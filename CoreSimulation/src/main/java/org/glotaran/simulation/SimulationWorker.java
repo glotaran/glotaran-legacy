@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
 import org.glotaran.core.interfaces.TimpControllerInterface;
@@ -16,6 +15,7 @@ import org.glotaran.core.models.gta.GtaSimulationContainer;
 
 import org.glotaran.core.models.sim.SpectralModelSpecification;
 import org.glotaran.core.models.tgm.Tgm;
+import org.glotaran.hdf5interface.Hdf5DatasetTimp;
 import org.glotaran.simfilesupport.spec.SpectralModelDataObject;
 import org.glotaran.tgmfilesupport.TgmDataObject;
 import org.netbeans.api.progress.ProgressHandle;
@@ -217,9 +217,7 @@ public class SimulationWorker implements Runnable {
             String freeFilename = FileUtil.findFreeFileName(resultsfolder, results[0].getDatasetName(), "timpdataset");
             results[0].setDatasetName(freeFilename);
             writeTo = resultsfolder.createData(freeFilename, "timpdataset");
-            ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
-            stream.writeObject(results[0]);
-            stream.close();
+            Hdf5DatasetTimp.save(FileUtil.toFile(writeTo), results[0]);
            }
         catch (IOException ex) {
             Exceptions.printStackTrace(ex);

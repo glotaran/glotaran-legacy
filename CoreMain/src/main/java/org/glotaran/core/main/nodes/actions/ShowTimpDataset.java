@@ -29,12 +29,11 @@ public final class ShowTimpDataset extends CookieAction {
             dataset = dataObject.getDatasetTimp();
             if (dataset != null) {
                 datatype = dataset.getType();
-            }
-            for (final DatasetLoaderInterface service : services) {
-                if (service.getType().equalsIgnoreCase(datatype)) {
-                    service.openDatasetEditor(dataObject);
+                for (final DatasetLoaderInterface service : services) {
+                    if (service.getType().equalsIgnoreCase(datatype)) {
+                        service.openDatasetEditor(dataObject);
+                    }
                 }
-
             }
 
             //filename = FileUtil.toFile(dataObject.getPrimaryFile()).getAbsolutePath();

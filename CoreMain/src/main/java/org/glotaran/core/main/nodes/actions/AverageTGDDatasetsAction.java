@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +20,7 @@ import org.glotaran.core.main.project.TGProject;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.messages.CoreWarningMessages;
 import org.glotaran.core.models.structures.DatasetTimp;
+import org.glotaran.hdf5interface.Hdf5DatasetTimp;
 import org.netbeans.api.project.FileOwnerQuery;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
@@ -147,17 +147,9 @@ public final class AverageTGDDatasetsAction implements ActionListener {
                 String datasetsfolder = preprocessDialogPanel.getFileName().getParent();
                 FileObject folderObj = FileUtil.toFileObject(new File(datasetsfolder));
                 String freeFilename = FileUtil.findFreeFileName(folderObj, preprocessDialogPanel.getFileName().getName(), "timpdataset");
-                ObjectOutputStream stream = null;
                 try {
-                    try {
-                        FileObject writeTo = folderObj.createData(freeFilename, "timpdataset");
-                        stream = new ObjectOutputStream(writeTo.getOutputStream());
-                        stream.writeObject(resDataset);
-                    } finally {
-                        if (stream != null) {
-                            stream.close();
-                        }
-                    }
+                    FileObject writeTo = folderObj.createData(freeFilename, "timpdataset");
+                    Hdf5DatasetTimp.save(FileUtil.toFile(writeTo), resDataset);
                 } catch (IOException ex) {
                     CoreErrorMessages.fileSaveError(freeFilename);
                 }

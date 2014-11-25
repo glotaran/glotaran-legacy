@@ -80,8 +80,8 @@ public class Hdf5DatasetTimp {
     private static boolean readPsisim(DatasetTimp dataset, Group groupPsisim) {
         try {
             List groupMembers = groupPsisim.getMemberList();
-            for (int i = 0; i < groupMembers.size(); i++) {
-                HObject obj = (HObject) groupMembers.get(i);
+            for (Object groupMember : groupMembers) {
+                HObject obj = (HObject) groupMember;
                 switch (obj.getName()) {
                     case "spectra": {
                         Dataset dset = (Dataset) obj;
@@ -180,36 +180,91 @@ public class Hdf5DatasetTimp {
                     }
                 }
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             CoreInformationMessages.HDF5Info(groupPsisim.getName() + ": " + ex.getMessage());
             return false;
         }
         return true;
     }
-    
+
     private static void readFlim(DatasetTimp dataset, Group groupFlim) {
+        try {
+            List groupMembers = groupFlim.getMemberList();
+            for (Object groupMember : groupMembers) {
+                HObject obj = (HObject) groupMember;
+                switch (obj.getName()) {
+                    case "image": {
+                        Dataset dset = (Dataset) obj;
+                        long[] dims = dset.getDims();
+                        if (dims.length != 2) {
+                            CoreInformationMessages.HDF5Info("Invalid number of DatasetTimp FLIM dimensions");
+                            return;
+                        }
+                        dataset.setIntenceIm((double[]) dset.read());
+                        dataset.setOrigHeigh((int) dims[0]);
+                        dataset.setOrigWidth((int) dims[1]);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            CoreInformationMessages.HDF5Info(groupFlim.getName() + ": " + ex.getMessage());
+        }
     }
-    
+
     private static void readIRF(DatasetTimp dataset, Group groupIrf) {
+         try {
+            List groupMembers = groupIrf.getMemberList();
+            for (Object groupMember : groupMembers) {
+                HObject obj = (HObject) groupMember;
+                switch (obj.getName()) {
+                    case "irf": {
+                        Dataset dset = (Dataset) obj;
+                        long[] dims = dset.getDims();
+                        if (dims.length != 1) {
+                            CoreInformationMessages.HDF5Info("Invalid number of dimensions in the saved IRF");
+                            return;
+                        }
+                        dataset.setMeasuredIRF((double[]) dset.read());
+                        break;
+                    }
+                    case "axis": {
+                        Dataset dset = (Dataset) obj;
+                        long[] dims = dset.getDims();
+                        if (dims.length != 1) {
+                            CoreInformationMessages.HDF5Info("Invalid number of dimensions in the saved IRF domain axis");
+                            return;
+                        }
+                        dataset.setMeasuredIRFDomainAxis((double[]) dset.read());
+                        break;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            CoreInformationMessages.HDF5Info(groupIrf.getName() + ": " + ex.getMessage());
+        }
     }
-    
+
     public static DatasetTimp load(File file) throws FileNotFoundException {
         DatasetTimp dataset = new DatasetTimp();
-        H5File hdfFile = getHdf5File(file, true);
+        H5File hdfFile = getHdf5File(file, false);
 
         if (hdfFile == null) {
-            return dataset;
+            return null;
         }
 
+        //start reading the data from the file
+        //if an error occurs, return null unless we have psisim data correctly 
+        //loaded, in this case, return the dataset
         try {
             long fileVersion = 0;
             Group root = (Group) ((javax.swing.tree.DefaultMutableTreeNode) hdfFile.getRootNode()).getUserObject();
             if (root == null) {
-                return dataset;
+                return null;
             }
             Group groupTimp = (Group) FileFormat.findObject(hdfFile, "/DatasetTimp");
             if (groupTimp == null) {
-                return dataset; //return empty (default) DatasetTimp
+                return null;
             }
 
             // read dataset attributes
@@ -238,38 +293,41 @@ public class Hdf5DatasetTimp {
                                 dataset.setDatalabel(val[0]);
                                 break;
                         }
-                    }
-                    else if(objVal instanceof long[]){
-                        if(attr.getName().equals("version"))
+                    } else if (objVal instanceof long[]) {
+                        if (attr.getName().equals("version")) {
                             fileVersion = ((long[]) objVal)[0];
+                        }
                     }
                 } catch (Exception ex) {
                     //do not care - these are just attributes...
                 }
             }
-             
-            if (version != fileVersion){
+
+            if (version != fileVersion) {
                 CoreInformationMessages.HDF5Info("Incompatible version of HDF5 DatasetTimp file (" + fileVersion + ")");
-                return dataset;
+                return null;
             }
-            
+
             // read psisim data
             Group groupPsisim = (Group) FileFormat.findObject(hdfFile, "/DatasetTimp/psisim");
             if (groupPsisim == null) {
-                return dataset; //psisim data must exist in DatasetTimp
+                return null;
             }
-            if(!readPsisim(dataset, groupPsisim))
-                return dataset;
-            
+            if (!readPsisim(dataset, groupPsisim)) {
+                return null;
+            }
+
             // read FLIM image
             Group groupFlim = (Group) FileFormat.findObject(hdfFile, "/DatasetTimp/flim");
-            if (groupFlim != null)
+            if (groupFlim != null) {
                 readFlim(dataset, groupFlim);
-            
+            }
+
             // read FLIM image
             Group groupIrf = (Group) FileFormat.findObject(hdfFile, "/DatasetTimp/measured_irf");
-            if (groupFlim != null)
+            if (groupFlim != null) {
                 readIRF(dataset, groupIrf);
+            }
 
         } catch (Exception ex) {
             CoreInformationMessages.HDF5Info(file.getName() + ": " + ex.getMessage());
