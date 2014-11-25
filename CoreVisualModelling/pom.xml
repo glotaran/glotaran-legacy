@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>CoreVisualModelling</artifactId>
     <packaging>nbm</packaging>
@@ -14,17 +14,17 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
-	<publicPackage>org.glotaran.core.ui.visualmodelling</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.common</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.components</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.filesupport</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.menu</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.nodes</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.nodes.dataobjects</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.palette</publicPackage>
-	<publicPackage>org.glotaran.core.ui.visualmodelling.view</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.common</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.components</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.filesupport</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.menu</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.nodes</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.nodes.dataobjects</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.palette</publicPackage>
+                        <publicPackage>org.glotaran.core.ui.visualmodelling.view</publicPackage>
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -43,103 +43,110 @@
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
-	
-	
-	
-	
-	
-	
-	<dependency>
-	<groupId>org.netbeans.api</groupId>
-		<artifactId>org-netbeans-api-visual</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-	<groupId>org.netbeans.api</groupId>
-		<artifactId>org-netbeans-api-xml</artifactId>
-		<version>RELEASE80</version></dependency>
-	
-	
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-netbeans-spi-palette</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-netbeans-swing-outline</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-actions</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-awt</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-dialogs</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-explorer</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-loaders</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-nodes</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-text</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-windows</artifactId>
-		<version>RELEASE80</version></dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-visual</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-xml</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-spi-palette</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-swing-outline</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-actions</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-dialogs</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-explorer</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-filesystems</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-loaders</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-nodes</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-text</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-windows</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>GtaFileSupport</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>TGMFileSupport</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SimSupport</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>

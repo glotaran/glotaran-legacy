@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>CoreAnalysis</artifactId>
     <packaging>nbm</packaging>
@@ -75,37 +75,37 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreInterfaces</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>GtaFileSupport</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SimSupport</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>TGMFileSupport</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -120,22 +120,22 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>JFreeChartCustom</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreSimulation</artifactId>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
             <type>jar</type>
         </dependency>
     </dependencies>

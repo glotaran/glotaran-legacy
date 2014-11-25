@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>CoreAUC</artifactId>
     <packaging>nbm</packaging>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbeans.version}</version>
+            <version>RELEASE80</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>CoreModels</artifactId>
     <packaging>nbm</packaging>
@@ -14,14 +14,14 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
-	<publicPackage>org.glotaran.core.models.gta</publicPackage>
-	<publicPackage>org.glotaran.core.models.results</publicPackage>
-	<publicPackage>org.glotaran.core.models.sim</publicPackage>
-	<publicPackage>org.glotaran.core.models.structures</publicPackage>
-	<publicPackage>org.glotaran.core.models.tgd</publicPackage>
-	<publicPackage>org.glotaran.core.models.tgm</publicPackage>
+                        <publicPackage>org.glotaran.core.models.gta</publicPackage>
+                        <publicPackage>org.glotaran.core.models.results</publicPackage>
+                        <publicPackage>org.glotaran.core.models.sim</publicPackage>
+                        <publicPackage>org.glotaran.core.models.structures</publicPackage>
+                        <publicPackage>org.glotaran.core.models.tgd</publicPackage>
+                        <publicPackage>org.glotaran.core.models.tgm</publicPackage>
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
     </dependencies>
     <properties>

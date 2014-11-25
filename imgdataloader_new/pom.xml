@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>imgdataloader_new</artifactId>
     <packaging>nbm</packaging>
@@ -43,12 +43,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreInterfaces</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
     </dependencies>
     <properties>

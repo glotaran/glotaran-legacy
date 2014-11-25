@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>AnalysisOverviewFileSupport</artifactId>
     <packaging>nbm</packaging>
@@ -36,11 +36,6 @@
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
-	
-	
-	
-	
-	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-awt</artifactId>
@@ -72,17 +67,17 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreInterfaces</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -92,10 +87,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <version>1.5.0.0</version>
 </project>

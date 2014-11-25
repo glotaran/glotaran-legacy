@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>CoreResultDisplayers</artifactId>
     <packaging>nbm</packaging>
@@ -14,7 +14,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
                     </publicPackages>    
                 </configuration>
@@ -42,49 +42,58 @@
 	
 	
 	
-	<dependency>
-	<groupId>org.netbeans.api</groupId>
-		<artifactId>org-netbeans-api-progress</artifactId>
-		<version>RELEASE80</version></dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-progress</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
 	
 	
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-awt</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-dialogs</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-loaders</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-nodes</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-windows</artifactId>
-		<version>RELEASE80</version></dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-dialogs</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-filesystems</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-loaders</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-nodes</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-windows</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
 	
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -96,32 +105,32 @@
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>AnalysisOverviewFileSupport</artifactId>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <artifactId>CoreInterfaces</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <artifactId>CoreMessages</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <artifactId>CoreModels</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <artifactId>UJMPwithdep</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -131,18 +140,18 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>JFreeChartCustom</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <artifactId>jcommon</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.5.0.0</version>
         </dependency>
     </dependencies>
     <properties>

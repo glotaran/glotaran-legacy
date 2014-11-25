@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5.0.0</version>
     </parent>
     <artifactId>JFreeChartCustom</artifactId>
     <packaging>nbm</packaging>
@@ -52,12 +52,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-            <version>${project.version}</version>
+            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>${project.version}</version>          
+            <version>1.5.0.0</version>          
         </dependency>
         <dependency>
             <groupId>org.jfree</groupId>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jcommon</artifactId>
-            <version>${project.version}</version>          
+            <version>1.5.0.0</version>          
         </dependency>
     </dependencies>
     <properties>
