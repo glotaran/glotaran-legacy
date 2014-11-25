@@ -916,6 +916,7 @@ public class AnalysisWorker implements Runnable {
             counter++;
             if (dataset == null) {
                 run = false;
+                break;
             }
             int numberOfNaNs = checkDatasetForNaNs(dataset);
             if (numberOfNaNs > 0) {
