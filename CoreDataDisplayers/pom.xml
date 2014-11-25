@@ -133,12 +133,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
             <version>1.5.0.0</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jfreechart</artifactId>
-            <version>1.5.0.0</version>
         </dependency>
         <dependency>
             <artifactId>jcommon</artifactId>

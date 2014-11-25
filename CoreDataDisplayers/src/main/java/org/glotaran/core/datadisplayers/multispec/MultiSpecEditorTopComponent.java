@@ -70,11 +70,11 @@ import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 @TopComponent.Description(
         preferredID = "MultiSpecEditorTopComponent",
         //iconBase="SET/PATH/TO/ICON/HERE", 
-        persistenceType = TopComponent.PERSISTENCE_ALWAYS
+        persistenceType = TopComponent.PERSISTENCE_NEVER
 )
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "org.glotaran.core.datadisplayers.multispec.MultiSpecEditorTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
+//@ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_MultiSpecEditorAction",
         preferredID = "MultiSpecEditorTopComponent"
