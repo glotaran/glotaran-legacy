@@ -5,31 +5,25 @@
  */
 package org.glotaran.core.datadisplayers.multispec;
 
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SpinnerNumberModel;
-import org.glotaran.core.datadisplayers.common.CommonDataDispTools;
+import javax.swing.SwingWorker;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.jfreechartcustom.ColorCodedImageDataset;
 import org.glotaran.jfreechartcustom.GraphPanel;
-import org.glotaran.jfreechartcustom.GrayPaintScalePlus;
 import org.glotaran.jfreechartcustom.HeightMapPanel;
 import org.glotaran.jfreechartcustom.ImageCrosshairLabelGenerator;
 import org.glotaran.jfreechartcustom.ImageUtilities;
-import org.glotaran.jfreechartcustom.IntensImageDataset;
 import org.glotaran.jfreechartcustom.LinLogFormat;
-import org.glotaran.jfreechartcustom.NonLinearNumberTickUnit;
 import org.glotaran.jfreechartcustom.RainbowPaintScale;
 import org.glotaran.jfreechartcustom.RedGreenPaintScale;
 import org.jfree.chart.ChartFactory;
@@ -37,7 +31,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYDataImageAnnotation;
 import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
@@ -47,7 +40,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
@@ -57,6 +49,8 @@ import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -64,6 +58,7 @@ import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.CloneableTopComponent;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 
 /**
  * Top component which displays something.
@@ -172,18 +167,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jtbIntegrateMap = new javax.swing.JToggleButton();
         jcbColorScale = new javax.swing.JComboBox();
         jpSVDResults = new javax.swing.JPanel();
-        jToolBar3 = new javax.swing.JToolBar();
-        jLabel10 = new javax.swing.JLabel();
-        jSnumSV = new javax.swing.JSpinner();
-        jSeparator5 = new javax.swing.JToolBar.Separator();
-        jLabel11 = new javax.swing.JLabel();
-        jTFtotalNumSV = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JToolBar.Separator();
-        jPanel10 = new javax.swing.JPanel();
-        jPSingValues = new javax.swing.JPanel();
-        jPLeftSingVectors = new javax.swing.JPanel();
-        jPRightSingVectors = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        imSVDPanel = new org.glotaran.core.datadisplayers.common.ImageSVDPanel();
 
         setMinimumSize(new java.awt.Dimension(500, 300));
         setPreferredSize(new java.awt.Dimension(1000, 600));
@@ -518,140 +502,13 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
                 jpSVDResultsComponentShown(evt);
             }
         });
-        jpSVDResults.setLayout(new java.awt.GridBagLayout());
-
-        jToolBar3.setRollover(true);
-        jToolBar3.setMinimumSize(new java.awt.Dimension(438, 23));
-        jToolBar3.setPreferredSize(new java.awt.Dimension(460, 23));
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel10, org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jLabel10.text")); // NOI18N
-        jToolBar3.add(jLabel10);
-
-        jSnumSV.setMaximumSize(new java.awt.Dimension(45, 20));
-        jSnumSV.setMinimumSize(new java.awt.Dimension(45, 20));
-        jSnumSV.setPreferredSize(new java.awt.Dimension(45, 20));
-        jSnumSV.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSnumSVStateChanged(evt);
-            }
-        });
-        jToolBar3.add(jSnumSV);
-        jToolBar3.add(jSeparator5);
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel11, org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jLabel11.text")); // NOI18N
-        jToolBar3.add(jLabel11);
-
-        jTFtotalNumSV.setEditable(false);
-        jTFtotalNumSV.setText(org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jTFtotalNumSV.text")); // NOI18N
-        jTFtotalNumSV.setMaximumSize(new java.awt.Dimension(100, 20));
-        jTFtotalNumSV.setMinimumSize(new java.awt.Dimension(45, 20));
-        jTFtotalNumSV.setPreferredSize(new java.awt.Dimension(55, 20));
-        jToolBar3.add(jTFtotalNumSV);
-        jToolBar3.add(jSeparator6);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jpSVDResults.add(jToolBar3, gridBagConstraints);
-
-        jPanel10.setMinimumSize(new java.awt.Dimension(1000, 570));
-        jPanel10.setPreferredSize(new java.awt.Dimension(500, 500));
-        jPanel10.setLayout(new java.awt.GridBagLayout());
-
-        jPSingValues.setBackground(new java.awt.Color(255, 255, 255));
-        jPSingValues.setMinimumSize(new java.awt.Dimension(50, 50));
-        jPSingValues.setPreferredSize(new java.awt.Dimension(100, 100));
-        jPSingValues.setLayout(new java.awt.BorderLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        jPanel10.add(jPSingValues, gridBagConstraints);
-
-        jPLeftSingVectors.setBackground(new java.awt.Color(255, 255, 255));
-        jPLeftSingVectors.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPLeftSingVectors.setPreferredSize(new java.awt.Dimension(100, 100));
-        jPLeftSingVectors.setLayout(new java.awt.BorderLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.6;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel10.add(jPLeftSingVectors, gridBagConstraints);
-
-        jPRightSingVectors.setBackground(new java.awt.Color(255, 255, 255));
-        jPRightSingVectors.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPRightSingVectors.setPreferredSize(new java.awt.Dimension(100, 100));
-        jPRightSingVectors.setLayout(new java.awt.GridLayout(2, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        jPanel10.add(jPRightSingVectors, gridBagConstraints);
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jLabel5.text")); // NOI18N
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel10.add(jLabel5, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        jpSVDResults.add(jPanel10, gridBagConstraints);
+        jpSVDResults.setLayout(new java.awt.BorderLayout());
+        jpSVDResults.add(imSVDPanel, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("SVD", jpSVDResults);
 
         add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jSnumSVStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSnumSVStateChanged
-//        updateSVDPlots();
-    }//GEN-LAST:event_jSnumSVStateChanged
-
-    private void jpSVDResultsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jpSVDResultsComponentShown
-
-//        if (svdResult == null) {
-//            SwingWorker<Matrix[], Void> worker = new SwingWorker<Matrix[], Void>() {
-//
-//                final ProgressHandle ph = ProgressHandleFactory.createHandle("Performing Singular Value Decomposition on dataset");
-//
-//                @Override
-//                protected Matrix[] doInBackground() throws Exception {
-//                    ph.start();
-//                    return calculateSVD();
-//                }
-//
-//                @Override
-//                protected void done() {
-//                    createSVDPlots();
-//                    ph.finish();
-//                }
-//            };
-//            worker.execute();
-//        }
-    }//GEN-LAST:event_jpSVDResultsComponentShown
 
     private void rangeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rangeSliderStateChanged
         double newMinAmpl, newMaxAmpl;
@@ -724,34 +581,46 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         
     }//GEN-LAST:event_jcbColorScaleActionPerformed
 
+    private void jpSVDResultsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jpSVDResultsComponentShown
+        if (!imSVDPanel.isCalculated()) {
+            calculateSVD();
+            
+//            SwingWorker<Matrix[], Void> worker = new SwingWorker<Matrix[], Void>() {
+//                final ProgressHandle ph = ProgressHandleFactory.createHandle("Performing Singular Value Decomposition on dataset");
+//
+//                @Override
+//                protected Matrix[] doInBackground() throws Exception {
+//                    ph.start();
+//                    return calculateSVD();
+//                }
+//
+//                @Override
+//                protected void done() {
+//                    imSVDPanel.createSVDPlots();
+//                    ph.finish();
+//                }
+//            };
+//            worker.execute();
+        }
+    }//GEN-LAST:event_jpSVDResultsComponentShown
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.glotaran.core.datadisplayers.common.ImageSVDPanel imSVDPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPLeftSingVectors;
-    private javax.swing.JPanel jPRightSingVectors;
-    private javax.swing.JPanel jPSingValues;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jSPInfoPane;
     private javax.swing.JSlider jSVerticalCut;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar.Separator jSeparator5;
-    private javax.swing.JToolBar.Separator jSeparator6;
-    private javax.swing.JSpinner jSnumSV;
     private javax.swing.JTextArea jTAInfo;
     private javax.swing.JTextField jTFMaxIntence;
     private javax.swing.JTextField jTFMinIntence;
-    private javax.swing.JTextField jTFtotalNumSV;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JComboBox jcbColorScale;
     private javax.swing.JPanel jpDataPanelInner;
     private javax.swing.JPanel jpDataPannel;
@@ -787,7 +656,24 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-
+    
+    private Matrix[] calculateSVD() {
+//        Matrix[] SVD;
+//        DefaultDenseDoubleMatrix2D newMatrix = new DefaultDenseDoubleMatrix2D(data.getPsisim(), data.getNt(),data.getNl());
+////        for (int i = 0; i < data.getNt(); i ++){
+////            for (int j = 0; j < data.getNl(); j++){
+////                newMatrix.setDouble(data.getPsisim()[j*data.getNt()+i], i, j);   
+////            }
+////        }
+//        //Matrix newMatrix = MatrixFactory.importFromArray(flimImage.getData());
+//       // newMatrix = newMatrix.reshape(Ret.NEW, flimImage.getCannelN(),flimImage.getX()*flimImage.getY());
+//        SVD = newMatrix.svd();
+//        imSVDPanel.setSVDResults(SVD);
+//        imSVDPanel.initialiseSVDPlots(data.getNt(), data.getOriginalWidth(), data.getOriginalHeight(), data.getX(), data.getIntenceImX(), data.getIntenceImY());
+//        return imSVDPanel.getSVDResults();
+        return null;
+    }
+    
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
