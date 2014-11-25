@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.main.nodes.TimpResultsNode;
 import org.glotaran.core.models.structures.TimpResultDataset;
+import org.glotaran.hdf5interface.Hdf5TimpResultDataset;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.filesystems.MIMEResolver;
@@ -54,6 +55,7 @@ public class TimpResultDataObject extends InstanceDataObject {
             ois = new ObjectInputStream(new FileInputStream(file));
             try {
                 dataset = (TimpResultDataset) ois.readObject();
+                TimpResultDataset tmpDs = Hdf5TimpResultDataset.load(file);
             } catch (ClassNotFoundException ex) {
                 CoreErrorMessages.oldClassException();
             }

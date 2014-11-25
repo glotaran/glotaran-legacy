@@ -53,6 +53,7 @@ import static java.lang.Math.floor;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import org.glotaran.hdf5interface.Hdf5TimpResultDataset;
 
 /**
  *
@@ -1153,6 +1154,11 @@ public class AnalysisWorker implements Runnable {
                 ObjectOutputStream stream = new ObjectOutputStream(writeTo.getOutputStream());
                 stream.writeObject(timpResultDataset);
                 stream.close();
+                
+                String hdfFile = writeTo.getPath();
+                hdfFile = hdfFile.substring(0, hdfFile.lastIndexOf('.')) + ".h5";
+                File file = new File(hdfFile);
+                Hdf5TimpResultDataset.save(file, timpResultDataset);
 
                 newResultsObject.getDatasets().get(i).setResultFile(new OutputFile());
                 newResultsObject.getDatasets().get(i).getResultFile().setFilename(freeFilename);
