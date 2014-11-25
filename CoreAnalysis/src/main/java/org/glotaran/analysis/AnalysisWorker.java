@@ -128,7 +128,7 @@ public class AnalysisWorker implements Runnable {
 
                 if (isValidAnalysis(datasets, modelReference)) {
                     timpcontroller = Lookup.getDefault().lookup(TimpControllerInterface.class);
-                    if (timpcontroller.isConnected()) {
+                    if (timpcontroller != null && timpcontroller.isConnected()) {
                         results = timpcontroller.runAnalysis(datasets, modelCalls, fitModelCall);
                         nlsprogressResult = timpcontroller.getStringArray(TimpControllerInterface.NAME_OF_RESULT_OBJECT + "$nlsprogress");
 
