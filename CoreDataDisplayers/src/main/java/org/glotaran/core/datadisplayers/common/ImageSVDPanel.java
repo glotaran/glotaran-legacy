@@ -46,6 +46,7 @@ public class ImageSVDPanel extends javax.swing.JPanel {
     private double[] xAxe;
     private double[] yAxe;
     private double[] timeAxe;
+    private boolean calculated = false;
     
     
     
@@ -245,7 +246,7 @@ public class ImageSVDPanel extends javax.swing.JPanel {
         jPRightSingVectors.validate();
     }
 
-    private void createSVDPlots() {
+    public void createSVDPlots() {
 
         int maxSpinnerNumberModel = Math.min(MAX_NUMBER_SINGULAR_VALUES, (int) svdResult[1].getRowCount());
         jTFtotalNumSV.setText("Max " + maxSpinnerNumberModel + " of  " + String.valueOf(svdResult[1].getRowCount()));
@@ -344,16 +345,36 @@ public class ImageSVDPanel extends javax.swing.JPanel {
         jPSingValues.add(chpan);
     }
 
-    public void initialiseSVDPlots(Matrix[] results, int t, int x, int y, double[] time, double[] xAx, double[] yAx)
+    public void initialiseSVDPlots(int t, int x, int y, double[] time, double[] xAx, double[] yAx)
     {
-        svdResult = results;
+//        svdResult = results;
         timeSteps = t;
         timeAxe = time;
         imageHeight = y;
         imageWitdth = x;
         xAxe = xAx;
         yAxe = yAx;
-        
-        
+        if (svdResult!=null){
+            calculated = true;
+        } else {
+            calculated = false;
+        }
+    }
+    
+    public boolean isCalculated(){
+        return calculated;
+    }
+    
+    public void setSVDResults(Matrix[] results){
+        svdResult = results;
+        if (svdResult!=null){
+            calculated = true;
+        } else {
+            calculated = false;
+        }
+    }
+    
+    public Matrix[] getSVDResults(){
+        return svdResult;
     }
 }
