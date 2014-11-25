@@ -26,57 +26,6 @@ import org.glotaran.core.messages.CoreInformationMessages;
  * @author anton
  */
 public class Hdf5DatasetTimp {
-
-    public static final long version = 1L;
-    private static int init = 0;
-
-    private static void init() {
-        try {
-            Class fileclass = Class.forName("ncsa.hdf.object.h5.H5File");
-            FileFormat fileformat = (FileFormat) fileclass.newInstance();
-            if (fileformat != null) {
-                FileFormat.addFileFormat("HDF5", fileformat);
-                init = 1;
-            }
-        } catch (Throwable err) {
-            CoreInformationMessages.HDF5Info(err.getMessage());
-        }
-    }
-
-    private static H5File getHdf5File(File file, boolean write) {
-        H5File hdfFile;
-
-        if (0 == init) {
-            init();
-        }
-
-        // Retrieve an instance of the implementing class for the HDF5 format
-        FileFormat fileFormat = FileFormat.getFileFormat(FileFormat.FILE_TYPE_HDF5);
-        if (fileFormat == null) {
-            CoreInformationMessages.HDF5Info("Cannot find HDF5 FileFormat.");
-            return null;
-        }
-
-        try {
-            if (write) {
-                hdfFile = (H5File) fileFormat.createFile(file.getCanonicalPath(), FileFormat.FILE_CREATE_DELETE);
-            } else {
-                hdfFile = (H5File) fileFormat.createInstance(file.getCanonicalPath(), FileFormat.READ);
-            }
-            // Check for error condition and report.
-            if (hdfFile == null) {
-                CoreInformationMessages.HDF5Info("Failed to create file: " + file.getName());
-                return null;
-            }
-            hdfFile.open();
-        } catch (Exception ex) {
-            CoreInformationMessages.HDF5Info("Failed to open " + file.getName() + ": " + ex.getMessage());
-            return null;
-        }
-
-        return hdfFile;
-    }
-
     private static boolean readPsisim(DatasetTimp dataset, Group groupPsisim) {
         try {
             List groupMembers = groupPsisim.getMemberList();
@@ -247,7 +196,7 @@ public class Hdf5DatasetTimp {
 
     public static DatasetTimp load(File file) throws FileNotFoundException {
         DatasetTimp dataset = new DatasetTimp();
-        H5File hdfFile = getHdf5File(file, false);
+        H5File hdfFile = Hdf5Provider.getHdf5File(file, false);
 
         if (hdfFile == null) {
             return null;
@@ -303,7 +252,7 @@ public class Hdf5DatasetTimp {
                 }
             }
 
-            if (version != fileVersion) {
+            if (Hdf5Provider.version != fileVersion) {
                 CoreInformationMessages.HDF5Info("Incompatible version of HDF5 DatasetTimp file (" + fileVersion + ")");
                 return null;
             }
@@ -343,7 +292,7 @@ public class Hdf5DatasetTimp {
     }
 
     public static void save(File file, DatasetTimp dataset) throws IOException {
-        H5File hdfFile = getHdf5File(file, true);
+        H5File hdfFile = Hdf5Provider.getHdf5File(file, true);
 
         if (hdfFile == null) {
             return;
@@ -438,8 +387,8 @@ public class Hdf5DatasetTimp {
             attr = new Attribute("units", dtVarString, single_dim, value_str);
             groupTimp.writeMetadata(attr);
 
-            //DatasetTimp HDF5 version
-            value_long = new long[]{version};
+            //Glotaran HDF5 version
+            value_long = new long[]{ Hdf5Provider.version };
             attr = new Attribute("version", dtLong, single_dim, value_long);
             groupTimp.writeMetadata(attr);
 
