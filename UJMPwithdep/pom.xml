@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0.0</version>
+        <version>1.5.0-0</version>
     </parent>
     <artifactId>UJMPwithdep</artifactId>
     <packaging>nbm</packaging>

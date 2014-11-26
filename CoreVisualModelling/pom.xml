@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0.0</version>
+        <version>1.5.0-0</version>
     </parent>
     <artifactId>CoreVisualModelling</artifactId>
     <packaging>nbm</packaging>
@@ -121,33 +121,27 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>GtaFileSupport</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>TGMFileSupport</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SimSupport</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-settings</artifactId>

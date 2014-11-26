@@ -64,6 +64,7 @@ import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
+import org.openide.util.NbPreferences;
 import org.openide.windows.CloneableTopComponent;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -925,8 +926,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         try {
             newMinAmpl = Double.parseDouble(jTFMinIntence.getText());
             newMaxAmpl = Double.parseDouble(jTFMaxIntence.getText());
-            PaintScale ps = new RainbowPaintScale(newMinAmpl, newMaxAmpl);
-//            PaintScale ps = new RedGreenPaintScale(newMinAmpl, newMaxAmpl);
+            PaintScale ps = getPaintScale(newMinAmpl, newMaxAmpl);
 
             BufferedImage image = ImageUtilities.createColorCodedImage(this.dataset, ps);
             XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
@@ -1298,8 +1298,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         newMaxAmpl = data.getMinInt() + range / (rangeSlider1.getMaximum() - rangeSlider1.getMinimum()) * rangeSlider1.getHighValue();
         if (newMinAmpl < newMaxAmpl) {
             try {
-                PaintScale ps = new RainbowPaintScale(newMinAmpl, newMaxAmpl);
-//                PaintScale ps = new RedGreenPaintScale(newMinAmpl, newMaxAmpl);
+                PaintScale ps = getPaintScale(newMinAmpl, newMaxAmpl);
 
                 BufferedImage image = ImageUtilities.createColorCodedImage(this.dataset, ps);
                 XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
@@ -1680,6 +1679,19 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         }
     }
 
+    private PaintScale getPaintScale(double newMinAmpl, double newMaxAmpl) {
+        PaintScale ps = new RainbowPaintScale(newMinAmpl, newMaxAmpl);
+        switch (NbPreferences.root().node("org/glotaran/CoreOptions").getInt("selectedColorScale", 0)) {
+            case 0:
+                ps = new RainbowPaintScale(newMinAmpl, newMaxAmpl);
+                break;
+            case 1:
+                ps = new RedGreenPaintScale(newMinAmpl, newMaxAmpl);
+                break;                      
+        }
+        return ps;        
+    }
+
     final static class ResolvableHelper implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -1770,8 +1782,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             dataMin = data.getMinInt();
             dataMax = data.getMaxInt();
         }
-        PaintScale ps = new RainbowPaintScale(dataMin, dataMax);
-//        PaintScale ps = new RedGreenPaintScale(dataMin, dataMax);
+        PaintScale ps = getPaintScale(dataMin, dataMax);
         BufferedImage image = ImageUtilities.createColorCodedImage(this.dataset, ps);
 
         XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
@@ -1803,8 +1814,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             dataMin = data.getMinInt();
             dataMax = data.getMaxInt();
         }
-        PaintScale ps = new RainbowPaintScale(dataMin, dataMax);
-//        PaintScale ps = new RedGreenPaintScale(dataMin, dataMax);
+        PaintScale ps = getPaintScale(dataMin, dataMax);
         this.chartMain = createChart(new XYSeriesCollection());
         this.chartMain.setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
 

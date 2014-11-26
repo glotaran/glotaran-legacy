@@ -6,7 +6,7 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.0-0</version>
     </parent>
-    <artifactId>ASCIIDataloader</artifactId>
+    <artifactId>CoreOptions</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -14,10 +14,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
-                    <publicPackages>                        
-                    </publicPackages>    
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -34,41 +30,26 @@
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
-	
-	
-	
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-dialogs</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId>
-		<version>RELEASE80</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId>
-		<version>RELEASE80</version></dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreInterfaces</artifactId>
-             <version>[1.5,)</version>         </dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreMessages</artifactId>
-             <version>[1.5,)</version>         </dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreModels</artifactId>
-             <version>[1.5,)</version>         </dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-options-api</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreModels</artifactId>
-             <version>[1.5,)</version>         </dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

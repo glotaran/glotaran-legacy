@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0.0</version>
+        <version>1.5.0-0</version>
     </parent>
     <artifactId>CoreModels</artifactId>
     <packaging>nbm</packaging>
@@ -57,8 +57,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
-            <version>1.5.0.0</version>
-        </dependency>
+             <version>[1.5,)</version>         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
