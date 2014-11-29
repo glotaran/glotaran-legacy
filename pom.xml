@@ -86,7 +86,7 @@
 	<module>csvdataloader</module>
 	<module>GtaFileSupport</module>
 	<module>imgdataloader_new</module>
-	<module>JAXBWizzardOutput</module>
+	
 	<module>jcommon</module>
 	<module>jfreechart</module>
 	<module>JFreeChartCustom</module>
