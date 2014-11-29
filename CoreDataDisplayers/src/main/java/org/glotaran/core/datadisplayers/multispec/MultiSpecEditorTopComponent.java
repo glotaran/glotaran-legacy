@@ -13,7 +13,9 @@ import java.text.DecimalFormat;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingWorker;
+import org.apache.commons.math3.linear.BlockRealMatrix;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
 import org.glotaran.core.messages.CoreErrorMessages;
@@ -49,15 +51,15 @@ import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
-import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.CloneableTopComponent;
+import org.ujmp.commonsmath.CommonsMathDenseDoubleMatrix2DFactory;
 import org.ujmp.core.Matrix;
+import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
+import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
 import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 
 /**
@@ -658,19 +660,28 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }
     
     private Matrix[] calculateSVD() {
-//        Matrix[] SVD;
-//        DefaultDenseDoubleMatrix2D newMatrix = new DefaultDenseDoubleMatrix2D(data.getPsisim(), data.getNt(),data.getNl());
-////        for (int i = 0; i < data.getNt(); i ++){
-////            for (int j = 0; j < data.getNl(); j++){
-////                newMatrix.setDouble(data.getPsisim()[j*data.getNt()+i], i, j);   
-////            }
-////        }
-//        //Matrix newMatrix = MatrixFactory.importFromArray(flimImage.getData());
-//       // newMatrix = newMatrix.reshape(Ret.NEW, flimImage.getCannelN(),flimImage.getX()*flimImage.getY());
-//        SVD = newMatrix.svd();
-//        imSVDPanel.setSVDResults(SVD);
-//        imSVDPanel.initialiseSVDPlots(data.getNt(), data.getOriginalWidth(), data.getOriginalHeight(), data.getX(), data.getIntenceImX(), data.getIntenceImY());
-//        return imSVDPanel.getSVDResults();
+        //org.ujmp.core.util.UJMPSettings.setUseOjalgo(false);      
+        RealMatrix mat = new BlockRealMatrix(data.getNt(),data.getNl());
+            for (int i = 0; i < data.getNt(); i ++){
+            for (int j = 0; j < data.getNl(); j++){
+                mat.setEntry(i, j,data.getPsisim()[j*data.getNt()+i]);   
+            }            
+        }
+        org.apache.commons.math3.linear.SingularValueDecomposition svd = new SingularValueDecomposition(mat);         
+        RealMatrix U = svd.getS();
+        RealMatrix S = svd.getS();
+        RealMatrix V = svd.getV();          
+        //This works only with UJMP 0.3.0 or higher
+        //CommonsMathDenseDoubleMatrix2DFactory fac = CommonsMathDenseDoubleMatrix2DFactory.INSTANCE;
+        //imSVDPanel.setSVDResults(new Matrix[]{fac.dense(U),fac.dense(S),fac.dense(V)};                
+       
+        // This uses too much memory, it seems the 'thin' boolean is not working well.
+        //DefaultDenseDoubleMatrix2D newMatrix = new DefaultDenseDoubleMatrix2D(data.getPsisim(), data.getNt(),data.getNl());
+        //SVD.SVDMatrix svdresult = new org.ujmp.core.doublematrix.calculation.general.decomposition.SVD.SVDMatrix(newMatrix, true, true, true);
+        //SVDMatrix test = new SVDMatrix(newMatrix, thin, wantu, wantv);
+              
+        //imSVDPanel.initialiseSVDPlots(data.getNt(), data.getOriginalWidth(), data.getOriginalHeight(), data.getX(), data.getIntenceImX(), data.getIntenceImY());
+        //return imSVDPanel.getSVDResults();
         return null;
     }
     
