@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0-0</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>jfreechart</artifactId>
     <packaging>nbm</packaging>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbeans.version}</version>
+            <version>RELEASE80</version>
         </dependency>
 	
 	 <!-- <dependency>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jcommon</artifactId>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

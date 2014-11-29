@@ -5,7 +5,7 @@
   <parent>
       <groupId>org.glotaran</groupId>
       <artifactId>glotaran-parent</artifactId>
-      <version>1.5.0-0</version>
+      <version>1.5.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>glotaran-branding</artifactId>
@@ -21,7 +21,7 @@
     <dependency>
       <groupId>org.netbeans.api</groupId>
       <artifactId>org-netbeans-api-annotations-common</artifactId>
-      <version>${netbeans.version}</version>
+      <version>RELEASE80</version>
     </dependency>
   </dependencies>
 

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0-0</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>CoreDataDisplayers</artifactId>
     <packaging>nbm</packaging>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbeans.version}</version>
+            <version>RELEASE80</version>
         </dependency>
 	
 	
@@ -45,40 +45,40 @@
 	<dependency>
 	<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-api-progress</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>RELEASE80</version></dependency>
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-awt</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-dialogs</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-loaders</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-nodes</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util-lookup</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		<version>RELEASE80</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-windows</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		<version>RELEASE80</version></dependency>
 	
 	 <!-- <dependency>
 		<groupId>??????</groupId>
@@ -87,56 +87,56 @@
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.5.0-0</version>
+            <version>1.5.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jide-oss</artifactId>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
-            <version>RELEASE801</version>
+            <version>RELEASE80</version>
         </dependency>
         <dependency>
             <artifactId>CoreInterfaces</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreMessages</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreModels</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>JFreeChartCustom</artifactId>
-            <version>1.5.0-0</version>
+            <version>1.5.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>jcommon</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-settings</artifactId>
-            <version>${netbeans.version}</version>
+            <version>RELEASE80</version>
         </dependency>
            <dependency>
             <groupId>org.apache.commons</groupId>
@@ -147,5 +147,5 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <version>1.5.0-2</version>
+    <version>1.5.0-SNAPSHOT</version>
 </project>

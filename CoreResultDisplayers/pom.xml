@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0-0</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>CoreResultDisplayers</artifactId>
     <packaging>nbm</packaging>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbeans.version}</version>
+            <version>RELEASE80</version>
         </dependency>
 	
 	
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.5.0-0</version>
+            <version>1.5.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -105,29 +105,29 @@
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>AnalysisOverviewFileSupport</artifactId>
-            <version>1.5.0-0</version>
+            <version>1.5.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <artifactId>CoreInterfaces</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreMessages</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreModels</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>UJMPwithdep</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
@@ -136,16 +136,16 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>JFreeChartCustom</artifactId>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>jcommon</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>[1.5,)</version>         </dependency>
+             <version>1.5.0-SNAPSHOT</version>         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
