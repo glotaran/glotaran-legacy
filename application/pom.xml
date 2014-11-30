@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>1.5.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>glotaran-app</artifactId>
@@ -22,156 +22,156 @@
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
             <type>pom</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>glotaran-branding</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <!-- NbModuleSuite functional in RELEASE70 or later: -->
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-nbjunit</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
             <scope>test</scope> <!-- beyond platform cluster, this often needs to be dropped down to compile/runtime, some other modules in IDE clusters depend on it -->
         </dependency>
         <!-- To use Jelly Tools in your functional tests, add or replace with:
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-jellytools-platform</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
             <scope>test</scope>
         </dependency>
         -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreUI</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreSimulation</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreAnalysis</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreInterfaces</artifactId>
              <groupId>${project.groupId}</groupId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreMain</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreMessages</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>CoreModels</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>GtaFileSupport</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>JFreeChartCustom</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>SimSupport</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>TGMFileSupport</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <artifactId>UJMPwithdep</artifactId>
             <groupId>org.glotaran</groupId>
             <type>jar</type>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreVisualModelling</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreAUC</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>AVGDataloader</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jide-oss</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>JRI</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jcommon</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>TIMPController</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreResultDisplayers</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>REngine</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>imgdataloader_new</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>PQDataloader</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SDTDataloader</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>RawDataloader</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ASCIIDataloader</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>csvdataloader</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>JRConnect</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>AnalysisOverviewFileSupport</artifactId>
-             <version>1.5.0-SNAPSHOT</version>         </dependency>
+             <version>1.5.1-SNAPSHOT</version>         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb</artifactId>
@@ -180,32 +180,32 @@
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-libs-jaxb</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-libs-testng</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-modules-projectui</artifactId>
-            <version>RELEASE80</version>
+            <version>RELEASE801</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreOptions</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
+            <version>1.5.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreDataDisplayers</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
+            <version>1.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -266,5 +266,5 @@
             </build>
         </profile>
     </profiles>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.5.1-SNAPSHOT</version>
 </project>

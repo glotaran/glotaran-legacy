@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>1.5.1-SNAPSHOT</version>
     </parent>
     <artifactId>CoreSimulation</artifactId>
     <packaging>nbm</packaging>
@@ -32,8 +32,8 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>RELEASE80</version>
+            <artifactId>org-netbeans-api-annotations-common</artifactId> 
+ <version>RELEASE801</version>
         </dependency>
 	
 	
@@ -43,59 +43,59 @@
 	<dependency>
 	<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-api-progress</artifactId>
-		<version>RELEASE80</version></dependency>
+		<version>RELEASE801</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-dialogs</artifactId>
-		<version>RELEASE80</version></dependency>
+		<artifactId>org-openide-dialogs</artifactId> 
+              <version>RELEASE801</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE80</version></dependency>
+		<version>RELEASE801</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-loaders</artifactId>
-		<version>RELEASE80</version></dependency>
+		<version>RELEASE801</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-nodes</artifactId>
-		<version>RELEASE80</version></dependency>
+		<version>RELEASE801</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId>
-		<version>RELEASE80</version></dependency>
+		<artifactId>org-openide-util</artifactId> 
+              <version>RELEASE801</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId>
-		<version>RELEASE80</version></dependency>
+		<artifactId>org-openide-util-lookup</artifactId> 
+              <version>RELEASE801</version></dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
+            <version>1.5.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreInterfaces</artifactId>
-           <version>1.5.0-SNAPSHOT</version>
+           <version>1.5.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
+            <version>1.5.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>SimSupport</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
+            <version>1.5.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>TGMFileSupport</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
+            <version>1.5.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>1.5.1-SNAPSHOT</version>
     </parent>
     <artifactId>UJMPwithdep</artifactId>
     <packaging>nbm</packaging>
@@ -217,8 +217,8 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>RELEASE80</version>
+            <artifactId>org-netbeans-api-annotations-common</artifactId> 
+ <version>RELEASE801</version>
         </dependency>
         <dependency>
             <groupId>org.ujmp</groupId>
