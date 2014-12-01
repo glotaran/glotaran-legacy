@@ -14,7 +14,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
                     </publicPackages>    
                 </configuration>
@@ -32,43 +32,51 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
 	
 	
 	
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-dialogs</artifactId> 
-              <version>RELEASE801</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE801</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId> 
-              <version>RELEASE801</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId> 
-              <version>RELEASE801</version></dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-dialogs</artifactId> 
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-filesystems</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId> 
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId> 
+            <version>${netbeans.version}</version>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreInterfaces</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <version>1.5.1-SNAPSHOT</version>         
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <version>1.5.1-SNAPSHOT</version>         
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <version>1.5.1-SNAPSHOT</version>         
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <version>1.5.1-SNAPSHOT</version>         
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

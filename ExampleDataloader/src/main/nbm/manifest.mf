@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: org/glotaran/example/dataloader/Bundle.properties
+AutoUpdate-Essential-Module: false
+
+

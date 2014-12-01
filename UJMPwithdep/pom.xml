@@ -14,194 +14,194 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
-	<publicPackage>Jama</publicPackage>
-	<publicPackage>Jama.examples</publicPackage>
-	<publicPackage>Jama.test</publicPackage>
-	<publicPackage>Jama.util</publicPackage>
-        <publicPackage>Jama.Matrix</publicPackage>        
-	<publicPackage>org.ojalgo.matrix.store</publicPackage>
-	<publicPackage>org.ujmp.colt</publicPackage>
-	<publicPackage>org.ujmp.colt.benchmark</publicPackage>
-	<publicPackage>org.ujmp.commonsmath</publicPackage>
-	<publicPackage>org.ujmp.commonsmath.benchmark</publicPackage>
-	<publicPackage>org.ujmp.complete</publicPackage>
-	<publicPackage>org.ujmp.complete.benchmark</publicPackage>
-	<publicPackage>org.ujmp.core</publicPackage>
-	<publicPackage>org.ujmp.core.annotation</publicPackage>
-	<publicPackage>org.ujmp.core.benchmark</publicPackage>
-	<publicPackage>org.ujmp.core.bigdecimalmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.bigdecimalmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.bigdecimalmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.bigdecimalmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.bigdecimalmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.bigintegermatrix</publicPackage>
-	<publicPackage>org.ujmp.core.bigintegermatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.bigintegermatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.bigintegermatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.bigintegermatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.booleanmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.booleanmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.booleanmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.booleanmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.booleanmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.bytematrix</publicPackage>
-	<publicPackage>org.ujmp.core.bytematrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.bytematrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.bytematrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.bytematrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.charmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.charmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.charmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.charmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.charmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.collections</publicPackage>
-	<publicPackage>org.ujmp.core.datematrix</publicPackage>
-	<publicPackage>org.ujmp.core.datematrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.datematrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.datematrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.datematrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.basic</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.basic</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.creators</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.misc</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.rounding</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.trigonometric</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.general</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.general.decomposition</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.general.discretize</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.general.misc</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.general.missingvalues</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.calculation.general.statistical</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.doublematrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.enums</publicPackage>
-	<publicPackage>org.ujmp.core.exceptions</publicPackage>
-	<publicPackage>org.ujmp.core.floatmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.floatmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.floatmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.floatmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.floatmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.genericmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.genericmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.genericmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.graphmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.interfaces</publicPackage>
-	<publicPackage>org.ujmp.core.intmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.intmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.intmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.intmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.intmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.io</publicPackage>
-	<publicPackage>org.ujmp.core.listmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.longmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.longmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.longmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.longmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.longmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.mapmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.mapper</publicPackage>
-	<publicPackage>org.ujmp.core.matrix</publicPackage>
-	<publicPackage>org.ujmp.core.matrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.objectmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.objectmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.objectmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.objectmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.objectmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.setmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.shortmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.shortmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.shortmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.shortmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.shortmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.stringmatrix</publicPackage>
-	<publicPackage>org.ujmp.core.stringmatrix.calculation</publicPackage>
-	<publicPackage>org.ujmp.core.stringmatrix.factory</publicPackage>
-	<publicPackage>org.ujmp.core.stringmatrix.impl</publicPackage>
-	<publicPackage>org.ujmp.core.stringmatrix.stub</publicPackage>
-	<publicPackage>org.ujmp.core.timeseries</publicPackage>
-	<publicPackage>org.ujmp.core.treematrix</publicPackage>
-	<publicPackage>org.ujmp.core.util</publicPackage>
-	<publicPackage>org.ujmp.core.util.concurrent</publicPackage>
-	<publicPackage>org.ujmp.core.util.io</publicPackage>
-	<publicPackage>org.ujmp.core.util.matrices</publicPackage>
-	<publicPackage>org.ujmp.ehcache</publicPackage>
-	<publicPackage>org.ujmp.ejml</publicPackage>
-	<publicPackage>org.ujmp.ejml.benchmark</publicPackage>
-	<publicPackage>org.ujmp.ejml.calculation</publicPackage>
-	<publicPackage>org.ujmp.gui</publicPackage>
-	<publicPackage>org.ujmp.gui.actions</publicPackage>
-	<publicPackage>org.ujmp.gui.clipboard</publicPackage>
-	<publicPackage>org.ujmp.gui.colormap</publicPackage>
-	<publicPackage>org.ujmp.gui.editor</publicPackage>
-	<publicPackage>org.ujmp.gui.frame</publicPackage>
-	<publicPackage>org.ujmp.gui.interfaces</publicPackage>
-	<publicPackage>org.ujmp.gui.io</publicPackage>
-	<publicPackage>org.ujmp.gui.menu</publicPackage>
-	<publicPackage>org.ujmp.gui.panels</publicPackage>
-	<publicPackage>org.ujmp.gui.plot</publicPackage>
-	<publicPackage>org.ujmp.gui.print</publicPackage>
-	<publicPackage>org.ujmp.gui.renderer</publicPackage>
-	<publicPackage>org.ujmp.gui.statusbar</publicPackage>
-	<publicPackage>org.ujmp.gui.toolbar</publicPackage>
-	<publicPackage>org.ujmp.gui.util</publicPackage>
-	<publicPackage>org.ujmp.hadoop</publicPackage>
-	<publicPackage>org.ujmp.itext</publicPackage>
-	<publicPackage>org.ujmp.jackcess</publicPackage>
-	<publicPackage>org.ujmp.jama</publicPackage>
-	<publicPackage>org.ujmp.jama.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jampack</publicPackage>
-	<publicPackage>org.ujmp.jampack.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jblas</publicPackage>
-	<publicPackage>org.ujmp.jblas.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jblas.calculation</publicPackage>
-	<publicPackage>org.ujmp.jbpcafill</publicPackage>
-	<publicPackage>org.ujmp.jdbc</publicPackage>
-	<publicPackage>org.ujmp.jexcelapi</publicPackage>
-	<publicPackage>org.ujmp.jfreechart</publicPackage>
-	<publicPackage>org.ujmp.jlinalg</publicPackage>
-	<publicPackage>org.ujmp.jlinalg.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jmatharray</publicPackage>
-	<publicPackage>org.ujmp.jmatharray.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jmathplot</publicPackage>
-	<publicPackage>org.ujmp.jmatio</publicPackage>
-	<publicPackage>org.ujmp.jmatrices</publicPackage>
-	<publicPackage>org.ujmp.jmatrices.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jsci</publicPackage>
-	<publicPackage>org.ujmp.jsci.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jscience</publicPackage>
-	<publicPackage>org.ujmp.jscience.benchmark</publicPackage>
-	<publicPackage>org.ujmp.jung</publicPackage>
-	<publicPackage>org.ujmp.lsimpute</publicPackage>
-	<publicPackage>org.ujmp.lucene</publicPackage>
-	<publicPackage>org.ujmp.mail</publicPackage>
-	<publicPackage>org.ujmp.mantissa</publicPackage>
-	<publicPackage>org.ujmp.mantissa.benchmark</publicPackage>
-	<publicPackage>org.ujmp.mtj</publicPackage>
-	<publicPackage>org.ujmp.mtj.benchmark</publicPackage>
-	<publicPackage>org.ujmp.mtj.calculation</publicPackage>
-	<publicPackage>org.ujmp.ojalgo</publicPackage>
-	<publicPackage>org.ujmp.ojalgo.benchmark</publicPackage>
-	<publicPackage>org.ujmp.ojalgo.calculation</publicPackage>
-	<publicPackage>org.ujmp.orbital</publicPackage>
-	<publicPackage>org.ujmp.orbital.benchmark</publicPackage>
-	<publicPackage>org.ujmp.owlpack</publicPackage>
-	<publicPackage>org.ujmp.owlpack.benchmark</publicPackage>
-	<publicPackage>org.ujmp.parallelcolt</publicPackage>
-	<publicPackage>org.ujmp.parallelcolt.benchmark</publicPackage>
-	<publicPackage>org.ujmp.parallelcolt.calculation</publicPackage>
-	<publicPackage>org.ujmp.pdfbox</publicPackage>
-	<publicPackage>org.ujmp.sst</publicPackage>
-	<publicPackage>org.ujmp.sst.benchmark</publicPackage>
-	<publicPackage>org.ujmp.vecmath</publicPackage>
-	<publicPackage>org.ujmp.vecmath.benchmark</publicPackage>
+                        <publicPackage>Jama</publicPackage>
+                        <publicPackage>Jama.examples</publicPackage>
+                        <publicPackage>Jama.test</publicPackage>
+                        <publicPackage>Jama.util</publicPackage>
+                        <publicPackage>Jama.Matrix</publicPackage>        
+                        <publicPackage>org.ojalgo.matrix.store</publicPackage>
+                        <publicPackage>org.ujmp.colt</publicPackage>
+                        <publicPackage>org.ujmp.colt.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.commonsmath</publicPackage>
+                        <publicPackage>org.ujmp.commonsmath.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.complete</publicPackage>
+                        <publicPackage>org.ujmp.complete.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.core</publicPackage>
+                        <publicPackage>org.ujmp.core.annotation</publicPackage>
+                        <publicPackage>org.ujmp.core.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.core.bigdecimalmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.bigdecimalmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.bigdecimalmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.bigdecimalmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.bigdecimalmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.bigintegermatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.bigintegermatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.bigintegermatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.bigintegermatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.bigintegermatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.booleanmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.booleanmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.booleanmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.booleanmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.booleanmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.bytematrix</publicPackage>
+                        <publicPackage>org.ujmp.core.bytematrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.bytematrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.bytematrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.bytematrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.charmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.charmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.charmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.charmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.charmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.collections</publicPackage>
+                        <publicPackage>org.ujmp.core.datematrix</publicPackage>
+                        <publicPackage>org.ujmp.core.datematrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.datematrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.datematrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.datematrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.basic</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.basic</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.creators</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.hyperbolic</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.misc</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.rounding</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.entrywise.trigonometric</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.general</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.general.decomposition</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.general.discretize</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.general.misc</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.general.missingvalues</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.calculation.general.statistical</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.doublematrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.enums</publicPackage>
+                        <publicPackage>org.ujmp.core.exceptions</publicPackage>
+                        <publicPackage>org.ujmp.core.floatmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.floatmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.floatmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.floatmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.floatmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.genericmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.genericmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.genericmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.graphmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.interfaces</publicPackage>
+                        <publicPackage>org.ujmp.core.intmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.intmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.intmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.intmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.intmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.io</publicPackage>
+                        <publicPackage>org.ujmp.core.listmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.longmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.longmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.longmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.longmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.longmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.mapmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.mapper</publicPackage>
+                        <publicPackage>org.ujmp.core.matrix</publicPackage>
+                        <publicPackage>org.ujmp.core.matrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.objectmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.objectmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.objectmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.objectmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.objectmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.setmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.shortmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.shortmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.shortmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.shortmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.shortmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.stringmatrix</publicPackage>
+                        <publicPackage>org.ujmp.core.stringmatrix.calculation</publicPackage>
+                        <publicPackage>org.ujmp.core.stringmatrix.factory</publicPackage>
+                        <publicPackage>org.ujmp.core.stringmatrix.impl</publicPackage>
+                        <publicPackage>org.ujmp.core.stringmatrix.stub</publicPackage>
+                        <publicPackage>org.ujmp.core.timeseries</publicPackage>
+                        <publicPackage>org.ujmp.core.treematrix</publicPackage>
+                        <publicPackage>org.ujmp.core.util</publicPackage>
+                        <publicPackage>org.ujmp.core.util.concurrent</publicPackage>
+                        <publicPackage>org.ujmp.core.util.io</publicPackage>
+                        <publicPackage>org.ujmp.core.util.matrices</publicPackage>
+                        <publicPackage>org.ujmp.ehcache</publicPackage>
+                        <publicPackage>org.ujmp.ejml</publicPackage>
+                        <publicPackage>org.ujmp.ejml.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.ejml.calculation</publicPackage>
+                        <publicPackage>org.ujmp.gui</publicPackage>
+                        <publicPackage>org.ujmp.gui.actions</publicPackage>
+                        <publicPackage>org.ujmp.gui.clipboard</publicPackage>
+                        <publicPackage>org.ujmp.gui.colormap</publicPackage>
+                        <publicPackage>org.ujmp.gui.editor</publicPackage>
+                        <publicPackage>org.ujmp.gui.frame</publicPackage>
+                        <publicPackage>org.ujmp.gui.interfaces</publicPackage>
+                        <publicPackage>org.ujmp.gui.io</publicPackage>
+                        <publicPackage>org.ujmp.gui.menu</publicPackage>
+                        <publicPackage>org.ujmp.gui.panels</publicPackage>
+                        <publicPackage>org.ujmp.gui.plot</publicPackage>
+                        <publicPackage>org.ujmp.gui.print</publicPackage>
+                        <publicPackage>org.ujmp.gui.renderer</publicPackage>
+                        <publicPackage>org.ujmp.gui.statusbar</publicPackage>
+                        <publicPackage>org.ujmp.gui.toolbar</publicPackage>
+                        <publicPackage>org.ujmp.gui.util</publicPackage>
+                        <publicPackage>org.ujmp.hadoop</publicPackage>
+                        <publicPackage>org.ujmp.itext</publicPackage>
+                        <publicPackage>org.ujmp.jackcess</publicPackage>
+                        <publicPackage>org.ujmp.jama</publicPackage>
+                        <publicPackage>org.ujmp.jama.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jampack</publicPackage>
+                        <publicPackage>org.ujmp.jampack.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jblas</publicPackage>
+                        <publicPackage>org.ujmp.jblas.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jblas.calculation</publicPackage>
+                        <publicPackage>org.ujmp.jbpcafill</publicPackage>
+                        <publicPackage>org.ujmp.jdbc</publicPackage>
+                        <publicPackage>org.ujmp.jexcelapi</publicPackage>
+                        <publicPackage>org.ujmp.jfreechart</publicPackage>
+                        <publicPackage>org.ujmp.jlinalg</publicPackage>
+                        <publicPackage>org.ujmp.jlinalg.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jmatharray</publicPackage>
+                        <publicPackage>org.ujmp.jmatharray.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jmathplot</publicPackage>
+                        <publicPackage>org.ujmp.jmatio</publicPackage>
+                        <publicPackage>org.ujmp.jmatrices</publicPackage>
+                        <publicPackage>org.ujmp.jmatrices.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jsci</publicPackage>
+                        <publicPackage>org.ujmp.jsci.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jscience</publicPackage>
+                        <publicPackage>org.ujmp.jscience.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.jung</publicPackage>
+                        <publicPackage>org.ujmp.lsimpute</publicPackage>
+                        <publicPackage>org.ujmp.lucene</publicPackage>
+                        <publicPackage>org.ujmp.mail</publicPackage>
+                        <publicPackage>org.ujmp.mantissa</publicPackage>
+                        <publicPackage>org.ujmp.mantissa.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.mtj</publicPackage>
+                        <publicPackage>org.ujmp.mtj.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.mtj.calculation</publicPackage>
+                        <publicPackage>org.ujmp.ojalgo</publicPackage>
+                        <publicPackage>org.ujmp.ojalgo.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.ojalgo.calculation</publicPackage>
+                        <publicPackage>org.ujmp.orbital</publicPackage>
+                        <publicPackage>org.ujmp.orbital.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.owlpack</publicPackage>
+                        <publicPackage>org.ujmp.owlpack.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.parallelcolt</publicPackage>
+                        <publicPackage>org.ujmp.parallelcolt.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.parallelcolt.calculation</publicPackage>
+                        <publicPackage>org.ujmp.pdfbox</publicPackage>
+                        <publicPackage>org.ujmp.sst</publicPackage>
+                        <publicPackage>org.ujmp.sst.benchmark</publicPackage>
+                        <publicPackage>org.ujmp.vecmath</publicPackage>
+                        <publicPackage>org.ujmp.vecmath.benchmark</publicPackage>
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -218,61 +218,61 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ujmp</groupId>
             <artifactId>ujmp-complete</artifactId>
             <version>0.2.5</version>                  
         </dependency>	
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/arpack-combo.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/ejml-0.24.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/concurrent.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/colt.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/optimization.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/Jama-1.0.2.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/jtransforms.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/csparsej.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/jplasma.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/ojalgo-29.0.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/ujmp-complete-0.2.5.jar</artifactId>
-		<version>???</version></dependency> --> 
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/parallelcolt-0.9.4.jar</artifactId>
-		<version>???</version></dependency> -->
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/arpack-combo.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/ejml-0.24.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/concurrent.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/colt.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/optimization.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/Jama-1.0.2.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/jtransforms.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/csparsej.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/jplasma.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/ojalgo-29.0.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/ujmp-complete-0.2.5.jar</artifactId>
+        <version>???</version></dependency> --> 
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/parallelcolt-0.9.4.jar</artifactId>
+        <version>???</version></dependency> -->
         <dependency>
             <groupId>com.googlecode.netlib-java</groupId>
             <artifactId>netlib-java</artifactId>

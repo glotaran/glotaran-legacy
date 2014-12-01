@@ -6,7 +6,7 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
-    <artifactId>CoreOptions</artifactId>
+    <artifactId>ExampleDataloader</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -14,6 +14,22 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
+                <configuration>
+                    <author>Joris Snellenburg</author>
+                    <moduleType>autoload</moduleType>
+                    <!--  A list of additional resources to include in the NBM file. -->
+                    <!-- For example, to include native libraries: -->
+                    <!--
+                    <nbmResource>
+                        <directory>src/main/libs</directory>
+                        <targetPath>modules/lib</targetPath>
+                        <includes>
+                            <include>*.dll</include>
+                            <include>*.so</include>
+                        </includes>
+                    </nbmResource>                
+                    -->
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -27,27 +43,22 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>${netbeans.version}</version>
+            <artifactId>org-netbeans-api-annotations-common</artifactId>
+            <version>RELEASE80</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreModels</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreInterfaces</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util</artifactId> 
-              <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId> 
-              <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-options-api</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-awt</artifactId>
+            <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
     </dependencies>

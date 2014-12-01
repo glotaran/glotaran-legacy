@@ -102,6 +102,7 @@
 	<module>TIMPController</module>
 	<module>UJMPwithdep</module>
         <module>CoreOptions</module>
+        <module>ExampleDataloader</module>
     </modules>
 
     <properties>

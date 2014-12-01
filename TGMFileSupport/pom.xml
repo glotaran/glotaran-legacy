@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>RELEASE801</version>
+ <version>${netbeans.version}</version>
         </dependency>
 	
 	
@@ -47,48 +47,48 @@
 	<dependency>
 	<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-api-xml</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-core-multiview</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-awt</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-dialogs</artifactId> 
-              <version>RELEASE801</version></dependency>
+              <version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-loaders</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-nodes</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-text</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util</artifactId> 
-              <version>RELEASE801</version></dependency>
+              <version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util-lookup</artifactId> 
-              <version>RELEASE801</version></dependency>
+              <version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-windows</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMain</artifactId>
@@ -108,12 +108,12 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId> 
-              <version>RELEASE801</version>
+              <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

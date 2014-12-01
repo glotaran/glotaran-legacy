@@ -33,22 +33,22 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>RELEASE801</version>
+ <version>${netbeans.version}</version>
         </dependency>
 	
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util</artifactId> 
-              <version>RELEASE801</version></dependency>
+              <version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util-lookup</artifactId> 
-              <version>RELEASE801</version></dependency>
+              <version>${netbeans.version}</version></dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-windows</artifactId>
-		<version>RELEASE801</version></dependency>
+		<version>${netbeans.version}</version></dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>

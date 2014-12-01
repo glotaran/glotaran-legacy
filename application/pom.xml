@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
             <type>pom</type>
         </dependency>
         <dependency>
@@ -33,14 +33,14 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-nbjunit</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
             <scope>test</scope> <!-- beyond platform cluster, this often needs to be dropped down to compile/runtime, some other modules in IDE clusters depend on it -->
         </dependency>
         <!-- To use Jelly Tools in your functional tests, add or replace with:
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-jellytools-platform</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
         -->
@@ -180,22 +180,22 @@
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-libs-jaxb</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-libs-testng</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-modules-projectui</artifactId>
-            <version>RELEASE801</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -206,6 +206,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreDataDisplayers</artifactId>
             <version>1.5.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ExampleDataloader</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
