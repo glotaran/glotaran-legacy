@@ -16,7 +16,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <author>Joris Snellenburg</author>
-                    <moduleType>autoload</moduleType>
+                    <moduleType>disabled</moduleType>
                     <!--  A list of additional resources to include in the NBM file. -->
                     <!-- For example, to include native libraries: -->
                     <!--

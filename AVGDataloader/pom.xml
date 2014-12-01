@@ -16,7 +16,7 @@
                 <extensions>true</extensions>
 		<configuration>
                     <author>Joris Snellenburg</author>
-                    <moduleType>autoload</moduleType>                  
+                    <moduleType>disabled</moduleType>                  
                 </configuration>
             </plugin>
             <plugin>
