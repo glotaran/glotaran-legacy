@@ -66,20 +66,20 @@ public class ParametersSubNode extends PropertiesAbstractNode implements Propert
         Property<Double> constrainedMax = null;
 
         try {
-            startingValue = new PropertySupport.Reflection<Double>(obj, Double.class, "start");
-            fixedValue = new PropertySupport.Reflection<Boolean>(obj, Boolean.class, "isFixed", "setFixed");
-            constrainedValue = new PropertySupport.Reflection<Boolean>(obj, Boolean.class, "isConstrained", "setConstrained");
-            constrainedMin = new PropertySupport.Reflection<Double>(obj, Double.class, "minimum");
-            constrainedMax = new PropertySupport.Reflection<Double>(obj, Double.class, "maximum");
+            startingValue = new PropertySupport.Reflection<>(obj, Double.class, "start");
+            fixedValue = new PropertySupport.Reflection<>(obj, Boolean.class, "isFixed", "setFixed");
+            constrainedValue = new PropertySupport.Reflection<>(obj, Boolean.class, "isConstrained", "setConstrained");
+            constrainedMin = new PropertySupport.Reflection<>(obj, Double.class, "minimum");
+            constrainedMax = new PropertySupport.Reflection<>(obj, Double.class, "maximum");
+            startingValue.setName("Starting value");
+            fixedValue.setName("Value fixed");
+            constrainedValue.setName("Value constrained");
+            constrainedMin.setName("Minimal value");
+            constrainedMax.setName("Maximal value");
         } catch (NoSuchMethodException ex) {
             Exceptions.printStackTrace(ex);
         }
-        startingValue.setName("Starting value");
-        fixedValue.setName("Value fixed");
-        constrainedValue.setName("Value constrained");
-        constrainedMin.setName("Minimal value");
-        constrainedMax.setName("Maximal value");
-
+        
         set.put(startingValue);
         set.put(fixedValue);
         set.put(constrainedValue);

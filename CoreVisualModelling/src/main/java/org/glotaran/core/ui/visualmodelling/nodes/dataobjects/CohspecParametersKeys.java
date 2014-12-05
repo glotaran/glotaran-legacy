@@ -4,13 +4,8 @@
  */
 package org.glotaran.core.ui.visualmodelling.nodes.dataobjects;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.glotaran.core.ui.visualmodelling.nodes.CohspecParametersSubNode;
-import org.glotaran.core.ui.visualmodelling.nodes.IrfMeasuredIrfSubNode;
-import org.glotaran.core.ui.visualmodelling.nodes.IrfParametersSubNode;
-import org.glotaran.core.ui.visualmodelling.nodes.OscspecParametersNode;
-import org.glotaran.core.ui.visualmodelling.nodes.OscspecParametersSubNode;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
@@ -18,6 +13,7 @@ import org.openide.nodes.Node;
 /**
  *
  * @author slapten
+ * 
  */
 public class CohspecParametersKeys extends NonLinearParametersKeys {
     

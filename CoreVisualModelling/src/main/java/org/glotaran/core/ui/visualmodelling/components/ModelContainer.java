@@ -313,7 +313,6 @@ public class ModelContainer
                 manager.getRootContext().getChildren().add(
                         new Node[]{new OscspecParametersNode(model, this)});
                 }
-            
             }
         }
     }

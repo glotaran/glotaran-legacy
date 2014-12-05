@@ -89,9 +89,7 @@ public class VisualCommonFunctions {
         Object o = null;
         try {
             o = transferable.getTransferData(new DataFlavor(PaletteItem.class, "PaletteItem"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (UnsupportedFlavorException ex) {
+        } catch (IOException | UnsupportedFlavorException ex) {
             ex.printStackTrace();
         }
         return o instanceof PaletteItem ? (PaletteItem) o : null; //TODO: not null
@@ -603,16 +601,20 @@ public class VisualCommonFunctions {
             cohSpecModel.setCoh("");
             cohSpecModel.getCohspec().setSet(false);
             cohSpecModel.getCohspec().setType(null);
+            cohSpecModel.getCohspec().getSeqstart().clear();
+            cohSpecModel.getCohspec().getFixed().clear();
         }
 
         if (evt.getPropertyName().equalsIgnoreCase("Number of components")) {
             if ((Integer) evt.getNewValue() > (Integer) evt.getOldValue()) {
                 for (int i = 0; i < (Integer) evt.getNewValue() - (Integer) evt.getOldValue(); i++) {
                     cohSpecModel.getCohspec().getSeqstart().add(0.0);
+                    cohSpecModel.getCohspec().getFixed().add(Boolean.FALSE);
                 }
             } else {
                 for (int i = 0; i < (Integer) evt.getOldValue() - (Integer) evt.getNewValue(); i++) {
                     cohSpecModel.getCohspec().getSeqstart().remove(cohSpecModel.getCohspec().getSeqstart().size() - 1);
+                    cohSpecModel.getCohspec().getFixed().remove(cohSpecModel.getCohspec().getFixed().size() - 1);
                 }
             }
         }
@@ -620,6 +622,7 @@ public class VisualCommonFunctions {
         if (evt.getPropertyName().equalsIgnoreCase("delete")) {
             int index = (Integer) evt.getNewValue();
             cohSpecModel.getCohspec().getSeqstart().remove(index);
+            cohSpecModel.getCohspec().getFixed().remove(index);
         }
 
         if (evt.getPropertyName().equalsIgnoreCase("start")) {

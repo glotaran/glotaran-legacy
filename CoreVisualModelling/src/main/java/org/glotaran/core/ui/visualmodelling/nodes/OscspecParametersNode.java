@@ -81,7 +81,7 @@ public class OscspecParametersNode extends PropertiesAbstractNode {
     @Override
     public String getDisplayName() {
         String name = super.getDisplayName();
-        name = name + " (" + cohspecTypeProperty.toString() + ")";
+        name = name + " (" + oscNumber.toString()+ " " + cohspecTypeProperty.toString()+ ")";
         return name;
     }
 

@@ -5,16 +5,13 @@
 package org.glotaran.core.ui.visualmodelling.nodes;
 
 import java.awt.Image;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import org.glotaran.core.models.tgm.CohspecPanelModel;
 import org.glotaran.core.ui.visualmodelling.common.EnumPropertyEditor;
 import org.glotaran.core.ui.visualmodelling.common.EnumTypes;
 import org.glotaran.core.ui.visualmodelling.common.EnumTypes.CohSpecTypes;
 import org.glotaran.core.ui.visualmodelling.nodes.dataobjects.NonLinearParameter;
 import org.glotaran.core.ui.visualmodelling.nodes.dataobjects.NonLinearParametersKeys;
-import org.openide.nodes.Children;
 import org.openide.nodes.PropertySupport;
 import org.openide.nodes.Sheet;
 import org.openide.util.Exceptions;
@@ -33,9 +30,9 @@ public final class CohSpecNode extends PropertiesAbstractNode {
     private Boolean cohSpecSeq = Boolean.FALSE;
     private Double cohSpecClpMin = 0.0;
     private Double cohSpecClpMax = 0.0;
-    private String[] propertyNames = new String[]{"cohSpecName", "cohSpecModelType", "cohSpecClpZero", "cohSpecClpMin", "cohSpecClpMax", "cohSpecSeqNumber"};
-    private String[] propertyDisplayNames = new String[]{"Name", "Model type", "Constrain to 0", "From (min)", "To (max)", "Number of seq starting values "};
-    private String[] propertyShortDescription = new String[]{
+    final private String[] propertyNames = new String[]{"cohSpecName", "cohSpecModelType", "cohSpecClpZero", "cohSpecClpMin", "cohSpecClpMax", "cohSpecSeqNumber"};
+    final private String[] propertyDisplayNames = new String[]{"Name", "Model type", "Constrain to 0", "From (min)", "To (max)", "Number of seq starting values "};
+    final private String[] propertyShortDescription = new String[]{
         "Coherent artifact/scatter component(s)",
         "The type of the time profile for the coherent artifact/scatter components(s). <br>"
         + "Currently only the <b>Irf</b>, <b>Seq</b> and <b>Mix</b> types are implemented.",
@@ -66,7 +63,14 @@ public final class CohSpecNode extends PropertiesAbstractNode {
             NonLinearParametersKeys params = (NonLinearParametersKeys) getChildren();
             
             for (int i = 0; i < cohspecPanel.getCohspec().getSeqstart().size(); i++) {
-                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), false));
+                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)));
+            }
+        }
+        
+        if (cohSpecModelType.equals(CohSpecTypes.XPM)){
+            NonLinearParametersKeys params = (NonLinearParametersKeys) getChildren();
+            for (int i = 0; i < 3; i++){
+                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)));
             }
         }
         this.addPropertyChangeListener(listn);
@@ -105,11 +109,11 @@ public final class CohSpecNode extends PropertiesAbstractNode {
 
     public void setCohSpecModelType(CohSpecTypes cohSpecModelType) {
         this.cohSpecModelType = cohSpecModelType;
-        Property<Integer> numberOfComponents = null;
+        Property<Integer> numberOfComponents;
         if (cohSpecModelType.equals(CohSpecTypes.SEQ)
                 || cohSpecModelType.equals(CohSpecTypes.MIXED)) {
             try {
-                numberOfComponents = new PropertySupport.Reflection<Integer>(this, Integer.class, "getCompNum", "setCompNum");
+                numberOfComponents = new PropertySupport.Reflection<>(this, Integer.class, "getCompNum", "setCompNum");
 //Add properties for cohspec = seq
                 numberOfComponents.setName(propertyNames[5]);
                 numberOfComponents.setDisplayName(propertyDisplayNames[5]);
@@ -121,6 +125,9 @@ public final class CohSpecNode extends PropertiesAbstractNode {
         } else {
             getSheet().get(Sheet.PROPERTIES).remove(propertyNames[5]);
             setCompNum(0);
+            if (cohSpecModelType.equals(CohSpecTypes.XPM)){
+                setCompNum(3);
+            }
         }
 
         fireDisplayNameChange(null, getDisplayName());
@@ -136,8 +143,8 @@ public final class CohSpecNode extends PropertiesAbstractNode {
         this.cohSpecClp0 = cohSpecClp0;
         if (cohSpecClp0) {
             try {
-                Property<Double> clpminimum = new PropertySupport.Reflection<Double>(this, Double.class, propertyNames[3]);
-                Property<Double> clpmaximum = new PropertySupport.Reflection<Double>(this, Double.class, propertyNames[4]);
+                Property<Double> clpminimum = new PropertySupport.Reflection<>(this, Double.class, propertyNames[3]);
+                Property<Double> clpmaximum = new PropertySupport.Reflection<>(this, Double.class, propertyNames[4]);
                 clpminimum.setName(propertyNames[3]);
                 clpminimum.setDisplayName(propertyDisplayNames[3]);
                 clpminimum.setShortDescription(propertyShortDescription[3]);
@@ -184,26 +191,27 @@ public final class CohSpecNode extends PropertiesAbstractNode {
         Property<Boolean> cohSpecClp0Property = null;
 
         try {
-            cohSpecNameProperty = new PropertySupport.Reflection<String>(this, String.class, "getDisplayName", null);
-            cohSpecModelTypeProperty = new PropertySupport.Reflection<EnumTypes.CohSpecTypes>(this, EnumTypes.CohSpecTypes.class, propertyNames[1]);
+            cohSpecNameProperty = new PropertySupport.Reflection<>(this, String.class, "getDisplayName", null);
+            cohSpecModelTypeProperty = new PropertySupport.Reflection<>(this, EnumTypes.CohSpecTypes.class, propertyNames[1]);
             cohSpecModelTypeProperty.setPropertyEditorClass(EnumPropertyEditor.class); //EnumPropertyEditor.class;
-            cohSpecClp0Property = new PropertySupport.Reflection<Boolean>(this, Boolean.class, propertyNames[2]);
+            cohSpecClp0Property = new PropertySupport.Reflection<>(this, Boolean.class, propertyNames[2]);
+            cohSpecNameProperty.setName(propertyNames[0]);
+            cohSpecNameProperty.setDisplayName(propertyDisplayNames[0]);
+            cohSpecNameProperty.setShortDescription(propertyShortDescription[0]);
+            //CohSpec Model
+            cohSpecModelTypeProperty.setName(propertyNames[1]);
+            cohSpecModelTypeProperty.setDisplayName(propertyDisplayNames[1]);
+            cohSpecModelTypeProperty.setShortDescription(propertyShortDescription[1]);
+            //CohSpec Zero Constraint
+            cohSpecClp0Property.setName(propertyNames[2]);
+            cohSpecClp0Property.setDisplayName(propertyDisplayNames[2]);
+            cohSpecClp0Property.setShortDescription(propertyShortDescription[2]);
 
         } catch (NoSuchMethodException ex) {
             Exceptions.printStackTrace(ex);
         }
         //CohSpec Name
-        cohSpecNameProperty.setName(propertyNames[0]);
-        cohSpecNameProperty.setDisplayName(propertyDisplayNames[0]);
-        cohSpecNameProperty.setShortDescription(propertyShortDescription[0]);
-        //CohSpec Model
-        cohSpecModelTypeProperty.setName(propertyNames[1]);
-        cohSpecModelTypeProperty.setDisplayName(propertyDisplayNames[1]);
-        cohSpecModelTypeProperty.setShortDescription(propertyShortDescription[1]);
-        //CohSpec Zero Constraint
-        cohSpecClp0Property.setName(propertyNames[2]);
-        cohSpecClp0Property.setDisplayName(propertyDisplayNames[2]);
-        cohSpecClp0Property.setShortDescription(propertyShortDescription[2]);
+
 
         //Add all CohSpec properties to the set
         set.put(cohSpecNameProperty);
@@ -223,7 +231,11 @@ public final class CohSpecNode extends PropertiesAbstractNode {
         NonLinearParametersKeys childColection = (NonLinearParametersKeys) getChildren();
         int currCompNum = childColection.getNodesCount();
         if (currCompNum < compNum) {
-            childColection.addDefaultObj(compNum - currCompNum);
+            if(cohSpecModelType.equals(CohSpecTypes.XPM)){
+                childColection.addDefaultObj(compNum - currCompNum, "XPMCohSpecNode");
+            } else {
+                childColection.addDefaultObj(compNum - currCompNum);
+            }
         } else {
             childColection.removeParams(currCompNum - compNum);
         }
