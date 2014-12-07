@@ -116,7 +116,7 @@ public class InitModel {
 
         if (typeCoh != null) {
             cohSpecStr = "cohspec = list(type = \"" + typeCoh + "\"";
-            if (typeCoh.equalsIgnoreCase("seq") || typeCoh.equalsIgnoreCase("mix") || typeCoh.equalsIgnoreCase("xpm")) {
+            if (typeCoh.equalsIgnoreCase("seq") || typeCoh.equalsIgnoreCase("mix")) {
                 cohSpecStr = cohSpecStr + ",";
                 ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getCohspecPanel().getCohspec().getSeqstart();
                 if (seqstart != null && !seqstart.isEmpty()) {
@@ -129,6 +129,20 @@ public class InitModel {
                     }
                     cohSpecStr = cohSpecStr + ")";
                 }
+            }
+            if (typeCoh.equalsIgnoreCase("xpm")){
+                cohSpecStr = cohSpecStr + ") ,";
+                ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getCohspecPanel().getCohspec().getSeqstart();
+                if (seqstart != null && !seqstart.isEmpty()) {
+                    cohSpecStr = cohSpecStr + "coh = c(";
+                    for (int i = 0; i < seqstart.size(); i++) {
+                        if (i > 0) {
+                            cohSpecStr = cohSpecStr + ",";
+                        }
+                        cohSpecStr = cohSpecStr + seqstart.get(i);
+                    }
+                }
+                
             }
             if (typeCoh.equalsIgnoreCase("freeirfdisp")) {
                 //TODO: implement freeirfdisp etc.
