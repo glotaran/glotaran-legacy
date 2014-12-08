@@ -56,10 +56,17 @@ public final class CohSpecNode extends PropertiesAbstractNode {
             setCohSpecClpMin(cohspecPanel.getClp0Min());
             setCohSpecClpMax(cohspecPanel.getClp0Max());
         }
-        setCohSpecModelType(cohSpecModelType.setFromStr(cohspecPanel.getCohspec().getType()));
+        setCohSpecModelType(cohSpecModelType.setFromStr(cohspecPanel.getCohspec().getType()),true);
         
         if (cohSpecModelType.equals(CohSpecTypes.SEQ)
-                || cohSpecModelType.equals(CohSpecTypes.MIXED)) {            
+                || cohSpecModelType.equals(CohSpecTypes.MIXED)
+                || cohSpecModelType.equals(CohSpecTypes.XPM)) { 
+            if (cohspecPanel.getCohspec().getFixed().isEmpty()){
+                for (Double seqstart : cohspecPanel.getCohspec().getSeqstart()) {
+                    cohspecPanel.getCohspec().getFixed().add(Boolean.FALSE);
+                }
+                               
+            }
             NonLinearParametersKeys params = (NonLinearParametersKeys) getChildren();
             
             for (int i = 0; i < cohspecPanel.getCohspec().getSeqstart().size(); i++) {
@@ -67,12 +74,12 @@ public final class CohSpecNode extends PropertiesAbstractNode {
             }
         }
         
-        if (cohSpecModelType.equals(CohSpecTypes.XPM)){
-            NonLinearParametersKeys params = (NonLinearParametersKeys) getChildren();
-            for (int i = 0; i < 3; i++){
-                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)));
-            }
-        }
+//        if (cohSpecModelType.equals(CohSpecTypes.XPM)){
+//            NonLinearParametersKeys params = (NonLinearParametersKeys) getChildren();
+//            for (int i = 0; i < 3; i++){
+//                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)));
+//            }
+//        }
         this.addPropertyChangeListener(listn);
         setShortDescription(propertyShortDescription[0]);
     }
@@ -80,7 +87,7 @@ public final class CohSpecNode extends PropertiesAbstractNode {
     @Override
     public String getDisplayName() {
         String name = super.getDisplayName();
-        if (getCompNum() != 0) { // and if seq == true
+        if (getCompNum() != 0 && !cohSpecModelType.equals(CohSpecTypes.XPM)) { // and if seq == true
             name = name + " (" + getCompNum() + " " + cohSpecModelType + ")";
         } else {
             name = name + " (" + cohSpecModelType + ")";
@@ -106,9 +113,12 @@ public final class CohSpecNode extends PropertiesAbstractNode {
     public CohSpecTypes getCohSpecModelType() {
         return cohSpecModelType;
     }
-
-    public void setCohSpecModelType(CohSpecTypes cohSpecModelType) {
-        this.cohSpecModelType = cohSpecModelType;
+    
+    public void setCohSpecModelType(CohSpecTypes cohSpecModelType){
+        setCohSpecModelType(cohSpecModelType,false);
+    }
+    
+    public void setCohSpecModelType(CohSpecTypes cohSpecModelType, boolean constr) {
         Property<Integer> numberOfComponents;
         if (cohSpecModelType.equals(CohSpecTypes.SEQ)
                 || cohSpecModelType.equals(CohSpecTypes.MIXED)) {
@@ -122,14 +132,18 @@ public final class CohSpecNode extends PropertiesAbstractNode {
             } catch (NoSuchMethodException ex) {
                 Exceptions.printStackTrace(ex);
             }
+            if (this.cohSpecModelType.equals(CohSpecTypes.XPM)){
+                setCompNum(0);
+            }
         } else {
             getSheet().get(Sheet.PROPERTIES).remove(propertyNames[5]);
             setCompNum(0);
-            if (cohSpecModelType.equals(CohSpecTypes.XPM)){
+            if (cohSpecModelType.equals(CohSpecTypes.XPM)&&(!constr)){
+            } else {
                 setCompNum(3);
             }
         }
-
+        this.cohSpecModelType = cohSpecModelType;
         fireDisplayNameChange(null, getDisplayName());
         //firePropertyChange("cohSpecModelType", null, cohSpecModelType);
         firePropertyChange(propertyNames[1], null, cohSpecModelType);
