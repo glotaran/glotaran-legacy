@@ -63,8 +63,14 @@ public class NonLinearParametersKeys extends Children.Keys {
             return new Node[]{new ParametersSubNode((NonLinearParameter) key)};
         }
     }
+    
+    
+    public void addObj(NonLinearParameter objToAdd){
+        addObj(objToAdd,"nonlinearParameter");
+    }
 
-    public void addObj(NonLinearParameter objToAdd) {
+    public void addObj(NonLinearParameter objToAdd, String nodetype) {
+        nodeType = nodetype;
         if (parameters != null) {
             parameters.add(objToAdd);
         } else {

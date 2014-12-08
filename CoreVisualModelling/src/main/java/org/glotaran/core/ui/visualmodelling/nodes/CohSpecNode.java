@@ -68,9 +68,10 @@ public final class CohSpecNode extends PropertiesAbstractNode {
                                
             }
             NonLinearParametersKeys params = (NonLinearParametersKeys) getChildren();
+            String nodeType = cohSpecModelType.equals(CohSpecTypes.XPM) ? "XPMCohSpecNode" : "nonlinearParameter";
             
             for (int i = 0; i < cohspecPanel.getCohspec().getSeqstart().size(); i++) {
-                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)));
+                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)), nodeType);
             }
         }
         
@@ -80,8 +81,8 @@ public final class CohSpecNode extends PropertiesAbstractNode {
 //                params.addObj(new NonLinearParameter(cohspecPanel.getCohspec().getSeqstart().get(i), cohspecPanel.getCohspec().getFixed().get(i)));
 //            }
 //        }
-        this.addPropertyChangeListener(listn);
         setShortDescription(propertyShortDescription[0]);
+        this.addPropertyChangeListener(listn);
     }
 
     @Override
@@ -135,13 +136,15 @@ public final class CohSpecNode extends PropertiesAbstractNode {
             if (this.cohSpecModelType.equals(CohSpecTypes.XPM)){
                 setCompNum(0);
             }
+            this.cohSpecModelType = cohSpecModelType;
         } else {
+            
             getSheet().get(Sheet.PROPERTIES).remove(propertyNames[5]);
             setCompNum(0);
+            this.cohSpecModelType = cohSpecModelType;
             if (cohSpecModelType.equals(CohSpecTypes.XPM)&&(!constr)){
-            } else {
                 setCompNum(3);
-            }
+            } 
         }
         this.cohSpecModelType = cohSpecModelType;
         fireDisplayNameChange(null, getDisplayName());
