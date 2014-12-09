@@ -38,7 +38,7 @@ public class OscspecParametersNode extends PropertiesAbstractNode {
     }
 
     public OscspecParametersNode(TgmDataObject tgmDO, PropertyChangeListener listn) {
-        super("Oscpar", new OscParametersKeys(tgmDO.getTgm().getDat().getOscspecPanel().getOscpar(), tgmDO.getTgm().getDat().getOscspecPanel().getOscspec().getFixed()), Lookups.singleton(tgmDO));        
+        super("Oscpar", new OscParametersKeys(tgmDO.getTgm().getDat().getOscspecPanel().getOscspec().getStart(), tgmDO.getTgm().getDat().getOscspecPanel().getOscspec().getFixed()), Lookups.singleton(tgmDO));        
         this.oscspecPanelModel = tgmDO.getTgm().getDat().getOscspecPanel();         
         if (oscspecPanelModel.getOscspec().getType() == null || oscspecPanelModel.getOscspec().getType().isEmpty()) {
             setOscSpecType(EnumTypes.OscSpecTypes.HARMONIC);
@@ -46,7 +46,8 @@ public class OscspecParametersNode extends PropertiesAbstractNode {
         } else {
             this.cohspecTypeProperty = cohspecTypeProperty.setFromStr(oscspecPanelModel.getOscspec().getType());
             if (cohspecTypeProperty.equals(EnumTypes.OscSpecTypes.HARMONIC)) {
-                oscNumber = (oscspecPanelModel.getOscpar().size()) / 3;
+//                oscNumber = (oscspecPanelModel.getOscpar().size()) / 3;
+                oscNumber = (oscspecPanelModel.getOscspec().getStart().size()) / 3;
             }
             setOscSpecType(cohspecTypeProperty);
         }

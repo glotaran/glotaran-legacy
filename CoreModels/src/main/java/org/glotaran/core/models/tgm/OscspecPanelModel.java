@@ -57,6 +57,9 @@ public class OscspecPanelModel {
      *     
      */
     public Oscspec getOscspec() {
+        if (oscspec == null){
+            oscspec = new Oscspec();
+        }
         return oscspec;
     }
 

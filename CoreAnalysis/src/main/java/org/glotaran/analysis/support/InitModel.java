@@ -165,7 +165,8 @@ public class InitModel {
                 oscSpecStr = "oscspec = list(type = \"" + typeOsc + "\"";
                 if (typeOsc.equalsIgnoreCase("harmonic")) {
                     oscSpecStr = oscSpecStr + ",";
-                    ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getOscspecPanel().getOscpar();
+//                    ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getOscspecPanel().getOscpar();
+                    ArrayList<Double> seqstart = (ArrayList<Double>) tgm.getDat().getOscspecPanel().getOscspec().getStart();
                     if (seqstart != null && !seqstart.isEmpty()) {
                         oscSpecStr = oscSpecStr + "start = c(";
                         for (int i = 0; i < seqstart.size(); i++) {

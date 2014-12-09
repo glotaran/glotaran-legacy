@@ -313,14 +313,16 @@ public class VisualCommonFunctions {
             Integer newVal = (Integer) evt.getNewValue();
             if (oldVal < newVal) {
                 for (int i = 0; i < (newVal - oldVal) * 3; i++) {
-                    oscModel.getOscpar().add(
+//                    oscModel.getOscpar().add(
+                    oscModel.getOscspec().getStart().add(
                             ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
                     oscModel.getOscspec().getFixed().add(
                             ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());
                 }
             } else {
                 for (int i = 0; i < (oldVal - newVal) * 3; i++) {
-                    oscModel.getOscpar().remove(oscModel.getOscpar().size() - 1);
+//                    oscModel.getOscpar().remove(oscModel.getOscpar().size() - 1);
+                    oscModel.getOscspec().getStart().remove(oscModel.getOscspec().getStart().size() - 1);
                     oscModel.getOscspec().getFixed().remove(oscModel.getOscspec().getFixed().size() - 1);
                 }
 
@@ -329,7 +331,8 @@ public class VisualCommonFunctions {
         }
 
         if (evt.getPropertyName().equalsIgnoreCase("start")) {
-            if (oscModel.getOscpar().isEmpty()) {
+//            if (oscModel.getOscpar().isEmpty()) {
+            if (oscModel.getOscspec().getStart().isEmpty()) {
                 setOscType(oscModel, evt, ((OscspecParametersNode) evt.getSource()).getOscSpecType());
             }
             int index;
@@ -338,7 +341,8 @@ public class VisualCommonFunctions {
             } else {
                 index = (int) floor((Double) evt.getOldValue());
             }
-            oscModel.getOscpar().set(index, (Double) evt.getNewValue());
+//            oscModel.getOscpar().set(index, (Double) evt.getNewValue());
+            oscModel.getOscspec().getStart().set(index, (Double) evt.getNewValue());
 
         }
         if (evt.getPropertyName().equalsIgnoreCase("fixed")) {
@@ -715,7 +719,8 @@ public class VisualCommonFunctions {
 
                     int nodeCount = ((OscspecParametersNode) evt.getSource()).getChildren().getNodesCount();
                     for (int i = 0; i < nodeCount; i++) {
-                        oscModel.getOscpar().add(
+//                        oscModel.getOscpar().add(
+                        oscModel.getOscspec().getStart().add(
                                 ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().getStart());
                         oscModel.getOscspec().getFixed().add(
                                 ((ParametersSubNode) ((OscspecParametersNode) evt.getSource()).getChildren().getNodes()[i]).getDataObj().isFixed());

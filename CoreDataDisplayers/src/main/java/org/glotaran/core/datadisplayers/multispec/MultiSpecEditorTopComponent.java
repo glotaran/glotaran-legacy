@@ -668,7 +668,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
             }            
         }
         org.apache.commons.math3.linear.SingularValueDecomposition svd = new SingularValueDecomposition(mat);         
-        RealMatrix U = svd.getS();
+        RealMatrix U = svd.getU();
         RealMatrix S = svd.getS();
         RealMatrix V = svd.getV();          
         //This works only with UJMP 0.3.0 or higher
