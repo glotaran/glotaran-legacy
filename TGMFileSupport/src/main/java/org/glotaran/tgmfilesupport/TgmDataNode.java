@@ -9,6 +9,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.glotaran.core.main.nodes.TimpResultsNode;
 import org.glotaran.core.models.structures.TimpResultDataset;
 import org.glotaran.core.models.tgm.KinPar;
@@ -93,7 +94,47 @@ public class TgmDataNode extends DataNode implements Node.Cookie, Transferable {
                 public Transferable paste() throws IOException {
                     try {
                         TimpResultDataset results = ((TimpResultsNode) arg0.getTransferData(TimpResultsNode.DATA_FLAVOR)).getObject().getTimpResultDataset();
-                        final UpdateModelParameters updParamPanel = new UpdateModelParameters();
+                        ArrayList<Boolean> paramsToCopy = new ArrayList<>();
+                        
+                        if (results.getKineticParameters().length>0){
+                            paramsToCopy.add(Boolean.TRUE);
+                        } else {
+                            paramsToCopy.add(Boolean.FALSE);
+                        }
+                        
+                        if (results.getOscpar().length>0){
+                            paramsToCopy.add(Boolean.TRUE);
+                        } else {
+                            paramsToCopy.add(Boolean.FALSE);
+                        }
+                        
+                        if (results.getIrfpar().length>0){
+                            paramsToCopy.add(Boolean.TRUE);
+                        } else {
+                            paramsToCopy.add(Boolean.FALSE);
+                        }
+                        
+                        if (results.getParmu().length>0){
+                            paramsToCopy.add(Boolean.TRUE);
+                        } else {
+                            paramsToCopy.add(Boolean.FALSE);
+                        }
+                        
+                        if (results.getPartau().length>0){
+                            paramsToCopy.add(Boolean.TRUE);
+                        } else {
+                            paramsToCopy.add(Boolean.FALSE);
+                        }
+                        
+                        if (results.getSpectralParameters().length>0){
+                            paramsToCopy.add(Boolean.TRUE);
+                        } else {
+                            paramsToCopy.add(Boolean.FALSE);
+                        }
+
+
+                        
+                        final UpdateModelParameters updParamPanel = new UpdateModelParameters(paramsToCopy);
                         NotifyDescriptor detParamToUpdateDialog = new NotifyDescriptor(
                                 updParamPanel,
                                 NbBundle.getBundle("org/glotaran/tgmfilesupport/Bundle").getString("selParamForUpdate"),
@@ -153,6 +194,28 @@ public class TgmDataNode extends DataNode implements Node.Cookie, Transferable {
                                 obj.tgm.getDat().getIrfparPanel().setParmu(parmuStr);
                                 obj.tgm.getDat().getIrfparPanel().setLamda(results.getLamdac());
                                 obj.tgm.getDat().getIrfparPanel().setDispmufun("poly");
+                            }
+                            
+//update oscilation parameters if necessary, new model will have same oscpar as result object;
+                            if (updParamPanel.isOscParSelected()) {
+                                if (obj.tgm.getDat().getOscspecPanel().getOscspec().getStart().size() == results.getOscpar().length/2) {
+                                    for (int i = 0; i < results.getOscpar().length/2; i++) {
+                                        obj.tgm.getDat().getOscspecPanel().getOscspec().getStart().set(i, results.getOscpar()[i]);
+                                    }
+                                } else {
+                                    
+                                    obj.tgm.getDat().getOscspecPanel().getOscspec().getStart().clear();
+                                    obj.tgm.getDat().getOscspecPanel().getOscspec().getFixed().clear();
+                                    obj.tgm.getDat().getOscspecPanel().getOscspec().setType("harmonic");
+                                    obj.tgm.getDat().getOscspecPanel().getOscspec().setSet(true);
+                                    for (int i = 0; i < results.getOscpar().length/2; i++) {
+                                        obj.tgm.getDat().getOscspecPanel().getOscspec().getStart().add(results.getOscpar()[i]);
+                                        obj.tgm.getDat().getOscspecPanel().getOscspec().getFixed().add(Boolean.FALSE);
+                                    }
+                                }
+                                
+                                
+                                results.getOscpar();
                             }
 
 //update partau if necessary, new model will have same parmu as result object;
