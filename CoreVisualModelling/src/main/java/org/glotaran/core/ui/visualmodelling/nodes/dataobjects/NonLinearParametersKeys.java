@@ -32,20 +32,20 @@ public class NonLinearParametersKeys extends Children.Keys {
 
     public NonLinearParametersKeys(List<KinPar> paramList) {
         nodeType = "nonlinearParameter";
-        parameters = new ArrayList<NonLinearParameter>();
+        parameters = new ArrayList<>();
         if (paramList != null) {
-            for (int i = 0; i < paramList.size(); i++) {
-                parameters.add(new NonLinearParameter(paramList.get(i)));
+            for (KinPar paramList1 : paramList) {
+                parameters.add(new NonLinearParameter(paramList1));
             }
         }
     }
     
     public NonLinearParametersKeys(List<KinPar> paramList, String nodetype) {
         nodeType = nodetype;
-        parameters = new ArrayList<NonLinearParameter>();
+        parameters = new ArrayList<>();
         if (paramList != null) {
-            for (int i = 0; i < paramList.size(); i++) {
-                parameters.add(new NonLinearParameter(paramList.get(i)));
+            for (KinPar paramList1 : paramList) {
+                parameters.add(new NonLinearParameter(paramList1));
             }
         }
     }
@@ -74,7 +74,7 @@ public class NonLinearParametersKeys extends Children.Keys {
         if (parameters != null) {
             parameters.add(objToAdd);
         } else {
-            parameters = new ArrayList<NonLinearParameter>();
+            parameters = new ArrayList<>();
             parameters.add(objToAdd);
         }
         setKeys(parameters);
@@ -106,7 +106,7 @@ public class NonLinearParametersKeys extends Children.Keys {
                 parameters.add(new NonLinearParameter());
             }
         } else {
-            parameters = new ArrayList<NonLinearParameter>();
+            parameters = new ArrayList<>();
             for (int i = 0; i < numObj; i++) {
                 parameters.add(new NonLinearParameter());
             }
@@ -116,8 +116,8 @@ public class NonLinearParametersKeys extends Children.Keys {
 
     @Override
     public boolean remove(Node[] arg0) {
-        for (int i = 0; i < arg0.length; i++) {
-            ParametersSubNode node = (ParametersSubNode) arg0[i];
+        for (Node arg01 : arg0) {
+            ParametersSubNode node = (ParametersSubNode) arg01;
             parameters.remove(node.getDataObj());
             setKeys(parameters);
         }

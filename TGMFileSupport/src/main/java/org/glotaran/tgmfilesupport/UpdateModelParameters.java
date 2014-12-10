@@ -85,7 +85,6 @@ public class UpdateModelParameters extends javax.swing.JPanel {
         add(jCBParMu, gridBagConstraints);
 
         jCBParTau.setText(org.openide.util.NbBundle.getMessage(UpdateModelParameters.class, "UpdateModelParameters.jCBParTau.text")); // NOI18N
-        jCBParTau.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -94,7 +93,6 @@ public class UpdateModelParameters extends javax.swing.JPanel {
         add(jCBParTau, gridBagConstraints);
 
         jCBSpecPar.setText(org.openide.util.NbBundle.getMessage(UpdateModelParameters.class, "UpdateModelParameters.jCBSpecPar.text")); // NOI18N
-        jCBSpecPar.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;

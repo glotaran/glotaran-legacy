@@ -75,7 +75,7 @@ public class OscspecParametersNode extends PropertiesAbstractNode {
             }
             this.oscNumber = newOscNumber;
         }
-        
+        fireDisplayNameChange(null, getDisplayName());
         firePropertyChange("oscNumber", oldVal, this.oscNumber);
     }
 

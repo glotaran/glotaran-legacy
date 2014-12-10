@@ -87,8 +87,8 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private static final String PREFERRED_ID = "StreakOutTopComponent";
     private TimpResultDataset res;
     private ChartPanel chpanImage;
-    ArrayList<Integer> selectedTimeTraces = new ArrayList<Integer>();
-    ArrayList<Integer> selectedWaveTraces = new ArrayList<Integer>();
+    ArrayList<Integer> selectedTimeTraces = new ArrayList<>();
+    ArrayList<Integer> selectedWaveTraces = new ArrayList<>();
     private XYSeriesCollection selectedTimeTracesColection = new XYSeriesCollection();
     private XYSeriesCollection selectedTimeResidualsColection = new XYSeriesCollection();
     private XYSeriesCollection selectedWaveTracesColection = new XYSeriesCollection();
@@ -129,56 +129,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             numberOfRates = res.getKineticParameters().length / 2;
         }
 
-        ArrayList<String> paramsList = new ArrayList<String>(numberOfRates);
-
-        for (int i = 0; i < (res.getKineticParameters().length / 2); i++) {
-            //TODO: add errors
-            paramsList.add("k" + (i + 1) + "="
-                    + new Formatter().format("%2.6g",
-                    res.getKineticParameters()[i]) //TODO: (un)comment to show/hide errors
-                    //+ " (" + new Formatter().format("%2.4g",res.getKineticParameters()[i+1]) + ")"
-                    );
-            //,res.getKineticParameters()[numberOfComponents + i])
-        }
-
-        if (res.getIrfpar() != null) {
-            int irfParLength = res.getIrfpar().length / 2;
-            for (int i = 0; i < irfParLength; i++) {
-                paramsList.add("irf" + (i + 1) + "="
-                        + new Formatter().format("%2.6g", res.getIrfpar()[i]) //TODO: (un)comment to show/hide errors
-                        //+ " (" + new Formatter().format("%2.4g", res.getIrfpar()[i+1]) +")"
-                        );
-            }
-        }
-        paramsList.add("");
-        paramsList.add("-- Lifetimes [~s] --");
-        double[] eigenValues;
-        boolean useKMatrix = false;
-        if (res.getEigenvaluesK() != null) {
-            eigenValues = res.getEigenvaluesK();
-            useKMatrix = true;
-        } else {
-            eigenValues = res.getKineticParameters();
-        }
-        DecimalFormat lifeTimesFormat = new DecimalFormat("##0.0##E0");
-        String lifeTime;
-        for (int i = 0; i < numberOfRates; i++) {
-            if (useKMatrix) {
-                lifeTime = lifeTimesFormat.format(1 / -eigenValues[i]);
-            } else {
-                lifeTime = lifeTimesFormat.format(1 / eigenValues[i]);
-            }
-            if (lifeTime.contains("E0")) {
-                lifeTime = lifeTime.replace("E0", "");
-            }
-            paramsList.add("tau" + (i + 1) + "=" + lifeTime);
-        }
-        paramsList.add("-----");
-        paramsList.add("RMS =" + (new Formatter().format("%g", res.getRms())).toString());
-        jLKineticParameters.setListData(paramsList.toArray());
-        jLKineticParameters.setVisibleRowCount(paramsList.size());
-        jLKineticParameters.setPreferredSize(jLKineticParameters.getPreferredScrollableViewportSize());
-        jLKineticParameters.revalidate();
+        updateParametersList();
 
 //first tab
         t0Curve = CommonResDispTools.calculateDispersionTrace(res);
@@ -277,6 +228,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jTBShowCohSpec = new javax.swing.JToggleButton();
         jTBNormToMax = new javax.swing.JToggleButton();
+        jTBShowParametersErrors = new javax.swing.JToggleButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPSingValues = new javax.swing.JPanel();
@@ -409,6 +361,17 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             }
         });
         jToolBar1.add(jTBNormToMax);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jTBShowParametersErrors, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jTBShowParametersErrors.text")); // NOI18N
+        jTBShowParametersErrors.setFocusable(false);
+        jTBShowParametersErrors.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTBShowParametersErrors.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jTBShowParametersErrors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBShowParametersErrorsActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jTBShowParametersErrors);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1728,6 +1691,10 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         }
     }//GEN-LAST:event_jBExportResidualsActionPerformed
 
+    private void jTBShowParametersErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBShowParametersErrorsActionPerformed
+        updateParametersList();
+    }//GEN-LAST:event_jTBShowParametersErrorsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAutoSelectTraces;
     private javax.swing.JButton jBClearAllTimeTraces;
@@ -1793,6 +1760,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private javax.swing.JToggleButton jTBOverlayTimeTracess;
     private javax.swing.JToggleButton jTBOverlayWaveTracess;
     private javax.swing.JToggleButton jTBShowCohSpec;
+    private javax.swing.JToggleButton jTBShowParametersErrors;
     private javax.swing.JTextField jTFCentrWave;
     private javax.swing.JTextField jTFCurvParam;
     private javax.swing.JTextField jTFLinPart;
@@ -1939,6 +1907,130 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         public Object readResolve() {
             return SpecResultsTopComponent.getDefault();
         }
+    }
+    
+    private void updateParametersList(){
+        ArrayList<String> paramsList = new ArrayList<>(numberOfRates);
+        String line = "";
+        if (res.getKineticParameters() != null) {
+            int kinParLenght = res.getKineticParameters().length / 2;
+            for (int i = 0; i < kinParLenght; i++) {
+                line = line.concat("k");
+                line = line.concat(String.valueOf(i + 1));
+                line = line.concat("=");
+                line = line.concat(new Formatter().format("%2.6g", res.getKineticParameters()[i]).toString());
+                if (jTBShowParametersErrors.isSelected()) {
+                    line = line.concat(" (");
+                    line = line.concat(new Formatter().format("%2.4g", res.getKineticParameters()[i + kinParLenght]).toString());
+                    line = line.concat(")");
+                }
+//            paramsList.add("k" + (i + 1) + "="
+//                    + new Formatter().format("%2.6g",
+//                    res.getKineticParameters()[i]) 
+////TODO: (un)comment to show/hide errors
+//                    //+ " (" + new Formatter().format("%2.4g",res.getKineticParameters()[i+1]) + ")"
+//                    );
+                //,res.getKineticParameters()[numberOfComponents + i])
+                paramsList.add(line);
+                line = "";
+            }
+        }
+
+        if (res.getIrfpar() != null) {
+            int irfParLength = res.getIrfpar().length / 2;
+            for (int i = 0; i < irfParLength; i++) {
+                line = line.concat("irf");
+                line = line.concat(String.valueOf(i + 1));
+                line = line.concat("=");
+                line = line.concat(new Formatter().format("%2.6g", res.getIrfpar()[i]).toString());
+                if (jTBShowParametersErrors.isSelected()) {
+                    line = line.concat(" (");
+                    line = line.concat(new Formatter().format("%2.4g", res.getIrfpar()[i + irfParLength]).toString());
+                    line = line.concat(")");
+                }
+
+//                paramsList.add("irf" + (i + 1) + "="
+//                        + new Formatter().format("%2.6g", res.getIrfpar()[i]) //TODO: (un)comment to show/hide errors
+//                        //+ " (" + new Formatter().format("%2.4g", res.getIrfpar()[i+1]) +")"
+//                        );
+                paramsList.add(line);
+                line = "";
+            }
+        }
+        if (res.getOscpar() != null) {
+            paramsList.add("-- Oscilation parameters --");
+            paramsList.add("(Phase shift, Frequency(\u03C9), Damping(\u03b3))");
+            int oscParLength = res.getOscpar().length / 6;
+            for (int i = 0; i < oscParLength; i++) {
+                line = line.concat("Oscilator");
+                line = line.concat(String.valueOf(i + 1));
+                line = line.concat(" (");
+                for (int j = 0; j<3; j++){
+                    line = line.concat(new Formatter().format("%2.6g", res.getOscpar()[i*3+j]).toString());
+                    line = line.concat(" ,");
+                }
+                line = line.substring(0, line.length()-1);
+                line = line.concat(")");
+                paramsList.add(line);
+                line = "";
+                
+                if (jTBShowParametersErrors.isSelected()) {
+                    line = line.concat("Err");
+                    line = line.concat(String.valueOf(i + 1));
+                    line = line.concat(" (");
+                    
+                    for (int j = 0; j<3; j++){
+                    line = line.concat(new Formatter().format("%2.4g", res.getOscpar()[i*3+j+oscParLength*3]).toString());
+                    line = line.concat(" ,");
+                    }
+                    line = line.substring(0, line.length()-1);
+                    line = line.concat(")");
+                    paramsList.add(line);
+                    line = "";
+                }
+            } 
+        }
+        
+        paramsList.add("");
+        paramsList.add("-- Lifetimes [~s] --");
+        double[] eigenValues;
+        boolean useKMatrix = false;
+        if (res.getEigenvaluesK() != null) {
+            eigenValues = res.getEigenvaluesK();
+            useKMatrix = true;
+        } else {
+            eigenValues = res.getKineticParameters();
+        }
+        DecimalFormat lifeTimesFormat = new DecimalFormat("##0.0##E0");
+        String lifeTime;
+        for (int i = 0; i < numberOfRates; i++) {
+            if (useKMatrix) {
+                lifeTime = lifeTimesFormat.format(1 / -eigenValues[i]);
+            } else {
+                lifeTime = lifeTimesFormat.format(1 / eigenValues[i]);
+            }
+            if (lifeTime.contains("E0")) {
+                lifeTime = lifeTime.replace("E0", "");
+            }
+
+            line = line.concat("tau");
+            line = line.concat(String.valueOf(i + 1));
+            line = line.concat("=");
+            line = line.concat(lifeTime);
+            paramsList.add(line);
+            line = "";
+//            paramsList.add("tau" + (i + 1) + "=" + lifeTime);
+        }
+        
+        
+        
+        paramsList.add("-----");
+        paramsList.add("RMS =" + (new Formatter().format("%g", res.getRms())).toString());
+        jLKineticParameters.setListData(paramsList.toArray());
+        jLKineticParameters.setVisibleRowCount(paramsList.size());
+        jLKineticParameters.setPreferredSize(jLKineticParameters.getPreferredScrollableViewportSize());
+        jLKineticParameters.revalidate();
+    
     }
     
     private GraphPanel createLinLogTimePlot(double timeZero, double linearBoundValue, Matrix data, double[] timesteps) {

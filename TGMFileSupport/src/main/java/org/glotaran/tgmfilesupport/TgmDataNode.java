@@ -233,38 +233,50 @@ public class TgmDataNode extends DataNode implements Node.Cookie, Transferable {
     private ArrayList<Boolean> getUpdatableParams(TimpResultDataset results) {
         ArrayList<Boolean> paramsToCopy = new ArrayList<>();
 
-        if (results.getKineticParameters().length > 0) {
-            paramsToCopy.add(Boolean.TRUE);
+        if (results.getKineticParameters() != null) {
+            if (results.getKineticParameters().length > 0) {
+                paramsToCopy.add(Boolean.TRUE);
+            }
         } else {
             paramsToCopy.add(Boolean.FALSE);
         }
 
-        if (results.getOscpar().length > 0) {
-            paramsToCopy.add(Boolean.TRUE);
+        if (results.getOscpar() != null) {
+            if (results.getOscpar().length > 0) {
+                paramsToCopy.add(Boolean.TRUE);
+            }
         } else {
             paramsToCopy.add(Boolean.FALSE);
         }
 
-        if (results.getIrfpar().length > 0) {
-            paramsToCopy.add(Boolean.TRUE);
+        if (results.getIrfpar() != null) {
+            if (results.getIrfpar().length > 0) {
+                paramsToCopy.add(Boolean.TRUE);
+            }
         } else {
             paramsToCopy.add(Boolean.FALSE);
         }
 
-        if (results.getParmu().length > 0) {
-            paramsToCopy.add(Boolean.TRUE);
+        if (results.getParmu() != null) {
+            if (results.getParmu().length > 0) {
+                paramsToCopy.add(Boolean.TRUE);
+            }
         } else {
             paramsToCopy.add(Boolean.FALSE);
         }
 
-        if (results.getPartau().length > 0) {
-            paramsToCopy.add(Boolean.TRUE);
+        if (results.getPartau() != null) {
+            if (results.getPartau().length > 0) {
+                paramsToCopy.add(Boolean.TRUE);
+            }
         } else {
             paramsToCopy.add(Boolean.FALSE);
         }
 
-        if (results.getSpectralParameters().length > 0) {
-            paramsToCopy.add(Boolean.TRUE);
+        if (results.getSpectralParameters() != null) {
+            if (results.getSpectralParameters().length > 0) {
+                paramsToCopy.add(Boolean.TRUE);
+            }
         } else {
             paramsToCopy.add(Boolean.FALSE);
         }
