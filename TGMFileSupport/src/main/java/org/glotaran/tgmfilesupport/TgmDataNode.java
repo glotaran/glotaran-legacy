@@ -94,47 +94,7 @@ public class TgmDataNode extends DataNode implements Node.Cookie, Transferable {
                 public Transferable paste() throws IOException {
                     try {
                         TimpResultDataset results = ((TimpResultsNode) arg0.getTransferData(TimpResultsNode.DATA_FLAVOR)).getObject().getTimpResultDataset();
-                        ArrayList<Boolean> paramsToCopy = new ArrayList<>();
-                        
-                        if (results.getKineticParameters().length>0){
-                            paramsToCopy.add(Boolean.TRUE);
-                        } else {
-                            paramsToCopy.add(Boolean.FALSE);
-                        }
-                        
-                        if (results.getOscpar().length>0){
-                            paramsToCopy.add(Boolean.TRUE);
-                        } else {
-                            paramsToCopy.add(Boolean.FALSE);
-                        }
-                        
-                        if (results.getIrfpar().length>0){
-                            paramsToCopy.add(Boolean.TRUE);
-                        } else {
-                            paramsToCopy.add(Boolean.FALSE);
-                        }
-                        
-                        if (results.getParmu().length>0){
-                            paramsToCopy.add(Boolean.TRUE);
-                        } else {
-                            paramsToCopy.add(Boolean.FALSE);
-                        }
-                        
-                        if (results.getPartau().length>0){
-                            paramsToCopy.add(Boolean.TRUE);
-                        } else {
-                            paramsToCopy.add(Boolean.FALSE);
-                        }
-                        
-                        if (results.getSpectralParameters().length>0){
-                            paramsToCopy.add(Boolean.TRUE);
-                        } else {
-                            paramsToCopy.add(Boolean.FALSE);
-                        }
-
-
-                        
-                        final UpdateModelParameters updParamPanel = new UpdateModelParameters(paramsToCopy);
+                        final UpdateModelParameters updParamPanel = new UpdateModelParameters(getUpdatableParams(results));
                         NotifyDescriptor detParamToUpdateDialog = new NotifyDescriptor(
                                 updParamPanel,
                                 NbBundle.getBundle("org/glotaran/tgmfilesupport/Bundle").getString("selParamForUpdate"),
@@ -268,5 +228,47 @@ public class TgmDataNode extends DataNode implements Node.Cookie, Transferable {
         } else {
             throw new UnsupportedFlavorException(flavor);
         }
+    }
+    
+    private ArrayList<Boolean> getUpdatableParams(TimpResultDataset results) {
+        ArrayList<Boolean> paramsToCopy = new ArrayList<>();
+
+        if (results.getKineticParameters().length > 0) {
+            paramsToCopy.add(Boolean.TRUE);
+        } else {
+            paramsToCopy.add(Boolean.FALSE);
+        }
+
+        if (results.getOscpar().length > 0) {
+            paramsToCopy.add(Boolean.TRUE);
+        } else {
+            paramsToCopy.add(Boolean.FALSE);
+        }
+
+        if (results.getIrfpar().length > 0) {
+            paramsToCopy.add(Boolean.TRUE);
+        } else {
+            paramsToCopy.add(Boolean.FALSE);
+        }
+
+        if (results.getParmu().length > 0) {
+            paramsToCopy.add(Boolean.TRUE);
+        } else {
+            paramsToCopy.add(Boolean.FALSE);
+        }
+
+        if (results.getPartau().length > 0) {
+            paramsToCopy.add(Boolean.TRUE);
+        } else {
+            paramsToCopy.add(Boolean.FALSE);
+        }
+
+        if (results.getSpectralParameters().length > 0) {
+            paramsToCopy.add(Boolean.TRUE);
+        } else {
+            paramsToCopy.add(Boolean.FALSE);
+        }
+
+        return paramsToCopy;
     }
 }
