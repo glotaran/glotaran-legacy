@@ -105,10 +105,31 @@
                 </Component>
                 <Component class="javax.swing.JToolBar$Separator" name="jSeparator1">
                 </Component>
+                <Component class="javax.swing.JToggleButton" name="jTBShowParametersErrors">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowParametersErrors.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowParametersErrors.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="verticalTextPosition" type="int" value="3"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTBShowParametersErrorsActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JToolBar$Separator" name="jSeparator6">
+                </Component>
                 <Component class="javax.swing.JToggleButton" name="jTBShowCohSpec">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowCohSpec.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowCohSpec.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
@@ -118,6 +139,25 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTBShowCohSpecActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="jTBShowOscSpectra">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowOscSpectra.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowOscSpectra.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="verticalTextPosition" type="int" value="3"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTBShowOscSpectraActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JToolBar$Separator" name="jSeparator5">
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="jTBNormToMax">
                   <Properties>
@@ -130,19 +170,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTBNormToMaxActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JToggleButton" name="jTBShowParametersErrors">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/glotaran/core/resultdisplayers/spec/Bundle.properties" key="SpecResultsTopComponent.jTBShowParametersErrors.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTBShowParametersErrorsActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
