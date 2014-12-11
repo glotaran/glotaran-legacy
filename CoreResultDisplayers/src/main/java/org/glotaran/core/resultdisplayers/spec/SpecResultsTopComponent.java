@@ -2208,15 +2208,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         if (jTBShowCohSpec.isSelected()){
             int traceIndex;
             int lastSeriaIndex;
-            int cohSpecNum;          
-            if (res.getCoh() != null) {
-                cohSpecNum = res.getCoh().length/2;
+            int cohSpecNum;
+            if (jTBShowOscSpectra.isSelected()) {
+                cohSpecNum = numberOfComponents - numberOfRates - res.getOscpar().length / 2 / OSCSPEC_PARAM_LENGTHS;
             } else {
-                if (jTBShowOscSpectra.isSelected()){
-                    cohSpecNum = numberOfComponents - numberOfRates - res.getOscpar().length/2/OSCSPEC_PARAM_LENGTHS;
-                } else {
-                    cohSpecNum = numberOfComponents - numberOfRates;
-                }
+                cohSpecNum = numberOfComponents - numberOfRates;
             }
             for (int j = 0; j < cohSpecNum; j++) {
                 seria = new YIntervalSeries("CohSpec" + (j + 1));// new XYSeries(specName + (j + 1));
