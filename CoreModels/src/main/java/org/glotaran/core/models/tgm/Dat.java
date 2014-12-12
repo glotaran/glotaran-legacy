@@ -199,6 +199,9 @@ public class Dat {
      *     
      */
     public OscspecPanelModel getOscspecPanel() {
+        if (oscspecPanel==null){
+            oscspecPanel = new OscspecPanelModel();
+        }
         return oscspecPanel;
     }
 
