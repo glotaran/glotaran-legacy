@@ -158,6 +158,7 @@ public class TgmDataNode extends DataNode implements Node.Cookie, Transferable {
                             
 //update oscilation parameters if necessary, new model will have same oscpar as result object;
                             if (updParamPanel.isOscParSelected()) {
+                                
                                 if (obj.tgm.getDat().getOscspecPanel().getOscspec().getStart().size() == results.getOscpar().length/2) {
                                     for (int i = 0; i < results.getOscpar().length/2; i++) {
                                         obj.tgm.getDat().getOscspecPanel().getOscspec().getStart().set(i, results.getOscpar()[i]);
