@@ -50,7 +50,7 @@ public class ShowSpecEditor implements DatasetLoaderInterface {
         for (TopComponent t : tset) {
             if (t instanceof SpecEditorTopCompNew) {
                 SpecEditorTopCompNew srtc = (SpecEditorTopCompNew) t;
-                if (srtc.getDataObject2() != null) {
+                if (srtc.getDataObject() != null) {
                     if (srtc.getDataObject().equals(dataObj)) {
                         srtc.requestActive();
                         return;
