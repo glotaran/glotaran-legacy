@@ -374,7 +374,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         add(jPEnableLifetimeDensityMap, gridBagConstraints);
 
         jPSeparator.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jPSeparator.border.title"))); // NOI18N
-        jPSeparator.setMinimumSize(new java.awt.Dimension(373, 40));
+        jPSeparator.setMinimumSize(new java.awt.Dimension(380, 40));
         jPSeparator.setPreferredSize(new java.awt.Dimension(380, 40));
         jPSeparator.setLayout(new java.awt.GridBagLayout());
 
@@ -416,10 +416,10 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         jPSeparator.add(jRBSpace, gridBagConstraints);
 
         jTFOtherSeparator.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jTFOtherSeparator.text")); // NOI18N
+        jTFOtherSeparator.setMinimumSize(new java.awt.Dimension(30, 19));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 50;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPSeparator.add(jTFOtherSeparator, gridBagConstraints);
 

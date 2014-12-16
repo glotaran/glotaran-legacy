@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.glotaran.core.interfaces.GlotaranDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.openide.util.Lookup;
 
@@ -43,12 +44,16 @@ final class JFileSourcePane extends javax.swing.JPanel {
     JFileSourcePane(final File openPath) {
 
         initComponents();
-        ArrayList<String> extensionList = new ArrayList<String>();
-        ArrayList<String> descriptions = new ArrayList<String>();
+        ArrayList<String> extensionList = new ArrayList<>();
+        ArrayList<String> descriptions = new ArrayList<>();
 
         services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
         for (final TGDatasetInterface service : services) {
+            if (service instanceof GlotaranDataloaderInterface) {
+                extensionList.addAll(((GlotaranDataloaderInterface)service).getExtensions());
+            } else {
             extensionList.add(service.getExtention());
+            }
             descriptions.add(service.getFilterString());
         }
 

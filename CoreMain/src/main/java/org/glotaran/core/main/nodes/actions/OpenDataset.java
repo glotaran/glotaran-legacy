@@ -135,7 +135,7 @@ public final class OpenDataset extends CookieAction {
         for (File f : files) {
             for (final TGDatasetInterface service : services) {
                 //TODO: eliminate extension requirement
-                if (f.getName().toLowerCase().endsWith(Pattern.compile(service.getExtention(), Pattern.CASE_INSENSITIVE).toString())) {
+                //if (f.getName().toLowerCase().endsWith(Pattern.compile(service.getExtention(), Pattern.CASE_INSENSITIVE).toString())) {
                     try {
                         if (service.Validator(f)) {
                             openDatasetFile(service, f);
@@ -149,7 +149,7 @@ public final class OpenDataset extends CookieAction {
                     } catch (InstantiationException ex) {
                         Exceptions.printStackTrace(ex);
                     }
-                }
+               // }
             }
         }
     }

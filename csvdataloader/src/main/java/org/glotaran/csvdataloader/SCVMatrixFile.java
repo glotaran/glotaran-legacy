@@ -4,7 +4,6 @@
  */
 package org.glotaran.csvdataloader;
 
-import org.openide.util.Exceptions;
 import org.openide.util.NbBundle;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +13,6 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
@@ -24,26 +22,33 @@ import org.ujmp.core.MatrixFactory;
 import org.ujmp.core.calculation.Calculation.Ret;
 import org.ujmp.core.enums.FileFormat;
 import org.ujmp.core.exceptions.MatrixException;
-import org.ujmp.gui.MatrixGUIObject;
-import org.ujmp.gui.panels.MatrixTableEditorPanel;
 import static java.lang.Math.floor;
-import org.glotaran.core.models.structures.FlimImageAbstract;
+import org.glotaran.core.interfaces.GlotaranDataloaderInterface;
 
 /**
  *
  * @author Owner
  */
-public class SCVMatrixFile implements TGDatasetInterface {
+public class SCVMatrixFile implements GlotaranDataloaderInterface {
     private String filetype = "spec" ;
+    
+     @Override
+    public ArrayList<String> getExtensions() {
+        ArrayList<String> supportedExtensions = new ArrayList<>();
+        supportedExtensions.add("csv");
+        supportedExtensions.add("txt");
+        supportedExtensions.add("dat");
+        return supportedExtensions;
+    }       
 
     @Override
     public String getExtention() {
-        return "csv";
+        return getExtensions().get(0);
     }
 
     @Override
     public String getFilterString() {
-        return ".csv tab space or comma separated matrix";
+        return ".csv;.txt;.dat delimited separated matrix file";
     }
 
     @Override
@@ -53,8 +58,8 @@ public class SCVMatrixFile implements TGDatasetInterface {
 
     @Override
     public boolean Validator(File file) {
-        String ext = FileUtil.getExtension(file.getName());
-        if (ext.equalsIgnoreCase("csv")) {
+        String ext = FileUtil.getExtension(file.getName());        
+        if (getExtensions().contains(ext.toLowerCase())) {
             try {
                 //MatrixFactory.importFromFile(FileFormat.CSV, file);
                 return true;

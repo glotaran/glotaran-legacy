@@ -15,7 +15,7 @@ public interface TGDatasetInterface {
      * get type - extention of the suported files.
      * @return A {String} containing the extention.
      */
-    public String getExtention();
+    public String getExtention();    
 
     /**
      * @return true if str = sdt.
