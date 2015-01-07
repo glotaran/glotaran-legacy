@@ -339,12 +339,8 @@ public class CommonActionFunctions {
 
     /**
      * Correct for outliers. Corrections done on the source dataset
-     *
-     * @param dataset DatasetTimp : source dataset
-     * @param size int : size of the scanning window
-     * @param fence double : multiplication factor for acceptance fence
-     * 0.75*fence
-     * @return int : number of outliers;
+     * @param dataset dataset to work with
+     * @param ocParameters parameters for outlier correction
      */
     public static void outliersCorrection(DatasetTimp dataset, OutlierCorrectionParameters ocParameters) {
         if (ocParameters.isIndividualOutlierC()) {
@@ -354,7 +350,7 @@ public class CommonActionFunctions {
             int ywindnum = dataset.getNl() / size;
             int xwindnum = dataset.getNt() / size;
 
-            ArrayList<Double> wind = new ArrayList<Double>();
+            ArrayList<Double> wind = new ArrayList<>();
 
             int outliercount = 0;
             double med;
@@ -464,8 +460,8 @@ public class CommonActionFunctions {
             lowage = med - fence * interv;
             hiage = med + fence * interv;
 
-            for (int y = (ywindnum - 1) * size; y < dataset.getNt(); y++) {
-                for (int x = (xwindnum - 1) * size; x < dataset.getNl(); x++) {
+            for (int y = (ywindnum - 1) * size; y < dataset.getNl(); y++) {
+                for (int x = (xwindnum - 1) * size; x < dataset.getNt(); x++) {
                     if ((dataset.getPsisim()[y * dataset.getNt() + x] > hiage)
                             || (dataset.getPsisim()[y * dataset.getNt() + x] < lowage)) {
 

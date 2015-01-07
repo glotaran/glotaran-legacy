@@ -68,7 +68,7 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(540, 130));
         setLayout(new java.awt.GridBagLayout());
 
-        jPReplaceIndividualOutliers.setMinimumSize(new java.awt.Dimension(180, 100));
+        jPReplaceIndividualOutliers.setMinimumSize(new java.awt.Dimension(200, 100));
         jPReplaceIndividualOutliers.setPreferredSize(new java.awt.Dimension(200, 100));
         jPReplaceIndividualOutliers.setLayout(new java.awt.GridBagLayout());
 
