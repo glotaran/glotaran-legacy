@@ -128,19 +128,17 @@ public class DimensionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTFDimToFocusLost
 
     private void jTFDimFromFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDimFromFocusGained
-        try {
-            Double.parseDouble(jTFDimFrom.getText());
+        if (checkDouble(jTFDimFrom.getText())) {
             fromOld = Double.parseDouble(jTFDimFrom.getText());
-        } catch (NumberFormatException e) {
+        } else {
             fromOld = -1;
         }
     }//GEN-LAST:event_jTFDimFromFocusGained
 
     private void jTFDimToFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDimToFocusGained
-        try {
-            Double.parseDouble(jTFDimTo.getText());
+        if (checkDouble(jTFDimTo.getText())) {
             toOld = Double.parseDouble(jTFDimTo.getText());
-        } catch (NumberFormatException e) {
+        } else {
             toOld = -1;
         }
     }//GEN-LAST:event_jTFDimToFocusGained

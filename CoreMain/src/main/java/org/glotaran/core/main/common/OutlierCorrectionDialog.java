@@ -105,9 +105,12 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
 
         jTFFence.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTFFence.setText(org.openide.util.NbBundle.getMessage(OutlierCorrectionDialog.class, "OutlierCorrectionDialog.jTFFence.text")); // NOI18N
-        jTFFence.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFFenceKeyReleased(evt);
+        jTFFence.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTFFenceFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTFFenceFocusLost(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -214,14 +217,6 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
         add(jRBSetRegionToConstantValue, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTFFenceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFFenceKeyReleased
-       try {
-            outlierParameters.setFence(Integer.parseInt(jTFFence.getText()));
-        } catch (Exception e) {
-            CoreErrorMessages.numberFormatException();
-        }
-    }//GEN-LAST:event_jTFFenceKeyReleased
-
     public OutlierCorrectionParameters getOutlierParameters() {
         return outlierParameters;
     }
@@ -262,6 +257,22 @@ public class OutlierCorrectionDialog extends javax.swing.JPanel {
             outlierParameters.setOcRegConstD2(1,(double)evt.getNewValue());
         }
     }//GEN-LAST:event_dimPanel2PropertyChange
+
+    private void jTFFenceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFFenceFocusGained
+        try {
+            outlierParameters.setFence(Integer.parseInt(jTFFence.getText()));
+        } catch (Exception e) {
+            CoreErrorMessages.numberFormatException();
+        }
+    }//GEN-LAST:event_jTFFenceFocusGained
+
+    private void jTFFenceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFFenceFocusLost
+        try {
+            outlierParameters.setFence(Integer.parseInt(jTFFence.getText()));
+        } catch (Exception e) {
+            CoreErrorMessages.numberFormatException();
+        }
+    }//GEN-LAST:event_jTFFenceFocusLost
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
