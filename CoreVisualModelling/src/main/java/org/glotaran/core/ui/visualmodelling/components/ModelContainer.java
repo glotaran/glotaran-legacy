@@ -302,8 +302,10 @@ public class ModelContainer
             }
             if (model.getTgm().getDat().getCohspecPanel().getCohspec() != null) {
                 if (model.getTgm().getDat().getCohspecPanel().getCohspec().getType() != null) {
-                    manager.getRootContext().getChildren().add(
-                            new Node[]{new CohSpecNode(model.getTgm().getDat().getCohspecPanel(), this)});
+                    if (!model.getTgm().getDat().getCohspecPanel().getCohspec().getType().isEmpty()) {
+                        manager.getRootContext().getChildren().add(
+                                new Node[]{new CohSpecNode(model.getTgm().getDat().getCohspecPanel(), this)});
+                    }
                 }
             }
         
