@@ -79,6 +79,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
              <version>1.5.1-SNAPSHOT</version>         </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+            <version>RELEASE801</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

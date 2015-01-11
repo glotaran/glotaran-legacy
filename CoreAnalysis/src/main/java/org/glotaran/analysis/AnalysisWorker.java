@@ -651,11 +651,11 @@ public class AnalysisWorker implements Runnable {
     private String getModelDiffsChange(GtaModelDifferences modelDifferences) {
         String result = "";
         String fileName, pathName;
-        String tempStr = "";
-        Tgm changesModel = null;
-        Integer datasetIndex = null;
-        ArrayList<String> baseArgs = new ArrayList<String>();
-        ArrayList<String> changedArgs = new ArrayList<String>();
+        String tempStr;
+        Tgm changesModel;
+        Integer datasetIndex;
+        ArrayList<String> baseArgs = new ArrayList<>();
+        ArrayList<String> changedArgs = new ArrayList<>();
         List<GtaModelDiffContainer> diffContainers = modelDifferences.getDifferences();
 
         //Fill in the "change" parameter
@@ -686,6 +686,8 @@ public class AnalysisWorker implements Runnable {
 
 
         for (GtaModelDiffContainer diffContainer : diffContainers) {
+            baseArgs.clear();
+            changedArgs.clear();
 
             if (diffContainer != null) {
                 GtaChangesModel changes = diffContainer.getChanges();

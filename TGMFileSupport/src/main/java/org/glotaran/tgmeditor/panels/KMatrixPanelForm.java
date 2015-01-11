@@ -359,7 +359,7 @@ public class KMatrixPanelForm extends JPanel implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         if (event.getSource().equals(model1)) {
             setValue(jTKMatrix1, this);
-            int data = getParamNuber(model1);
+            int data = getParamNumber(model1);
             int kinparNum = kinparModel.getRowCount();
             if (data > kinparNum) {
                 kinparModel.removeTableModelListener(this);
@@ -383,7 +383,7 @@ public class KMatrixPanelForm extends JPanel implements TableModelListener {
         } else {
             if (event.getSource().equals(model2)) {
                 setValue(jTKMatrix1, this);
-                int data = getParamNuber(model2);
+                int data = getParamNumber(model2);
                 int kinparNum = kinscalModel.getRowCount();
                 if (data > kinparNum) {
                     kinscalModel.removeTableModelListener(this);
@@ -773,7 +773,7 @@ public class KMatrixPanelForm extends JPanel implements TableModelListener {
     private javax.swing.JTable jTStartingKinscal;
     // End of variables declaration//GEN-END:variables
 
-    private int getParamNuber(NumberTableModel tableModel) {
+    private int getParamNumber(NumberTableModel tableModel) {
         int number = 0;
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             for (int j = 0; j < tableModel.getColumnCount(); j++) {

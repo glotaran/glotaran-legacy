@@ -12,7 +12,12 @@ import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.core.models.structures.TimpResultDataset;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.tgm.Tgm;
+import org.openide.DialogDisplayer;
+import org.openide.awt.StatusDisplayer;
 import org.openide.util.lookup.ServiceProvider;
+import org.openide.windows.IOProvider;
+import org.openide.windows.InputOutput;
+import org.openide.windows.OutputWriter;
 import org.rosuda.irconnect.IREXP;
 import org.rosuda.irconnect.IRList;
 import org.rosuda.irconnect.IRMap;
@@ -28,24 +33,27 @@ import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 public class TimpController implements TimpControllerInterface {
 
     private ITwoWayConnection connection = null;
+    private boolean isRserveRunning = false;
+    private boolean isTIMPLoaded = false;
+    private InputOutput io;
 
     public TimpController() {
+        io = IOProvider.getDefault().getIO("Rserve", true);
         if (connection == null) {
             connection = MakeNewConnection();
         }
-        //connection = JRIConnectionFactory.getInstance().createTwoWayConnection(null);
     }
-    
+
     @Override
     public boolean isConnected() {
         if (connection != null) {
             return connection.isConnected();
         } else {
             connection = MakeNewConnection();
-            if (connection!=null) {
+            if (connection != null) {
                 return connection.isConnected();
             } else {
-            return false;
+                return false;
             }
         }
     }
@@ -56,19 +64,126 @@ public class TimpController implements TimpControllerInterface {
         connection.voidEval("try(gc())");
         System.gc();
     }
+
     private ITwoWayConnection MakeNewConnection() {
-      if (connection == null) {
-          try {
-               connection = new REngineConnectionFactory().createTwoWayConnection(null);
-                if (connection.isConnected()) {
-                connection.voidEval("try(require(TIMP))");
+        // if (connection == null) {
+        try {
+            connection = new REngineConnectionFactory().createTwoWayConnection(null);
+            if (connection.isConnected()) {
+                connection.voidEval("");
+                connection.assign("isGlotaranConnection", "TRUE");
             }
-          } catch (Exception e) {
-              e.getMessage();
-          }              
+        } catch (Exception e) {
+            io.getErr().println("Failed to connect to R via Rserve");
+            io.getErr().println(e.getMessage());
         }
-        //connection = JRIConnectionFactory.getInstance().createTwoWayConnection(null);
-      return connection;
+        //  }
+        return connection;
+    }
+
+    private boolean isTIMPinstalled() {
+        return connection.eval("is.element(\"TIMP\", installed.packages()[,1])").asBool().isTRUE();
+    }
+
+    private void verifyRserve() {
+        OutputWriter writer = io.getOut();
+
+        if (connection == null) {
+            writer.println("Starting Rserve connection ...");
+            connection = MakeNewConnection();
+        } else {            
+            writer.println("Restarting Rserve connection ...");
+            connection.close();            
+            connection = MakeNewConnection();
+        }
+        if (connection != null) {
+            writer.println("Rserve connection started.");
+            if (connection.isConnected()) {
+                writer.println("Working Rserve connection established.");
+            }
+            writer.append("Rserve test evaluation:");
+            try {
+                connection.voidEval("isCalledFromGlotaran <- TRUE");
+                if (connection.eval("isCalledFromGlotaran").asBool().isTRUE()) {
+                    writer.append(" OK").flush();
+
+                }
+            } catch (Exception e) {
+                // R session could not be validated
+                writer.append(" FAIL").flush();
+                return;
+            }
+            writer.println();
+
+            writer.append("Rserve test assignment:");
+            try {
+                connection.assign("isAssignedFromGlotaran", "TRUE");
+                if (connection.eval("as.logical(isAssignedFromGlotaran)").asBool().isTRUE()) {
+                    writer.append(" OK").flush();
+                    isRserveRunning = true;
+
+                }
+            } catch (Exception e) {
+                // R session could not be validated
+                writer.append(" FAIL").flush();
+                isRserveRunning = false;
+                return;
+            }
+            writer.println();
+
+            writer.append("Test if R-package TIMP is installed:");
+            if (isTIMPinstalled()) {
+                long version;
+                writer.append(" OK").flush();
+                writer.println();
+                writer.append("Test if TIMP is up to date:");
+                int[] verArray = connection.eval("packageVersion(\"TIMP\")").asList().getHead().asIntArray();
+                version = (long) (verArray[0] * Math.pow(10, 8) + verArray[1] * Math.pow(10, 4) + verArray[2]);
+                if (version >= 100120001) {
+                    writer.append(" OK.").flush();
+                } else {
+                    writer.append(" WARNING.").flush();
+                    writer.println();
+                    io.getErr().println("Warning: please update TIMP. Run R and run install.packages(\"TIMP\")");
+                    io.getErr().println("An older version might work but could lead to unexpected behavior.");
+                    StatusDisplayer.getDefault().setStatusText("Please update the R-package TIMP", 1).clear(15000);
+                }
+                writer.println();
+                writer.println("Detected TIMP version: " + verArray[0] + "." + verArray[1] + "." + verArray[2]);
+
+            } else {
+                writer.append(" FAIL.").flush();
+                writer.println();
+                io.getErr().println("ERROR: please install TIMP. Run R and run install.packages(\"TIMP\")");
+                io.select();
+                StatusDisplayer.getDefault().setStatusText("The R-package TIMP is not installed. Please install.", 1).clear(30000);
+                return;
+            }
+
+            writer.append("Loading TIMP package:");
+            if (isTIMPinstalled()) {
+                try {
+                    isTIMPLoaded = connection.eval("as.logical(print(require(TIMP)))").asBool().isTRUE();
+                    if (isTIMPLoaded) {
+                        writer.append(" OK.").flush();
+                    } else {
+                        writer.append(" FAIL").flush();
+                    }
+                    //writer.append(s).flush();
+                } catch (Exception e) {
+                    // R session could not be validated
+                    writer.append(" FAIL").flush();
+                    isTIMPLoaded = false;
+                    writer.println();
+                    return;
+                }
+            }
+            writer.println();
+
+            // check if a TIMP function can be called
+            writer.close();
+        }
+
     }
 
     @Override
@@ -78,31 +193,31 @@ public class TimpController implements TimpControllerInterface {
 
     @Override
     public TimpResultDataset[] runAnalysis(DatasetTimp[] datasets, ArrayList<String> initModelCalls, String fitModelCall) {
-        if (connection==null) {
-            connection = MakeNewConnection();
+        if (!isRserveRunning || !isTIMPLoaded) {
+            verifyRserve();
         }
-        
-        if (connection!=null) {
-        TimpResultDataset[] results = null;
+        if (isRserveRunning && isTIMPLoaded) {
 
-        for (int i = 0; i < datasets.length; i++) {
-            sendDataset(datasets[i], i);
-        }
+            TimpResultDataset[] results = null;
 
-        for (int i = 0; i < initModelCalls.size(); i++) {
-            sendModel(initModelCalls.get(i), i);
-        }
-
-        connection.voidEval("try(" + fitModelCall + ")");
-        if (getBool("exists(\"" + NAME_OF_RESULT_OBJECT + "\")")) {
-            results = new TimpResultDataset[datasets.length];
             for (int i = 0; i < datasets.length; i++) {
-                results[i] = getTimpResultDataset(i);
+                sendDataset(datasets[i], i);
             }
-            //TODO: make sure this is possible
-            //connection.close();
-        }
-        return results;
+
+            for (int i = 0; i < initModelCalls.size(); i++) {
+                sendModel(initModelCalls.get(i), i);
+            }
+
+            connection.voidEval("try(" + fitModelCall + ")");
+            if (getBool("exists(\"" + NAME_OF_RESULT_OBJECT + "\")")) {
+                results = new TimpResultDataset[datasets.length];
+                for (int i = 0; i < datasets.length; i++) {
+                    results[i] = getTimpResultDataset(i);
+                }
+                //TODO: make sure this is possible
+                //connection.close();
+            }
+            return results;
         } else {
             return null;
         }
@@ -131,7 +246,6 @@ public class TimpController implements TimpControllerInterface {
         connection.eval("if(is.null(intenceIm))  intenceIm <- matrix(1,1,1)");
         connection.eval("intenceIm <- as.matrix(intenceIm)");
         connection.eval("dim(psisim) <- c(nt, nl)");
-
 
         connection.eval(NAME_OF_DATASET + String.valueOf(index) + " <- dat(psi.df = psisim, x = x, nt = nt, x2 = x2, nl = nl, "
                 + "inten = intenceIm)");
@@ -167,12 +281,12 @@ public class TimpController implements TimpControllerInterface {
         result.setDatasetName(datasetName);
 //        result.setSpectra(getCLP(NAME_OF_RESULT_OBJECT, datasetNumber));
         Matrix spectra = getSpectra(NAME_OF_RESULT_OBJECT, datasetNumber);
-        if(spectra!=null) {
+        if (spectra != null) {
             result.setSpectra(new JamaDenseDoubleMatrix2D(spectra).getWrappedObject());
         }
         Matrix clp = getCLP(NAME_OF_RESULT_OBJECT, true, datasetNumber);
-        if (clp!=null) {
-        result.setSpectraErr(new JamaDenseDoubleMatrix2D(clp).getWrappedObject());
+        if (clp != null) {
+            result.setSpectraErr(new JamaDenseDoubleMatrix2D(clp).getWrappedObject());
         }
         result.setX(getdim1(NAME_OF_RESULT_OBJECT, datasetNumber));
         result.setX2(getdim2(NAME_OF_RESULT_OBJECT, datasetNumber));
@@ -270,12 +384,12 @@ public class TimpController implements TimpControllerInterface {
             String param) {
         return getDoubleArray(
                 new StringBuffer().append(""
-                + "unlist("
-                + "parEst("
-                + resultVariable + ", "
-                + "param = \"" + param + "\""
-                + ",dataset = " + dataset
-                + "))").toString());
+                        + "unlist("
+                        + "parEst("
+                        + resultVariable + ", "
+                        + "param = \"" + param + "\""
+                        + ",dataset = " + dataset
+                        + "))").toString());
     }
 
     public List<Matrix> getXList(String resultVariable, boolean single) {
@@ -309,13 +423,13 @@ public class TimpController implements TimpControllerInterface {
         }
         if (single) {
             double[] temp = connection.eval("getX(" + resultVariable + ", dataset =" + index + ")").asDoubleArray();
-            Matrix x = MatrixFactory.importFromArray(temp);            
+            Matrix x = MatrixFactory.importFromArray(temp);
             //x.setSize(1, (temp.length-1));
 //            Matrix x = new Matrix(1, temp.length);
 //            for (int i = 0; i < temp.length; i++) {
 //                x.set(0, i, temp[i]);
 //            }
-            return x.reshape(Ret.NEW, 1, (temp.length-1));
+            return x.reshape(Ret.NEW, 1, (temp.length - 1));
         } else {
             //return getDoubleMatrix("getX(" + resultVariable + ", dataset =" + index + ")");
             return getTempMatrix("getX(" + resultVariable + ", dataset =" + index + ")");
@@ -340,8 +454,8 @@ public class TimpController implements TimpControllerInterface {
     public Matrix getSpectra(String resultVariable, int dataset) {
         Matrix sas = getCLP(resultVariable, false, dataset);
         Matrix das = getDAS(resultVariable, dataset);
-       Matrix results = MatrixFactory.concat(0, sas, das);
-       // Matrix results = new Matrix(sas.getRowDimension() * 2, sas.getColumnDimension());
+        Matrix results = MatrixFactory.concat(0, sas, das);
+        // Matrix results = new Matrix(sas.getRowDimension() * 2, sas.getColumnDimension());
         //results.setMatrix(0, sas.getRowDimension() - 1, 0, sas.getColumnDimension() - 1, sas);
         //results.setMatrix(sas.getRowDimension(), sas.getRowDimension() * 2 - 1, 0, sas.getColumnDimension() - 1, das);
         return results;
@@ -460,9 +574,9 @@ public class TimpController implements TimpControllerInterface {
             connection.eval("f2 = matrix(unlist(f), ncol=ncol(w))/w");
             double[] dim = connection.eval("dim(f2)").asDoubleArray();
             double[] temp = connection.eval("f2").asDoubleArray();
-            Matrix retMatrix = MatrixFactory.importFromArray(temp);            
+            Matrix retMatrix = MatrixFactory.importFromArray(temp);
             //retMatrix.setSize((long)dim[0], (long)dim[1]);
-            return retMatrix.reshape(Ret.NEW, (long)dim[0], (long)dim[1]);
+            return retMatrix.reshape(Ret.NEW, (long) dim[0], (long) dim[1]);
             //return new Matrix(temp, (int) dim[0]);
         } else {
             return getTempMatrix("getTraces(" + resultVariable + ", dataset =" + dataset + ")");
@@ -550,11 +664,11 @@ public class TimpController implements TimpControllerInterface {
 
     public Matrix getDoubleMatrix(String cmd) {
         //just once the values
-       IRMatrix retIRMatrix = getIRMatrix(cmd);
+        IRMatrix retIRMatrix = getIRMatrix(cmd);
         Matrix doubleMatrix = MatrixFactory.dense(ValueType.DOUBLE, retIRMatrix.getRows(), retIRMatrix.getColumns());
-         for (int row = 0; row < retIRMatrix.getRows(); row++) {
+        for (int row = 0; row < retIRMatrix.getRows(); row++) {
             for (int col = 0; col < retIRMatrix.getColumns(); col++) {
-                doubleMatrix.setAsDouble(retIRMatrix.getValueAt(row, col).asDouble(),row, col);
+                doubleMatrix.setAsDouble(retIRMatrix.getValueAt(row, col).asDouble(), row, col);
             }
         }
         return doubleMatrix;
@@ -567,7 +681,7 @@ public class TimpController implements TimpControllerInterface {
         //Matrix intMatrix = new Matrix(retIRMatrix.getRows(), retIRMatrix.getColumns());
         for (int row = 0; row < retIRMatrix.getRows(); row++) {
             for (int col = 0; col < retIRMatrix.getColumns(); col++) {
-                intMatrix.setAsInt(retIRMatrix.getValueAt(row, col).asInt(),row, col);
+                intMatrix.setAsInt(retIRMatrix.getValueAt(row, col).asInt(), row, col);
             }
         }
         return intMatrix;
@@ -622,10 +736,11 @@ public class TimpController implements TimpControllerInterface {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-        private int getDatasetTimplength(){
+    private int getDatasetTimplength() {
         return 1;
     }
-public DatasetTimp[] runSimulation(ArrayList<String> initModelCalls, String simModel) {
+
+    public DatasetTimp[] runSimulation(ArrayList<String> initModelCalls, String simModel) {
 
         DatasetTimp[] results = null;
 
@@ -645,10 +760,10 @@ public DatasetTimp[] runSimulation(ArrayList<String> initModelCalls, String simM
     }
 
     private DatasetTimp getResultDataset(int i) {
-         String datasetName = "dataset";
+        String datasetName = "dataset";
         DatasetTimp result = new DatasetTimp();
 
-       // connection.assign("intenceIm", dd.getIntenceIm());
+        // connection.assign("intenceIm", dd.getIntenceIm());
         result.setDatasetName(datasetName);
         result.setType("spec");
         result.setPsisim(getPsisim(NAME_OF_SIM_OBJECT, 0));
@@ -659,26 +774,31 @@ public DatasetTimp[] runSimulation(ArrayList<String> initModelCalls, String simM
         result.calcRangeInt();
         return result;
     }
+
     private double[] getPsisim(String resultVariable, int dataset) {
-        String cmd = "t("+ resultVariable + "@psi.df)";
+        String cmd = "t(" + resultVariable + "@psi.df)";
         return getDoubleArray("as.vector(" + resultVariable + "@psi.df)");
         //return getTempMatrix(cmd).get;
         //return getDoubleMatrix(resultVariable + "@psi.df").getRowPackedCopy();
     }
+
     private double[] getTime(String resultVariable, int dataset) {
         return getDoubleArray(resultVariable + "@x");
     }
+
     private double[] getX2(String resultVariable, int dataset) {
         return getDoubleArray(resultVariable + "@x2");
     }
+
     private int getNl(String resultVariable, int dataset) {
         return getInt(resultVariable + "@nl");
     }
+
     private int getNt(String resultVariable, int dataset) {
         return getInt(resultVariable + "@nt");
     }
+
     private double[] getIntenceIm(String resultVariable, int dataset) {
         return getDoubleArray(resultVariable + "@x2");
     }
 }
-

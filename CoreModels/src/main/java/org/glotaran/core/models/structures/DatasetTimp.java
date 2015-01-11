@@ -14,8 +14,8 @@ public final class DatasetTimp implements Serializable {
     private double minInt;      //min(psysim)
     private double[] x;         //vector with timesteps (time-dimension)
     private double[] x2;        //vector with wavelengts (x-dimension)
-    private double[] intenceImX;        //vector with wavelengts  (z-dimention)
-    private double[] intenceImY;        //vector with wavelengts  (z-dimention)
+    private double[] intenceImX;        //vector with wavelengts  (z-dimension)
+    private double[] intenceImY;        //vector with wavelengts  (z-dimension)
     private int nt;             //length of x
     private int nl;             //length of x2
     private int orheight;       //original height of flim image

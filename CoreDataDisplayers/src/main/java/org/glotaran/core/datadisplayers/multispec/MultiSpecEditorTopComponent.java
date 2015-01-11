@@ -900,7 +900,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jTAInfo.append(tempString);
         tempString = "Time window: " + String.valueOf(data.getX()[data.getNt() - 1] - data.getX()[0]) + "\n";
         jTAInfo.append(tempString);
-        tempString = "Nuber of time steps: " + String.valueOf(data.getNt()) + "\n";
+        tempString = "Number of time steps: " + String.valueOf(data.getNt()) + "\n";
         jTAInfo.append(tempString);
         tempString = "Image window: " + String.valueOf(data.getIntenceImY()[data.getOriginalWidth() - 1] - data.getIntenceImY()[0]) + " x " + String.valueOf(data.getIntenceImX()[data.getOriginalHeight()- 1] - data.getIntenceImX()[0]) + "\n";
         jTAInfo.append(tempString);
