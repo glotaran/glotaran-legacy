@@ -49,17 +49,37 @@ public class Hdf5DatasetTimp {
                             if (!(objMeta instanceof Attribute)) {
                                 continue;
                             }
+                            double[] dval;
+                            String[] strval;
                             Attribute attr = (Attribute) objMeta;
-                            double[] val = (double[]) attr.getValue();
-                            if (val == null) {
-                                continue;
-                            }
                             switch (attr.getName()) {
                                 case "min":
-                                    dataset.setMinInt(val[0]);
+                                    dval = (double[]) attr.getValue();
+                                    if (dval == null) {
+                                        continue;
+                                    }
+                                    dataset.setMinInt(dval[0]);
                                     break;
                                 case "max":
-                                    dataset.setMaxInt(val[0]);
+                                    dval = (double[]) attr.getValue();
+                                    if (dval == null) {
+                                        continue;
+                                    }
+                                    dataset.setMaxInt(dval[0]);
+                                    break;
+                                case "label3":
+                                    strval = (String[]) attr.getValue();
+                                    if (strval == null) {
+                                        continue;
+                                    }
+                                    dataset.setX3label(strval[0]);
+                                    break;
+                                case "units3":
+                                    strval = (String[]) attr.getValue();
+                                    if (strval == null) {
+                                        continue;
+                                    }
+                                    dataset.setX3label(strval[0]);
                                     break;
                             }
                         }
@@ -154,15 +174,50 @@ public class Hdf5DatasetTimp {
                         dataset.setOrigWidth((int) dims[1]);
                         break;
                     }
+                    case "x_scale": {
+                        Dataset dset = (Dataset) obj;
+                        long[] dims = dset.getDims();
+                        if (dims.length != 1) {
+                            CoreInformationMessages.HDF5Info("Invalid number of DatasetTimp FLIM X scale dimensions");
+                            return;
+                        }
+                        dataset.setIntenceImX((double[]) dset.read());
+                        break;
+                    }
+                    case "y_scale": {
+                        Dataset dset = (Dataset) obj;
+                        long[] dims = dset.getDims();
+                        if (dims.length != 1) {
+                            CoreInformationMessages.HDF5Info("Invalid number of DatasetTimp FLIM Y scale dimensions");
+                            return;
+                        }
+                        dataset.setIntenceImY((double[]) dset.read());
+                        break;
+                    }
                 }
             }
+
+            // check, if we have got consistent data
+            // TODO: we probably do want to do something more than just showing a warning here,
+            // but we do not probably want deleting any data.
+            if (dataset.getIntenceImX() != null) {
+                if (dataset.getIntenceImX().length != dataset.getOriginalHeight()) {
+                    CoreInformationMessages.HDF5Info("Unexpected length of DatasetTimp FLIM X scale - discarding scale data");
+                }
+            }
+            if (dataset.getIntenceImY() != null) {
+                if (dataset.getIntenceImY().length != dataset.getOriginalWidth()) {
+                    CoreInformationMessages.HDF5Info("Unexpected length of DatasetTimp FLIM Y scale - discarding scale data");
+                }
+            }
+
         } catch (Exception ex) {
             CoreInformationMessages.HDF5Info(groupFlim.getName() + ": " + ex.getMessage());
         }
     }
 
     private static void readIRF(DatasetTimp dataset, Group groupIrf) {
-         try {
+        try {
             List groupMembers = groupIrf.getMemberList();
             for (Object groupMember : groupMembers) {
                 HObject obj = (HObject) groupMember;
@@ -353,6 +408,15 @@ public class Hdf5DatasetTimp {
                     attr = new Attribute("units", dtVarString, single_dim, value_str);
                     dset.writeMetadata(attr);
                 }
+
+                //x3label/unit do not appear to be used anywhere or linked to anything
+                //put them as main data's attributes
+                value_str = new String[]{dataset.getX3label()};
+                attr = new Attribute("label3", dtVarString, single_dim, value_str);
+                dsetPsisim.writeMetadata(attr);
+                value_str = new String[]{dataset.getX3unit()};
+                attr = new Attribute("units3", dtVarString, single_dim, value_str);
+                dsetPsisim.writeMetadata(attr);
             }
 
             //store FLIM image
@@ -360,6 +424,18 @@ public class Hdf5DatasetTimp {
                 assert (dataset.getOriginalHeight() * dataset.getOriginalWidth() == dataset.getIntenceIm().length);
                 data_dim = new long[]{dataset.getOriginalHeight(), dataset.getOriginalWidth()};
                 hdfFile.createScalarDS("image", groupFlim, dtDouble, data_dim, data_dim, null, 0, dataset.getIntenceIm());
+
+                if (dataset.getIntenceImX() != null) {
+                    assert (dataset.getOriginalHeight() == dataset.getIntenceImX().length);
+                    data_dim = new long[]{dataset.getOriginalHeight()};
+                    hdfFile.createScalarDS("x_scale", groupFlim, dtDouble, data_dim, data_dim, null, 0, dataset.getIntenceImX());
+                }
+
+                if (dataset.getIntenceImY() != null) {
+                    assert (dataset.getOriginalWidth() == dataset.getIntenceImY().length);
+                    data_dim = new long[]{dataset.getOriginalWidth()};
+                    hdfFile.createScalarDS("y_scale", groupFlim, dtDouble, data_dim, data_dim, null, 0, dataset.getIntenceImY());
+                }
             }
 
             //store IRF data
