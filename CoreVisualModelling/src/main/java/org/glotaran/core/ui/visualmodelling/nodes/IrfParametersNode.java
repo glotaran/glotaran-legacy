@@ -191,8 +191,7 @@ public class IrfParametersNode extends PropertiesAbstractNode {
             if (currCompNum < 4) {
                 childColection.addDefaultObj(4 - currCompNum);
             } else {
-                childColection.removeParams(currCompNum - 2);
-                childColection.addDefaultObj(2);
+                childColection.removeParams(currCompNum - 4);
             }
             getSheet().get(Sheet.PROPERTIES).remove(propNames[5]);
             addStreackProp();
