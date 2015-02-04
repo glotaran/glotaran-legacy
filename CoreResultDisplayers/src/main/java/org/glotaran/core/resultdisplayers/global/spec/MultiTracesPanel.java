@@ -511,20 +511,26 @@ public class MultiTracesPanel extends javax.swing.JPanel {
                         resid.addSeries(residTo.getSeries(0));
                   }
                 } else {
-                    emptySer.setKey("EmptyTrace" + String.valueOf(i));
+                    emptySer = new XYSeries("EmptyTrace" +String.valueOf(i));
+//                    emptySer.setKey("EmptyTrace" +String.valueOf(i));
                     trace.addSeries(emptySer);
-                    emptySer.setKey("EmptyFit" + String.valueOf(i));
+                    emptySer = new XYSeries("EmptyFit" +String.valueOf(i));
+//                    emptySer.setKey("EmptyFit" + String.valueOf(i));
                     trace.addSeries(emptySer);
-                    emptySer.setKey("EmptyResid" + String.valueOf(i));
+                    emptySer = new XYSeries("EmptyResid" +String.valueOf(i));
+//                    emptySer.setKey("EmptyResid" + String.valueOf(i));
                     resid.addSeries(emptySer);
 
                 }
             } else {
-                emptySer.setKey("EmptyTrace" + String.valueOf(i));
+                emptySer = new XYSeries("EmptyTrace" + String.valueOf(i));
+//                    emptySer.setKey("EmptyTrace" +String.valueOf(i));
                 trace.addSeries(emptySer);
-                emptySer.setKey("EmptyFit" + String.valueOf(i));
+                emptySer = new XYSeries("EmptyFit" + String.valueOf(i));
+//                    emptySer.setKey("EmptyFit" + String.valueOf(i));
                 trace.addSeries(emptySer);
-                emptySer.setKey("EmptyResid" + String.valueOf(i));
+                emptySer = new XYSeries("EmptyResid" + String.valueOf(i));
+//                    emptySer.setKey("EmptyResid" + String.valueOf(i));
                 resid.addSeries(emptySer);
             }
         }
