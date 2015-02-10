@@ -14,6 +14,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.SpinnerNumberModel;
@@ -72,6 +73,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         spSkipRows = new javax.swing.JSpinner();
         spSkipColums = new javax.swing.JSpinner();
+        jCBAutoSkip = new javax.swing.JCheckBox();
         jPEnableLifetimeDensityMap = new javax.swing.JPanel();
         jPLifetimeDensityMapSettings = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -149,12 +151,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel1.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPSkip.add(jLabel1, gridBagConstraints);
+        jPSkip.add(jLabel1, new java.awt.GridBagConstraints());
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jLabel2.text")); // NOI18N
@@ -185,6 +182,10 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPSkip.add(spSkipColums, gridBagConstraints);
+
+        jCBAutoSkip.setText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jCBAutoSkip.text")); // NOI18N
+        jCBAutoSkip.setToolTipText(org.openide.util.NbBundle.getMessage(CSVLoaderDialog.class, "CSVLoaderDialog.jCBAutoSkip.toolTipText")); // NOI18N
+        jPSkip.add(jCBAutoSkip, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -793,9 +794,9 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
         try {
             dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file, getDelimiterString());
             if ((getSkipRows() > 0) || (getSkipColums() > 0)) {
-                dataMatrix.subMatrix(Calculation.Ret.ORIG, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+                dataMatrix.subMatrix(Calculation.Ret.LINK, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
             }
-            MatrixTableEditorPanel matPanel = new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix));
+            MatrixTableEditorPanel matPanel = new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix.subMatrix(Calculation.Ret.LINK, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1)));
             jpMatrixEditor.removeAll();
             jpMatrixEditor.add(matPanel);
             jpMatrixEditor.validate();
@@ -812,6 +813,7 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private javax.swing.JCheckBox cbWaveCalbration;
     private javax.swing.JCheckBox cbspectraInRows;
     private javax.swing.JButton jBPreview;
+    private javax.swing.JCheckBox jCBAutoSkip;
     private javax.swing.JCheckBox jCBLinLogEnabeled;
     private javax.swing.JFormattedTextField jFTFFrom;
     private javax.swing.JFormattedTextField jFTFLastLifetimeMult;
@@ -909,6 +911,10 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     public String getFilename() {
         return tfFilename.getText();
     }
+
+    public boolean getAutoSkip() {
+        return jCBAutoSkip.isSelected();
+    }        
 
     public int getSkipRows() {
         return ((SpinnerNumberModel) spSkipRows.getModel()).getNumber().intValue();

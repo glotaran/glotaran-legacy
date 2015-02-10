@@ -3,4 +3,4 @@ AutoUpdate-Show-In-Client: true
 AutoUpdate-Essential-Module: true
 OpenIDE-Module-Layer: org/glotaran/analysis/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/analysis/Bundle.properties
-
+OpenIDE-Module-Specification-Version: ${glotaran.modules.specification.version}

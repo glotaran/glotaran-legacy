@@ -192,7 +192,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         dataObject2 = dataObj;
         data = dataObj.getDatasetTimp();
         
-        boolean invertedWaves = data.getX2()[0]<data.getX2()[1] ? false : true;
+        boolean invertedWaves = data.getX2().length > 1 ? data.getX2()[0]>data.getX2()[1]  : false ;
         if (invertedWaves) {
             double[] x2t = new double[data.getNl()];
             double[] temp = new double[data.getNl()*data.getNt()];
@@ -497,8 +497,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         gridBagConstraints.weighty = 0.6;
         jPanel1.add(jPSpecImage, gridBagConstraints);
 
-        jSColum.setMinimum(1);
-        jSColum.setValue(1);
+        jSColum.setValue(0);
         jSColum.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSColumStateChanged(evt);
@@ -513,9 +512,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 70);
         jPanel1.add(jSColum, gridBagConstraints);
 
-        jSRow.setMinimum(1);
         jSRow.setOrientation(javax.swing.JSlider.VERTICAL);
-        jSRow.setValue(1);
+        jSRow.setValue(0);
         jSRow.setInverted(true);
         jSRow.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1204,6 +1202,8 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             jSColum.setValue(0);
             jSRow.setValue(0);
             if (data.getNt()==1||data.getNl()==1) {
+                //TODO: make nice chart of 1D data
+                MakeImageChart(MakeXYZDataset());
             } else {
                 MakeImageChart(MakeXYZDataset());
             }
@@ -1749,8 +1749,10 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             upInd = (int) (this.lastXRange.getUpperBound() - 1);
             double lowIndValue = data.getX2()[lowInd];
             double upIndValue = data.getX2()[upInd];
+            if (upInd != lowInd) {
             Range domainAxisRange = lowIndValue > upIndValue ? (new Range(upIndValue, lowIndValue)) : (new Range(lowIndValue, upIndValue));
             plot2.getDomainAxis().setRange(domainAxisRange);
+            }
             jSColum.setMinimum(lowInd);
             jSColum.setMaximum(upInd);
 
@@ -1761,8 +1763,10 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             XYPlot plot1 = (XYPlot) this.subchartTimeTrace.getPlot();
             lowInd = (int) (this.wholeYRange.getUpperBound() - this.lastYRange.getUpperBound());
             upInd = (int) (this.wholeYRange.getUpperBound() - this.lastYRange.getLowerBound() - 1);
-            plot1.getDomainAxis().setRange(new Range(data.getX()[lowInd], data.getX()[upInd]));
+            if (upInd != lowInd) {
+            plot1.getDomainAxis().setRange(new Range(data.getX()[lowInd], data.getX()[upInd]));            
             plot1.getRangeAxis().setAutoRange(true);
+            }
             jSRow.setMinimum(lowInd);
             jSRow.setMaximum(upInd);
         }
@@ -1995,15 +1999,14 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         tempString = "Time window: " + String.valueOf(data.getX()[data.getNt() - 1] - data.getX()[0]) + "\n";
         jTAInfo.append(tempString);
         tempString = "Nuber of time steps: " + String.valueOf(data.getNt()) + "\n";
-        jTAInfo.append(tempString);
-        tempString = "Time step: " + String.valueOf(data.getX()[1] - data.getX()[0]) + "\n";
-        jTAInfo.append(tempString);
+        jTAInfo.append(tempString); 
+        tempString = "Time step: " + ((data.getX().length > 1) ? String.valueOf(data.getX()[1] - data.getX()[0]) + "\n" : "0");
+        jTAInfo.append(tempString);        
 
         tempString = "Wave window: " + String.valueOf(data.getX2()[data.getNl() - 1] - data.getX2()[0]) + "\n";
-        jTAInfo.append(tempString);
+        jTAInfo.append(tempString);        
         tempString = "Nuber of wave steps: " + String.valueOf(data.getNl()) + "\n";
         jTAInfo.append(tempString);
-
         tempString = "Wave step: " + ((data.getX2().length > 1) ? String.valueOf(data.getX2()[1] - data.getX2()[0]) + "\n" : "0");
 
 

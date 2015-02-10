@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-AutoUpdate-Show-In-Client: false
-OpenIDE-Module-Implementation-Version: 1
+AutoUpdate-Show-In-Client: true
 OpenIDE-Module-Layer: org/glotaran/simfilesupport/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/glotaran/simfilesupport/Bundle.properties
-
+AutoUpdate-Essential-Module: false
+OpenIDE-Module-Specification-Version: ${glotaran.modules.specification.version}

@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: false
 OpenIDE-Module-Localizing-Bundle: org/rosuda/Bundle.properties
-
+AutoUpdate-Essential-Module: true
+OpenIDE-Module-Specification-Version: ${glotaran.modules.specification.version}

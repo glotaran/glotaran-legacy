@@ -33,7 +33,7 @@ public abstract class ImageUtilities {
         XYSeries series = new XYSeries(seriesName);
         int cols = dataset.GetImageWidth();
         for (int c = 0; c < cols; c++) {
-            series.add(dataset.GetWaveValue(c), dataset.getZValue(1, row * cols + c));
+            series.add(dataset.GetWaveValue(c), dataset.getZValue(1, row*cols + c));
         }
         XYSeriesCollection result = new XYSeriesCollection(series);
         return result;

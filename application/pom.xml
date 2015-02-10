@@ -2,38 +2,129 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Parent POM -->   
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
-    </parent>
+        <relativePath>..</relativePath>
+    </parent>        
 
     <artifactId>glotaran-app</artifactId>
     <packaging>nbm-application</packaging>
-
     <name>glotaran-app</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <all.clusters>${project.build.directory}/${brandingToken}</all.clusters>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
-            <version>${netbeans.version}</version>
             <type>pom</type>
+            <!--
+            <exclusions>
+                <exclusion>
+                    <artifactId>org-jdesktop-layout</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-api-search</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-api-visual</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-core-execution</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-core-netigso</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-core-osgi</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-core-output2</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-libs-osgi</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-libs-felix</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-libs-jsr223</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-libs-testng</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-core-kit</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-netbinox</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-openide-compat</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-openide-execution</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-openide-options</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-openide-util-enumerations</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-editor-mimelookup-impl</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-print</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-favorites</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-javahelp</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-sampler</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org-netbeans-modules-spi-actions</artifactId>
+                    <groupId>org.netbeans.modules</groupId>
+                </exclusion>                
+            </exclusions>
+            -->
         </dependency>
+        
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>glotaran-branding</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
-        <!-- NbModuleSuite functional in RELEASE70 or later: -->
+            <artifactId>glotaran-branding</artifactId>                     
+        </dependency>        
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-nbjunit</artifactId>
-            <version>${netbeans.version}</version>
             <scope>test</scope> <!-- beyond platform cluster, this often needs to be dropped down to compile/runtime, some other modules in IDE clusters depend on it -->
         </dependency>
         <!-- To use Jelly Tools in your functional tests, add or replace with:
@@ -43,150 +134,148 @@
             <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
-        -->
+        -->        
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreUI</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>CoreUI</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jfreechart</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>jfreechart</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreSimulation</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>CoreSimulation</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreAnalysis</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>CoreAnalysis</artifactId>                     
+        </dependency>
         <dependency>
-            <artifactId>CoreInterfaces</artifactId>
-             <groupId>${project.groupId}</groupId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>CoreInterfaces</artifactId>                 
+        </dependency>
         <dependency>
-            <artifactId>CoreMain</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>CoreMain</artifactId>            
+        </dependency>
         <dependency>
-            <artifactId>CoreMessages</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>CoreMessages</artifactId>            
+        </dependency>
         <dependency>
-            <artifactId>CoreModels</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>CoreModels</artifactId>            
+        </dependency>
         <dependency>
-            <artifactId>GtaFileSupport</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>GtaFileSupport</artifactId>                            
+        </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>    
             <artifactId>JFreeChartCustom</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
-            <artifactId>SimSupport</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>SimSupport</artifactId>            
+        </dependency>
         <dependency>
-            <artifactId>TGMFileSupport</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>TGMFileSupport</artifactId>            
+        </dependency>
         <dependency>
-            <artifactId>UJMPwithdep</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreVisualModelling</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>    
+            <artifactId>UJMPwithdep</artifactId>            
+        </dependency>
+        <dependency> 
+            <groupId>${project.groupId}</groupId>                
+            <artifactId>CoreVisualModelling</artifactId>   
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreAUC</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>CoreAUC</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>AVGDataloader</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>AVGDataloader</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jide-oss</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>jide-oss</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>JRI</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>JRI</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jcommon</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>jcommon</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>TIMPController</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>TIMPController</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreResultDisplayers</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>CoreResultDisplayers</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>REngine</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>REngine</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>imgdataloader_new</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>imgdataloader_new</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>PQDataloader</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>PQDataloader</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>SDTDataloader</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>SDTDataloader</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>RawDataloader</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>RawDataloader</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ASCIIDataloader</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>csvdataloader</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>csvdataloader</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>JRConnect</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>JRConnect</artifactId>                     
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>AnalysisOverviewFileSupport</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <artifactId>AnalysisOverviewFileSupport</artifactId>                     
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreOptions</artifactId>            
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreDataDisplayers</artifactId>            
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ExampleDataloader</artifactId>
+        </dependency>
+        
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb</artifactId>
-            <version>2.1.9</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-libs-jaxb</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-libs-testng</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
+        </dependency>    
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
@@ -197,33 +286,57 @@
             <artifactId>org-netbeans-modules-projectui</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreOptions</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CoreDataDisplayers</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ExampleDataloader</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+ 
+
     </dependencies>
 
     <build>
         <plugins>
+            
+            <!-- Disable the ZIP goal in the non-deployment or release mode. Also set up the location of the glotaran.conf -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <configuration>
-                    <installerLicenseFile>gpl-2.0.txt</installerLicenseFile>
-                    <etcConfFile>src/main/resources/glotaran.conf</etcConfFile>
+                    <!-- Set up the glotaran.conf for the final artifact -->
+                    <etcConfFile>${basedir}/target/${brandingToken}.conf</etcConfFile>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-standalone-zip</id>
+                        <phase>none</phase>       
+                    </execution>
+                </executions>
             </plugin>
+            
+            <!-- Copy ressources glotaran.conf and Info.plist with filtering (replacing 'project.version' by the actual version -->
+            <plugin> 
+                <artifactId>maven-resources-plugin</artifactId> 
+                <executions> 
+                    <execution> 
+                        <id>generate-app-conf-file</id> 
+                        <phase>generate-resources</phase> 
+                        <goals> 
+                            <goal>copy-resources</goal> 
+                        </goals> 
+                        <configuration> 
+                            <outputDirectory>${basedir}/target/</outputDirectory> 
+                            <resources> 
+                                <resource> 
+                                    <directory>src/main/resources</directory> 
+                                    <includes> 
+                                        <include>${brandingToken}.conf</include>
+                                        <include>Info.plist</include>
+                                    </includes> 
+                                    <filtering>true</filtering> 
+                                </resource> 
+                            </resources>
+                            <escapeString>\</escapeString>
+                        </configuration> 
+                    </execution> 
+                </executions> 
+            </plugin>
+            
             <!-- Permits NbModuleSuite to be run in integration-test phase: -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -236,33 +349,59 @@
                     </systemPropertyVariables>
                     <argLine>-Xmx512m </argLine>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
+            </plugin>                        
         </plugins>
     </build>
 
     <profiles>
+        
+        <!-- The deployment profile is built for daily releases. It builds the standalone 
+        zip and the autoupdate site. It can be used with deploy-dmg to include the dmg as well. -->
         <profile>
-            <id>deployment</id>
+            <id>deployment</id>                     
+            
             <build>
                 <plugins>
+                    
+                    <!-- NBM Plugin settings. Enable the zip and autoupdate generation -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>nbm-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>extra</id>
+                                <id>default-standalone-zip</id>
+                                <phase>package</phase>       
+                            </execution>
+                            <execution>
+                                <id>autoupdate</id>
                                 <goals>
                                     <goal>autoupdate</goal>
-                                   <!-- <goal>webstart-app</goal> -->
-                                    <goal>build-installers</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <!-- Permits NbModuleSuite to be run in integration-test phase: -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <all.clusters>${all.clusters}</all.clusters>
+                                <branding.token>${brandingToken}</branding.token>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                    
+                    <!-- Avoid jar goal -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>none</phase>
+                                <goals>
+                                    <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -270,6 +409,281 @@
                 </plugins>
             </build>
         </profile>
+        
+        <!-- Profile used along with deployment to create the dmg archive -->
+        <profile>
+            <id>create-dmg</id>
+            <build>
+                <plugins>
+                    
+                    <!-- Create the Mac OS X application bundle and dmg file -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>create-app-bundle</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        
+                                        <echo message ="project.build.directory = ${project.build.directory}" /> 
+                                
+                                        <delete includeEmptyDirs="true" failonerror="false">
+                                            <fileset dir="${project.build.directory}/${glotaran.appbundle.name}.app"/>
+                                            <fileset dir="${project.build.directory}/${glotaran.app.title}"/>
+                                            <fileset dir="${project.build.directory}/${project.artifactId}-${project.version}.dmg"/>
+                                            <fileset dir="${project.build.directory}/${project.artifactId}-${glotaran.branding.version}.dmg"/>                                            
+                                        </delete>
+                                
+                                        <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app"/>
+                                        <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS"/>
+                                        
+                                        <copy todir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}">
+                                            <fileset dir="${project.build.directory}/${brandingToken}"/>
+                                        </copy>
+                                                                                
+                                        <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}.icns" file="src/main/app-resources/graphics/${brandingToken}.icns" />
+                                        <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Info.plist" file="${project.build.directory}/Info.plist"/>
+                                
+                                        <chmod file="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}/bin/${brandingToken}" perm="ugo+rx"/>
+                                
+                                        <symlink link="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS/Glotaran" resource="../Resources/${brandingToken}/bin/${brandingToken}" failonerror="false" />
+                                        <!-- No code signing for now -->
+                                        <!-- <exec dir="${project.build.directory}" os="Mac OS X" executable="codesign">
+                                            <arg value="-fs"/> 
+                                            <arg value="${glotaran.codesign.identity}"/> 
+                                            <arg value="-v"/> 
+                                            <arg value="${glotaran.appbundle.name}.app"/> 
+                                        </exec> -->
+                                        
+                                        <mkdir dir="${project.build.directory}/${glotaran.app.title}"/>
+                                        <mkdir dir="${project.build.directory}/${glotaran.app.title}/.background"/>
+                                        
+                                        <!-- Note that .DS_Store is version specific due to the file naming constraint on the dmg file -->
+                                        <echo message ="Copy src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store to dmg" /> 
+                                        <copy tofile="${project.build.directory}/${glotaran.app.title}/.DS_Store" file="src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store.bak" />
+                                        <copy tofile="${project.build.directory}/${glotaran.app.title}/.background/Mac_OSX_dmg_background.png" file="src/main/app-resources/graphics/Mac_OSX_dmg_background.png" />
+                                        <move file="${project.build.directory}/${glotaran.appbundle.name}.app" todir="${project.build.directory}/${glotaran.app.title}/" />
+                                        <symlink link="${project.build.directory}/${glotaran.app.title}/Applications" resource="/Applications" failonerror="false" />
+                                        
+                                        <exec dir="${project.build.directory}" os="Mac OS X" executable="hdiutil">
+                                            <arg value="create"/> 
+                                            <arg value="-noanyowners"/> 
+                                            <arg value="-imagekey"/> 
+                                            <arg value="zlib-level=9"/> 
+                                            <arg value="-srcfolder"/> 
+                                            <arg value="${project.build.directory}/${glotaran.app.title}"/> 
+                                            <arg value="${project.name.capatilized}-${glotaran.branding.version}.dmg"/>
+                                        </exec>
+
+                                        <exec dir="${project.build.directory}" os="Linux" executable="mkisofs">
+                                            <arg value="-V"/> 
+                                            <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}"/>
+                                            <arg value="-U"/>
+                                            <arg value="-D"/>
+                                            <arg value="-l"/>
+                                            <arg value="-allow-multidot"/>
+                                            <arg value="-max-iso9660-filenames"/>
+                                            <arg value="-relaxed-filenames"/>
+                                            <arg value="-no-iso-translate"/>
+                                            <arg value="-r"/>
+                                            <arg value="-o"/>
+                                            <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}.dmg"/>
+                                            <!-- the -root argument creates a folder structure in the dmg, which is unwanted in our case -->
+                                            <!-- 
+                                            <arg value="-root"/>
+                                            <arg value="Glotaran_Installer"/> 
+                                            -->
+                                            <arg value="${project.build.directory}/${glotaran.app.title}"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <!-- Profile used along with deployment to attach the dmg archive -->
+        <profile>
+            <id>deploy-dmg</id>
+            <build>
+                <plugins>
+                    <!-- Attach the final DMG for deployment -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-dmg</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>attach-artifact</goal>
+                                </goals>
+                                <configuration>
+                                    <artifacts>
+                                        <artifact>
+                                            <file>${project.build.directory}/${project.name.capatilized}-${glotaran.branding.version}.dmg</file>
+                                            <type>dmg</type>
+                                        </artifact>
+                                    </artifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>   
+                </plugins>
+            </build>
+        </profile>
+        
+        <!-- Profile activated for windows/macos release only. Should be called alone so it only creates the windows installer/compressed dmg -->
+        <profile>
+            <id>release-extra</id>
+            <build>
+                <plugins>
+                    <!-- Avoid updatesite.xml.gz attach -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>nbm-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-standalone-zip</id>
+                                <phase>none</phase>       
+                            </execution>
+                            <execution>
+                                <id>autoupdate</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>                        
+        
+        <profile>
+            <id>replace-icon-unix</id>
+            <activation>
+                <os>
+                    <family>Unix</family>
+                </os>
+                <file>
+                    <exists>${wine.bottle}\drive_c\${resourcehacker.installdir}\ResHacker.exe</exists>
+                </file>                     
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId> 
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>                        
+                                <configuration>
+                                    <target> 
+
+                                        <echo message ="Replacing icon of Windows launcher executable" />
+                                        <echo message ="Using wine bottle: ${wine.bottle}" />  
+                                        <echo message ="Running ${resourcehacker.installdir}\ResHacker.exe" />
+                                        <echo message ="Replacing ${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe" />                                        
+                                        <echo message ="Using applicaion.ico = ${application.ico} " />                                        
+                                        
+                                        <!-- replace executable with ResHacker.exe path on windows -->
+                                        <exec executable="wine" resolveexecutable="true" logerror="true">
+                                            <!-- replace value with location of installation bottle, or remove on windows -->
+                                            <env key="WINEPREFIX" value="${wine.bottle}" />
+                                            <!-- remove this argument when running on windows -->
+                                            <arg value="${resourcehacker.installdir}\ResHacker.exe"/>
+                                            <arg value="-addoverwrite"/>
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
+                                            <arg value="${application.ico},"/>
+                                            <arg value="ICONGROUP,"/>
+                                            <arg value="MAINICON,"/>
+                                            <arg value="0"/>
+                                        </exec>     
+                                        
+                                        <exec executable="wine" resolveexecutable="true" logerror="true">
+                                            <!-- replace value with location of installation bottle, or remove on windows -->
+                                            <env key="WINEPREFIX" value="${wine.bottle}" />
+                                            <!-- remove this argument when running on windows -->
+                                            <arg value="${resourcehacker.installdir}\ResHacker.exe"/>
+                                            <arg value="-addoverwrite"/>
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe,"/>
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe,"/>
+                                            <arg value="${application.ico},"/>
+                                            <arg value="ICONGROUP,"/>
+                                            <arg value="MAINICON,"/>
+                                            <arg value="0"/>
+                                        </exec>   
+                                        
+                                        <echo message ="Updated zip file: ${project.build.directory}/${project.artifactId}-${project.version}.zip" />                                        
+             
+                                        <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true"> 
+                                            <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" /> 
+                                        </zip>            
+                                    </target>       
+                                </configuration>                      
+                            </execution>
+                        </executions>
+                    </plugin>  
+                </plugins>
+            </build>
+        </profile>            
+                
+        <profile>
+            <id>replace-icon-windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+                <file>
+                    <exists>${resourcehacker.installdir}\ResHacker.exe</exists>
+                </file>                            
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId> 
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>                        
+                                <configuration>
+                                    <target> 
+
+                                        <echo message ="Replacing icon of Windows launcher executable" /> 
+                                        <!-- replace executable with ResHacker.exe path on windows -->
+                                        <exec executable="${resourcehacker.installdir}\ResHacker.exe" resolveexecutable="true" logerror="true">
+                                            <arg value="-addoverwrite"/>
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
+                                            <arg value="${application.ico},"/>
+                                            <arg value="ICONGROUP,"/>
+                                            <arg value="MAINICON,"/>
+                                            <arg value="0"/>
+                                        </exec>      
+             
+                                        <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true"> 
+                                            <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" /> 
+                                        </zip>            
+                                    </target>       
+                                </configuration>                      
+                            </execution>
+                        </executions>
+                    </plugin>                       
+                </plugins>                  
+            </build>
+        </profile>
     </profiles>
-    <version>1.5.1-SNAPSHOT</version>
+
 </project>

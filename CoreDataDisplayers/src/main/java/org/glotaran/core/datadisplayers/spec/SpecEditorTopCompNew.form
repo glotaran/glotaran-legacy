@@ -329,8 +329,7 @@
                     </Container>
                     <Component class="javax.swing.JSlider" name="jSColum">
                       <Properties>
-                        <Property name="minimum" type="int" value="1"/>
-                        <Property name="value" type="int" value="1"/>
+                        <Property name="value" type="int" value="0"/>
                       </Properties>
                       <Events>
                         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSColumStateChanged"/>
@@ -343,9 +342,8 @@
                     </Component>
                     <Component class="javax.swing.JSlider" name="jSRow">
                       <Properties>
-                        <Property name="minimum" type="int" value="1"/>
                         <Property name="orientation" type="int" value="1"/>
-                        <Property name="value" type="int" value="1"/>
+                        <Property name="value" type="int" value="0"/>
                         <Property name="inverted" type="boolean" value="true"/>
                       </Properties>
                       <Events>

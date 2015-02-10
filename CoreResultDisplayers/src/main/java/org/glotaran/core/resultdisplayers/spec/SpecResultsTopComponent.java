@@ -2442,7 +2442,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 //do SVD
 
         long maxSVNumber = Math.min(MAX_NUMBER_SINGULAR_VALUES, svdResult[1].getRowCount());
-        int n = 2;
+        int n = (int) Math.min(svdResult[1].getRowCount(), 2); 
 //creare collection with first 2 LSV
         XYSeriesCollection lSVCollection = new XYSeriesCollection();
         XYSeries seria;

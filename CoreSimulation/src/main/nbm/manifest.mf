@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 OpenIDE-Module-Localizing-Bundle: org/glotaran/simulation/Bundle.properties
-
+AutoUpdate-Essential-Module: false
+OpenIDE-Module-Specification-Version: ${glotaran.modules.specification.version}

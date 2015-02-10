@@ -2,10 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
+  <!-- Parent POM -->
   <parent>
       <groupId>org.glotaran</groupId>
       <artifactId>glotaran-parent</artifactId>
       <version>1.5.1-SNAPSHOT</version>
+      <relativePath>..</relativePath>
   </parent>
 
   <artifactId>glotaran-branding</artifactId>
@@ -14,33 +17,83 @@
   <name>glotaran-branding</name>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <glotaran.branding.update.center.official.url>${glotaran.update.center.testing.url}</glotaran.branding.update.center.official.url>
+    <glotaran.branding.update.center.thirdparty.url>${glotaran.update.center.testing.url}</glotaran.branding.update.center.thirdparty.url>
   </properties>
 
-  <dependencies>
+  <!-- <dependencies>
     <dependency>
       <groupId>org.netbeans.api</groupId>
       <artifactId>org-netbeans-api-annotations-common</artifactId>
       <version>${netbeans.version}</version>
     </dependency>
-  </dependencies>
+  </dependencies> -->
+  
 
-  <build>
-      <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>nbm-maven-plugin</artifactId>
+
+    <build>
+        <plugins>
+            <!-- Copy and filtering tasks -->
+            <plugin> 
+                <artifactId>maven-resources-plugin</artifactId> 
+                <executions> 
+                    <!-- Copy and replace %{glotaran.app.version} variable in two Bundle.properties file that contains the application title -->
+                    <execution> 
+                        <id>generate-bundles</id> 
+                        <phase>generate-resources</phase> 
+                        <goals> 
+                            <goal>copy-resources</goal> 
+                        </goals> 
+                        <configuration> 
+                            <outputDirectory>src/main/nbm-branding</outputDirectory> 
+                            <resources> 
+                                <resource> 
+                                    <directory>src/main/resources</directory> 
+                                    <includes> 
+                                        <include>core/core.jar/org/netbeans/core/startup/Bundle.properties</include>
+                                        <include>modules/org-netbeans-core-windows.jar/org/netbeans/core/windows/view/ui/Bundle.properties</include>
+                                        <include>modules/org-netbeans-core.jar/org/netbeans/core/ui/Bundle.properties</include>
+                                    </includes> 
+                                    <filtering>true</filtering> 
+                                </resource> 
+                            </resources> 
+                        </configuration> 
+                    </execution> 
+                    
+                    <execution> 
+                        <id>generate-autoudate-urls</id> 
+                        <phase>generate-resources</phase> 
+                        <goals> 
+                            <goal>copy-resources</goal> 
+                        </goals> 
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes</outputDirectory> 
+                            <resources> 
+                                <resource> 
+                                    <directory>src/main/resources</directory> 
+                                    <includes> 
+                                        <include>org/glotaran/branding/Bundle.properties</include>
+                                    </includes> 
+                                    <filtering>true</filtering> 
+                                </resource> 
+                            </resources> 
+                        </configuration> 
+                    </execution> 
+                </executions> 
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <!-- to have the jar plugin pickup the nbm generated manifest -->
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
-                </configuration>
-            </plugin>
-      </plugins>
-  </build>
+        </plugins>
+    </build>
+    
+    <profiles>
+        <!-- Release profile -->
+        <profile>
+            <id>release</id>
+            <properties>
+                <glotaran.branding.update.center.official.url>${glotaran.update.center.official.url}</glotaran.branding.update.center.official.url>
+                <glotaran.branding.update.center.thirdparty.url>${glotaran.update.center.thirdparty.url}</glotaran.branding.update.center.thirdparty.url>
+            </properties>
+        </profile>
+    </profiles>
     <description>Glotaran is a free software program developed for global and target analysis of time-resolved spectroscopy and microscopy data. It serves as a graphical user interface (GUI) to the R-package TIMP. It works with any operating system that supports Java 6 and higher. The current version of Glotaran is 1.4; updates are automatically acquired by the program.
 
 A publication about Glotaran, with the title "Glotaran: a Java-based graphical user interface for the R-package TIMP" has been published in the Journal of Statistical Software, on July 1st 2012 and can be found here: http://www.jstatsoft.org/v49/i03/

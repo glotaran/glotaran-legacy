@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
 OpenIDE-Module-Localizing-Bundle: org/glotaran/core/datadisplayers/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
-
+AutoUpdate-Essential-Module: true
+OpenIDE-Module-Specification-Version: ${glotaran.modules.specification.version}

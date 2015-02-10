@@ -200,7 +200,7 @@ public class CommonActionFunctions {
      */
     public static DatasetTimp selectInDataset(DatasetTimp dataset, double minX, double maxX, double minY, double maxY) {
         double[] temp;
-        boolean reversedAxis = dataset.getX2()[0] > dataset.getX2()[1];
+        boolean reversedAxis = dataset.getX2().length > 1 ? dataset.getX2()[0] > dataset.getX2()[1] : false;
         if (!(minX == 0 && maxX == 0)) {
             int indMinX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? maxX : (!reversedAxis && (minX > maxX) ? maxX : minX), false);
             int indMaxX = findWaveIndex(dataset, (reversedAxis && maxX > minX) ? minX : (!reversedAxis && (minX > maxX) ? minX : maxX), true);
