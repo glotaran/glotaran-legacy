@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
     <!-- Parent POM -->   
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.5.1</version>
         <!-- for relativePath one level higher is actually the default -->
         <relativePath>..</relativePath> 
     </parent>        
@@ -420,75 +419,75 @@
                                 <configuration>
                                     <target>
                                         
-                                        <echo message ="project.build.directory = ${project.build.directory}" /> 
+                                        <echo message="project.build.directory = ${project.build.directory}" /> 
                                 
                                         <delete includeEmptyDirs="true" failonerror="false">
-                                            <fileset dir="${project.build.directory}/${glotaran.appbundle.name}.app"/>
-                                            <fileset dir="${project.build.directory}/${glotaran.app.title}"/>
-                                            <fileset dir="${project.build.directory}/${project.artifactId}-${project.version}.dmg"/>
-                                            <fileset dir="${project.build.directory}/${project.artifactId}-${glotaran.branding.version}.dmg"/>                                            
+                                            <fileset dir="${project.build.directory}/${glotaran.appbundle.name}.app" />
+                                            <fileset dir="${project.build.directory}/${glotaran.app.title}" />
+                                            <fileset dir="${project.build.directory}/${project.artifactId}-${project.version}.dmg" />
+                                            <fileset dir="${project.build.directory}/${project.artifactId}-${glotaran.branding.version}.dmg" />                                            
                                         </delete>
                                 
-                                        <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app"/>
-                                        <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS"/>
+                                        <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app" />
+                                        <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS" />
                                         
                                         <copy todir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}">
-                                            <fileset dir="${project.build.directory}/${brandingToken}"/>
+                                            <fileset dir="${project.build.directory}/${brandingToken}" />
                                         </copy>
                                                                                 
                                         <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}.icns" file="src/main/app-resources/graphics/${brandingToken}.icns" />
-                                        <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Info.plist" file="${project.build.directory}/Info.plist"/>
+                                        <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Info.plist" file="${project.build.directory}/Info.plist" />
                                 
-                                        <chmod file="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}/bin/${brandingToken}" perm="ugo+rx"/>
+                                        <chmod file="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}/bin/${brandingToken}" perm="ugo+rx" />
                                 
                                         <symlink link="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS/Glotaran" resource="../Resources/${brandingToken}/bin/${brandingToken}" failonerror="false" />
                                         <!-- No code signing for now -->
                                         <!-- <exec dir="${project.build.directory}" os="Mac OS X" executable="codesign">
-                                            <arg value="-fs"/> 
-                                            <arg value="${glotaran.codesign.identity}"/> 
-                                            <arg value="-v"/> 
-                                            <arg value="${glotaran.appbundle.name}.app"/> 
+                                            <arg value="-fs" /> 
+                                            <arg value="${glotaran.codesign.identity}" /> 
+                                            <arg value="-v" /> 
+                                            <arg value="${glotaran.appbundle.name}.app" /> 
                                         </exec> -->
                                         
-                                        <mkdir dir="${project.build.directory}/${glotaran.app.title}"/>
-                                        <mkdir dir="${project.build.directory}/${glotaran.app.title}/.background"/>
+                                        <mkdir dir="${project.build.directory}/${glotaran.app.title}" />
+                                        <mkdir dir="${project.build.directory}/${glotaran.app.title}/.background" />
                                         
                                         <!-- Note that .DS_Store is version specific due to the file naming constraint on the dmg file -->
-                                        <echo message ="Copy src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store to dmg" /> 
+                                        <echo message="Copy src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store to dmg" /> 
                                         <copy tofile="${project.build.directory}/${glotaran.app.title}/.DS_Store" file="src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store.bak" />
                                         <copy tofile="${project.build.directory}/${glotaran.app.title}/.background/Mac_OSX_dmg_background.png" file="src/main/app-resources/graphics/Mac_OSX_dmg_background.png" />
                                         <move file="${project.build.directory}/${glotaran.appbundle.name}.app" todir="${project.build.directory}/${glotaran.app.title}/" />
                                         <symlink link="${project.build.directory}/${glotaran.app.title}/Applications" resource="/Applications" failonerror="false" />
                                         
                                         <exec dir="${project.build.directory}" os="Mac OS X" executable="hdiutil">
-                                            <arg value="create"/> 
-                                            <arg value="-noanyowners"/> 
-                                            <arg value="-imagekey"/> 
-                                            <arg value="zlib-level=9"/> 
-                                            <arg value="-srcfolder"/> 
-                                            <arg value="${project.build.directory}/${glotaran.app.title}"/> 
-                                            <arg value="${project.name.capatilized}-${glotaran.branding.version}.dmg"/>
+                                            <arg value="create" /> 
+                                            <arg value="-noanyowners" /> 
+                                            <arg value="-imagekey" /> 
+                                            <arg value="zlib-level=9" /> 
+                                            <arg value="-srcfolder" /> 
+                                            <arg value="${project.build.directory}/${glotaran.app.title}" /> 
+                                            <arg value="${project.name.capatilized}-${glotaran.branding.version}.dmg" />
                                         </exec>
 
                                         <exec dir="${project.build.directory}" os="Linux" executable="mkisofs">
-                                            <arg value="-V"/> 
-                                            <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}"/>
-                                            <arg value="-U"/>
-                                            <arg value="-D"/>
-                                            <arg value="-l"/>
-                                            <arg value="-allow-multidot"/>
-                                            <arg value="-max-iso9660-filenames"/>
-                                            <arg value="-relaxed-filenames"/>
-                                            <arg value="-no-iso-translate"/>
-                                            <arg value="-r"/>
-                                            <arg value="-o"/>
-                                            <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}.dmg"/>
+                                            <arg value="-V" /> 
+                                            <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}" />
+                                            <arg value="-U" />
+                                            <arg value="-D" />
+                                            <arg value="-l" />
+                                            <arg value="-allow-multidot" />
+                                            <arg value="-max-iso9660-filenames" />
+                                            <arg value="-relaxed-filenames" />
+                                            <arg value="-no-iso-translate" />
+                                            <arg value="-r" />
+                                            <arg value="-o" />
+                                            <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}.dmg" />
                                             <!-- the -root argument creates a folder structure in the dmg, which is unwanted in our case -->
                                             <!-- 
-                                            <arg value="-root"/>
-                                            <arg value="Glotaran_Installer"/> 
+                                            <arg value="-root" />
+                                            <arg value="Glotaran_Installer" /> 
                                             -->
-                                            <arg value="${project.build.directory}/${glotaran.app.title}"/>
+                                            <arg value="${project.build.directory}/${glotaran.app.title}" />
                                         </exec>
                                     </target>
                                 </configuration>
@@ -578,42 +577,42 @@
                                 <configuration>
                                     <target> 
 
-                                        <echo message ="Replacing icon of Windows launcher executable" />
-                                        <echo message ="Using wine bottle: ${wine.bottle}" />  
-                                        <echo message ="Running ${resourcehacker.installdir}\ResHacker.exe" />
-                                        <echo message ="Replacing ${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe" />                                        
-                                        <echo message ="Using applicaion.ico = ${application.ico} " />                                        
+                                        <echo message="Replacing icon of Windows launcher executable" />
+                                        <echo message="Using wine bottle: ${wine.bottle}" />  
+                                        <echo message="Running ${resourcehacker.installdir}\ResHacker.exe" />
+                                        <echo message="Replacing ${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe" />                                        
+                                        <echo message="Using applicaion.ico = ${application.ico} " />                                        
                                         
                                         <!-- replace executable with ResHacker.exe path on windows -->
                                         <exec executable="wine" resolveexecutable="true" logerror="true">
                                             <!-- replace value with location of installation bottle, or remove on windows -->
                                             <env key="WINEPREFIX" value="${wine.bottle}" />
                                             <!-- remove this argument when running on windows -->
-                                            <arg value="${resourcehacker.installdir}\ResHacker.exe"/>
-                                            <arg value="-addoverwrite"/>
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
-                                            <arg value="${application.ico},"/>
-                                            <arg value="ICONGROUP,"/>
-                                            <arg value="MAINICON,"/>
-                                            <arg value="0"/>
+                                            <arg value="${resourcehacker.installdir}\ResHacker.exe" />
+                                            <arg value="-addoverwrite" />
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
+                                            <arg value="${application.ico}," />
+                                            <arg value="ICONGROUP," />
+                                            <arg value="MAINICON," />
+                                            <arg value="0" />
                                         </exec>     
                                         
                                         <exec executable="wine" resolveexecutable="true" logerror="true">
                                             <!-- replace value with location of installation bottle, or remove on windows -->
                                             <env key="WINEPREFIX" value="${wine.bottle}" />
                                             <!-- remove this argument when running on windows -->
-                                            <arg value="${resourcehacker.installdir}\ResHacker.exe"/>
-                                            <arg value="-addoverwrite"/>
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe,"/>
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe,"/>
-                                            <arg value="${application.ico},"/>
-                                            <arg value="ICONGROUP,"/>
-                                            <arg value="MAINICON,"/>
-                                            <arg value="0"/>
+                                            <arg value="${resourcehacker.installdir}\ResHacker.exe" />
+                                            <arg value="-addoverwrite" />
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe," />
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe," />
+                                            <arg value="${application.ico}," />
+                                            <arg value="ICONGROUP," />
+                                            <arg value="MAINICON," />
+                                            <arg value="0" />
                                         </exec>   
                                         
-                                        <echo message ="Updated zip file: ${project.build.directory}/${project.artifactId}-${project.version}.zip" />                                        
+                                        <echo message="Updated zip file: ${project.build.directory}/${project.artifactId}-${project.version}.zip" />                                        
              
                                         <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true"> 
                                             <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" /> 
@@ -651,16 +650,16 @@
                                 <configuration>
                                     <target> 
 
-                                        <echo message ="Replacing icon of Windows launcher executable" /> 
+                                        <echo message="Replacing icon of Windows launcher executable" /> 
                                         <!-- replace executable with ResHacker.exe path on windows -->
                                         <exec executable="${resourcehacker.installdir}\ResHacker.exe" resolveexecutable="true" logerror="true">
-                                            <arg value="-addoverwrite"/>
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe,"/>
-                                            <arg value="${application.ico},"/>
-                                            <arg value="ICONGROUP,"/>
-                                            <arg value="MAINICON,"/>
-                                            <arg value="0"/>
+                                            <arg value="-addoverwrite" />
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
+                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
+                                            <arg value="${application.ico}," />
+                                            <arg value="ICONGROUP," />
+                                            <arg value="MAINICON," />
+                                            <arg value="0" />
                                         </exec>      
              
                                         <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true"> 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.glotaran</groupId>
     <artifactId>glotaran-parent</artifactId>
-    <version>1.5.1-SNAPSHOT</version>    
+    <version>1.5.1</version>    
     <packaging>pom</packaging>
 
     <name>glotaran-parent</name>
@@ -45,7 +44,7 @@
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <glotaran.maven.requiredVersion>3.2.2</glotaran.maven.requiredVersion>
-        <netbeans.run.params.ide/>
+        <netbeans.run.params.ide />
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
         <application.ico>${basedir}/src/main/app-resources/graphics/glotaran.ico</application.ico>
         
@@ -203,7 +202,8 @@
     <scm>
         <connection>scm:git:https://jsnel@github.com/jsnel/glotaran.git</connection>
         <developerConnection>scm:git:https://jsnel@github.com/jsnel/glotaran.git</developerConnection>
-    </scm>        
+      <tag>v1.5.1</tag>
+  </scm>        
     
     <!-- List all dependencies with versions so it can be used in child POMs 
     without explicit versions -->
@@ -919,7 +919,7 @@
                         <configuration>
                             <show>public</show>
                             <doctitle>${project.name.capatilized} ${project.version} API Index</doctitle>
-                            <subpackages></subpackages>
+                            <subpackages />
                             <nohelp>true</nohelp>
                             <detectLinks>true</detectLinks>
                             <detectOfflineLinks>true</detectOfflineLinks> 
