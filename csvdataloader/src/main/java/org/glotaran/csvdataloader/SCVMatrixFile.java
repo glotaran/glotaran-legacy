@@ -71,6 +71,17 @@ public class SCVMatrixFile implements GlotaranDataloaderInterface {
         return false;
     }
 
+    private boolean checkFilterRow(int i, CSVLoaderDialog editorPanel, Matrix unfilteredDataMatrix) {
+        if (editorPanel.isLabelsInRows()) {
+            if (unfilteredDataMatrix.getColumnCount() > 1) {
+                if (!Double.isNaN(unfilteredDataMatrix.getAsDouble(i, 1))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public org.glotaran.core.models.structures.DatasetTimp loadFile(File file) throws FileNotFoundException {
         DatasetTimp dataset = null;
@@ -97,26 +108,23 @@ public class SCVMatrixFile implements GlotaranDataloaderInterface {
                 }
 
                 if (editorPanel.getAutoSkip()) {
-                    ArrayList<Long> rowsToFilter = new ArrayList<>();
+                    ArrayList<Integer> rowsToFilter = new ArrayList<>();
                     for (int i = 0; i < unfilteredDataMatrix.getRowCount(); i++) {
-                        System.out.println(unfilteredDataMatrix.getAsDouble(i, 0));
+                        //System.out.println(unfilteredDataMatrix.getAsDouble(i, 0));
                         if (Double.isNaN(unfilteredDataMatrix.getAsDouble(i, 0))) {
-                            rowsToFilter.add((long) i);
+                            if (checkFilterRow(i, editorPanel, unfilteredDataMatrix)) {
+                                rowsToFilter.add(i);
+                            }
                         } else {
                             break;
                         }
                     }
                     for (int i = 0; i < unfilteredDataMatrix.getRowCount(); i++) {
-                        System.out.println(unfilteredDataMatrix.getAsDouble((unfilteredDataMatrix.getRowCount() - 1 - i), 0));
+                        //System.out.println(unfilteredDataMatrix.getAsDouble((unfilteredDataMatrix.getRowCount() - 1 - i), 0));
                         if (Double.isNaN(unfilteredDataMatrix.getAsDouble((unfilteredDataMatrix.getRowCount() - 1 - i), 0))) {
-                            rowsToFilter.add((unfilteredDataMatrix.getRowCount() - 1 - i));
-//                        for (int j = 0; j < dataMatrix.getColumnCount(); j++) {
-//                            if(Double.NaN == dataMatrix.getAsDouble((dataMatrix.getRowCount() - 1 - i), j)) {
-//                                 // check colums for NaNs
-//                            } else {
-//                                break;
-//                            }
-//                        }
+                            if (checkFilterRow((int) (unfilteredDataMatrix.getRowCount() - 1 - i), editorPanel, unfilteredDataMatrix)) {
+                                rowsToFilter.add((int) (unfilteredDataMatrix.getRowCount() - 1 - i));
+                            }
                         } else {
                             break;
                         }
@@ -138,7 +146,7 @@ public class SCVMatrixFile implements GlotaranDataloaderInterface {
                     }
 //                    if (editorPanel.isLabelsInColums()) {
 //                        if (editorPanel.isLabelsInRows()) {
-                    dataset.setNl((int) (dataMatrix.getRowCount() - (editorPanel.isLabelsInColums()? 1 : 0)));
+                    dataset.setNl((int) (dataMatrix.getRowCount() - (editorPanel.isLabelsInColums() ? 1 : 0)));
                     dataset.setNt((int) (dataMatrix.getColumnCount() - (editorPanel.isLabelsInRows() ? 1 : 0)));
                     dataset.setX2(new double[dataset.getNl()]);
                     dataset.setX(new double[dataset.getNt()]);
