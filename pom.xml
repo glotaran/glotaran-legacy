@@ -140,7 +140,7 @@
 
         <glotaran.maven-license-plugin.version>1.9.0</glotaran.maven-license-plugin.version>
 
-        <glotaran.maven-release-plugin.version>2.3.2</glotaran.maven-release-plugin.version>
+        <glotaran.maven-release-plugin.version>2.5.1</glotaran.maven-release-plugin.version>
 
         <glotaran.maven-resources-plugin.version>2.6</glotaran.maven-resources-plugin.version>
 
@@ -156,8 +156,8 @@
         
         <glotaran.maven-reactor-plugin.version>1.0</glotaran.maven-reactor-plugin.version>
         
-        <glotaran.wagon-maven-plugin.version>1.0-beta-5</glotaran.wagon-maven-plugin.version>           
-
+        <glotaran.wagon-maven-plugin.version>1.0-beta-5</glotaran.wagon-maven-plugin.version>    
+           
     </properties> 
     
     <!-- Maven required version -->
@@ -595,6 +595,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${glotaran.maven-assembly-plugin.version}</version>
+                </plugin>               
+                <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${glotaran.maven-release-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -602,6 +607,15 @@
         <!-- Plugins configuration ===============================================================-->
         
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <releaseProfiles>releases</releaseProfiles>
+                </configuration>
+            </plugin>
 
             <!-- Compiler -->
             <plugin>
@@ -771,7 +785,7 @@
                 <glotaran.default.repository.url>${glotaran.release.repository.url}</glotaran.default.repository.url>
                 <glotaran.javadoc.repository.path>external/apidocs/${project.version}</glotaran.javadoc.repository.path>
                 <glotaran.updates.repository.path>external/updates/${project.version}</glotaran.updates.repository.path>
-            </properties>
+            </properties>           
         </profile>
         
         <!-- Profile activated for windows/macos release only. Should be called alone so it only creates the windows installer/compressed dmg -->
