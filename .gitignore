@@ -259,3 +259,5 @@ nbproject/*
 /JAXBWizzardOutput/src/main/java/org/glotaran/core/models/sim/
 /JAXBWizzardOutput/src/main/java/org/glotaran/core/models/gta/
 
+/branding/src/main/nbm-branding/core/core.jar/org/netbeans/core/startup/Bundle.properties
+/branding/src/main/nbm-branding/modules/org-netbeans-core-windows.jar/org/netbeans/core/windows/view/ui/Bundle.properties
