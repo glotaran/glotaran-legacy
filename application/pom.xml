@@ -211,10 +211,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>JRI</artifactId>                     
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>TIMPController</artifactId>                     
         </dependency>
         <dependency>
@@ -277,15 +273,11 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
-            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-modules-projectui</artifactId>
-            <version>${netbeans.version}</version>
         </dependency>
- 
-
     </dependencies>
 
     <build>

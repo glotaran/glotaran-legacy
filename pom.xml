@@ -223,6 +223,11 @@
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.netbeans.modules</groupId>
+                <artifactId>org-netbeans-modules-projectui</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.netbeans.api</groupId>
                 <artifactId>org-netbeans-core-multiview</artifactId>
                 <version>${netbeans.version}</version>
@@ -315,11 +320,6 @@
             <dependency>
                 <groupId>org.netbeans.api</groupId>
                 <artifactId>org-openide-nodes</artifactId>
-                <version>${netbeans.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.netbeans.api</groupId>
-                <artifactId>org-openide-awt</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
@@ -489,12 +489,7 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>jide-oss</artifactId>
                 <version>${project.version}</version>         
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>JRI</artifactId>
-                <version>${project.version}</version>         
-            </dependency>           
+            </dependency>       
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>TIMPController</artifactId>
@@ -503,11 +498,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreResultDisplayers</artifactId>
-                <version>${project.version}</version>         
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>REngine</artifactId>
                 <version>${project.version}</version>         
             </dependency>
             <dependency>
