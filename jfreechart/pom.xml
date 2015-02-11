@@ -9,7 +9,6 @@
     
     <artifactId>jfreechart</artifactId>
     <packaging>nbm</packaging>
-    <version>1.5.1-SNAPSHOT</version>
     <name>LibaryWrapper - JFreeChart</name>
     
     <build>

@@ -9,7 +9,6 @@
     
     <artifactId>UJMPwithdep</artifactId>
     <packaging>nbm</packaging>
-    <version>1.5.1-SNAPSHOT</version>
     <name>LibaryWrapper - UJMP_with_dependencies</name>
     
     <build>

@@ -9,7 +9,6 @@
     
     <artifactId>jide-oss</artifactId>
     <packaging>nbm</packaging>
-    <version>1.5.1-SNAPSHOT</version>
     <name>LibaryWrapper - jide-oss</name>
      
     <build>

@@ -9,7 +9,6 @@
     
     <artifactId>imgdataloader_new</artifactId>
     <packaging>nbm</packaging>
-    <version>1.5.1-SNAPSHOT</version>
     <name>HamamatsuDataLoader</name>
     <description>Provides the support for Hamamatsu Streak Images with extension .img</description>
                   

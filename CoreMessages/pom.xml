@@ -9,7 +9,6 @@
     
     <artifactId>CoreMessages</artifactId>
     <packaging>nbm</packaging>
-    <version>1.5.1-SNAPSHOT</version>
         
     <build>
         <plugins>

@@ -12,7 +12,6 @@
 
   <artifactId>glotaran-branding</artifactId>
   <packaging>nbm</packaging>
-  <version>1.5.1-SNAPSHOT</version>
   <name>glotaran-branding</name>
 
   <properties>
