@@ -6,53 +6,77 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>jfreechart</artifactId>
     <packaging>nbm</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    <name>LibaryWrapper - JFreeChart</name>
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
-                    <publicPackages>                        
-	<publicPackage>org.jfree.chart</publicPackage>
-	<publicPackage>org.jfree.chart.annotations</publicPackage>
-	<publicPackage>org.jfree.chart.axis</publicPackage>
-	<publicPackage>org.jfree.chart.block</publicPackage>
-	<publicPackage>org.jfree.chart.demo</publicPackage>
-	<publicPackage>org.jfree.chart.editor</publicPackage>
-	<publicPackage>org.jfree.chart.encoders</publicPackage>
-	<publicPackage>org.jfree.chart.entity</publicPackage>
-	<publicPackage>org.jfree.chart.event</publicPackage>
-	<publicPackage>org.jfree.chart.imagemap</publicPackage>
-	<publicPackage>org.jfree.chart.labels</publicPackage>
-	<publicPackage>org.jfree.chart.needle</publicPackage>
-	<publicPackage>org.jfree.chart.panel</publicPackage>
-	<publicPackage>org.jfree.chart.plot</publicPackage>
-	<publicPackage>org.jfree.chart.plot.dial</publicPackage>
-	<publicPackage>org.jfree.chart.renderer</publicPackage>
-	<publicPackage>org.jfree.chart.renderer.category</publicPackage>
-	<publicPackage>org.jfree.chart.renderer.xy</publicPackage>
-	<publicPackage>org.jfree.chart.resources</publicPackage>
-	<publicPackage>org.jfree.chart.servlet</publicPackage>
-	<publicPackage>org.jfree.chart.title</publicPackage>
-	<publicPackage>org.jfree.chart.urls</publicPackage>
-	<publicPackage>org.jfree.chart.util</publicPackage>
-	<publicPackage>org.jfree.data</publicPackage>
-	<publicPackage>org.jfree.data.category</publicPackage>
-	<publicPackage>org.jfree.data.contour</publicPackage>
-	<publicPackage>org.jfree.data.function</publicPackage>
-	<publicPackage>org.jfree.data.gantt</publicPackage>
-	<publicPackage>org.jfree.data.general</publicPackage>
-	<publicPackage>org.jfree.data.io</publicPackage>
-	<publicPackage>org.jfree.data.jdbc</publicPackage>
-	<publicPackage>org.jfree.data.resources</publicPackage>
-	<publicPackage>org.jfree.data.statistics</publicPackage>
-	<publicPackage>org.jfree.data.time</publicPackage>
-	<publicPackage>org.jfree.data.time.ohlc</publicPackage>
-	<publicPackage>org.jfree.data.xml</publicPackage>
-	<publicPackage>org.jfree.data.xy</publicPackage>    
+                <configuration>
+                    <publicPackages>
+                        <!-- exported by jfreechart -->                        
+                        <publicPackage>org.jfree.chart</publicPackage>
+                        <publicPackage>org.jfree.chart.annotations</publicPackage>
+                        <publicPackage>org.jfree.chart.axis</publicPackage>
+                        <publicPackage>org.jfree.chart.block</publicPackage>
+                        <publicPackage>org.jfree.chart.demo</publicPackage>
+                        <publicPackage>org.jfree.chart.editor</publicPackage>
+                        <publicPackage>org.jfree.chart.encoders</publicPackage>
+                        <publicPackage>org.jfree.chart.entity</publicPackage>
+                        <publicPackage>org.jfree.chart.event</publicPackage>
+                        <publicPackage>org.jfree.chart.imagemap</publicPackage>
+                        <publicPackage>org.jfree.chart.labels</publicPackage>
+                        <publicPackage>org.jfree.chart.needle</publicPackage>
+                        <publicPackage>org.jfree.chart.panel</publicPackage>
+                        <publicPackage>org.jfree.chart.plot</publicPackage>
+                        <publicPackage>org.jfree.chart.plot.dial</publicPackage>
+                        <publicPackage>org.jfree.chart.renderer</publicPackage>
+                        <publicPackage>org.jfree.chart.renderer.category</publicPackage>
+                        <publicPackage>org.jfree.chart.renderer.xy</publicPackage>
+                        <publicPackage>org.jfree.chart.resources</publicPackage>
+                        <publicPackage>org.jfree.chart.servlet</publicPackage>
+                        <publicPackage>org.jfree.chart.title</publicPackage>
+                        <publicPackage>org.jfree.chart.urls</publicPackage>
+                        <publicPackage>org.jfree.chart.util</publicPackage>
+                        <publicPackage>org.jfree.data</publicPackage>
+                        <publicPackage>org.jfree.data.category</publicPackage>
+                        <publicPackage>org.jfree.data.contour</publicPackage>
+                        <publicPackage>org.jfree.data.function</publicPackage>
+                        <publicPackage>org.jfree.data.gantt</publicPackage>
+                        <publicPackage>org.jfree.data.general</publicPackage>
+                        <publicPackage>org.jfree.data.io</publicPackage>
+                        <publicPackage>org.jfree.data.jdbc</publicPackage>
+                        <publicPackage>org.jfree.data.resources</publicPackage>
+                        <publicPackage>org.jfree.data.statistics</publicPackage>
+                        <publicPackage>org.jfree.data.time</publicPackage>
+                        <publicPackage>org.jfree.data.time.ohlc</publicPackage>
+                        <publicPackage>org.jfree.data.xml</publicPackage>
+                        <publicPackage>org.jfree.data.xy</publicPackage>
+                        <!-- exported by jcommon -->
+                        <publicPackage>com.keypoint</publicPackage>
+                        <publicPackage>org.jfree</publicPackage>
+                        <publicPackage>org.jfree.base</publicPackage>
+                        <publicPackage>org.jfree.base.config</publicPackage>
+                        <publicPackage>org.jfree.base.log</publicPackage>
+                        <publicPackage>org.jfree.base.modules</publicPackage>
+                        <publicPackage>org.jfree.date</publicPackage>
+                        <publicPackage>org.jfree.io</publicPackage>
+                        <publicPackage>org.jfree.layout</publicPackage>
+                        <publicPackage>org.jfree.resources</publicPackage>
+                        <publicPackage>org.jfree.text</publicPackage>
+                        <publicPackage>org.jfree.threads</publicPackage>
+                        <publicPackage>org.jfree.ui</publicPackage>
+                        <publicPackage>org.jfree.ui.about</publicPackage>
+                        <publicPackage>org.jfree.ui.about.resources</publicPackage>
+                        <publicPackage>org.jfree.ui.action</publicPackage>
+                        <publicPackage>org.jfree.ui.tabbedui</publicPackage>
+                        <publicPackage>org.jfree.util</publicPackage>    
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -69,24 +93,16 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>${netbeans.version}</version>
-        </dependency>
-	
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/jfreechart-1.0.13.jar</artifactId>
-		<version>???</version></dependency> -->
+        </dependency>	
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>1.0.19</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.jfree</groupId>
             <artifactId>jcommon</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <version>1.0.23</version>
+        </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

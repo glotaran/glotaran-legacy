@@ -6,15 +6,18 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>CoreDataDisplayers</artifactId>
     <packaging>nbm</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
                     </publicPackages>    
                 </configuration>
@@ -32,120 +35,91 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-progress</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-dialogs</artifactId> 
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-filesystems</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-loaders</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-nodes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId> 
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId> 
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-windows</artifactId>
         </dependency>
 	
-	
-	
-	
-	
-	
-	
-	
-	<dependency>
-	<groupId>org.netbeans.api</groupId>
-		<artifactId>org-netbeans-api-progress</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-awt</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-dialogs</artifactId> 
-              <version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-filesystems</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-loaders</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-nodes</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId> 
-              <version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId> 
-              <version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-windows</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	
-	 <!-- <dependency>
-		<groupId>??????</groupId>
-		<artifactId>release/modules/ext/swingx-all-1.6.3.jar</artifactId>
-		<version>???</version></dependency> -->
+        <!-- <dependency>
+        <groupId>??????</groupId>
+        <artifactId>release/modules/ext/swingx-all-1.6.3.jar</artifactId>
+        <version>???</version></dependency> -->
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jide-oss</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>UJMPwithdep</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
-            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>CoreInterfaces</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>
+        </dependency>
         <dependency>
             <artifactId>CoreMessages</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>
+        </dependency>
         <dependency>
             <artifactId>CoreModels</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+            <groupId>${project.groupId}</groupId>
+        </dependency>
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>JFreeChartCustom</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jfreechart</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
-        <dependency>
-            <artifactId>jcommon</artifactId>
-            <groupId>org.glotaran</groupId>
-            <type>jar</type>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>       
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-settings</artifactId>
-            <version>${netbeans.version}</version>
         </dependency>
-           <dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
-            <version>3.3</version>
         </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <version>1.5.1-SNAPSHOT</version>
 </project>

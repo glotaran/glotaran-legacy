@@ -219,12 +219,67 @@
             </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
-                <artifactId>org-openide-dialogs</artifactId>
+                <artifactId>org-netbeans-modules-editor-mimelookup</artifactId>            
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-core-multiview</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>	
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-openide-awt</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-openide-io</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-modules-extexecution</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-api-xml</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-api-visual</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-openide-actions</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-spi-palette</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-modules-autoupdate-ui</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>       
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
                 <artifactId>org-openide-filesystems</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-openide-loaders</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-openide-dialogs</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
@@ -293,6 +348,23 @@
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>3.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-modules-projectuiapi</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-openide-text</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+        
+        
+            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>glotaran-branding</artifactId>
                 <version>${project.version}</version>         
@@ -313,10 +385,21 @@
             </dependency>
             -->
             <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-modules-projectapi</artifactId>
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.netbeans.api</groupId>
+                <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId> 
+                <version>${netbeans.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb</artifactId>
                 <version>2.1.9</version>
             </dependency>
+            
             <dependency>
                 <groupId>org.netbeans.modules</groupId>
                 <artifactId>org-netbeans-libs-jaxb</artifactId>
@@ -411,12 +494,7 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>JRI</artifactId>
                 <version>${project.version}</version>         
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>jcommon</artifactId>
-                <version>${project.version}</version>         
-            </dependency>
+            </dependency>           
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>TIMPController</artifactId>
@@ -530,12 +608,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${glotaran.maven-deploy-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>${glotaran.maven-release-plugin.version}</version>
-                </plugin>
+                </plugin>                             
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
@@ -597,9 +670,9 @@
                     <version>${glotaran.maven-assembly-plugin.version}</version>
                 </plugin>               
                 <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${glotaran.maven-release-plugin.version}</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${glotaran.maven-release-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -614,6 +687,7 @@
                     <tagNameFormat>@{project.version}</tagNameFormat>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <releaseProfiles>releases</releaseProfiles>
+                    <preparationGoals>clean verify</preparationGoals>
                 </configuration>
             </plugin>
 
@@ -977,15 +1051,12 @@
         <module>GtaFileSupport</module>
         <module>imgdataloader_new</module>
 	
-        <module>jcommon</module>
         <module>jfreechart</module>
         <module>JFreeChartCustom</module>
         <module>jide-oss</module>
         <module>JRConnect</module>
-        <module>JRI</module>
         <module>PQDataloader</module>
         <module>RawDataloader</module>
-        <module>REngine</module>
         <module>SDTDataloader</module>
         <module>SimSupport</module>
         <module>TGMFileSupport</module>

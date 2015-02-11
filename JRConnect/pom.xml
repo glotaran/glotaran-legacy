@@ -6,17 +6,21 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>JRConnect</artifactId>
     <packaging>nbm</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    <name>Library - JRConnect</name>
+     
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
-	<publicPackage>org.rosuda.*</publicPackage>	
+                        <publicPackage>org.rosuda.*</publicPackage>	
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -32,27 +36,27 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>${netbeans.version}</version>
+            <artifactId>org-netbeans-api-annotations-common</artifactId>  
         </dependency>
-	<dependency>
-		<groupId>org.rosuda</groupId>
-		<artifactId>org-rosuda-JRIEngine</artifactId>
-		<version>0.5.5</version></dependency>
-                <dependency>
-		<groupId>org.rosuda</groupId>
-		<artifactId>org-rosuda-JRI</artifactId>
-		<version>0.5.5</version></dependency>
-	<dependency>
-		<groupId>org.rosuda</groupId>
-		<artifactId>org-rosuda-REngine</artifactId>
-		<version>0.5.5</version></dependency>
-                <dependency>
-		<groupId>org.rosuda</groupId>
-		<artifactId>org-rosuda-Rserve</artifactId>
-		<version>1.8.1</version></dependency>
+        <dependency>
+            <groupId>org.rosuda</groupId>
+            <artifactId>org-rosuda-JRIEngine</artifactId>
+            <version>0.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rosuda</groupId>
+            <artifactId>org-rosuda-JRI</artifactId>
+            <version>0.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rosuda</groupId>
+            <artifactId>org-rosuda-REngine</artifactId>
+            <version>0.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.rosuda</groupId>
+            <artifactId>org-rosuda-Rserve</artifactId>
+            <version>1.8.1</version>
+        </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

@@ -6,18 +6,21 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>GtaFileSupport</artifactId>
     <packaging>nbm</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-		<configuration>
+                <configuration>
                     <publicPackages>                        
-	<publicPackage>org.glotaran.gtafilesupport</publicPackage>
-	<publicPackage>org.glotaran.gtafilesupport.api</publicPackage>
+                        <publicPackage>org.glotaran.gtafilesupport</publicPackage>
+                        <publicPackage>org.glotaran.gtafilesupport.api</publicPackage>
                     </publicPackages>    
                 </configuration>
             </plugin>
@@ -33,61 +36,51 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>${netbeans.version}</version>
+            <artifactId>org-netbeans-api-annotations-common</artifactId>  
         </dependency>
-	
-	
-	
-	
-	
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-awt</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-filesystems</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-loaders</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-nodes</artifactId>
-		<version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util</artifactId> 
-              <version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-util-lookup</artifactId> 
-              <version>${netbeans.version}</version></dependency>
-	<dependency>
-		<groupId>org.netbeans.api</groupId>
-		<artifactId>org-openide-windows</artifactId>
-		<version>${netbeans.version}</version></dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-filesystems</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-loaders</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-nodes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId> 
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId> 
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-windows</artifactId>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreInterfaces</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreMessages</artifactId>
-             <version>1.5.1-SNAPSHOT</version>         </dependency>
+        </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId> 
-              <version>${netbeans.version}</version>
+            <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId>               
         </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

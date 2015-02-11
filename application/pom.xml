@@ -8,20 +8,26 @@
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <!-- for relativePath one level higher is actually the default -->
+        <relativePath>..</relativePath> 
     </parent>        
 
     <artifactId>glotaran-app</artifactId>
     <packaging>nbm-application</packaging>
-    <name>glotaran-app</name>
+    <name>glotaran-application</name>
 
     <dependencies>
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
             <type>pom</type>
-            <!--
+            <!-- TODO: find out which exclusions are useful -->
             <exclusions>
+                <exclusion>
+                    <artifactId>org-netbeans-libs-javafx</artifactId>
+                    <groupId>org.netbeans.api</groupId>
+                </exclusion>
+                <!--
                 <exclusion>
                     <artifactId>org-jdesktop-layout</artifactId>
                     <groupId>org.netbeans.api</groupId>
@@ -114,8 +120,8 @@
                     <artifactId>org-netbeans-modules-spi-actions</artifactId>
                     <groupId>org.netbeans.modules</groupId>
                 </exclusion>                
+                -->
             </exclusions>
-            -->
         </dependency>
         
         <dependency>
@@ -209,19 +215,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jcommon</artifactId>                     
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>TIMPController</artifactId>                     
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CoreResultDisplayers</artifactId>                     
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>REngine</artifactId>                     
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

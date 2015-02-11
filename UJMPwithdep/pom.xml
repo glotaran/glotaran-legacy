@@ -6,8 +6,12 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>UJMPwithdep</artifactId>
     <packaging>nbm</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    <name>LibaryWrapper - UJMP_with_dependencies</name>
+    
     <build>
         <plugins>
             <plugin>
@@ -218,7 +222,6 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
-            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ujmp</groupId>
@@ -309,7 +312,4 @@
             <version>29.0</version>
         </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

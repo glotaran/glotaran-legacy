@@ -6,8 +6,11 @@
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>CoreSimulation</artifactId>
     <packaging>nbm</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    
     <build>
         <plugins>
             <plugin>
@@ -33,73 +36,54 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
- <version>${netbeans.version}</version>
         </dependency>
-	
-	
-	
-	
-	
 	<dependency>
 	<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-api-progress</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		</dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-dialogs</artifactId> 
-              <version>${netbeans.version}</version></dependency>
+              </dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-filesystems</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		</dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-loaders</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		</dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-nodes</artifactId>
-		<version>${netbeans.version}</version></dependency>
+		</dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util</artifactId> 
-              <version>${netbeans.version}</version></dependency>
+              </dependency>
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-util-lookup</artifactId> 
-              <version>${netbeans.version}</version></dependency>
+              </dependency>
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>CoreModels</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>CoreInterfaces</artifactId>
-           <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>CoreMain</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>SimSupport</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.glotaran</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>TGMFileSupport</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

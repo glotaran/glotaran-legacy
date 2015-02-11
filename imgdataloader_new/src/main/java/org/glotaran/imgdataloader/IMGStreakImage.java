@@ -29,7 +29,7 @@ public class IMGStreakImage implements TGDatasetInterface {
 
     @Override
     public String getFilterString() {
-        return ".img Hamamatsu streack images";
+        return ".img Hamamatsu streak images";
     }
 
     @Override
