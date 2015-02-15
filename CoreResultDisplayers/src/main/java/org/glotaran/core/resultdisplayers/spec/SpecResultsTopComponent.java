@@ -274,7 +274,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton8 = new javax.swing.JButton();
+        jBSVDSelection = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         jBExportResiduals = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -614,16 +614,16 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jToolBar2.add(jButton3);
         jToolBar2.add(jSeparator2);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton8, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jButton8.text")); // NOI18N
-        jButton8.setFocusable(false);
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(jBSVDSelection, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBSVDSelection.text")); // NOI18N
+        jBSVDSelection.setFocusable(false);
+        jBSVDSelection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBSVDSelection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBSVDSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jBSVDSelectionActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButton8);
+        jToolBar2.add(jBSVDSelection);
         jToolBar2.add(jSeparator4);
 
         org.openide.awt.Mnemonics.setLocalizedText(jBExportResiduals, org.openide.util.NbBundle.getMessage(SpecResultsTopComponent.class, "SpecResultsTopComponent.jBExportResiduals.text")); // NOI18N
@@ -1335,23 +1335,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             jTBLinLog.setSelected(false);
             jTBLinLogTraces.setSelected(false);
             updateTrace(jSColum.getValue());
-            ChartPanel conc;
-            if (numberOfRates < res.getConcentrations().getColumnDimension()) {
-                conc = createLinTimePlot(concentrationsMatrix, res.getX(), true);
-            } else {
-                conc = createLinTimePlot(concentrationsMatrix, res.getX());
-            }
-            ChartPanel lsv = createLinTimePlot(leftSingVec, res.getX(), 2);
-            lsv.getChart().setTitle("Left singular vectors");
-            lsv.getChart().getTitle().setFont(new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12));
-            jPConcentrations.removeAll();
-            jPConcentrations.add(conc);
-            jPConcentrations.validate();
-            jPLeftSingVectors.removeAll();
-            jPLeftSingVectors.add(lsv);
-            jPLeftSingVectors.validate();
-            jBUpdLinLog.setEnabled(false);
-
+            updateLinLogPlotSumary();
         }
     }
 
@@ -1392,7 +1376,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         jPSASnorm.validate();
     }//GEN-LAST:event_jTBNormToMaxActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void jBSVDSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSVDSelectionActionPerformed
         Range yRange = chartMain.getXYPlot().getRangeAxis().getRange();
         Range xRange = chartMain.getXYPlot().getDomainAxis().getRange();
 
@@ -1417,8 +1401,9 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         updateSVDPlots(tempSVDResult, tempX, tempX2, jPRightSingVectorsPart, jPLeftSingVectorsPart, jPSingValuesPart);
         updateTrace(jSColum.getValue());
         jPRightSingVectorsPart.validate();
+        jPLeftSingVectorsPart.validate();
         jPSingValuesPart.validate();
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_jBSVDSelectionActionPerformed
 
     private void jTFLinPartFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFLinPartFocusLost
         try {
@@ -1747,10 +1732,10 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
     private javax.swing.JButton jBExportResiduals;
     private javax.swing.JButton jBExportTimeTraces;
     private javax.swing.JButton jBExportWaveTraces;
+    private javax.swing.JButton jBSVDSelection;
     private javax.swing.JButton jBUpdLinLog;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCBDispCurveShow;
     private javax.swing.JList jLKineticParameters;
     private javax.swing.JLabel jLabel2;
@@ -2567,24 +2552,47 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         return curveDataset;
     }
 
-    private void updateLinLogPlotSumary() {
+    private void updateLinLogPlotSumary(){
         double linPortion = linPart;
-        ChartPanel conc = createLinLogTimePlot(t0Curve[0], linPortion, concentrationsMatrix, res.getX(), true);
-        ChartPanel lsv = createLinLogTimePlot(t0Curve[0], linPortion, leftSingVec, res.getX());
+        GraphPanel lsv;
+        GraphPanel conc;
+        GraphPanel lsvPart;
+        if (!jTBLinLog.isSelected()) {
+            if (numberOfRates < res.getConcentrations().getColumnDimension()) {
+                conc = createLinTimePlot(concentrationsMatrix, res.getX(), true);
+            } else {
+                conc = createLinTimePlot(concentrationsMatrix, res.getX());
+            }
+            lsv = createLinTimePlot(leftSingVec, res.getX(), 2);    
+            lsvPart = createLinTimePlot(leftSingVecPart, timePart, 2);
+
+        } else {
+            conc = createLinLogTimePlot(t0Curve[0], linPortion, concentrationsMatrix, res.getX(), true);
+            lsv = createLinLogTimePlot(t0Curve[0], linPortion, leftSingVec, res.getX());
+            lsvPart = createLinLogTimePlot(t0Curve[0], linPortion, leftSingVecPart, timePart);
+
+        }
+
         lsv.getChart().setTitle("Left singular vectors");
         lsv.getChart().getTitle().setFont(new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12));
+        lsvPart.getChart().setTitle("Left singular vectors");
+        lsvPart.getChart().getTitle().setFont(new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12));
 
         jPConcentrations.removeAll();
         conc.setSize(jPConcentrations.getSize());
         jPConcentrations.add(conc);
-        jPConcentrations.repaint();
+        jPConcentrations.validate();
 
         jPLeftSingVectors.removeAll();
         lsv.setSize(jPLeftSingVectors.getSize());
         jPLeftSingVectors.add(lsv);
-        jPLeftSingVectors.repaint();
+        jPLeftSingVectors.validate();
+        
+        jPLeftSingVectorsPart.removeAll();
+        jPLeftSingVectorsPart.add(lsvPart);
+        jPLeftSingVectorsPart.validate();
+                
         jBUpdLinLog.setEnabled(true);
-
     }
 
     private void updateTrace(int xIndex) {
@@ -2596,29 +2604,11 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
             jPSelectedTimeTrace.removeAll();
             jPSelectedTimeTrace.add(linTime);
             jPSelectedTimeTrace.validate();
-
-            if (leftSingVecPart != null) {
-                GraphPanel lsv = createLinTimePlot(leftSingVecPart, timePart, 2);
-                lsv.getChart().setTitle("Left singular vectors");
-                lsv.getChart().getTitle().setFont(new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12));
-                jPLeftSingVectorsPart.removeAll();
-                jPLeftSingVectorsPart.add(lsv);
-                jPLeftSingVectorsPart.validate();
-            }
         } else {
             GraphPanel linLogTime = CommonResDispTools.createLinLogTimeTraceResidChart(trace, resid, String.valueOf(res.getX2()[xIndex]), false, linPart);
             jPSelectedTimeTrace.removeAll();
             jPSelectedTimeTrace.add(linLogTime);
             jPSelectedTimeTrace.validate();
-            if (leftSingVecPart != null) {
-                double linPortion = linPart;
-                GraphPanel lsv = createLinLogTimePlot(t0Curve[0], linPortion, leftSingVecPart, timePart);
-                lsv.getChart().setTitle("Left singular vectors");
-                lsv.getChart().getTitle().setFont(new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12));
-                jPLeftSingVectorsPart.removeAll();
-                jPLeftSingVectorsPart.add(lsv);
-                jPLeftSingVectorsPart.validate();
-            }
         }
     }
 
