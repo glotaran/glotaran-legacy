@@ -563,16 +563,26 @@
         </profile>                        
         
         <profile>
+            
             <id>replace-icon-unix</id>
-            <activation>
+            <activation>    
+               
+                <!-- Following activation conditions are disabeled as a workaround for MNG-4565 behavior in Maven < 3.2.2 -->                               
+                <!--
                 <os>
                     <family>Unix</family>
                 </os>
+                <property>
+                    <name>resourcehacker.installdir</name>
+                </property>
+                -->
                 <file>
-                    <exists>${wine.bottle}\drive_c\${resourcehacker.installdir}\ResHacker.exe</exists>
-                </file>                     
+                    <!-- Unfortuonately this test only works if the path resolves exactly,
+                         which requires us to specify an os specific location in ~/.m2/settings.xml .            -->                    
+                    <exists>${wine.bottle}/drive_c/${resourcehacker.installdir.unix}/ResHacker.exe</exists>
+                </file>                      
             </activation>
-            <build>
+            <build>                
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId> 
@@ -585,7 +595,7 @@
                                 </goals>                        
                                 <configuration>
                                     <target> 
-
+                                        <echo message="[OS-Specific] UNIX [/OS-Specific]" /> 
                                         <echo message="Replacing icon of Windows launcher executable" />
                                         <echo message="Using wine bottle: ${wine.bottle}" />  
                                         <echo message="Running ${resourcehacker.installdir}\ResHacker.exe" />
@@ -637,13 +647,20 @@
                 
         <profile>
             <id>replace-icon-windows</id>
-            <activation>
+            <activation>              
+                <!-- Following activation conditions disabeled as a workaround for MNG-4565 behavior in Maven < 3.2.2 -->                              
+                <!--
                 <os>
                     <family>Windows</family>
                 </os>
+                <property>
+                    <name>resourcehacker.installdir</name>
+                </property>
+                -->     
                 <file>
+                    <!-- specifiy the property in specific location in ~/.m2/settings.xml -->
                     <exists>${resourcehacker.installdir}\ResHacker.exe</exists>
-                </file>                            
+                </file>                                                    
             </activation>
             <build>
                 <plugins>
@@ -658,7 +675,7 @@
                                 </goals>                        
                                 <configuration>
                                     <target> 
-
+                                        <echo message="[OS-Specific] WINDOWS [/OS-Specific]" /> 
                                         <echo message="Replacing icon of Windows launcher executable" /> 
                                         <!-- replace executable with ResHacker.exe path on windows -->
                                         <exec executable="${resourcehacker.installdir}\ResHacker.exe" resolveexecutable="true" logerror="true">
