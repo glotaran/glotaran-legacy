@@ -347,7 +347,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jTBZoomX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/zoom_lambda-24.png"))); // NOI18N
+        jTBZoomX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/zoom_lambda24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBZoomX, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomX.text")); // NOI18N
         jTBZoomX.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomX.toolTipText")); // NOI18N
         jTBZoomX.setFocusable(false);
@@ -360,7 +360,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         });
         jToolBar1.add(jTBZoomX);
 
-        jTBZoomY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/zoom_t-24.png"))); // NOI18N
+        jTBZoomY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/zoom_t24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBZoomY, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomY.text")); // NOI18N
         jTBZoomY.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomY.toolTipText")); // NOI18N
         jTBZoomY.setFocusable(false);
@@ -374,7 +374,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jToolBar1.add(jTBZoomY);
         jToolBar1.add(jSeparator1);
 
+        jBAverage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/average24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBAverage, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBAverage.text")); // NOI18N
+        jBAverage.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBAverage.toolTipText")); // NOI18N
         jBAverage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAverageActionPerformed(evt);
@@ -382,7 +384,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         });
         jToolBar1.add(jBAverage);
 
+        jBResample.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/resample24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBResample, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBResample.text")); // NOI18N
+        jBResample.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBResample.toolTipText")); // NOI18N
         jBResample.setFocusable(false);
         jBResample.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBResample.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -393,7 +397,7 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         });
         jToolBar1.add(jBResample);
 
-        jBSelectData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/select-24.png"))); // NOI18N
+        jBSelectData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/select24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBSelectData, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBSelectData.text")); // NOI18N
         jBSelectData.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBSelectData.toolTipText")); // NOI18N
         jBSelectData.setFocusable(false);
