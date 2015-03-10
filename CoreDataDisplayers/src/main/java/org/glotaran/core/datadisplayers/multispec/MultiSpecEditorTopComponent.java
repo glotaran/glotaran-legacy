@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 import org.apache.commons.math3.linear.BlockRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
@@ -51,6 +52,8 @@ import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.windows.TopComponent;
@@ -121,7 +124,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         dataObject = dataObj;
         setName(timpDataFile.getDatasetName());
         data = timpDataFile;
-        MakeImageChart(MakeXYZDataset());
+        makeImageChart(MakeXYZDataset());
         updateFileInfo();
         
     }
@@ -166,6 +169,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
+        jTBRotate = new javax.swing.JToggleButton();
         jtbIntegrateMap = new javax.swing.JToggleButton();
         jcbColorScale = new javax.swing.JComboBox();
         jpSVDResults = new javax.swing.JPanel();
@@ -468,6 +472,13 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jToolBar1.setMinimumSize(new java.awt.Dimension(200, 23));
         jToolBar1.setPreferredSize(new java.awt.Dimension(200, 23));
 
+        org.openide.awt.Mnemonics.setLocalizedText(jTBRotate, org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jTBRotate.text")); // NOI18N
+        jTBRotate.setToolTipText(org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jTBRotate.toolTipText")); // NOI18N
+        jTBRotate.setFocusable(false);
+        jTBRotate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTBRotate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jTBRotate);
+
         org.openide.awt.Mnemonics.setLocalizedText(jtbIntegrateMap, org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jtbIntegrateMap.text")); // NOI18N
         jtbIntegrateMap.setFocusable(false);
         jtbIntegrateMap.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -479,7 +490,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         });
         jToolBar1.add(jtbIntegrateMap);
 
-        jcbColorScale.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rainbow Scale", "RedGrin Scale", "Gray Scale" }));
+        jcbColorScale.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rainbow Scale", "RedGreen Scale", "Gray Scale" }));
         jcbColorScale.setMaximumSize(new java.awt.Dimension(100, 20));
         jcbColorScale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -585,25 +596,25 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
 
     private void jpSVDResultsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jpSVDResultsComponentShown
         if (!imSVDPanel.isCalculated()) {
-            calculateSVD();
+//            calculateSVD();
             
-//            SwingWorker<Matrix[], Void> worker = new SwingWorker<Matrix[], Void>() {
-//                final ProgressHandle ph = ProgressHandleFactory.createHandle("Performing Singular Value Decomposition on dataset");
-//
-//                @Override
-//                protected Matrix[] doInBackground() throws Exception {
-//                    ph.start();
-//                    return calculateSVD();
-//                }
-//
-//                @Override
-//                protected void done() {
+            SwingWorker<Matrix[], Void> worker = new SwingWorker<Matrix[], Void>() {
+                final ProgressHandle ph = ProgressHandleFactory.createHandle("Performing Singular Value Decomposition on dataset");
+
+                @Override
+                protected Matrix[] doInBackground() throws Exception {
+                    ph.start();
+                    return calculateSVD();
+                }
+
+                @Override
+                protected void done() {
 //                    imSVDPanel.createSVDPlots();
-//                    ph.finish();
-//                }
-//            };
-//            worker.execute();
-        }
+                    ph.finish();
+                }
+            };
+            worker.execute(); 
+       }
     }//GEN-LAST:event_jpSVDResultsComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -619,6 +630,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     private javax.swing.JSlider jSVerticalCut;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTAInfo;
+    private javax.swing.JToggleButton jTBRotate;
     private javax.swing.JTextField jTFMaxIntence;
     private javax.swing.JTextField jTFMinIntence;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -727,7 +739,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         return chart_temp;
     }
     
-    private void MakeImageChart(ColorCodedImageDataset dataset) {
+    private void makeImageChart(ColorCodedImageDataset dataset) {
         double range = Math.abs(data.getMaxInt() - data.getMinInt());
         double dataMin, dataMax;
         if (range == 0.0) {
@@ -794,10 +806,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         overlay.addRangeCrosshair(crhHorisontalCut);
         chartPanelMultiSpec.addOverlay(overlay);
         jpMultiSpecImage.add(chartPanelMultiSpec);
-        //TODO: auto scale the JSlider jSColum to the size of the chart
-        //chpanImage.getChartRenderingInfo().getChartArea().getWidth();
-        //jSColum.setBounds(jSColum.getBounds().x, jSColum.getBounds().y,(int)chpanImage.getChartRenderingInfo().getChartArea().getBounds().width,jSColum.getHeight());
-
+        
         chartMultiSpec.addChangeListener((ChartChangeListener) this);
         
         subchartVerticalCutTrace = createXYPlot(PlotOrientation.HORIZONTAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImX(),jpVerticalCut, false, null);
@@ -947,29 +956,8 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }
     
     private void updateImagePlot(double minAmp, double maxAmp) {
-        PaintScale ps;
-        switch (jcbColorScale.getSelectedIndex()){
-            case 0: {
-                ps = new RainbowPaintScale(minAmp, maxAmp);
-                break;
-            }
-            case 1: {
-                ps = new RedGreenPaintScale(data.getMinInt(), data.getMaxInt());
-                break;
-            }
-            case 2: {
-                ps = new GrayPaintScale();
-                break;
-            }
-            default: {
-                ps = new RainbowPaintScale(minAmp, maxAmp);
-                break;
-            }
-        }
-         
+        PaintScale ps = getPaintScale(minAmp, maxAmp);
                              
-//        PaintScale ps = new RedGreenPaintScale(data.getMinInt(), data.getMaxInt());
-
         BufferedImage image = ImageUtilities.createColorCodedImage(dataset, ps,false,true);
         XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
                 dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
@@ -1048,5 +1036,27 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
 
     }
 
-    
+    private PaintScale getPaintScale(double minAmp, double maxAmp) {
+        PaintScale ps;
+        switch (jcbColorScale.getSelectedIndex()){
+            case 0: {
+                ps = new RainbowPaintScale(minAmp, maxAmp);
+                break;
+            }
+            case 1: {
+                ps = new RedGreenPaintScale(minAmp, maxAmp);
+                break;
+            }
+            case 2: {
+                ps = new GrayPaintScale(minAmp,maxAmp);
+                break;
+            }
+            default: {
+                ps = new RainbowPaintScale(minAmp, maxAmp);
+                break;
+            }
+        }
+        return ps;
+    }
+ 
 }
