@@ -68,11 +68,12 @@ public abstract class ImageUtilities {
      * @param paintScale the paint scale for the z-values (<code>null</code> not permitted).
      * @param invertX invert X dimension
      * @param invertY invert Y dimension
+     * @param transpose transpose matrix
      * @return  A buffered image.
      */
     
     public static BufferedImage createColorCodedImage(ColorCodedImageDataset dataset, 
-            PaintScale paintScale, boolean invertX, boolean invertY) {
+            PaintScale paintScale, boolean invertX, boolean invertY, boolean transpose) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -81,8 +82,11 @@ public abstract class ImageUtilities {
         }
         int xCount = dataset.GetImageWidth();
         int yCount = dataset.GetImageHeigth();
-        BufferedImage image = new BufferedImage(xCount, yCount,
-                BufferedImage.TYPE_INT_ARGB);
+        
+        BufferedImage image = transpose ? 
+                new BufferedImage(yCount, xCount,BufferedImage.TYPE_INT_ARGB) : 
+                new BufferedImage(xCount, yCount,BufferedImage.TYPE_INT_ARGB);
+        
         Graphics2D g2 = image.createGraphics();
         int yIndOr;
         int xIndOr; 
@@ -102,12 +106,33 @@ public abstract class ImageUtilities {
                 double z = dataset.getZValue(0, yIndOr * xCount + xIndOr);
                 Paint p = paintScale.getPaint(z);
                 g2.setPaint(p);
-                g2.fillRect(xIndex, yIndex, 1, 1);
+                if (transpose) {
+                    g2.fillRect(yIndex, xIndex, 1, 1);
+                } else {
+                    g2.fillRect(xIndex, yIndex, 1, 1);
+                }
             }
         }
         return image;
         
     }
+    
+    
+     /**
+     * Creates an image that displays the values from the specified dataset.
+     * 
+     * @param dataset the dataset (<code>null</code> not permitted).
+     * @param paintScale the paint scale for the z-values (<code>null</code> not permitted).
+     * @param invertX invert X dimension
+     * @param invertY invert Y dimension
+     * @return  A buffered image.
+     */
+    
+    public static BufferedImage createColorCodedImage(ColorCodedImageDataset dataset, 
+            PaintScale paintScale, boolean invertX, boolean invertY) {
+        return createColorCodedImage(dataset, paintScale, invertX, invertY, false);
+    }
+    
     
     /**
      * Creates an image that displays the values from the specified dataset.

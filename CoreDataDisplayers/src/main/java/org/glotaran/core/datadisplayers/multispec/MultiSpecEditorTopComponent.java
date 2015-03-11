@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -477,6 +478,11 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jTBRotate.setFocusable(false);
         jTBRotate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jTBRotate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jTBRotate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBRotateActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jTBRotate);
 
         org.openide.awt.Mnemonics.setLocalizedText(jtbIntegrateMap, org.openide.util.NbBundle.getMessage(MultiSpecEditorTopComponent.class, "MultiSpecEditorTopComponent.jtbIntegrateMap.text")); // NOI18N
@@ -524,20 +530,12 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }// </editor-fold>//GEN-END:initComponents
 
     private void rangeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rangeSliderStateChanged
-        double newMinAmpl, newMaxAmpl;
-        Double range = (data.getMaxInt() - data.getMinInt());
-        newMinAmpl = data.getMinInt() + range / (rangeSlider.getMaximum() - rangeSlider.getMinimum()) * rangeSlider.getLowValue();
-        newMaxAmpl = data.getMinInt() + range / (rangeSlider.getMaximum() - rangeSlider.getMinimum()) * rangeSlider.getHighValue();
-        if (newMinAmpl < newMaxAmpl) {
-            try {
-                updateImagePlot(newMinAmpl, newMaxAmpl);
+        double[] range = getSelectedRange();
+        if (range[0] < range[1]) {
+            updateImagePlot(range[0], range[1]);
+            jTFMinIntence.setText(String.valueOf(range[0]));
+            jTFMaxIntence.setText(String.valueOf(range[1]));
 
-                jTFMinIntence.setText(String.valueOf(newMinAmpl));
-                jTFMaxIntence.setText(String.valueOf(newMaxAmpl));
-
-            } catch (NumberFormatException ex) {
-                CoreErrorMessages.numberFormatException();
-            }
         }
     }//GEN-LAST:event_rangeSliderStateChanged
 
@@ -616,6 +614,10 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
             worker.execute(); 
        }
     }//GEN-LAST:event_jpSVDResultsComponentShown
+
+    private void jTBRotateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBRotateActionPerformed
+        updateImagePlot(getSelectedRange());
+    }//GEN-LAST:event_jTBRotateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.glotaran.core.datadisplayers.common.ImageSVDPanel imSVDPanel;
@@ -956,9 +958,13 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }
     
     private void updateImagePlot(double minAmp, double maxAmp) {
+        
         PaintScale ps = getPaintScale(minAmp, maxAmp);
+        boolean invertX = jTBRotate.isSelected();
+        boolean invertY = !jTBRotate.isSelected();
+        boolean transpose = jTBRotate.isSelected();
                              
-        BufferedImage image = ImageUtilities.createColorCodedImage(dataset, ps,false,true);
+        BufferedImage image = ImageUtilities.createColorCodedImage(dataset, ps,invertX,invertY,transpose);
         XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
                 dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
 
@@ -967,12 +973,20 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         plot.getRenderer().addAnnotation(ann, Layer.BACKGROUND);
 
         ((PaintScaleLegend) chartMultiSpec.getSubtitle(0)).setScale(ps);
-        ((PaintScaleLegend) chartMultiSpec.getSubtitle(0)).getAxis().setRange(minAmp, maxAmp);
-
-        
-        
+        ((PaintScaleLegend) chartMultiSpec.getSubtitle(0)).getAxis().setRange(minAmp, maxAmp);   
     }
     
+    private void updateImagePlot(double[] range) {
+        updateImagePlot(range[0], range[1]);   
+    }
+    
+    private double[] getSelectedRange(){
+        double[] newRange = new double[2];
+        Double range = (data.getMaxInt() - data.getMinInt());
+        newRange[0] = data.getMinInt() + range / (rangeSlider.getMaximum() - rangeSlider.getMinimum()) * rangeSlider.getLowValue();
+        newRange[1] = data.getMinInt() + range / (rangeSlider.getMaximum() - rangeSlider.getMinimum()) * rangeSlider.getHighValue();
+        return newRange;
+    }
 
     @Override
     public void chartChanged(ChartChangeEvent cce) {
