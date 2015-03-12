@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +19,6 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
-import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.jfreechartcustom.ColorCodedImageDataset;
 import org.glotaran.jfreechartcustom.GraphPanel;
@@ -60,11 +58,7 @@ import org.openide.awt.ActionID;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.CloneableTopComponent;
-import org.ujmp.commonsmath.CommonsMathDenseDoubleMatrix2DFactory;
 import org.ujmp.core.Matrix;
-import org.ujmp.core.doublematrix.calculation.general.decomposition.SVD;
-import org.ujmp.core.doublematrix.factory.DenseDoubleMatrix2DFactory;
-import org.ujmp.core.doublematrix.impl.DefaultDenseDoubleMatrix2D;
 
 /**
  * Top component which displays something.
@@ -117,7 +111,6 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
 
     public MultiSpecEditorTopComponent() {
         initComponents();
-
     }
 
     public MultiSpecEditorTopComponent(DatasetTimp timpDataFile, TgdDataObject dataObj) {
@@ -617,6 +610,8 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
 
     private void jTBRotateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBRotateActionPerformed
         updateImagePlot(getSelectedRange());
+//        updateCroshairs();
+//        setSliders();
     }//GEN-LAST:event_jTBRotateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -719,7 +714,6 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
             dataMax = data.getMaxInt();
         }
         PaintScale ps = new RainbowPaintScale(dataMin, dataMax);
-//        PaintScale ps = new RedGreenPaintScale(dataMin, dataMax);
         BufferedImage image = ImageUtilities.createColorCodedImage(this.dataset, ps);
 
         XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
@@ -751,7 +745,8 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
             dataMin = data.getMinInt();
             dataMax = data.getMaxInt();
         }
-        PaintScale ps = new RainbowPaintScale(dataMin, dataMax);
+        PaintScale ps = getPaintScale(dataMin, dataMax);
+        
         this.chartMultiSpec = createChart(new XYSeriesCollection());
         this.chartMultiSpec.setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
 
@@ -759,66 +754,32 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         this.wholeXRange = tempPlot.getDomainAxis().getRange();
         this.wholeYRange = tempPlot.getRangeAxis().getRange();
         
-        //added axes labeles on the image
-//        DecimalFormat formatter = new DecimalFormat("##0E0");
-//        NumberAxis xAxis = new NumberAxis("Wavelength → ");
-//
-//        
-//          double[] x2values = data.getIntenceImY();
-//        double x2range = Math.abs(x2values[0] - x2values[x2values.length - 1]);
-//        if (x2range<=0) {
-//            for (int i = 0; i < x2values.length; i++) {
-//                x2values[i]=i;
-//            }
-//        }
-//        
-//        int numberOfTicks = Math.min(data.getIntenceImY().length,MAX_NO_TICKS);
-//        NonLinearNumberTickUnit xTickUnit = new NonLinearNumberTickUnit(x2values.length/numberOfTicks, formatter,x2values);
-//        xAxis.setTickUnit(xTickUnit);
-//        xAxis.setTickLabelsVisible(true);
-//        tempPlot.setDomainAxis(xAxis);
-//        
-//        NumberAxis yAxis = new NumberAxis("← Wavelength");
-//
-//        formatter = new DecimalFormat("##0.#E0");
-//        numberOfTicks = Math.min(data.getX3().length,MAX_NO_TICKS);
-//         NonLinearNumberTickUnit yTickUnit = new NonLinearNumberTickUnit(data.getX3().length/numberOfTicks, formatter,data.getX3(),false);
-//        yAxis.setTickUnit(yTickUnit);
-//        yAxis.setTickLabelsVisible(true);
-//        tempPlot.setRangeAxis(yAxis);
-        
         chartPanelMultiSpec = new HeightMapPanel(chartMultiSpec,true);
         chartPanelMultiSpec.setFillZoomRectangle(true);
         chartPanelMultiSpec.setMouseWheelEnabled(true);
         chartPanelMultiSpec.setZoomFillPaint(new Color(68, 68, 78, 63));
         jpMultiSpecImage.removeAll();
-//        chpanImage.setSize(jPSpecImage.getMaximumSize());
         jpMultiSpecImage.setLayout(new BorderLayout());
 
         ImageCrosshairLabelGenerator crossLabGenVerticalCut = new ImageCrosshairLabelGenerator(data.getIntenceImY(), false);
         ImageCrosshairLabelGenerator crossLabGenHorisontalCut = new ImageCrosshairLabelGenerator(data.getIntenceImX(), false);
-        ImageCrosshairLabelGenerator crossLabGenTimeSlise = new ImageCrosshairLabelGenerator(data.getX(), false);
-       
+        
         crhVerticalCut = createCroshair(Color.red, crossLabGenVerticalCut);
         crhHorisontalCut = createCroshair(Color.gray, crossLabGenHorisontalCut);
-        crhTimeSlice = createCroshair(Color.red, null);
         
+                
         CrosshairOverlay overlay = new CrosshairOverlay();
         overlay.addDomainCrosshair(crhVerticalCut);
         overlay.addRangeCrosshair(crhHorisontalCut);
         chartPanelMultiSpec.addOverlay(overlay);
         jpMultiSpecImage.add(chartPanelMultiSpec);
         
-        chartMultiSpec.addChangeListener((ChartChangeListener) this);
+        
         
         subchartVerticalCutTrace = createXYPlot(PlotOrientation.HORIZONTAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImX(),jpVerticalCut, false, null);
         subchartHorisontalTrace = createXYPlot(PlotOrientation.VERTICAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImY(),jpHorisontalCut, false, null);
         
-        CrosshairOverlay overlayTime = new CrosshairOverlay();
-        overlayTime.addDomainCrosshair(crhTimeSlice);
-        
-        subchartTimeTrace = createXYPlot(PlotOrientation.VERTICAL,AxisLocation.BOTTOM_OR_LEFT, data.getX(),jpTimeeTrace, false, overlayTime);
-        
+//color bar        
         NumberAxis scaleAxis = new NumberAxis();
         scaleAxis.setAxisLinePaint(Color.black);
         scaleAxis.setTickMarkPaint(Color.black);
@@ -831,24 +792,11 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         legend.setPosition(RectangleEdge.RIGHT);
         legend.setBackgroundPaint(chartMultiSpec.getBackgroundPaint());
         chartMultiSpec.addSubtitle(legend);
-
-        this.chartMultiSpec.addChangeListener((ChartChangeListener) this);
-        jSVerticalCut.setValueIsAdjusting(true);
-        jSVerticalCut.setMaximum(dataset.GetImageWidth() - 1);
-        jSVerticalCut.setMinimum(0);
-//        jSVerticalCut.setValue(0);
-        jSVerticalCut.setValueIsAdjusting(false);
-
-        jsHorisontalCut.setValueIsAdjusting(true);
-        jsHorisontalCut.setMaximum(dataset.GetImageHeigth() - 1);
-        jsHorisontalCut.setMinimum(0);
-        jsHorisontalCut.setValueIsAdjusting(false);
         
-        jsTimeSlice.setValueIsAdjusting(true);
-        jsTimeSlice.setMaximum(data.getNt()-1);
-        jsTimeSlice.setMinimum(0);
-        jsTimeSlice.setValueIsAdjusting(false);
+        createTimeTracePlot();
+        setSliders();
         
+        chartMultiSpec.addChangeListener((ChartChangeListener) this);
     }
     
     private Crosshair createCroshair(Color crhColor, ImageCrosshairLabelGenerator lebelGenereator){
@@ -936,7 +884,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         twoPlaces.setExponentFormat(new DecimalFormat("0.#"));
         for (int i = 0; i <= 5; i++) {
             iLabel = (data.getMinInt() + (data.getMaxInt() - data.getMinInt()) / 5 * (i));
-            labels.put(new Integer(i * 20), new JLabel(twoPlaces.format(iLabel)));
+            labels.put(i * 20, new JLabel(twoPlaces.format(iLabel)));
         }
         rangeSlider.setLabelTable(labels);
         rangeSlider.setPaintTicks(true);
@@ -1071,6 +1019,49 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
             }
         }
         return ps;
+    }
+    
+    private void updateCroshairs(){
+        ImageCrosshairLabelGenerator crossLabGenVerticalCut = jTBRotate.isSelected() ? 
+                new ImageCrosshairLabelGenerator(data.getIntenceImY(), false) : 
+                new ImageCrosshairLabelGenerator(data.getIntenceImX(), false);
+        ImageCrosshairLabelGenerator crossLabGenHorisontalCut = jTBRotate.isSelected() ? 
+                new ImageCrosshairLabelGenerator(data.getIntenceImX(), false) :
+                new ImageCrosshairLabelGenerator(data.getIntenceImY(), false);
+        
+        crhVerticalCut.setLabelGenerator(crossLabGenVerticalCut);
+        crhHorisontalCut.setLabelGenerator(crossLabGenHorisontalCut);
+        
+    }
+
+    private void setSliders() { 
+        int sliderMaxValue;
+        jSVerticalCut.setValueIsAdjusting(true);
+        sliderMaxValue = jTBRotate.isSelected() ? dataset.GetImageHeigth() - 1 : dataset.GetImageWidth() - 1;
+        jSVerticalCut.setMaximum(sliderMaxValue);
+        jSVerticalCut.setMinimum(0);
+        jSVerticalCut.setValue(0);
+        jSVerticalCut.setValueIsAdjusting(false);
+
+        jsHorisontalCut.setValueIsAdjusting(true);
+        sliderMaxValue = jTBRotate.isSelected() ? dataset.GetImageWidth() - 1 : dataset.GetImageHeigth() - 1 ;
+        jsHorisontalCut.setMaximum(sliderMaxValue);
+        jsHorisontalCut.setMinimum(0);
+        jsHorisontalCut.setValue(0);
+        jsHorisontalCut.setValueIsAdjusting(false);
+    }
+    
+    private void createTimeTracePlot(){
+        //ImageCrosshairLabelGenerator crossLabGenTimeSlise = new ImageCrosshairLabelGenerator(data.getX(), false);
+        crhTimeSlice = createCroshair(Color.red, null);
+        CrosshairOverlay overlayTime = new CrosshairOverlay();
+        overlayTime.addDomainCrosshair(crhTimeSlice);
+        subchartTimeTrace = createXYPlot(PlotOrientation.VERTICAL,AxisLocation.BOTTOM_OR_LEFT, data.getX(),jpTimeeTrace, false, overlayTime);
+        jsTimeSlice.setValueIsAdjusting(true);
+        jsTimeSlice.setMaximum(data.getNt()-1);
+        jsTimeSlice.setMinimum(0);
+        jsTimeSlice.setValueIsAdjusting(false);
+        
     }
  
 }
