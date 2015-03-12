@@ -12,11 +12,8 @@ import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -41,8 +38,6 @@ import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.ExtensionFileFilter;
 import org.jfree.ui.RectangleInsets;
 import org.openide.windows.TopComponent;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
 
 /**
  *
@@ -190,7 +185,7 @@ public class GraphPanel extends ChartPanel {
             plot.setDrawingSupplier(new GlotaranDrawingSupplier());
             plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
             plot.setSeriesRenderingOrder(SeriesRenderingOrder.FORWARD);
-            errorBarsVisible = plot.getRenderer() instanceof XYErrorRenderer ? true : false;
+            errorBarsVisible = plot.getRenderer() instanceof XYErrorRenderer;
         }
         setPannable();
     }
@@ -210,11 +205,12 @@ public class GraphPanel extends ChartPanel {
                 }
             }
 //write all tracess that presented in chart, in colums, using domain axe from first seria in colums
-            BufferedWriter output = new BufferedWriter(new FileWriter(new File(filename)));
+            
+            
             StringBuilder sb = new StringBuilder();
 
             if (this.getChart().getPlot().getClass().equals(XYPlot.class)) {
-                xyList = new ArrayList<XYPlot>();
+                xyList = new ArrayList<>();
                 XYPlot plot = (XYPlot) this.getChart().getPlot();
                 if (plot!=null) {
                     xyList.add(plot);
@@ -225,8 +221,9 @@ public class GraphPanel extends ChartPanel {
                 List<XYPlot> plots = ((CombinedDomainXYPlot) this.getChart().getXYPlot()).getSubplots();
                 sb = exportXYPlot(sb, plots);
             }
-            output.append(sb);
-            output.close();
+            try (BufferedWriter output = new BufferedWriter(new FileWriter(new File(filename)))) {
+                output.append(sb);
+            }
         }
     }
 
@@ -274,16 +271,18 @@ public class GraphPanel extends ChartPanel {
                     filename = filename + ".svg";
                 }
             }
-
             // Create an instance of the SVG Generator
             SVGGraphics2D svgGenerator = new SVGGraphics2D(400,300);
             
 
             // draw the chart in the SVG generator
             getChart().draw(svgGenerator, new Rectangle2D.Double(0, 0, 400, 300), null);
-
-            org.jfree.graphics2d.svg.SVGUtils.writeToSVG(new File(filename),svgGenerator.getSVGDocument());
-            svgGenerator.dispose();
+            try (BufferedWriter output = new BufferedWriter(new FileWriter(new File(filename)))) {
+                output.append(svgGenerator.getSVGDocument());
+                output.close();
+//            Files.write(Paths.get(filename), svgGenerator.getSVGDocument().getBytes(),StandardOpenOption.CREATE);
+            }
+            
         }
     }
 
