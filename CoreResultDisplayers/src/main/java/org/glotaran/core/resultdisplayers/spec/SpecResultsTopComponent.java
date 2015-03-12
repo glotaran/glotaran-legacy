@@ -2579,12 +2579,10 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         lsvPart.getChart().getTitle().setFont(new Font(JFreeChart.DEFAULT_TITLE_FONT.getFontName(), JFreeChart.DEFAULT_TITLE_FONT.getStyle(), 12));
 
         jPConcentrations.removeAll();
-        conc.setSize(jPConcentrations.getSize());
         jPConcentrations.add(conc);
         jPConcentrations.validate();
 
         jPLeftSingVectors.removeAll();
-        lsv.setSize(jPLeftSingVectors.getSize());
         jPLeftSingVectors.add(lsv);
         jPLeftSingVectors.validate();
         
