@@ -118,7 +118,8 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         dataObject = dataObj;
         setName(timpDataFile.getDatasetName());
         data = timpDataFile;
-        makeImageChart(MakeXYZDataset());
+        MakeXYZDataset();
+        makeImageChartPanel();
         updateFileInfo();
         
     }
@@ -699,9 +700,9 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         // TODO read your settings according to their version
     }
     
-    private JFreeChart createChart(XYDataset dataset1) {
+    private JFreeChart createChart(XYDataset dataset) {
         JFreeChart chart_temp = ChartFactory.createScatterPlot(null,
-                null, null, dataset1, PlotOrientation.VERTICAL, false, false,
+                null, null, dataset, PlotOrientation.VERTICAL, false, false,
                 false);
 
         double range = Math.abs(data.getMaxInt() - data.getMinInt());
@@ -713,15 +714,17 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
             dataMin = data.getMinInt();
             dataMax = data.getMaxInt();
         }
-        PaintScale ps = new RainbowPaintScale(dataMin, dataMax);
-        BufferedImage image = ImageUtilities.createColorCodedImage(this.dataset, ps);
-
-        XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
-                dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
+        
+        PaintScale ps = getPaintScale(dataMin, dataMax);
+        XYDataImageAnnotation ann = getImageAnnotation(ps);
+        
+        chart_temp.setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
+        
         XYPlot plot = (XYPlot) chart_temp.getPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
         plot.getRenderer().addAnnotation(ann, Layer.BACKGROUND);
+        
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
         xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setLowerMargin(0.0);
@@ -732,54 +735,7 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
         yAxis.setVisible(false);
-        return chart_temp;
-    }
-    
-    private void makeImageChart(ColorCodedImageDataset dataset) {
-        double range = Math.abs(data.getMaxInt() - data.getMinInt());
-        double dataMin, dataMax;
-        if (range == 0.0) {
-            dataMin = data.getMinInt() - 0.1;
-            dataMax = data.getMaxInt() + 0.1;
-        } else {
-            dataMin = data.getMinInt();
-            dataMax = data.getMaxInt();
-        }
-        PaintScale ps = getPaintScale(dataMin, dataMax);
         
-        this.chartMultiSpec = createChart(new XYSeriesCollection());
-        this.chartMultiSpec.setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
-
-        XYPlot tempPlot = (XYPlot) this.chartMultiSpec.getPlot();
-        this.wholeXRange = tempPlot.getDomainAxis().getRange();
-        this.wholeYRange = tempPlot.getRangeAxis().getRange();
-        
-        chartPanelMultiSpec = new HeightMapPanel(chartMultiSpec,true);
-        chartPanelMultiSpec.setFillZoomRectangle(true);
-        chartPanelMultiSpec.setMouseWheelEnabled(true);
-        chartPanelMultiSpec.setZoomFillPaint(new Color(68, 68, 78, 63));
-        jpMultiSpecImage.removeAll();
-        jpMultiSpecImage.setLayout(new BorderLayout());
-
-        ImageCrosshairLabelGenerator crossLabGenVerticalCut = new ImageCrosshairLabelGenerator(data.getIntenceImY(), false);
-        ImageCrosshairLabelGenerator crossLabGenHorisontalCut = new ImageCrosshairLabelGenerator(data.getIntenceImX(), false);
-        
-        crhVerticalCut = createCroshair(Color.red, crossLabGenVerticalCut);
-        crhHorisontalCut = createCroshair(Color.gray, crossLabGenHorisontalCut);
-        
-                
-        CrosshairOverlay overlay = new CrosshairOverlay();
-        overlay.addDomainCrosshair(crhVerticalCut);
-        overlay.addRangeCrosshair(crhHorisontalCut);
-        chartPanelMultiSpec.addOverlay(overlay);
-        jpMultiSpecImage.add(chartPanelMultiSpec);
-        
-        
-        
-        subchartVerticalCutTrace = createXYPlot(PlotOrientation.HORIZONTAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImX(),jpVerticalCut, false, null);
-        subchartHorisontalTrace = createXYPlot(PlotOrientation.VERTICAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImY(),jpHorisontalCut, false, null);
-        
-//color bar        
         NumberAxis scaleAxis = new NumberAxis();
         scaleAxis.setAxisLinePaint(Color.black);
         scaleAxis.setTickMarkPaint(Color.black);
@@ -790,8 +746,41 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         legend.setMargin(new RectangleInsets(5, 5, 5, 5));
         legend.setStripWidth(15);
         legend.setPosition(RectangleEdge.RIGHT);
-        legend.setBackgroundPaint(chartMultiSpec.getBackgroundPaint());
-        chartMultiSpec.addSubtitle(legend);
+        legend.setBackgroundPaint(chart_temp.getBackgroundPaint());
+        chart_temp.addSubtitle(legend);
+        
+        this.wholeXRange = plot.getDomainAxis().getRange();
+        this.wholeYRange = plot.getRangeAxis().getRange();
+        
+        return chart_temp;
+    }
+    
+    private void makeImageChartPanel() {
+                
+        this.chartMultiSpec = createChart(new XYSeriesCollection());
+        chartPanelMultiSpec = new HeightMapPanel(chartMultiSpec,true);
+        chartPanelMultiSpec.setFillZoomRectangle(true);
+        chartPanelMultiSpec.setMouseWheelEnabled(true);
+        chartPanelMultiSpec.setZoomFillPaint(new Color(68, 68, 78, 63));
+        
+
+        
+        ImageCrosshairLabelGenerator crossLabGenVerticalCut = new ImageCrosshairLabelGenerator(data.getIntenceImY(), false);
+        ImageCrosshairLabelGenerator crossLabGenHorisontalCut = new ImageCrosshairLabelGenerator(data.getIntenceImX(), false);
+        crhVerticalCut = createCroshair(Color.red, crossLabGenVerticalCut);
+        crhHorisontalCut = createCroshair(Color.gray, crossLabGenHorisontalCut);
+                
+        CrosshairOverlay overlay = new CrosshairOverlay();
+        overlay.addDomainCrosshair(crhVerticalCut);
+        overlay.addRangeCrosshair(crhHorisontalCut);
+        chartPanelMultiSpec.addOverlay(overlay);
+        
+        jpMultiSpecImage.removeAll();
+        jpMultiSpecImage.setLayout(new BorderLayout());
+        jpMultiSpecImage.add(chartPanelMultiSpec);
+        
+        subchartVerticalCutTrace = createXYPlot(PlotOrientation.HORIZONTAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImX(),jpVerticalCut, false, null);
+        subchartHorisontalTrace = createXYPlot(PlotOrientation.VERTICAL,AxisLocation.BOTTOM_OR_RIGHT, data.getIntenceImY(),jpHorisontalCut, false, null);        
         
         createTimeTracePlot();
         setSliders();
@@ -906,16 +895,9 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
     }
     
     private void updateImagePlot(double minAmp, double maxAmp) {
-        
         PaintScale ps = getPaintScale(minAmp, maxAmp);
-        boolean invertX = jTBRotate.isSelected();
-        boolean invertY = !jTBRotate.isSelected();
-        boolean transpose = jTBRotate.isSelected();
-                             
-        BufferedImage image = ImageUtilities.createColorCodedImage(dataset, ps,invertX,invertY,transpose);
-        XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
-                dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
-
+        XYDataImageAnnotation ann = getImageAnnotation(ps);
+        
         XYPlot plot = (XYPlot) chartMultiSpec.getPlot();
         plot.getRenderer().removeAnnotations();
         plot.getRenderer().addAnnotation(ann, Layer.BACKGROUND);
@@ -1062,6 +1044,25 @@ public final class MultiSpecEditorTopComponent extends TopComponent implements C
         jsTimeSlice.setMinimum(0);
         jsTimeSlice.setValueIsAdjusting(false);
         
+    }
+    
+    private XYDataImageAnnotation getImageAnnotation(PaintScale ps){
+        boolean invertX = jTBRotate.isSelected();
+        boolean invertY = !jTBRotate.isSelected();
+        boolean transpose = jTBRotate.isSelected();
+                             
+        BufferedImage image = ImageUtilities.createColorCodedImage(dataset, ps,invertX,invertY,transpose);
+        XYDataImageAnnotation ann = new XYDataImageAnnotation(image, 0, 0,
+                    dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
+//        if (jTBRotate.isSelected()) {
+//            ann = new XYDataImageAnnotation(image, 0, 0,
+//                    dataset.GetImageHeigth(), dataset.GetImageWidth(), true);
+//
+//        } else {
+//            ann = new XYDataImageAnnotation(image, 0, 0,
+//                    dataset.GetImageWidth(), dataset.GetImageHeigth(), true);
+//        }
+        return ann;
     }
  
 }
