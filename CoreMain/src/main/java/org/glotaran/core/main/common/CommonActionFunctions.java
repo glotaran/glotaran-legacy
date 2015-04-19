@@ -643,6 +643,7 @@ public class CommonActionFunctions {
                         f.append(String.valueOf(dataset.getX()[i]));
                         f.append(",");
                     }
+                    f.newLine();
                     for (int i = 0; i < dataset.getNl(); i++) {
                         f.append(String.valueOf(dataset.getX2()[i]));
                         f.append(",");
@@ -673,6 +674,7 @@ public class CommonActionFunctions {
                         f.append(String.valueOf(dataset.getX()[i]));
                         f.append("\t");
                     }
+                    f.newLine();
                     for (int i = 0; i < dataset.getNl(); i++) {
                         f.append(String.valueOf(dataset.getX2()[i]));
                         f.append("\t");
