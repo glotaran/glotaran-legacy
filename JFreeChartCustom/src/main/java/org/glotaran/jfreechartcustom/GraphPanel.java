@@ -19,6 +19,7 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -51,8 +52,10 @@ public class GraphPanel extends ChartPanel {
     private static final String SAVE_PNG_COMMAND = "SAVE_PNG";
     private static final String OPEN_IN_NEW_WINDOW_COMMAND = "OPEN_IN_NEW_WINDOW";
     private static final String SHOW_ERRORBARS = "SHOW_ERRORBARS";
+    private static final String SHOW_CROSSLABELS = "SHOW_LABELS";
     private boolean errorBarsEnabled = false;
     private boolean errorBarsVisible = false;
+    private boolean showcrossLabeles = false;
     private Paint[] paintSequence = new Paint[]{Color.BLACK, Color.RED, Color.BLUE, Color.GREEN, Color.magenta, Color.CYAN, Color.YELLOW, Color.ORANGE, Color.PINK, Color.DARK_GRAY};
 
     public GraphPanel(JFreeChart chart) {
@@ -122,6 +125,11 @@ public class GraphPanel extends ChartPanel {
         if (command.equals(SHOW_ERRORBARS)) {
             doShowErrorBars();
         }
+        
+        if (command.equals(SHOW_CROSSLABELS)) {
+            doShowCrosshairLabels();
+        }
+        
 
     }
 
@@ -153,13 +161,18 @@ public class GraphPanel extends ChartPanel {
         openInSepWindItem.addActionListener(this);
         popmenu.insert(openInSepWindItem, 0);
 
+        JCheckBoxMenuItem  showCrossLabels = new JCheckBoxMenuItem("Show crosshair labels",showcrossLabeles);
+        showCrossLabels.setActionCommand(SHOW_CROSSLABELS);
+        showCrossLabels.addActionListener(this);
+        popmenu.insert(showCrossLabels, 1);
+        
         if (errorBarsEnabled == true) {
             JMenuItem showErrorBars = new JMenuItem("Show error bars");
             showErrorBars.setActionCommand(SHOW_ERRORBARS);
             showErrorBars.addActionListener(this);
             showErrorBars.setEnabled(errorBarsEnabled);
             popmenu.insert(showErrorBars, 1);
-            popmenu.insert(new JPopupMenu.Separator(), 2);
+            popmenu.insert(new JPopupMenu.Separator(), 3);
         }
     }
 
@@ -186,6 +199,9 @@ public class GraphPanel extends ChartPanel {
             plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
             plot.setSeriesRenderingOrder(SeriesRenderingOrder.FORWARD);
             errorBarsVisible = plot.getRenderer() instanceof XYErrorRenderer;
+            plot.setDomainCrosshairVisible(showcrossLabeles);
+            plot.setDomainCrosshairLockedOnData(false);
+
         }
         setPannable();
     }
@@ -373,5 +389,10 @@ public class GraphPanel extends ChartPanel {
             output.append(tempStrings.get(i)).append("\n");
         }
         return output;
+    }
+
+    private void doShowCrosshairLabels() {
+        showcrossLabeles = !showcrossLabeles;
+        updateAppearance();
     }
 }
