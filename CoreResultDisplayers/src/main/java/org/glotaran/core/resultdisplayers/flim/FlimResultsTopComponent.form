@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.6" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
@@ -251,9 +251,9 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel6" alignment="0" pref="302" max="32767" attributes="3"/>
-                              <Component id="jPanel4" alignment="0" min="0" pref="302" max="32767" attributes="3"/>
-                              <Component id="jPIntenceImage" alignment="0" pref="302" max="32767" attributes="3"/>
+                              <Component id="jLabel6" alignment="0" max="32767" attributes="3"/>
+                              <Component id="jPanel4" alignment="0" min="0" pref="450" max="32767" attributes="3"/>
+                              <Component id="jPIntenceImage" alignment="0" max="32767" attributes="3"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -316,7 +316,7 @@
                                       <Component id="jTFMaxIntence" min="-2" pref="67" max="-2" attributes="1"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -388,8 +388,8 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel1" alignment="0" pref="290" max="32767" attributes="2"/>
-                                      <Component id="jPImage" alignment="0" pref="290" max="32767" attributes="1"/>
+                                      <Component id="jLabel1" alignment="0" max="32767" attributes="2"/>
+                                      <Component id="jPImage" alignment="0" max="32767" attributes="1"/>
                                       <Component id="jPanel10" alignment="0" max="32767" attributes="2"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -452,7 +452,7 @@
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jTFMaxLifetime" min="-2" pref="71" max="-2" attributes="1"/>
-                                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -698,7 +698,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                     <Property name="columns" type="int" value="1"/>
-                    <Property name="rows" type="int" value="0"/>
+                    <Property name="rows" type="int" value="3"/>
                   </Layout>
                 </Container>
               </SubComponents>
