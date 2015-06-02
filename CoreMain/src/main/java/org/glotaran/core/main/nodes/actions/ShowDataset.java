@@ -30,7 +30,7 @@ public final class ShowDataset extends CookieAction {
 
     @Override
     protected void performAction(Node[] activatedNodes) {
-        String filetype;
+        String filetype = null;
         DatasetTimp data=null;
         File tgdFile;
         TGProject project;
@@ -56,12 +56,17 @@ public final class ShowDataset extends CookieAction {
         for (final TGDatasetInterface service : loadServices) {
             try {
                 if (service.Validator(tgdFile)) {
+                    if (!service.getType(tgdFile).equalsIgnoreCase("FLIM")){
                     data = service.loadFile(tgdFile);
+                    filetype = data.getType();
                     if (data == null) {
                         CoreErrorMessages.fileLoadException(tgdFile.getName());
                         return;
                     }
                     break;
+                    } else {
+                        filetype = service.getType(tgdFile);
+                    }
                 }
             } catch (FileNotFoundException ex) {
                 Exceptions.printStackTrace(ex);
@@ -70,8 +75,7 @@ public final class ShowDataset extends CookieAction {
             }
         }
         
-        if (!(data == null)) {
-            filetype = data.getType();
+        if (filetype!=null){
             for (final DatasetLoaderInterface service : services) {
                 if (service.getType().equalsIgnoreCase(filetype)) {
                     service.openDatasetEditor(data,dataObject);

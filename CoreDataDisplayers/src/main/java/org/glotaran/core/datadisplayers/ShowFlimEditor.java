@@ -46,6 +46,20 @@ public class ShowFlimEditor implements DatasetLoaderInterface {
 
     @Override
     public void openDatasetEditor(DatasetTimp data, TgdDataObject dataObj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<TopComponent> tset = WindowManager.getDefault().getRegistry().getOpened();
+        for (TopComponent t : tset) {
+            if (t instanceof SdtTopComponent) {
+                SdtTopComponent srtc = (SdtTopComponent) t;
+                if (srtc.getDataObject()!= null) {
+                    if (srtc.getDataObject().equals(dataObj)) {
+                        srtc.requestActive();
+                        return;
+                    }
+                }
+            }
+        }
+        SdtTopComponent tc = new SdtTopComponent(dataObj);
+        tc.open();
+        tc.requestActive();
     }
 }
