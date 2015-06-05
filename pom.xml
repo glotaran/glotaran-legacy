@@ -571,6 +571,11 @@
                 <artifactId>ExampleDataloader</artifactId>
                 <version>${project.version}</version>
             </dependency>
+	    <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>LabmonkeyDataloader</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
             
     </dependencyManagement>
@@ -1070,6 +1075,7 @@
         <module>UJMPwithdep</module>
         <module>CoreOptions</module>
         <module>ExampleDataloader</module>
+        <module>LabmonkeyDataloader</module>
     </modules>
     
 </project>

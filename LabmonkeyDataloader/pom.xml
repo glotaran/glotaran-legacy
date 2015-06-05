@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.glotaran</groupId>
+        <artifactId>glotaran-parent</artifactId>
+        <version>1.5.2-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>LabmonkeyDataloader</artifactId>
+    <packaging>nbm</packaging>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <author>Jörn Weißenborn</author>
+                    <moduleType></moduleType>
+                    <!--  A list of additional resources to include in the NBM file. -->
+                    <!-- For example, to include native libraries: -->
+                    <!--
+                    <nbmResource>
+                        <directory>src/main/libs</directory>
+                        <targetPath>modules/lib</targetPath>
+                        <includes>
+                            <include>*.dll</include>
+                            <include>*.so</include>
+                        </includes>
+                    </nbmResource>                
+                    -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-annotations-common</artifactId>            
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreModels</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreInterfaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>            
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20141113</version>
+        </dependency>
+
+    </dependencies>
+</project>
