@@ -1,0 +1,11 @@
+Header line 1: {"id": 1, "name": "Example measurement (simulated)", "date": "2012-04-23T18:25:43.511Z", "tags": ["time-resolved", "wavelength explicit"] }																								
+Header line 2: the next two lines are  some arbitrarily chosen file descripters																								
+Wavelength explicit																									
+NumberOfRecordsPerDatapoint 3																									
+	600	700	800
+0	310	360	410
+2.5	88.8164870267	103.1417268697	117.4669667127
+5	25.4463495734	29.5505995046	33.6548494358
+7.5	7.2905012154	8.4663885082	9.642275801
+10	2.0887635697	2.4256609197	2.7625582696
+	
