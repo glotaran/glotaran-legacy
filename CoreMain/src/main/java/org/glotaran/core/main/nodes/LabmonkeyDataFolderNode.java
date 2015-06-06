@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 import javax.swing.Action;
 import org.glotaran.core.main.nodes.actions.OpenDataset;
+import org.glotaran.core.main.nodes.actions.ReloadDatafolder;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
 import org.glotaran.core.main.project.TGProject;
@@ -18,12 +19,12 @@ import org.openide.nodes.Node;
 import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
 
-public class TGDatasetNode extends FilterNode {
+public class LabmonkeyDataFolderNode extends FilterNode {
 
-    private final Image ICON = ImageUtilities.loadImage("org/glotaran/core/main/resources/Folder-datasets-icon-16.png", true);
+    private final Image ICON = ImageUtilities.loadImage("org/glotaran/core/main/resources/Folder-labmonkey-icon-16.png", true);
 
-    public TGDatasetNode(Node node) {
-        super(node, new TGDatasetChildrenNode(node));
+    public LabmonkeyDataFolderNode(Node node) {
+        super(node, new LabmonkeyDataFolderChildrenNode(node));
 
         //nodeactions[0] = new OpenDatasetFile((TGProject)proj);
     }
@@ -48,16 +49,17 @@ public class TGDatasetNode extends FilterNode {
 
     @Override
     public String getDisplayName() {
-        if (this.getParentNode() instanceof TGDatasetNode) {
+        if (this.getParentNode() instanceof LabmonkeyDataFolderNode) {
             return this.getName();
         }
-        return NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("datasets");
+        return "LabmonkeyDataFolder"; 
+        // NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("datasets");
 //                .getMessage(TGDatasetNode.class, "datasets");//Utilities.getString("datasets");
     }
 
     @Override
     public boolean canRename() {
-        if (this.getParentNode() instanceof TGDatasetNode) {
+        if (this.getParentNode() instanceof LabmonkeyDataFolderNode) {
             return true;
         }
         return false;
@@ -73,7 +75,7 @@ public class TGDatasetNode extends FilterNode {
         if (proj != null && proj instanceof TGProject) {
             Action[] temp = actions;
             actions = new Action[actions.length + 1];
-            actions[0] = new OpenDataset();
+            actions[0] = new ReloadDatafolder();
             System.arraycopy(temp, 0, actions, 1, temp.length);
 //              for (int i = 0; i < temp.length; i++) {
 //                actions[i + 1] = temp[i];
@@ -83,9 +85,9 @@ public class TGDatasetNode extends FilterNode {
         return actions;
     }
 
-    private static class TGDatasetChildrenNode extends FilterNode.Children {
+    private static class LabmonkeyDataFolderChildrenNode extends FilterNode.Children {
 
-        TGDatasetChildrenNode(Node node) {
+        LabmonkeyDataFolderChildrenNode(Node node) {
             super(node);
         }
 
@@ -93,29 +95,17 @@ public class TGDatasetNode extends FilterNode {
         protected Node[] createNodes(Node n) {
             FileObject fo;
             // Test for labmonkey data folder
-            if (n.getLookup().lookup(DataFolder.class) != null) {
-                fo = n.getLookup().lookup(DataObject.class).getPrimaryFile();
-                if (fo.getFileObject(".labmonkeydatafolder").isValid()) {
-                    return new Node[]{new LabmonkeyDataFolderNode(n)};
-                } else {
-                    return new Node[]{new TGDatasetNode(n)};
-                }
+            if (n.getLookup().lookup(TgdDataObject.class) != null) {
+                return new Node[]{
+                    ((TgdDataObject) n.getLookup().lookup(TgdDataObject.class)).getNodeDelegate()};
+            } else if (n.getLookup().lookup(TimpDatasetDataObject.class) != null) {
+                return new Node[]{
+                    ((TimpDatasetDataObject) n.getLookup().lookup(TimpDatasetDataObject.class)).getNodeDelegate()
+                };
             } else {
-                if (n.getLookup().lookup(TgdDataObject.class) != null) {
-                    return new Node[]{
-                        ((TgdDataObject)n.getLookup().lookup(TgdDataObject.class)).getNodeDelegate()};
-                }
-                else {
-                    if (n.getLookup().lookup(TimpDatasetDataObject.class) != null) {
-                        return new Node[]{
-                            ((TimpDatasetDataObject)n.getLookup().lookup(TimpDatasetDataObject.class)).getNodeDelegate()
-                        };
-                    }
-                }
+                 return new Node[]{};
             }
-            // best effort
-//          return new Node[]{};
-            return new Node[]{new FilterNode(n)};
+
         }
     }
 }
