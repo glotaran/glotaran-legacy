@@ -47,15 +47,15 @@ public class LabmonkeyDataFolderNode extends FilterNode {
         return getIcon(type);
     }
 
-    @Override
-    public String getDisplayName() {
-        if (this.getParentNode() instanceof LabmonkeyDataFolderNode) {
-            return this.getName();
-        }
-        return "LabmonkeyDataFolder"; 
-        // NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("datasets");
-//                .getMessage(TGDatasetNode.class, "datasets");//Utilities.getString("datasets");
-    }
+//    @Override
+//    public String getDisplayName() {
+//        if (this.getParentNode() instanceof LabmonkeyDataFolderNode) {
+//            return this.getName();
+//        }
+//        return "LabmonkeyDataFolder"; 
+//        // NbBundle.getBundle("org/glotaran/core/main/Bundle").getString("datasets");
+////                .getMessage(TGDatasetNode.class, "datasets");//Utilities.getString("datasets");
+//    }
 
     @Override
     public boolean canRename() {
