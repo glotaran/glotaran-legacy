@@ -5,14 +5,16 @@
  */
 package org.glotaran.core.interfaces;
 
-import java.util.ArrayList;
+import java.io.File;
 
 /**
  *
  * @author Joris Snellenburg
  */
-public interface GlotaranDataloaderInterface extends TGDatasetInterface {
+public interface LabmonkeyDataloaderInterface extends TGDatasetInterface {
 
-    public ArrayList<String> getExtensions();
+    public String getName(File f);
+    
+    public String[] getDatasetPaths(String rootDirectoryPath);
         
 }

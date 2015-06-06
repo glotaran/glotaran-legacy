@@ -25,7 +25,7 @@ public class Datafolder {
         return datasets;
     }
 
-    private String[] getDatasetPaths(String scriptpath) {
+    public static String[] getDatasetPaths(String scriptpath) {
 
         File file = new File(scriptpath);
         String[] directories = file.list(new FilenameFilter() {

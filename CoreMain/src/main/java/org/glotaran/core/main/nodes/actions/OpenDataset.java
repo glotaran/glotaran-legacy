@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.glotaran.core.interfaces.LabmonkeyDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.main.project.TGProject;
@@ -46,7 +47,6 @@ public final class OpenDataset extends CookieAction {
 //        }
 //        return instance;
 //    }
-
     @Override
     protected void performAction(Node[] activatedNodes) {
         services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
@@ -60,7 +60,7 @@ public final class OpenDataset extends CookieAction {
             public void actionPerformed(ActionEvent e) {
                 File[] files;
                 if (e.getActionCommand().equalsIgnoreCase("Finish")) {
-                    pane.setVisible(false);                    
+                    pane.setVisible(false);
                     files = pane.getSelectedFiles();
                     if (files.length == 0) {
                         tryToGetStringFromTextField(pane.getComponents());
@@ -136,20 +136,20 @@ public final class OpenDataset extends CookieAction {
             for (final TGDatasetInterface service : services) {
                 //TODO: eliminate extension requirement
                 //if (f.getName().toLowerCase().endsWith(Pattern.compile(service.getExtention(), Pattern.CASE_INSENSITIVE).toString())) {
-                    try {
-                        if (service.Validator(f)) {
-                            openDatasetFile(service, f);
-                            //TODO: find out if this is the preferred way:
-                            FileUtil.refreshAll();
-                        }
-                    } catch (IOException ex) {
-                        Exceptions.printStackTrace(ex);
-                    } catch (IllegalAccessException ex) {
-                        Exceptions.printStackTrace(ex);
-                    } catch (InstantiationException ex) {
-                        Exceptions.printStackTrace(ex);
+                try {
+                    if (service.Validator(f)) {
+                        openDatasetFile(service, f);
+                        //TODO: find out if this is the preferred way:
+                        FileUtil.refreshAll();
                     }
-               // }
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (InstantiationException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+                // }
             }
         }
     }
@@ -158,8 +158,15 @@ public final class OpenDataset extends CookieAction {
         FileObject projectCacheFolder = null;
         FileObject cacheSubFolder;
         FileObject newFO = null;
+        String newFilename = "";
+
         FileObject originalFO = FileUtil.toFileObject(f);
+
         String cacheFolderName = originalFO.getName() + "_" + String.valueOf(System.currentTimeMillis());
+        if (service instanceof LabmonkeyDataloaderInterface) {
+            newFilename = ((LabmonkeyDataloaderInterface) service).getName(f);
+            cacheFolderName = newFilename + "_" + String.valueOf(System.currentTimeMillis());
+        }
 
         project = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
         if (project != null) {
@@ -181,7 +188,11 @@ public final class OpenDataset extends CookieAction {
         }
         try {
             //TODO: check if file exists
-            newFO = FileUtil.createData(dataObject.getPrimaryFile(), originalFO.getName().concat(".xml"));
+            if (service.getExtention().equalsIgnoreCase("yaml")) {
+                newFO = FileUtil.createData(dataObject.getPrimaryFile(), newFilename + File.separator + ".labmonkeydatafolder");
+            } else {
+                newFO = FileUtil.createData(dataObject.getPrimaryFile(), originalFO.getName().concat(".xml"));
+            }
             cacheSubFolder = projectCacheFolder.createFolder(cacheFolderName);
             tgd.setCacheFolderName(cacheSubFolder.getNameExt());
         } catch (IOException ex) {
@@ -189,18 +200,32 @@ public final class OpenDataset extends CookieAction {
         }
 
         if (newFO != null) {
-            File out = FileUtil.toFile(newFO);
-            try {
-                javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(tgd.getClass().getPackage().getName());
-                javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
-                marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
-                marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                // We marshal the data to a new xml file
-                marshaller.marshal(tgd, out);
-            } catch (javax.xml.bind.JAXBException ex) {
-                // TODO Handle exception
-                java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
+            writeJaxbFile(FileUtil.toFile(newFO), tgd);
+            if (service instanceof LabmonkeyDataloaderInterface) {
+                String[] allDatasetsPaths = ((LabmonkeyDataloaderInterface)service).getDatasetPaths(originalFO.getParent().getPath());
+                for (String pathToDataset : allDatasetsPaths) {
+                    tgd.setPath(pathToDataset);
+                    tgd.setFilename(pathToDataset.substring(pathToDataset.lastIndexOf(File.separator)+1));
+                    tgd.setExtension("~~DataFolder~~");
+                    tgd.setFiletype("~~LabmonkeyDataset~~");
+                    writeJaxbFile(new File(newFO.getParent().getPath() + File.separator + tgd.getFilename() + ".xml"), tgd);
+                }           
+
             }
+        }
+    }
+
+    private void writeJaxbFile(File out, Tgd tgd) {
+        try {
+            javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(tgd.getClass().getPackage().getName());
+            javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            // We marshal the data to a new xml file
+            marshaller.marshal(tgd, out);
+        } catch (javax.xml.bind.JAXBException ex) {
+            // TODO Handle exception
+            java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
         }
     }
 }

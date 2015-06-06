@@ -1,21 +1,31 @@
 package org.glotaran.labmonkeydataloader;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import org.glotaran.core.interfaces.LabmonkeyDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.core.models.structures.FlimImageAbstract;
+import org.json.JSONObject;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  *
  * @author Glotaran
  */
 @org.openide.util.lookup.ServiceProvider(service=TGDatasetInterface.class)
-public class LabmonkeyDataloader implements TGDatasetInterface {
+public class LabmonkeyFolderDataloader implements LabmonkeyDataloaderInterface {
 
     @Override
     public String getExtention() { //sorry for the typo
@@ -31,7 +41,7 @@ public class LabmonkeyDataloader implements TGDatasetInterface {
     public String getType(File file) throws FileNotFoundException {
         // Check if the type of the file is supported (one extension may hold diferent types of data,
         // think time-gated spectra or time-traces recorded per wavelength)
-        return "spec";
+        return "meta";
 //        String loadedString;
 //        Scanner sc = new Scanner(file);
 //        //TODO: implement your own file type parser
@@ -57,8 +67,10 @@ public class LabmonkeyDataloader implements TGDatasetInterface {
     @Override
     public boolean Validator(File file) throws FileNotFoundException, IOException, IllegalAccessException, InstantiationException {
         // Write your own elaborate validator to see if your LoadFile routine can deal with it
-//        String ext = getFileExtension(file);
-//        if (ext.equalsIgnoreCase(getExtention())) {
+        String ext = getFileExtension(file);
+        if (ext.equalsIgnoreCase(getExtention())) {
+            return true;
+        } else {
 //            String loadedString;
 //            Scanner sc = new Scanner(file);
 //            if (sc.hasNextLine()) { //workaround for binary img file
@@ -86,11 +98,13 @@ public class LabmonkeyDataloader implements TGDatasetInterface {
 //        } else {
 //            return false;
 //        }
-        return true;
+            return false;
+        }        
     }
 
     @Override
     public DatasetTimp loadFile(File file) throws FileNotFoundException {
+        // Program this to either load the average 
         // this example reads in a data file of type=spec in wavelength explicit format 
         // and stores it in the DatasetTimp class
         
@@ -182,7 +196,7 @@ public class LabmonkeyDataloader implements TGDatasetInterface {
     return dataset ;
 }
 
-@Override
+    @Override
         public FlimImageAbstract loadFlimFile(File file) throws FileNotFoundException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -194,6 +208,31 @@ public class LabmonkeyDataloader implements TGDatasetInterface {
             return ""; // empty extension
         }
         return name.substring(lastIndexOf+1);
+    }
+
+    @Override
+    public String getName(File file) {
+        String name = "labmonkeyDataFile" + System.currentTimeMillis();
+        String newname = "";        
+        final FileInputStream stream;
+        final Reader reader;
+        final BufferedReader bufferedReader;
+        try {
+            stream = new FileInputStream(file);
+            reader = new InputStreamReader(stream);
+            bufferedReader = new BufferedReader(reader);
+            final Object res = new Yaml().load(bufferedReader);        
+            Map map = (Map) res;
+            newname = (String)map.get("name");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(LabmonkeyFolderDataloader.class.getName()).log(Level.SEVERE, null, ex);
+        }                                        
+        return newname.isEmpty() ? name : newname;
+    }
+
+    @Override
+    public String[] getDatasetPaths(String rootDirectoryPath) {
+        return Datafolder.getDatasetPaths(rootDirectoryPath);
     }
 
 }
