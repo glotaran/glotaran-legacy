@@ -571,7 +571,7 @@
                 <artifactId>ExampleDataloader</artifactId>
                 <version>${project.version}</version>
             </dependency>
-	    <dependency>
+            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>LabmonkeyDataloader</artifactId>
                 <version>${project.version}</version>
@@ -819,7 +819,7 @@
     
     <!-- Profiles -->
     <profiles>
-        
+                      
         <!-- Profile for nighly builds and releases -->
         <profile>
             <id>deployment</id>
