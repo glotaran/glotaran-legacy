@@ -221,9 +221,12 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
-        </dependency>
+        </dependency>	
         <dependency>
             <groupId>org.ujmp</groupId>
+            <!-- This system scope dependency is a workaround until UJMP gets a proper artifact on maven central -->
+            <systemPath>${basedir}/../libs/ujmp-complete-0.2.5.jar</systemPath>
+            <scope>system</scope>
             <artifactId>ujmp-complete</artifactId>
             <version>0.2.5</version>                  
         </dependency>	
