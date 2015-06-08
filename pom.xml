@@ -202,8 +202,8 @@
     <scm>
         <connection>scm:git:https://jsnel@github.com/jsnel/glotaran.git</connection>
         <developerConnection>scm:git:https://jsnel@github.com/jsnel/glotaran.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>        
+        <tag>HEAD</tag>
+    </scm>        
     
     <!-- List all dependencies with versions so it can be used in child POMs 
     without explicit versions -->
@@ -555,7 +555,7 @@
                 <artifactId>ExampleDataloader</artifactId>
                 <version>${project.version}</version>
             </dependency>
-	    <dependency>
+            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>LabmonkeyDataloader</artifactId>
                 <version>${project.version}</version>
@@ -803,7 +803,7 @@
     
     <!-- Profiles -->
     <profiles>
-        
+                      
         <!-- Profile for nighly builds and releases -->
         <profile>
             <id>deployment</id>

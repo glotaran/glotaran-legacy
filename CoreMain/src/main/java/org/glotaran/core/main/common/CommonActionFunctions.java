@@ -486,8 +486,8 @@ public class CommonActionFunctions {
             dim2To = ocParameters.getOcRegConstD2() == null ? dataset.getNl(): CommonActionFunctions.findWaveIndex(dataset, ocParameters.getOcRegConstD2()[1], true);
             //TODO: check if specified region (partially) overlaps with dataset
             double s = ocParameters.getOcConstValue();
-            for (int i = 0; i < (dim1To-dim1From); i++) {
-                for (int j = 0; j < (dim2To-dim2From); j++) {
+            for (int i = 0; i <= (dim1To-dim1From); i++) {
+                for (int j = 0; j <= (dim2To-dim2From); j++) {
                     if ((i+dim1From) *(j+dim2From) < dataset.getPsisim().length) {
                     dataset.getPsisim()[(i+dim1From) + (j+dim2From) * dataset.getNt()] = s;
                     }
