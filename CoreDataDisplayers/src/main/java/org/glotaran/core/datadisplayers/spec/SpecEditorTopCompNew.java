@@ -1984,7 +1984,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         NumberAxis scaleAxis = new NumberAxis();
         scaleAxis.setAxisLinePaint(Color.black);
         scaleAxis.setTickMarkPaint(Color.black);
+        if (data.getMinInt() != data.getMaxInt() ) {
         scaleAxis.setRange(data.getMinInt(), data.getMaxInt());
+        }
         scaleAxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 12));
         PaintScaleLegend legend = new PaintScaleLegend(ps, scaleAxis);
         legend.setAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);

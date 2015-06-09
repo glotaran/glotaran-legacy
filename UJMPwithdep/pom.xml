@@ -217,16 +217,87 @@
             </plugin>
         </plugins>
     </build>
+    
+    <profiles>
+        <profile>
+            <id>Windows-deps</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <dependencies>
+            <dependency>
+                <groupId>org.ujmp</groupId>
+                <!-- This system scope dependency is a workaround until UJMP gets a proper artifact on maven central -->
+                <systemPath>${basedir}\..\libs\ujmp-complete-0.2.5.jar</systemPath>
+                <scope>system</scope>
+                <artifactId>ujmp-complete</artifactId>
+                <version>0.2.5</version>                  
+            </dependency>	
+	     <dependency>
+            <groupId>Jama</groupId>
+	    <systemPath>${basedir}\..\libs\Jama-1.0.2.jar</systemPath>
+                <scope>system</scope>
+            <artifactId>Jama</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+	    <systemPath>${basedir}\..\libs\ojalgo-29.0.jar</systemPath>
+                <scope>system</scope>
+            <artifactId>ojalgo</artifactId>
+            <version>29.0</version>
+        </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>unix-deps</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <dependencies>
+            <dependency>
+                <groupId>org.ujmp</groupId>
+                <!-- This system scope dependency is a workaround until UJMP gets a proper artifact on maven central -->
+                <systemPath>${basedir}/../libs/ujmp-complete-0.2.5.jar</systemPath>
+                <scope>system</scope>
+                <artifactId>ujmp-complete</artifactId>
+                <version>0.2.5</version>                  
+            </dependency>
+	     <dependency>
+            <groupId>Jama</groupId>
+	    <systemPath>${basedir}/../libs/Jama-1.0.2.jar</systemPath>
+                <scope>system</scope>
+            <artifactId>Jama</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+	    <systemPath>${basedir}/../libs/ojalgo-29.0.jar</systemPath>
+                <scope>system</scope>
+            <artifactId>ojalgo</artifactId>
+            <version>29.0</version>
+        </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId> 
-        </dependency>
+        </dependency>	
+        <!--
         <dependency>
-            <groupId>org.ujmp</groupId>
+            <groupId>org.ujmp</groupId>            
+            <systemPath>${basedir}/../libs/ujmp-complete-0.2.5.jar</systemPath>
+            <scope>system</scope>
             <artifactId>ujmp-complete</artifactId>
             <version>0.2.5</version>                  
         </dependency>	
+        -->
         <!-- <dependency>
         <groupId>??????</groupId>
         <artifactId>release/modules/ext/arpack-combo.jar</artifactId>
@@ -299,16 +370,6 @@
             <groupId>net.sourceforge.parallelcolt</groupId>
             <artifactId>parallelcolt</artifactId>
             <version>0.10.1</version>
-        </dependency>
-        <dependency>
-            <groupId>Jama</groupId>
-            <artifactId>Jama</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ojalgo</groupId>
-            <artifactId>ojalgo</artifactId>
-            <version>29.0</version>
-        </dependency>
+        </dependency>       
     </dependencies>
 </project>

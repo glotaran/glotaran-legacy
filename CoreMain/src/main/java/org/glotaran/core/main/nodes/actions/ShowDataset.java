@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
+import org.glotaran.core.interfaces.LabmonkeyDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.main.interfaces.DatasetLoaderInterface;
 import org.glotaran.core.messages.CoreErrorMessages;
@@ -31,13 +32,12 @@ public final class ShowDataset extends CookieAction {
     @Override
     protected void performAction(Node[] activatedNodes) {
         String filetype = null;
-        DatasetTimp data=null;
+        DatasetTimp data = null;
         File tgdFile;
         TGProject project;
         TgdDataObject dataObject = activatedNodes[0].getLookup().lookup(TgdDataObject.class);
-        
-//        setName(dataObject.getTgd().getFilename());
 
+//        setName(dataObject.getTgd().getFilename());
         //try to get the file from local cache
         project = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
         if (dataObject.getTgd().getRelativePath() != null) {
@@ -50,35 +50,48 @@ public final class ShowDataset extends CookieAction {
 //        setToolTipText(NbBundle.getMessage(SpecEditorTopCompNew.class, "HINT_StreakLoaderTopComponent"));
 //        setIcon(Utilities.loadImage(ICON_PATH, true));
 //        data = new DatasetTimp();
-        
-//get loaders from lookup        
-        Collection<? extends TGDatasetInterface> loadServices = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
-        for (final TGDatasetInterface service : loadServices) {
-            try {
-                if (service.Validator(tgdFile)) {
-                    if (!service.getType(tgdFile).equalsIgnoreCase("FLIM")){
-                    data = service.loadFile(tgdFile);
-                    filetype = data.getType();
-                    if (data == null) {
-                        CoreErrorMessages.fileLoadException(tgdFile.getName());
-                        return;
-                    }
-                    break;
-                    } else {
-                        filetype = service.getType(tgdFile);
+//get loaders from lookup  
+        if (dataObject.getTgd().getFiletype().matches("~~LabmonkeyDataset~~")) {
+            Collection<? extends LabmonkeyDataloaderInterface> labmonkeyServices = Lookup.getDefault().lookupAll(LabmonkeyDataloaderInterface.class);
+            for (final LabmonkeyDataloaderInterface service : labmonkeyServices) {
+                if (((LabmonkeyDataloaderInterface) service).getFilterString().matches("~~LabmonkeyDataset~~")) {
+                    try {
+                        data = ((LabmonkeyDataloaderInterface) service).loadFile(tgdFile);
+                        filetype = data.getType();
+                    } catch (FileNotFoundException ex) {
+                        Exceptions.printStackTrace(ex);
                     }
                 }
-            } catch (FileNotFoundException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (IOException | IllegalAccessException | InstantiationException ex) {
-                Exceptions.printStackTrace(ex);
+            }
+        } else {
+            Collection<? extends TGDatasetInterface> loadServices = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
+            for (final TGDatasetInterface service : loadServices) {
+                try {
+                    if (service.Validator(tgdFile)) {
+                        if (!service.getType(tgdFile).equalsIgnoreCase("FLIM")) {
+                            data = service.loadFile(tgdFile);
+                            filetype = data.getType();
+                            if (data == null) {
+                                CoreErrorMessages.fileLoadException(tgdFile.getName());
+                                return;
+                            }
+                            break;
+                        } else {
+                            filetype = service.getType(tgdFile);
+                        }
+                    }
+                } catch (FileNotFoundException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IOException | IllegalAccessException | InstantiationException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
             }
         }
-        
-        if (filetype!=null){
+
+        if (filetype != null) {
             for (final DatasetLoaderInterface service : services) {
                 if (service.getType().equalsIgnoreCase(filetype)) {
-                    service.openDatasetEditor(data,dataObject);
+                    service.openDatasetEditor(data, dataObject);
                 }
             }
         } else {
@@ -117,4 +130,3 @@ public final class ShowDataset extends CookieAction {
         return false;
     }
 }
-

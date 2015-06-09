@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.glotaran.core.interfaces.LabmonkeyDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
 import org.glotaran.core.main.nodes.dataobjects.TgdDataObject;
 import org.glotaran.core.main.project.TGProject;
@@ -35,7 +36,6 @@ public final class AverageTGDDatasetsAction implements ActionListener {
     private final List<DataObject> context;
     private ArrayList<DatasetTimp> listOfTimpDatasets = new ArrayList<DatasetTimp>();
     private DatasetTimp resDataset;
-
 
     public AverageTGDDatasetsAction(List<DataObject> context) {
         this.context = context;
@@ -59,45 +59,57 @@ public final class AverageTGDDatasetsAction implements ActionListener {
             Object res2 = DialogDisplayer.getDefault().notify(selectDataDialog);
             if (res2.equals(NotifyDescriptor.OK_OPTION)) {
 
-
 // after that it can be sent to another thread
-
                 for (DataObject dataObject : context) {
                     if (dataObject instanceof TgdDataObject) {
                         TgdDataObject dataObject2 = (TgdDataObject) dataObject;
                         project = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
-                        if (dataObject2.getTgd().getFiletype().equalsIgnoreCase("spec")) {
-                            if (dataObject2.getTgd().getRelativePath() != null) {
-                                tgdFile = new File(project.getProjectDirectory().getPath() + File.separator + dataObject2.getTgd().getRelativePath());
-                            } else { //try the orginal location
-                                tgdFile = new File(dataObject2.getTgd().getPath());
-                            }
-                            Collection<? extends TGDatasetInterface> services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
-                            for (final TGDatasetInterface service : services) {
-                                try {
-                                    if (service.Validator(tgdFile)) {
-                                        data = service.loadFile(tgdFile);
+                        if (dataObject2.getTgd().getRelativePath() != null) {
+                            tgdFile = new File(project.getProjectDirectory().getPath() + File.separator + dataObject2.getTgd().getRelativePath());
+                        } else { //try the orginal location
+                            tgdFile = new File(dataObject2.getTgd().getPath());
+                        }
+                        //This code is duplicated in ShowDataset.java 
+                        if (dataObject2.getTgd().getFiletype().matches("~~LabmonkeyDataset~~")) {
+                            Collection<? extends LabmonkeyDataloaderInterface> labmonkeyServices = Lookup.getDefault().lookupAll(LabmonkeyDataloaderInterface.class);
+                            for (final LabmonkeyDataloaderInterface service : labmonkeyServices) {
+                                if (((LabmonkeyDataloaderInterface) service).getFilterString().matches("~~LabmonkeyDataset~~")) {
+                                    try {
+                                        data = ((LabmonkeyDataloaderInterface) service).loadFile(tgdFile);
+                                        listOfTimpDatasets.add(data);
+                                    } catch (FileNotFoundException ex) {
+                                        Exceptions.printStackTrace(ex);
                                     }
-                                } catch (FileNotFoundException ex) {
-                                    Exceptions.printStackTrace(ex);
-                                    return;
-                                } catch (IOException ex) {
-                                    Exceptions.printStackTrace(ex);
-                                    return;
-                                } catch (IllegalAccessException ex) {
-                                    Exceptions.printStackTrace(ex);
-                                    return;
-                                } catch (InstantiationException ex) {
-                                    Exceptions.printStackTrace(ex);
-                                    return;
                                 }
                             }
-                            listOfTimpDatasets.add(data);
+                        } else {
+                            if (dataObject2.getTgd().getFiletype().equalsIgnoreCase("spec")) {
+                                Collection<? extends TGDatasetInterface> services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
+                                for (final TGDatasetInterface service : services) {
+                                    try {
+                                        if (service.Validator(tgdFile)) {
+                                            data = service.loadFile(tgdFile);
+                                            listOfTimpDatasets.add(data);
+                                        }
+                                    } catch (FileNotFoundException ex) {
+                                        Exceptions.printStackTrace(ex);
+                                        return;
+                                    } catch (IOException ex) {
+                                        Exceptions.printStackTrace(ex);
+                                        return;
+                                    } catch (IllegalAccessException ex) {
+                                        Exceptions.printStackTrace(ex);
+                                        return;
+                                    } catch (InstantiationException ex) {
+                                        Exceptions.printStackTrace(ex);
+                                        return;
+                                    }
+                                }
+                                
+                            }
                         }
                     }
                 }
-
-
 
                 if (preprocessDialogPanel.getTotalIntCorState()) {
                     for (DatasetTimp dataset : listOfTimpDatasets) {
@@ -136,7 +148,6 @@ public final class AverageTGDDatasetsAction implements ActionListener {
                                 preprocessDialogPanel.getOutlierCorrectionPanel().getOutlierParameters());
                     }
                 }
-
 
                 resDataset = CommonActionFunctions.averageSpecDatasets(listOfTimpDatasets);
                 if (resDataset == null) {
