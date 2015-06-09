@@ -95,7 +95,7 @@ public class TGDatasetNode extends FilterNode {
             // Test for labmonkey data folder
             if (n.getLookup().lookup(DataFolder.class) != null) {
                 fo = n.getLookup().lookup(DataObject.class).getPrimaryFile();
-                if (fo.getFileObject(".labmonkeydatafolder").isValid()) {
+                if (fo.getFileObject(".labmonkeydatafolder") != null) {
                     return new Node[]{new LabmonkeyDataFolderNode(n)};
                 } else {
                     return new Node[]{new TGDatasetNode(n)};
