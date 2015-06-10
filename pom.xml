@@ -188,7 +188,7 @@
         -->
         <repository>
             <id>repo</id>
-            <url>file://${basedir}/repo</url>
+            <url>file://${basedir}/../repo</url>
         </repository>
         <!-- Once Glotaran Nexus is in place this might be nice to have. -->
         <!-- 
