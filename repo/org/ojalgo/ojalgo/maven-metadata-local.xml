@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.ojalgo</groupId>
+  <artifactId>ojalgo</artifactId>
+  <versioning>
+    <release>29.0</release>
+    <versions>
+      <version>29.0</version>
+    </versions>
+    <lastUpdated>20150610003455</lastUpdated>
+  </versioning>
+</metadata>
