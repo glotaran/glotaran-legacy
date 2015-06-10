@@ -190,7 +190,7 @@
         -->
         <repository>
             <id>repo</id>
-            <url>file://${basedir}/repo</url>
+            <url>file://${basedir}/../repo</url>
         </repository>
         <repository>
             <id>netbeans</id>
