@@ -60,12 +60,11 @@
         <dependency>
             <artifactId>UJMPwithdep</artifactId>
             <groupId>org.glotaran</groupId>
-            <type>jar</type>
              </dependency>
         <dependency>
             <groupId>org.glotaran</groupId>
             <artifactId>CoreMain</artifactId>
              </dependency>
     </dependencies>
-   
+    
 </project>
