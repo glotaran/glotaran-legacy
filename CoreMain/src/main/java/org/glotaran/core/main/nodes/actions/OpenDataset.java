@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.glotaran.core.interfaces.LabmonkeyDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
+import org.glotaran.core.main.common.FileNameCleaner;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.main.project.TGProject;
 import org.glotaran.core.models.tgd.Tgd;
@@ -173,7 +174,7 @@ public final class OpenDataset extends CookieAction {
             }
         }
     }
-
+  
     private void openDatasetFile(TGDatasetInterface service, File f) {
         FileObject projectCacheFolder = null;
         FileObject cacheSubFolder;
@@ -185,6 +186,7 @@ public final class OpenDataset extends CookieAction {
         String cacheFolderName = originalFO.getName() + "_" + String.valueOf(System.currentTimeMillis());
         if (service instanceof LabmonkeyDataloaderInterface) {
             newFilename = ((LabmonkeyDataloaderInterface) service).getName(f);
+            newFilename = FileNameCleaner.cleanFileName(newFilename);            
             cacheFolderName = newFilename + "_" + String.valueOf(System.currentTimeMillis());
         }
 
@@ -209,7 +211,8 @@ public final class OpenDataset extends CookieAction {
         try {
             //TODO: check if file exists
             if (service.getExtention().equalsIgnoreCase("yaml")) {
-                newFO = FileUtil.createData(dataObject.getPrimaryFile(), newFilename + File.separator + ".labmonkeydatafolder");
+                FileObject subFolderFornewFO = FileUtil.createFolder(dataObject.getPrimaryFile(),newFilename);
+                newFO = FileUtil.createData(subFolderFornewFO,".labmonkeydatafolder");
             } else {
                 newFO = FileUtil.createData(dataObject.getPrimaryFile(), originalFO.getName().concat(".xml"));
             }
@@ -247,5 +250,5 @@ public final class OpenDataset extends CookieAction {
             // TODO Handle exception
             java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
         }
-    }
+    }       
 }
