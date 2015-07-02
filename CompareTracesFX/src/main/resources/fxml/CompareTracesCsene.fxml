@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
+    <stylesheets>
+        <URL value="@/styles/comparetracescsene.css" />
+    </stylesheets>
+   <children>
+      <ToolBar layoutY="6.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Clear" />
+        </items>
+      </ToolBar>
+      <Circle fill="DODGERBLUE" layoutX="300.0" layoutY="150.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label layoutX="254.0" layoutY="122.0" prefHeight="50.0" prefWidth="119.0" text="Hello">
+         <font>
+            <Font size="39.0" />
+         </font>
+         <textFill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
+      <Text layoutX="213.0" layoutY="313.0" stroke="RED" strokeType="OUTSIDE" text="Teest text" wrappingWidth="200.00000596046448">
+         <font>
+            <Font size="46.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
