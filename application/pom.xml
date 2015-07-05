@@ -258,13 +258,16 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ExampleDataloader</artifactId>
+            <artifactId>ExampleDataloader</artifactId>            
         </dependency>
-        <dependency>
+         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>LabmonkeyDataloader</artifactId>
         </dependency>
-        
+         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CompareTracesFX</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb</artifactId>

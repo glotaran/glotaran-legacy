@@ -569,6 +569,11 @@
                 <artifactId>ExampleDataloader</artifactId>
                 <version>${project.version}</version>
             </dependency>
+             <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>CompareTracesFX</artifactId>
+                <version>${project.version}</version>         
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>LabmonkeyDataloader</artifactId>
@@ -1059,7 +1064,7 @@
         <module>csvdataloader</module>
         <module>GtaFileSupport</module>
         <module>imgdataloader_new</module>
-	
+	<module>CompareTracesFX</module>
         <module>jfreechart</module>
         <module>JFreeChartCustom</module>
         <module>jide-oss</module>
