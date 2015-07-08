@@ -6,16 +6,19 @@
 package org.glotaran.comparetracesfx.swingcomponents;
 
 import java.io.IOException;
+import java.net.URL;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import static javafx.scene.input.DataFormat.URL;
+import javafx.scene.paint.Color;
 import org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -54,12 +57,7 @@ public final class CompareTracesTopComponent extends TopComponent {
         fxPanel = new JFXPanel();
         add(fxPanel);
         Platform.setImplicitExit(false);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                createScene();
-            }
-        });
+        Platform.runLater(()-> createScene());
     }
     
 
@@ -97,12 +95,15 @@ public final class CompareTracesTopComponent extends TopComponent {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-    private void createScene(){
-//        URL location = getClass().getResource("CompareTracesCsene.fxml");
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        Parent root = (Parent)fxmlLoader.load(location.openStream());
-//        fxPanel.setScene(new Scene(root));
-//        controller = (CompareTracesCseneController)fxmlLoader.getController();
-        
+    private void createScene() {
+
+        try {
+            URL url = getClass().getResource("/fxml/CompareTracesCsene.fxml");
+            Parent root = FXMLLoader.load(url);
+            Scene scene = new Scene(root, Color.LIGHTBLUE);
+            fxPanel.setScene(scene);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 }

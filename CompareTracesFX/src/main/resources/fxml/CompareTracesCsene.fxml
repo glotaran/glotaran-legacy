@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
+<AnchorPane id="AnchorPane" fx:id="pnScene" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
     <stylesheets>
         <URL value="@/styles/comparetracescsene.css" />
     </stylesheets>
@@ -20,8 +20,17 @@
           <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Clear" />
         </items>
       </ToolBar>
-      <Circle fill="DODGERBLUE" layoutX="300.0" layoutY="150.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label layoutX="254.0" layoutY="122.0" prefHeight="50.0" prefWidth="119.0" text="Hello">
+      <Circle layoutX="300.0" layoutY="150.0" radius="100.0" stroke="BLACK" strokeType="INSIDE">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop color="#1a00ff" />
+                  <Stop color="#00ff09" offset="0.49140893470790376" />
+                  <Stop color="RED" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </fill></Circle>
+      <Label fx:id="lbHello" alignment="CENTER" layoutX="204.0" layoutY="122.0" prefHeight="56.0" prefWidth="192.0" text="Hello" textAlignment="CENTER">
          <font>
             <Font size="39.0" />
          </font>
@@ -34,7 +43,7 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <Text layoutX="213.0" layoutY="313.0" stroke="RED" strokeType="OUTSIDE" text="Teest text" wrappingWidth="200.00000596046448">
+      <Text fx:id="txTestText" layoutX="213.0" layoutY="313.0" onMouseClicked="#snMouseClick" stroke="RED" strokeType="OUTSIDE" text="Click me" wrappingWidth="200.00000596046448">
          <font>
             <Font size="46.0" />
          </font>
