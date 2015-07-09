@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -10,43 +7,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="pnScene" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
-    <stylesheets>
-        <URL value="@/styles/comparetracescsene.css" />
-    </stylesheets>
+<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
    <children>
-      <ToolBar layoutY="6.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0">
         <items>
-          <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Clear" />
+          <Button fx:id="tbClear" mnemonicParsing="false" onAction="#tbClearAction" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Clear" />
+            <Button fx:id="tbExportTraces" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Export" />
+            <Button fx:id="tbOverlayTracess" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Overlay" />
         </items>
       </ToolBar>
-      <Circle layoutX="300.0" layoutY="150.0" radius="100.0" stroke="BLACK" strokeType="INSIDE">
-         <fill>
-            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-               <stops>
-                  <Stop color="#1a00ff" />
-                  <Stop color="#00ff09" offset="0.49140893470790376" />
-                  <Stop color="RED" offset="1.0" />
-               </stops>
-            </RadialGradient>
-         </fill></Circle>
-      <Label fx:id="lbHello" alignment="CENTER" layoutX="204.0" layoutY="122.0" prefHeight="56.0" prefWidth="192.0" text="Hello" textAlignment="CENTER">
-         <font>
-            <Font size="39.0" />
-         </font>
-         <textFill>
-            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-               <stops>
-                  <Stop color="BLACK" />
-                  <Stop color="WHITE" offset="1.0" />
-               </stops>
-            </RadialGradient>
-         </textFill>
-      </Label>
-      <Text fx:id="txTestText" layoutX="213.0" layoutY="313.0" onMouseClicked="#snMouseClick" stroke="RED" strokeType="OUTSIDE" text="Click me" wrappingWidth="200.00000596046448">
-         <font>
-            <Font size="46.0" />
-         </font>
-      </Text>
+      <AnchorPane id="AnchorPane" fx:id="graphPaneMain" prefHeight="400.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
    </children>
-</AnchorPane>
+</VBox>
