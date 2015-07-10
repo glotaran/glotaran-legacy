@@ -11,9 +11,22 @@
    <children>
       <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0">
         <items>
-          <Button fx:id="tbClear" mnemonicParsing="false" onAction="#tbClearAction" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Clear" />
-            <Button fx:id="tbExportTraces" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Export" />
-            <Button fx:id="tbOverlayTracess" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Overlay" />
+          <Button fx:id="tbClear" mnemonicParsing="false" onAction="#tbClearAction" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Clear">
+               <tooltip>
+                  <Tooltip text="Clear all selected tracess" />
+               </tooltip></Button>
+            <Button fx:id="tbExportTraces" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Export">
+               <tooltip>
+                  <Tooltip text="Export all tracess to a file" />
+               </tooltip></Button>
+            <ToggleButton fx:id="tbOverlayTracess" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="ToggleButton">
+               <tooltip>
+                  <Tooltip text="Overlay all tracess in one graph" />
+               </tooltip>
+            </ToggleButton>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button mnemonicParsing="false" onAction="#testSingleAction" text="testSingle" />
+            <Button mnemonicParsing="false" onAction="#testMultyAction" text="testMulty" />
         </items>
       </ToolBar>
       <AnchorPane id="AnchorPane" fx:id="graphPaneMain" prefHeight="400.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
