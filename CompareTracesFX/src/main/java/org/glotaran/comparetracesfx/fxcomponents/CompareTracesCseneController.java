@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -77,7 +78,8 @@ public class CompareTracesCseneController implements Initializable {
     private void testSingleAction(ActionEvent event) {
         XYDataset dataset = createDataset();
         JFreeChart chart = createChart(dataset); 
-//        ChartViewer viewer = new ChartViewer(chart);
+        ChartViewer viewer = new ChartViewer(chart);
+        graphPaneMain.getChildren().add(viewer);
 //        stage.setScene(new Scene(viewer)); 
     }
 
