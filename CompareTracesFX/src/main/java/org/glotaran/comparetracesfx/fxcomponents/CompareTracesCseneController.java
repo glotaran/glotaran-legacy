@@ -17,6 +17,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
@@ -38,7 +39,7 @@ public class CompareTracesCseneController implements Initializable {
     @FXML
     private Button tbClear;
     @FXML
-    private AnchorPane graphPaneMain;
+    private Pane graphPaneMain;
     @FXML
     private Button tbExportTraces;
     @FXML
@@ -80,7 +81,7 @@ public class CompareTracesCseneController implements Initializable {
         JFreeChart chart = createChart(dataset); 
         ChartViewer viewer = new ChartViewer(chart);
         graphPaneMain.getChildren().add(viewer);
-//        stage.setScene(new Scene(viewer)); 
+
     }
 
     @FXML

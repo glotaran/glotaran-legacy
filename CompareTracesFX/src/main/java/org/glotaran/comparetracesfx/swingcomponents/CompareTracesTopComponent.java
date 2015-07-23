@@ -5,6 +5,7 @@
  */
 package org.glotaran.comparetracesfx.swingcomponents;
 
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.URL;
 import javafx.application.Platform;
@@ -55,6 +56,7 @@ public final class CompareTracesTopComponent extends TopComponent {
         setName(Bundle.CTL_CompareTracesTopComponent());
         setToolTipText(Bundle.HINT_CompareTracesTopComponent());
         fxPanel = new JFXPanel();
+        fxPanel.setLayout(new BorderLayout());
         add(fxPanel);
         Platform.setImplicitExit(false);
         Platform.runLater(()-> createScene());

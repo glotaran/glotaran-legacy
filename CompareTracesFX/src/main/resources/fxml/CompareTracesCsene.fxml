@@ -14,11 +14,13 @@
           <Button fx:id="tbClear" mnemonicParsing="false" onAction="#tbClearAction" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Clear">
                <tooltip>
                   <Tooltip text="Clear all selected tracess" />
-               </tooltip></Button>
+               </tooltip>
+            </Button>
             <Button fx:id="tbExportTraces" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Export">
                <tooltip>
                   <Tooltip text="Export all tracess to a file" />
-               </tooltip></Button>
+               </tooltip>
+            </Button>
             <ToggleButton fx:id="tbOverlayTracess" mnemonicParsing="false" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="ToggleButton">
                <tooltip>
                   <Tooltip text="Overlay all tracess in one graph" />
@@ -29,6 +31,6 @@
             <Button mnemonicParsing="false" onAction="#testMultyAction" text="testMulty" />
         </items>
       </ToolBar>
-      <AnchorPane id="AnchorPane" fx:id="graphPaneMain" prefHeight="400.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
+      <Pane fx:id="graphPaneMain" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
    </children>
 </VBox>
