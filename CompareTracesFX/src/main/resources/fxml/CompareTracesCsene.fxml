@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
-   <children>
-      <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.glotaran.comparetracesfx.fxcomponents.CompareTracesCseneController">
+   <top>
+      <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button fx:id="tbClear" mnemonicParsing="false" onAction="#tbClearAction" onMouseEntered="#tbMouseEntered" onMouseExited="#tbMouseExited" text="Clear">
                <tooltip>
@@ -31,6 +32,12 @@
             <Button mnemonicParsing="false" onAction="#testMultyAction" text="testMulty" />
         </items>
       </ToolBar>
-      <Pane fx:id="graphPaneMain" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-   </children>
-</VBox>
+   </top>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+         <content>
+            <TilePane fx:id="graphPaneMain" hgap="2.0" prefColumns="3" vgap="2.0" />
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

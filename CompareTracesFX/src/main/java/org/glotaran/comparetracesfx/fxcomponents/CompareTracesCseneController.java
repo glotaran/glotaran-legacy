@@ -17,7 +17,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
@@ -39,7 +41,7 @@ public class CompareTracesCseneController implements Initializable {
     @FXML
     private Button tbClear;
     @FXML
-    private Pane graphPaneMain;
+    private TilePane graphPaneMain;
     @FXML
     private Button tbExportTraces;
     @FXML
@@ -81,23 +83,25 @@ public class CompareTracesCseneController implements Initializable {
         JFreeChart chart = createChart(dataset); 
         ChartViewer viewer = new ChartViewer(chart);
         graphPaneMain.getChildren().add(viewer);
-
+//        stage.setScene(new Scene(viewer)); 
     }
 
     @FXML
     private void testMultyAction(ActionEvent event) {
+        
+        XYDataset dataset = createDataset();
+        JFreeChart chart = createChart(dataset); 
+        ChartViewer viewer = new ChartViewer(chart);
+        graphPaneMain.getChildren().add(viewer);
     }
     
    
     private static JFreeChart createChart(XYDataset dataset) {
-
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
             "International Coffee Organisation : Coffee Prices",    // title
             null,             // x-axis label
             "US cents/lb",      // y-axis label
             dataset);
-
-        
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainPannable(true);
@@ -105,7 +109,6 @@ public class CompareTracesCseneController implements Initializable {
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
         plot.getDomainAxis().setLowerMargin(0.0);
-        
         
         XYItemRenderer r = plot.getRenderer();
         if (r instanceof XYLineAndShapeRenderer) {
@@ -124,12 +127,10 @@ public class CompareTracesCseneController implements Initializable {
             renderer.setSeriesPaint(5, new Color(0, 55, 122));
             renderer.setSeriesPaint(6, new Color(0, 92, 165));
         }
-
         return chart;
     }
     
     private static XYDataset createDataset() {
-
         TimeSeries s1 = new TimeSeries("Indicator Price");
         s1.add(new Month(1, 2010), 126.80);
         s1.add(new Month(2, 2010), 123.37);
