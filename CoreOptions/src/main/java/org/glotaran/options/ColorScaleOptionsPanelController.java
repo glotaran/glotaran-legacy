@@ -14,10 +14,10 @@ import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
 @OptionsPanelController.SubRegistration(
-        location = "Plotting",
+        location = "Options",
         displayName = "#AdvancedOption_DisplayName_ColorScale",
         keywords = "#AdvancedOption_Keywords_ColorScale",
-        keywordsCategory = "Plotting/ColorScale"
+        keywordsCategory = "Options/ColorScale"
 )
 @org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_ColorScale=Color scale", "AdvancedOption_Keywords_ColorScale=color"})
 public final class ColorScaleOptionsPanelController extends OptionsPanelController {
