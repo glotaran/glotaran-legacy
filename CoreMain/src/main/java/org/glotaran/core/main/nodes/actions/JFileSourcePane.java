@@ -45,32 +45,25 @@ final class JFileSourcePane extends javax.swing.JPanel {
 
         initComponents();
         ArrayList<String> extensionList = new ArrayList<>();
-        ArrayList<String> descriptions = new ArrayList<>();
+        FileFilter filter;
 
         services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
         for (final TGDatasetInterface service : services) {
+
             if (service instanceof GlotaranDataloaderInterface) {
                 extensionList.addAll(((GlotaranDataloaderInterface)service).getExtensions());
+                filter = new FileNameExtensionFilter(service.getFilterString(),(((GlotaranDataloaderInterface)service).getExtensions()).toArray(new String[0]));
             } else {
+                filter = new FileNameExtensionFilter(service.getFilterString(),service.getExtention());
             extensionList.add(service.getExtention());
             }
-            descriptions.add(service.getFilterString());
+            gui_choose.addChoosableFileFilter(filter);            
         }
-
+        
+        filter = new FileNameExtensionFilter("All supported data files",extensionList.toArray(new String[0]));
+        gui_choose.addChoosableFileFilter(filter);   
+        gui_choose.setFileFilter(filter);   
         gui_choose.setAcceptAllFileFilterUsed(true);
-
-        for (int i = 0; i < descriptions.size(); i++) {
-           FileFilter filter = new FileNameExtensionFilter(descriptions.get(i), extensionList.get(i));
-           gui_choose.addChoosableFileFilter(filter);
-        }
-
-        String[] extensions = new String[extensionList.size()];
-        for (int i = 0; i < extensionList.size(); i++) {
-            extensions[i]=extensionList.get(i);
-        }
-        FileFilter allSupportedFiles = new FileNameExtensionFilter("All supported data files",extensions);
-        gui_choose.addChoosableFileFilter(allSupportedFiles);
-        gui_choose.setFileFilter(allSupportedFiles);
 
         if (openPath != null) {
             gui_choose.setCurrentDirectory(openPath);

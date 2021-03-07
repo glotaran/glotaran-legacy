@@ -240,6 +240,13 @@ public class CoreErrorMessages {
                 NotifyDescriptor.ERROR_MESSAGE);
         DialogDisplayer.getDefault().notify(errorMessage);
     }
+    
+    public static void differentDatasetLabelsError() {
+        NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
+                NbBundle.getBundle("org/glotaran/core/messages/Bundle").getString("differentDatasetLabels"),
+                NotifyDescriptor.ERROR_MESSAGE);
+        DialogDisplayer.getDefault().notify(errorMessage);            
+    }
 
     public static void notEnoughTimesteps() {
         NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(

@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: org/glotaran/labmonkeydataloader/Bundle.properties
+AutoUpdate-Essential-Module: false
+OpenIDE-Module-Specification-Version: ${glotaran.modules.specification.version}
+

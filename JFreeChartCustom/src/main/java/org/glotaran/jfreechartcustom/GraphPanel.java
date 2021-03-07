@@ -6,22 +6,21 @@ package org.glotaran.jfreechartcustom;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -29,6 +28,11 @@ import org.jfree.graphics2d.svg.SVGGraphics2D;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYAnnotation;
+import org.jfree.chart.annotations.XYPointerAnnotation;
+import org.jfree.chart.annotations.XYTextAnnotation;
+import org.jfree.chart.event.ChartProgressEvent;
+import org.jfree.chart.event.ChartProgressListener;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
@@ -37,18 +41,18 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.AbstractXYDataset;
+import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.ExtensionFileFilter;
 import org.jfree.ui.RectangleInsets;
+import org.jfree.ui.TextAnchor;
 import org.openide.windows.TopComponent;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
 
 /**
  *
  * @author slapten
  */
-public class GraphPanel extends ChartPanel {
+public class GraphPanel extends ChartPanel implements ChartProgressListener {
 
     private final static long serialVersionUID = 1L;
     private static final String SAVE_ASCII_COMMAND = "SAVE_ASCII";
@@ -56,8 +60,11 @@ public class GraphPanel extends ChartPanel {
     private static final String SAVE_PNG_COMMAND = "SAVE_PNG";
     private static final String OPEN_IN_NEW_WINDOW_COMMAND = "OPEN_IN_NEW_WINDOW";
     private static final String SHOW_ERRORBARS = "SHOW_ERRORBARS";
+    private static final String SHOW_CROSSLABELS = "SHOW_LABELS";
     private boolean errorBarsEnabled = false;
     private boolean errorBarsVisible = false;
+    private boolean showcrossLabeles = false;
+    private double oldCrosshairValue = 0;
     private Paint[] paintSequence = new Paint[]{Color.BLACK, Color.RED, Color.BLUE, Color.GREEN, Color.magenta, Color.CYAN, Color.YELLOW, Color.ORANGE, Color.PINK, Color.DARK_GRAY};
 
     public GraphPanel(JFreeChart chart) {
@@ -127,6 +134,11 @@ public class GraphPanel extends ChartPanel {
         if (command.equals(SHOW_ERRORBARS)) {
             doShowErrorBars();
         }
+        
+        if (command.equals(SHOW_CROSSLABELS)) {
+            doShowCrosshairLabels();
+        }
+        
 
     }
 
@@ -158,13 +170,18 @@ public class GraphPanel extends ChartPanel {
         openInSepWindItem.addActionListener(this);
         popmenu.insert(openInSepWindItem, 0);
 
+        JCheckBoxMenuItem  showCrossLabels = new JCheckBoxMenuItem("Show crosshair labels",showcrossLabeles);
+        showCrossLabels.setActionCommand(SHOW_CROSSLABELS);
+        showCrossLabels.addActionListener(this);
+        popmenu.insert(showCrossLabels, 1);
+        
         if (errorBarsEnabled == true) {
             JMenuItem showErrorBars = new JMenuItem("Show error bars");
             showErrorBars.setActionCommand(SHOW_ERRORBARS);
             showErrorBars.addActionListener(this);
             showErrorBars.setEnabled(errorBarsEnabled);
             popmenu.insert(showErrorBars, 1);
-            popmenu.insert(new JPopupMenu.Separator(), 2);
+            popmenu.insert(new JPopupMenu.Separator(), 3);
         }
     }
 
@@ -190,7 +207,15 @@ public class GraphPanel extends ChartPanel {
             plot.setDrawingSupplier(new GlotaranDrawingSupplier());
             plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
             plot.setSeriesRenderingOrder(SeriesRenderingOrder.FORWARD);
-            errorBarsVisible = plot.getRenderer() instanceof XYErrorRenderer ? true : false;
+            errorBarsVisible = plot.getRenderer() instanceof XYErrorRenderer;
+            plot.setDomainCrosshairVisible(showcrossLabeles);
+            plot.setDomainCrosshairLockedOnData(true);
+            if (!showcrossLabeles) {
+                for (Object annotation : plot.getAnnotations()) {
+                    plot.removeAnnotation((XYAnnotation) annotation);
+                }
+            }
+
         }
         setPannable();
     }
@@ -210,11 +235,12 @@ public class GraphPanel extends ChartPanel {
                 }
             }
 //write all tracess that presented in chart, in colums, using domain axe from first seria in colums
-            BufferedWriter output = new BufferedWriter(new FileWriter(new File(filename)));
+            
+            
             StringBuilder sb = new StringBuilder();
 
             if (this.getChart().getPlot().getClass().equals(XYPlot.class)) {
-                xyList = new ArrayList<XYPlot>();
+                xyList = new ArrayList<>();
                 XYPlot plot = (XYPlot) this.getChart().getPlot();
                 if (plot!=null) {
                     xyList.add(plot);
@@ -225,8 +251,9 @@ public class GraphPanel extends ChartPanel {
                 List<XYPlot> plots = ((CombinedDomainXYPlot) this.getChart().getXYPlot()).getSubplots();
                 sb = exportXYPlot(sb, plots);
             }
-            output.append(sb);
-            output.close();
+            try (BufferedWriter output = new BufferedWriter(new FileWriter(new File(filename)))) {
+                output.append(sb);
+            }
         }
     }
 
@@ -274,16 +301,18 @@ public class GraphPanel extends ChartPanel {
                     filename = filename + ".svg";
                 }
             }
-
             // Create an instance of the SVG Generator
             SVGGraphics2D svgGenerator = new SVGGraphics2D(400,300);
             
 
             // draw the chart in the SVG generator
             getChart().draw(svgGenerator, new Rectangle2D.Double(0, 0, 400, 300), null);
-
-            org.jfree.graphics2d.svg.SVGUtils.writeToSVG(new File(filename),svgGenerator.getSVGDocument());
-            svgGenerator.dispose();
+            try (BufferedWriter output = new BufferedWriter(new FileWriter(new File(filename)))) {
+                output.append(svgGenerator.getSVGDocument());
+                output.close();
+//            Files.write(Paths.get(filename), svgGenerator.getSVGDocument().getBytes(),StandardOpenOption.CREATE);
+            }
+            
         }
     }
 
@@ -299,7 +328,6 @@ public class GraphPanel extends ChartPanel {
             XYErrorRenderer renderer = new XYErrorRenderer();
             renderer.setBaseLinesVisible(true);
             renderer.setBaseShapesVisible(false);
-
             this.getChart().setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
             XYPlot plot = new XYPlot(this.getChart().getXYPlot().getDataset(),
                     this.getChart().getXYPlot().getDomainAxis(),
@@ -374,5 +402,61 @@ public class GraphPanel extends ChartPanel {
             output.append(tempStrings.get(i)).append("\n");
         }
         return output;
+    }
+
+    private void doShowCrosshairLabels() {
+        showcrossLabeles = !showcrossLabeles;
+        updateAppearance();
+    }
+    
+    private XYTextAnnotation createAnnotationToolTip(double x, double y, int cIndex){
+        XYTextAnnotation annotation = new XYTextAnnotation(
+                new Formatter().format("%2.4g",y).toString(), x, y);
+        annotation.setFont(new Font("Dialog", Font.PLAIN, 12));
+//        annotation.setArrowLength(0.0);
+//        annotation.setArrowWidth(0.0);
+//        annotation.setBaseRadius(0.0);
+        annotation.setTextAnchor(TextAnchor.CENTER_LEFT);
+        annotation.setPaint(paintSequence[cIndex]);
+        return annotation; 
+        
+    }
+    
+
+    @Override
+    public void chartProgress(ChartProgressEvent event) {
+        super.chartProgress(event);
+        if (event.getType() != ChartProgressEvent.DRAWING_FINISHED) {
+            return;
+        }
+        if (showcrossLabeles) {
+            JFreeChart chart = this.getChart();
+            if (chart != null) {
+                XYPlot plot = (XYPlot) chart.getPlot();
+                XYDataset dataset = plot.getDataset();
+                if (dataset != null) {
+                    int specNum = dataset.getSeriesCount();
+                    double xx = plot.getDomainCrosshairValue();
+                    if (oldCrosshairValue != xx) {
+                        for (Object annotation : plot.getAnnotations()) {
+                            plot.removeAnnotation((XYAnnotation) annotation);
+                        }
+                        int j;
+                        for (int i = 0; i < specNum; i++) {
+                            j = 0;
+                            while (xx != dataset.getXValue(i, j) && j < dataset.getItemCount(i)) {
+                                j++;
+                            }
+                            if (j > 0 && j < dataset.getItemCount(i)) {
+                                double valueY = dataset.getYValue(i, j);
+                                plot.addAnnotation(createAnnotationToolTip(xx, valueY, i));
+
+                            }
+                        }
+                        oldCrosshairValue = xx;
+                    }
+                }
+            }
+        }
     }
 }

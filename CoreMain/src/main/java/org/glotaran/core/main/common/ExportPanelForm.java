@@ -13,8 +13,6 @@ package org.glotaran.core.main.common;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
-import org.glotaran.core.main.nodes.actions.FileUtilities;
-import org.glotaran.core.main.project.TGProject;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -101,7 +99,6 @@ public class ExportPanelForm extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jLabel7, gridBagConstraints);
 
-        jTFFileName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTFFileName.setText(org.openide.util.NbBundle.getMessage(ExportPanelForm.class, "ExportPanelForm.jTFFileName.text")); // NOI18N
         jTFFileName.setToolTipText(org.openide.util.NbBundle.getMessage(ExportPanelForm.class, "ExportPanelForm.jTFFileName.toolTipText")); // NOI18N
         jTFFileName.setPreferredSize(new java.awt.Dimension(20, 19));
@@ -143,8 +140,8 @@ public class ExportPanelForm extends javax.swing.JPanel {
                 fileName += ".ascii";
             } else if ((rbCSV.isSelected() && !fileName.endsWith(".csv"))) {
                 fileName += ".csv";
-            } else if ((rbPlane.isSelected() && !fileName.endsWith(".ascii"))) {
-                fileName += ".ascii";
+            } else if ((rbPlane.isSelected() && !fileName.endsWith(".dat"))) {
+                fileName += ".dat";
             }
 
         }
@@ -154,7 +151,7 @@ public class ExportPanelForm extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTFFileNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFFileNameFocusLost
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jTFFileNameFocusLost
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

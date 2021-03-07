@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-@OptionsPanelController.ContainerRegistration(id = "Plotting", categoryName = "#OptionsCategory_Name_Plotting", iconBase = "org/glotaran/options/icon_plot_options32.png", keywords = "#OptionsCategory_Keywords_Plotting", keywordsCategory = "Plotting")
-@NbBundle.Messages(value = {"OptionsCategory_Name_Plotting=Plotting", "OptionsCategory_Keywords_Plotting=Plotting options"})
+@OptionsPanelController.ContainerRegistration(id = "Options", categoryName = "#OptionsCategory_Name_Plotting", iconBase = "org/glotaran/options/glotaranProperties32.png", keywords = "#OptionsCategory_Keywords_Plotting", keywordsCategory = "Options")
+@NbBundle.Messages(value = {"OptionsCategory_Name_Plotting=Options", "OptionsCategory_Keywords_Plotting=Glotaran options"})
 package org.glotaran.options;
 
 import org.netbeans.spi.options.OptionsPanelController;

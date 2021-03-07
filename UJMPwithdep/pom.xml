@@ -10,7 +10,7 @@
     <artifactId>UJMPwithdep</artifactId>
     <packaging>nbm</packaging>
     <name>LibaryWrapper - UJMP_with_dependencies</name>
-    
+       
     <build>
         <plugins>
             <plugin>
@@ -217,6 +217,7 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -226,7 +227,26 @@
             <groupId>org.ujmp</groupId>
             <artifactId>ujmp-complete</artifactId>
             <version>0.2.5</version>                  
+        </dependency>
+        <dependency>
+            <groupId>Jama</groupId>
+            <artifactId>Jama</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ojalgo</groupId>
+            <artifactId>ojalgo</artifactId>
+            <version>29.0</version>
         </dependency>	
+        <!--
+        <dependency>
+            <groupId>org.ujmp</groupId>            
+            <systemPath>${basedir}/../libs/ujmp-complete-0.2.5.jar</systemPath>
+            <scope>system</scope>
+            <artifactId>ujmp-complete</artifactId>
+            <version>0.2.5</version>                  
+        </dependency>	
+        -->
         <!-- <dependency>
         <groupId>??????</groupId>
         <artifactId>release/modules/ext/arpack-combo.jar</artifactId>
@@ -299,16 +319,6 @@
             <groupId>net.sourceforge.parallelcolt</groupId>
             <artifactId>parallelcolt</artifactId>
             <version>0.10.1</version>
-        </dependency>
-        <dependency>
-            <groupId>Jama</groupId>
-            <artifactId>Jama</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ojalgo</groupId>
-            <artifactId>ojalgo</artifactId>
-            <version>29.0</version>
-        </dependency>
+        </dependency>       
     </dependencies>
 </project>

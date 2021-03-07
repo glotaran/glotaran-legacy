@@ -7,11 +7,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.prefs.BackingStoreException;
 import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.glotaran.core.interfaces.LabmonkeyDataloaderInterface;
 import org.glotaran.core.interfaces.TGDatasetInterface;
+import org.glotaran.core.main.common.FileNameCleaner;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.main.project.TGProject;
 import org.glotaran.core.models.tgd.Tgd;
@@ -26,11 +29,13 @@ import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
+import org.openide.util.NbPreferences;
 import org.openide.util.actions.CookieAction;
 
 public final class OpenDataset extends CookieAction {
 
     //static OpenDataset instance;
+    private final String PROP_LAST_USED_DATAFILE_FOLDER = "lastUsedDatafileFolder";
     private static final long serialVersionUID = 1;
     private Collection<? extends TGDatasetInterface> services;
     private TGProject project;
@@ -46,13 +51,20 @@ public final class OpenDataset extends CookieAction {
 //        }
 //        return instance;
 //    }
-
     @Override
     protected void performAction(Node[] activatedNodes) {
+        final JFileSourcePane pane;
+        final ActionListener lst;
         services = Lookup.getDefault().lookupAll(TGDatasetInterface.class);
         dataObject = activatedNodes[0].getLookup().lookup(DataObject.class);
-        final JFileSourcePane pane = new JFileSourcePane();
-        final ActionListener lst;
+        // Note that NbPreferences holds a cache, use .sync if you want to enfore a fresh read every single time.
+        String lastUsedDatafileFolder = NbPreferences.forModule(OpenDataset.class).get(PROP_LAST_USED_DATAFILE_FOLDER, "");
+        if (!lastUsedDatafileFolder.isEmpty()) {
+            pane = new JFileSourcePane(new File(lastUsedDatafileFolder));
+        } else {
+            pane = new JFileSourcePane();
+        }
+
         lst = new ActionListener() {
             String test;
 
@@ -60,7 +72,7 @@ public final class OpenDataset extends CookieAction {
             public void actionPerformed(ActionEvent e) {
                 File[] files;
                 if (e.getActionCommand().equalsIgnoreCase("Finish")) {
-                    pane.setVisible(false);                    
+                    pane.setVisible(false);
                     files = pane.getSelectedFiles();
                     if (files.length == 0) {
                         tryToGetStringFromTextField(pane.getComponents());
@@ -72,17 +84,26 @@ public final class OpenDataset extends CookieAction {
                         }
                     }
                     openSelectedFiles(files);
+                    String lastUsedDatafileFolder = "";
+                    try {
+                        lastUsedDatafileFolder = files[0].getParentFile().getCanonicalPath();
+                    } catch (IOException ex) {
+                        Exceptions.printStackTrace(ex);
+                    }
+                    if (!lastUsedDatafileFolder.isEmpty()) {
+                        NbPreferences.forModule(OpenDataset.class).put(PROP_LAST_USED_DATAFILE_FOLDER, lastUsedDatafileFolder);
+                    }
                 }
             }
 
             public void tryToGetStringFromTextField(Component[] comp) {
-                for (int x = 0; x < comp.length; x++) {
-                    if (comp[x] instanceof JFileChooser) {
-                        tryToGetStringFromTextField(((JFileChooser) comp[x]).getComponents());
-                    } else if (comp[x] instanceof JPanel) {
-                        tryToGetStringFromTextField(((JPanel) comp[x]).getComponents());
-                    } else if (comp[x] instanceof JTextField) {
-                        test = ((JTextField) comp[x]).getText();
+                for (Component comp1 : comp) {
+                    if (comp1 instanceof JFileChooser) {
+                        tryToGetStringFromTextField(((JFileChooser) comp1).getComponents());
+                    } else if (comp1 instanceof JPanel) {
+                        tryToGetStringFromTextField(((JPanel) comp1).getComponents());
+                    } else if (comp1 instanceof JTextField) {
+                        test = ((JTextField) comp1).getText();
                         return;
                     }
                 }
@@ -136,30 +157,38 @@ public final class OpenDataset extends CookieAction {
             for (final TGDatasetInterface service : services) {
                 //TODO: eliminate extension requirement
                 //if (f.getName().toLowerCase().endsWith(Pattern.compile(service.getExtention(), Pattern.CASE_INSENSITIVE).toString())) {
-                    try {
-                        if (service.Validator(f)) {
-                            openDatasetFile(service, f);
-                            //TODO: find out if this is the preferred way:
-                            FileUtil.refreshAll();
-                        }
-                    } catch (IOException ex) {
-                        Exceptions.printStackTrace(ex);
-                    } catch (IllegalAccessException ex) {
-                        Exceptions.printStackTrace(ex);
-                    } catch (InstantiationException ex) {
-                        Exceptions.printStackTrace(ex);
+                try {
+                    if (service.Validator(f)) {
+                        openDatasetFile(service, f);
+                        //TODO: find out if this is the preferred way:
+                        FileUtil.refreshAll();
                     }
-               // }
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (InstantiationException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+                // }
             }
         }
     }
-
+  
     private void openDatasetFile(TGDatasetInterface service, File f) {
         FileObject projectCacheFolder = null;
         FileObject cacheSubFolder;
         FileObject newFO = null;
+        String newFilename = "";
+
         FileObject originalFO = FileUtil.toFileObject(f);
+
         String cacheFolderName = originalFO.getName() + "_" + String.valueOf(System.currentTimeMillis());
+        if (service instanceof LabmonkeyDataloaderInterface) {
+            newFilename = ((LabmonkeyDataloaderInterface) service).getName(f);
+            newFilename = FileNameCleaner.cleanFileName(newFilename);            
+            cacheFolderName = newFilename + "_" + String.valueOf(System.currentTimeMillis());
+        }
 
         project = (TGProject) FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
         if (project != null) {
@@ -181,7 +210,12 @@ public final class OpenDataset extends CookieAction {
         }
         try {
             //TODO: check if file exists
-            newFO = FileUtil.createData(dataObject.getPrimaryFile(), originalFO.getName().concat(".xml"));
+            if (service.getExtention().equalsIgnoreCase("yaml")) {
+                FileObject subFolderFornewFO = FileUtil.createFolder(dataObject.getPrimaryFile(),newFilename);
+                newFO = FileUtil.createData(subFolderFornewFO,".labmonkeydatafolder");
+            } else {
+                newFO = FileUtil.createData(dataObject.getPrimaryFile(), originalFO.getName().concat(".xml"));
+            }
             cacheSubFolder = projectCacheFolder.createFolder(cacheFolderName);
             tgd.setCacheFolderName(cacheSubFolder.getNameExt());
         } catch (IOException ex) {
@@ -189,18 +223,32 @@ public final class OpenDataset extends CookieAction {
         }
 
         if (newFO != null) {
-            File out = FileUtil.toFile(newFO);
-            try {
-                javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(tgd.getClass().getPackage().getName());
-                javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
-                marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
-                marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                // We marshal the data to a new xml file
-                marshaller.marshal(tgd, out);
-            } catch (javax.xml.bind.JAXBException ex) {
-                // TODO Handle exception
-                java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
+            writeJaxbFile(FileUtil.toFile(newFO), tgd);
+            if (service instanceof LabmonkeyDataloaderInterface) {
+                String[] allDatasetsPaths = ((LabmonkeyDataloaderInterface) service).getDatasetPaths(originalFO.getParent().getPath());
+                for (String pathToDataset : allDatasetsPaths) {
+                    tgd.setPath(pathToDataset);
+                    tgd.setFilename(pathToDataset.substring(pathToDataset.lastIndexOf(File.separator) + 1));
+                    tgd.setExtension("~~DataFolder~~");
+                    tgd.setFiletype("~~LabmonkeyDataset~~");
+                    writeJaxbFile(new File(newFO.getParent().getPath() + File.separator + tgd.getFilename() + ".xml"), tgd);
+                }
+
             }
         }
     }
+
+    private void writeJaxbFile(File out, Tgd tgd) {
+        try {
+            javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(tgd.getClass().getPackage().getName());
+            javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            // We marshal the data to a new xml file
+            marshaller.marshal(tgd, out);
+        } catch (javax.xml.bind.JAXBException ex) {
+            // TODO Handle exception
+            java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
+        }
+    }       
 }

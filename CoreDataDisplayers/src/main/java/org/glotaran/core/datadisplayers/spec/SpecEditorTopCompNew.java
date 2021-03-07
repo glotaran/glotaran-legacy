@@ -347,7 +347,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
+        jTBZoomX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/zoom_lambda24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBZoomX, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomX.text")); // NOI18N
+        jTBZoomX.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomX.toolTipText")); // NOI18N
         jTBZoomX.setFocusable(false);
         jTBZoomX.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jTBZoomX.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -358,7 +360,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         });
         jToolBar1.add(jTBZoomX);
 
+        jTBZoomY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/zoom_t24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jTBZoomY, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomY.text")); // NOI18N
+        jTBZoomY.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jTBZoomY.toolTipText")); // NOI18N
         jTBZoomY.setFocusable(false);
         jTBZoomY.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jTBZoomY.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -370,7 +374,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jToolBar1.add(jTBZoomY);
         jToolBar1.add(jSeparator1);
 
+        jBAverage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/average24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBAverage, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBAverage.text")); // NOI18N
+        jBAverage.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBAverage.toolTipText")); // NOI18N
         jBAverage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAverageActionPerformed(evt);
@@ -378,7 +384,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         });
         jToolBar1.add(jBAverage);
 
+        jBResample.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/resample24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBResample, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBResample.text")); // NOI18N
+        jBResample.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBResample.toolTipText")); // NOI18N
         jBResample.setFocusable(false);
         jBResample.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBResample.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -389,7 +397,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         });
         jToolBar1.add(jBResample);
 
+        jBSelectData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/select24.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jBSelectData, org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBSelectData.text")); // NOI18N
+        jBSelectData.setToolTipText(org.openide.util.NbBundle.getMessage(SpecEditorTopCompNew.class, "SpecEditorTopCompNew.jBSelectData.toolTipText")); // NOI18N
         jBSelectData.setFocusable(false);
         jBSelectData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBSelectData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -563,11 +573,11 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGap(0, 360, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -614,15 +624,15 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rangeSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                    .addComponent(rangeSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFMaxIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(jTFMinIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                            .addComponent(jTFMaxIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                            .addComponent(jTFMinIntence, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1974,7 +1984,9 @@ final public class SpecEditorTopCompNew extends CloneableTopComponent
         NumberAxis scaleAxis = new NumberAxis();
         scaleAxis.setAxisLinePaint(Color.black);
         scaleAxis.setTickMarkPaint(Color.black);
+        if (data.getMinInt() != data.getMaxInt() ) {
         scaleAxis.setRange(data.getMinInt(), data.getMaxInt());
+        }
         scaleAxis.setTickLabelFont(new Font("Dialog", Font.PLAIN, 12));
         PaintScaleLegend legend = new PaintScaleLegend(ps, scaleAxis);
         legend.setAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);

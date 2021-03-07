@@ -14,5 +14,5 @@ import java.util.ArrayList;
 public interface GlotaranDataloaderInterface extends TGDatasetInterface {
 
     public ArrayList<String> getExtensions();
-
+        
 }

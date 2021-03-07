@@ -167,11 +167,20 @@
     
     <!-- Repositories -->
     <repositories>
-        <!--
-        Repository hosting NetBeans modules, especially APIs.
-        Versions are based on IDE releases, e.g.: RELEASE691
-        To create your own repository, use: nbm:populate-repository
-        -->
+         <!-- https://netbeans.apache.org/about/oracle-transition.html 
+        Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at 
+        http://netbeans.apidesign.org/maven2/. 
+        You can use this repository by adding the following to your pom.xml:
+        <build>
+            <repositories>
+                <repository>
+                    <id>netbeans</id>
+                    <name>NetBeans</name>
+                    <url>http://netbeans.apidesign.org/maven2/</url>
+                </repository>
+            </repositories>
+        <build>
+        -->    
         <!-- This no longer works:
         <repository>
             <id>netbeans</id>
@@ -182,6 +191,23 @@
             </snapshots>
         </repository>
         -->
+        
+        <!-- This is a local repository for some jar files not on maven central,
+        they are needed for binary backwards compatibility        
+        It was created as follows:
+        mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/Jama-1.0.2.jar -DgroupId=Jama -DartifactId=Jama -Dversion=1.0.2 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
+        mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ujmp-complete-0.2.5.jar -DgroupId=org.ujmp -DartifactId=ujmp-complete -Dversion=0.2.5 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
+        mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ojalgo-29.0.jar -DgroupId=org.ojalgo -DartifactId=ojalgo -Dversion=29.0 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/        
+        -->
+        <repository>
+            <id>repo</id>
+            <url>file://${basedir}/../repo</url>
+        </repository>
+        <repository>
+            <id>netbeans</id>
+            <name>NetBeans</name>
+            <url>http://netbeans.apidesign.org/maven2/</url>
+        </repository>
         <!-- https://netbeans.apache.org/about/oracle-transition.html 
         Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at 
         http://netbeans.apidesign.org/maven2/. 
@@ -196,11 +222,6 @@
             </repositories>
         <build>
         -->
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://netbeans.apidesign.org/maven2/</url>
-        </repository>
         <!-- Once Glotaran Nexus is in place this might be nice to have. -->
         <!-- 
         <repository>
@@ -211,6 +232,9 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository> -->
+    
+    
+    
     </repositories>
     
    
@@ -571,6 +595,11 @@
                 <artifactId>ExampleDataloader</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>LabmonkeyDataloader</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
             
     </dependencyManagement>
@@ -814,7 +843,7 @@
     
     <!-- Profiles -->
     <profiles>
-        
+                      
         <!-- Profile for nighly builds and releases -->
         <profile>
             <id>deployment</id>
@@ -1070,6 +1099,7 @@
         <module>UJMPwithdep</module>
         <module>CoreOptions</module>
         <module>ExampleDataloader</module>
+        <module>LabmonkeyDataloader</module>
     </modules>
     
 </project>

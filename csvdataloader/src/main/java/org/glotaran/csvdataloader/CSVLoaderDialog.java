@@ -793,10 +793,10 @@ public class CSVLoaderDialog extends javax.swing.JPanel {
     private void jBPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPreviewActionPerformed
         try {
             dataMatrix = MatrixFactory.importFromFile(FileFormat.CSV, file, getDelimiterString());
-            if ((getSkipRows() > 0) || (getSkipColums() > 0)) {
-                dataMatrix.subMatrix(Calculation.Ret.LINK, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
-            }
-            MatrixTableEditorPanel matPanel = new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix.subMatrix(Calculation.Ret.LINK, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1)));
+            //if ((getSkipRows() > 0) || (getSkipColums() > 0)) {
+                dataMatrix = dataMatrix.subMatrix(Calculation.Ret.LINK, getSkipRows(), getSkipColums(), dataMatrix.getRowCount() - 1, dataMatrix.getColumnCount() - 1);
+            //}
+            MatrixTableEditorPanel matPanel = new MatrixTableEditorPanel(new MatrixGUIObject(dataMatrix));
             jpMatrixEditor.removeAll();
             jpMatrixEditor.add(matPanel);
             jpMatrixEditor.validate();

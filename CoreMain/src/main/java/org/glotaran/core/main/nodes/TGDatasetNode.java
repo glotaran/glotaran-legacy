@@ -1,6 +1,5 @@
 package org.glotaran.core.main.nodes;
 
-
 import java.awt.Image;
 import java.io.IOException;
 import javax.swing.Action;
@@ -10,6 +9,8 @@ import org.glotaran.core.main.nodes.dataobjects.TimpDatasetDataObject;
 import org.glotaran.core.main.project.TGProject;
 import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataFolder;
 import org.openide.loaders.DataObject;
 import org.openide.nodes.FilterNode;
@@ -87,11 +88,18 @@ public class TGDatasetNode extends FilterNode {
         TGDatasetChildrenNode(Node node) {
             super(node);
         }
-        
+
         @Override
         protected Node[] createNodes(Node n) {
+            FileObject fo;
+            // Test for labmonkey data folder
             if (n.getLookup().lookup(DataFolder.class) != null) {
-                return new Node[]{new TGDatasetNode(n)};
+                fo = n.getLookup().lookup(DataObject.class).getPrimaryFile();
+                if (fo.getFileObject(".labmonkeydatafolder") != null) {
+                    return new Node[]{new LabmonkeyDataFolderNode(n)};
+                } else {
+                    return new Node[]{new TGDatasetNode(n)};
+                }
             } else {
                 if (n.getLookup().lookup(TgdDataObject.class) != null) {
                     return new Node[]{
