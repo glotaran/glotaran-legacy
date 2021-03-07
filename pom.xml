@@ -13,8 +13,8 @@
     <url>http://glotaran.org</url>
     <description>GloTarAn - A tool for Global and Target Analysis</description>
     <organization>
-        <name>VU University Amsterdam</name>
-        <url>http://nat.vu.nl</url>
+        <name>Vrije Universiteit Amsterdam</name>
+        <url>https://nat.vu.nl/</url>
     </organization>
     <inceptionYear>2007</inceptionYear>
     
@@ -74,8 +74,9 @@
         
         <!-- Update centers URLs -->
         <!-- Update centers URLs -->
-        <glotaran.update.center.official.url>http://glotaran.org/uc/official/${project.version}/catalog.xml</glotaran.update.center.official.url>
-        <glotaran.update.center.thirdparty.url>http://glotaran.org/uc/thirdparty/${project.version}/catalog.xml</glotaran.update.center.thirdparty.url>
+        <glotaran.update.center.official.url>https://glotaran.org/uc/official/${project.version}/catalog.xml</glotaran.update.center.official.url>
+        <glotaran.update.center.fallback.url>http://glotaran.org/uc/official/${project.version}/catalog.xml</glotaran.update.center.fallback.url>
+        <glotaran.update.center.thirdparty.url>https://glotaran.org/uc/thirdparty/${project.version}/catalog.xml</glotaran.update.center.thirdparty.url>
         <!-- 
         <glotaran.update.center.testing.url>http://nexus.glotaran.org/nexus/content/repositories/snapshots/external/updates/updates.xml</glotaran.update.center.testing.url>
         -->
@@ -171,6 +172,7 @@
         Versions are based on IDE releases, e.g.: RELEASE691
         To create your own repository, use: nbm:populate-repository
         -->
+        <!-- This no longer works:
         <repository>
             <id>netbeans</id>
             <name>NetBeans</name>
@@ -178,6 +180,26 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        -->
+        <!-- https://netbeans.apache.org/about/oracle-transition.html 
+        Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at 
+        http://netbeans.apidesign.org/maven2/. 
+        You can use this repository by adding the following to your pom.xml:
+        <build>
+            <repositories>
+                <repository>
+                    <id>netbeans</id>
+                    <name>NetBeans</name>
+                    <url>http://netbeans.apidesign.org/maven2/</url>
+                </repository>
+            </repositories>
+        <build>
+        -->
+        <repository>
+            <id>netbeans</id>
+            <name>NetBeans</name>
+            <url>http://netbeans.apidesign.org/maven2/</url>
         </repository>
         <!-- Once Glotaran Nexus is in place this might be nice to have. -->
         <!-- 
@@ -197,13 +219,7 @@
             <id>maven-repository</id>
             <url>${github.maven.repository}</url>
         </repository>
-    </distributionManagement> 
-    
-    <scm>
-        <connection>scm:git:https://jsnel@github.com/jsnel/glotaran.git</connection>
-        <developerConnection>scm:git:https://jsnel@github.com/jsnel/glotaran.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>        
+    </distributionManagement>      
     
     <!-- List all dependencies with versions so it can be used in child POMs 
     without explicit versions -->
