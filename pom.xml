@@ -180,13 +180,7 @@
                 </repository>
             </repositories>
         <build>
-        -->
-        <!-- This no longer works:
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://netbeans.apidesign.org/maven2/</url>
-        </repository>
+        -->    
         <!-- This no longer works:
         <repository>
             <id>netbeans</id>
