@@ -293,30 +293,36 @@ public final class AnalysisResultFileViewerTopComponent extends CloneableTopComp
     }
 
     private double[][] parseNlsProgress(GtaResult res) {
+        ArrayList<ArrayList<Double>> allValues;
+        allValues = new ArrayList<>();
         double[][] rssValues;
-        if (res.getNlsprogress() != null) {
-            ArrayList<Double> values = new ArrayList<Double>();
-            int numberOfIterations = 1, numberOfParameters = 0;
+        if (res.getNlsprogress() != null) {            
             if (!res.getNlsprogress().isEmpty()) {
-                numberOfIterations = res.getNlsprogress().size();
                 for (Iterator<NlsProgress> it = res.getNlsprogress().iterator(); it.hasNext();) {
+                    ArrayList<Double> values = new ArrayList<Double>();
                     NlsProgress nlsProgress = it.next();
                     String test = nlsProgress.getRss();
+                    test = test.replaceAll("[\\(\\)\\:\\=par]", " ");
                     Scanner tokenize = new Scanner(test);
                     while (tokenize.hasNext()) {
                         try {
                             values.add(Double.parseDouble(tokenize.next()));
-                        } catch (Exception e) {
-                            tokenize.next();
+                        } catch (NumberFormatException ex) {
+                            // tokenize.next();
+                            java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.INFO, null, ex); //NOI18N
                         }
                     }
+                    allValues.add(values);
                 }
-                numberOfParameters = values.size() / numberOfIterations;
             }
-            rssValues = new double[numberOfParameters][numberOfIterations];
+            
+            int numberOfIterations = allValues.size();
+            int numberOfNlsProgressValues = allValues.get(0).size();
+            
+            rssValues = new double[numberOfNlsProgressValues][numberOfIterations];
             for (int j = 0; j < numberOfIterations; j++) {
-                for (int i = 0; i < numberOfParameters; i++) {
-                    rssValues[i][j] = values.get(j * numberOfParameters + i);
+                for (int i = 0; i < numberOfNlsProgressValues; i++) {
+                    rssValues[i][j] = allValues.get(j).get(i);
                 }
             }
             return rssValues;
