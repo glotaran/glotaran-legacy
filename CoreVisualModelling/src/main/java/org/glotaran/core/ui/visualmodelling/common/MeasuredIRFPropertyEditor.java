@@ -8,6 +8,7 @@ package org.glotaran.core.ui.visualmodelling.common;
 import org.glotaran.tgmeditor.panels.MeasuredIrfparPanel;
 import java.awt.Component;
 import java.beans.PropertyEditorSupport;
+import org.glotaran.tgmfilesupport.TgmDataObject;
 
 /**
  * @author slapten
@@ -27,7 +28,7 @@ public class MeasuredIRFPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public Component getCustomEditor() {
-        return new MeasuredIrfparPanel((String) getValue());
+        return new MeasuredIrfparPanel((TgmDataObject) getValue());
     }
 
     @Override

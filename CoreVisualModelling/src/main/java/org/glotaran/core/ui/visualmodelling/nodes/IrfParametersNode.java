@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import org.glotaran.core.models.tgm.IrfparPanelModel;
 import org.glotaran.core.ui.visualmodelling.common.EnumPropertyEditor;
 import org.glotaran.core.ui.visualmodelling.common.EnumTypes;
+import org.glotaran.core.ui.visualmodelling.common.MeasuredIRFPropertyEditor;
 import org.glotaran.core.ui.visualmodelling.nodes.dataobjects.IrfParametersKeys;
 import org.glotaran.tgmfilesupport.TgmDataObject;
 import org.openide.nodes.PropertySupport;
@@ -223,16 +224,17 @@ public class IrfParametersNode extends PropertiesAbstractNode {
                 getSheet().get(Sheet.PROPERTIES).remove(propNames[3]);
             }
             getSheet().get(Sheet.PROPERTIES).remove(propNames[2]);
-//            addMeasuredIrfProp();
+            addMeasuredIrfProp();
         }
         irfTypeProperty = irfType;
         fireDisplayNameChange(null, getDisplayName());
         firePropertyChange("setIRFType", null, irfTypeProperty);
     }
 
-//    public TgmDataObject getTgmDataObject() {
-//        return getLookup().lookup(TgmDataObject.class);
-//    }
+    public TgmDataObject getTgmDataObject() {
+        return getLookup().lookup(TgmDataObject.class);
+    }
+    
     public EnumTypes.IRFTypes getIRFType() {
         return irfTypeProperty;
     }
@@ -267,17 +269,17 @@ public class IrfParametersNode extends PropertiesAbstractNode {
         }
     }
 
-//    private void addMeasuredIrfProp() { //it should not be here, will be moved to lower level. 
-//        PropertySupport.Reflection measuredIRF;
-//        try {
-//            measuredIRF = new PropertySupport.Reflection(this, TgmDataObject.class, "getTgmDataObject", null);
-//            measuredIRF.setPropertyEditorClass(MeasuredIRFPropertyEditor.class);
-//            measuredIRF.setName(propNames[4]);
-//            getSheet().get(Sheet.PROPERTIES).put(measuredIRF);
-//        } catch (NoSuchMethodException ex) {
-//            Exceptions.printStackTrace(ex);
-//        }
-//    }
+    private void addMeasuredIrfProp() { //it should not be here, will be moved to lower level. 
+        PropertySupport.Reflection measuredIRF;
+        try {
+            measuredIRF = new PropertySupport.Reflection(this, TgmDataObject.class, "getTgmDataObject", null);
+            measuredIRF.setPropertyEditorClass(MeasuredIRFPropertyEditor.class);
+            measuredIRF.setName(propNames[4]);
+            getSheet().get(Sheet.PROPERTIES).put(measuredIRF);
+        } catch (NoSuchMethodException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
 //    @Override
 //    public void fire(int index, PropertyChangeEvent evt){
 //        if ("start".equals(evt.getPropertyName())) {
@@ -287,5 +289,5 @@ public class IrfParametersNode extends PropertiesAbstractNode {
 //            firePropertyChange("fixed", index, evt.getNewValue());
 //        }
 //    }
-//
+
 }

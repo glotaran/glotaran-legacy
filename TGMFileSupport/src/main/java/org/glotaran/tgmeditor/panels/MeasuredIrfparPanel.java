@@ -2,17 +2,24 @@ package org.glotaran.tgmeditor.panels;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import org.glotaran.core.messages.CoreErrorMessages;
+import org.glotaran.core.models.tgm.IrfparPanelModel;
 import org.glotaran.jfreechartcustom.GraphPanel;
+import org.glotaran.tgmfilesupport.TgmDataObject;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -31,6 +38,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class MeasuredIrfparPanel extends JPanel{
     private static final long serialVersionUID = 1L;
 
+    private TgmDataObject dObj;
+    private IrfparPanelModel irfparPanelModel;
     private JFileChooser fc;
     private int length;
     private int from, till;
@@ -41,17 +50,33 @@ public class MeasuredIrfparPanel extends JPanel{
     private JFreeChart chart;
     private IntervalMarker marker;
 
-    public MeasuredIrfparPanel(String fileName){
-//        dObj = null;
-//        irfparPanelModel = null;
+    public MeasuredIrfparPanel(TgmDataObject dObj){
+        this.dObj = dObj;
+        this.irfparPanelModel = dObj.getTgm().getDat().getIrfparPanel();
         fc = new JFileChooser();
         chpan = null;
         chart = null;
         marker = null;
         maxInt = 0;
         refSerColl = new XYSeriesCollection();
-
         initComponents();
+        
+        if(!this.irfparPanelModel.getMeasuredIrf().isEmpty()) {
+            String measuredIRF = this.irfparPanelModel.getMeasuredIrf();
+            String[] stringArray = measuredIRF.split(",");
+            ArrayList array = stringListToFloats(stringArray);
+            refArray = arrayListToFloat(array);
+            plotMeasuredIRF(refArray);
+        }
+        if (this.irfparPanelModel.getConvalg().intValue()==3) {
+            jRBReferenceConv.setEnabled(true);
+            jRBReferenceConv.setSelected(true);
+            double refLifetime = this.irfparPanelModel.getReftau();
+            jTRefLifetime.setText(String.valueOf(refLifetime));            
+        } else {
+             jRBScatterConv.setEnabled(true);
+             jRBScatterConv.setSelected(true);
+        }
 
         
     }
@@ -68,6 +93,7 @@ public class MeasuredIrfparPanel extends JPanel{
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroupConvAlg = new javax.swing.ButtonGroup();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -88,6 +114,11 @@ public class MeasuredIrfparPanel extends JPanel{
         jLabel15 = new javax.swing.JLabel();
         jTFIrfShiftParameter = new javax.swing.JTextField();
         jCBParmuFixedShift = new javax.swing.JCheckBox();
+        jRBScatterConv = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jRBReferenceConv = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTRefLifetime = new javax.swing.JTextField();
 
         setMinimumSize(new java.awt.Dimension(0, 0));
         setLayout(new java.awt.BorderLayout());
@@ -277,6 +308,33 @@ public class MeasuredIrfparPanel extends JPanel{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        buttonGroupConvAlg.add(jRBScatterConv);
+        jRBScatterConv.setText("Scatter convolution");
+        jRBScatterConv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBScatterConvActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Convolution algorithm");
+
+        buttonGroupConvAlg.add(jRBReferenceConv);
+        jRBReferenceConv.setText("Reference convolution");
+        jRBReferenceConv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBReferenceConvActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("(reference lifetime)");
+
+        jTRefLifetime.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTRefLifetime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTRefLifetimeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -286,7 +344,16 @@ public class MeasuredIrfparPanel extends JPanel{
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(0, 438, Short.MAX_VALUE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRBScatterConv)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jRBReferenceConv)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTRefLifetime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -295,8 +362,18 @@ public class MeasuredIrfparPanel extends JPanel{
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRBScatterConv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRBReferenceConv)
+                            .addComponent(jLabel2)
+                            .addComponent(jTRefLifetime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(98, 98, 98))
         );
 
@@ -399,58 +476,101 @@ public class MeasuredIrfparPanel extends JPanel{
         }
     }//GEN-LAST:event_jCBEstimateBGActionPerformed
 
+    private ArrayList<Float> stringListToFloats(String[] stringArray) {
+        ArrayList <Float> tempArray = new ArrayList<Float>();
+        for (String string : stringArray) {
+            tempArray.add(Float.parseFloat(string));
+        }
+        return tempArray;
+        
+    }
+    
+    private double[] arrayListToFloat(ArrayList aList) {
+        int i = 0;
+        float num;
+        length = aList.size();
+        refArray = new double[length];
+        for (Object element : aList) {
+            //for (Enumeration e = refVector.(); e.hasMoreElements();) {
+            Float temp = (Float) element;
+            num = (float) temp;
+            if (num > maxInt) {
+                maxInt = num;
+            }
+            refArray[i] = num;
+            i++;
+        }
+        return refArray;
+    }
+    
+    
+    private void plotMeasuredIRF(double[] array) {
+      
+        XYSeries refSeria = new XYSeries("Reference");
+        length = array.length;
+        refArray = new double[length];
+        for (int i = 0; i < array.length; i++) {
+            refSeria.add(i, (float) array[i]);
+        }
+        if (refSerColl.getSeries().size() > 0) {
+            refSerColl.removeAllSeries();
+        }
+        refSerColl.addSeries(refSeria);
+        MakeChart(refSerColl);
+        from = 0;
+        till = length;
+        marker = new IntervalMarker(from, till);
+        marker.setPaint(new Color(222, 222, 255, 128));
+
+        jBSubtrBG.setEnabled(true);
+        jCBEstimateBG.setEnabled(true);
+        jTFBGvalue.setEnabled(true);
+        jCBNegToZer.setEnabled(true);
+
+        jSFrom.setModel(new SpinnerNumberModel(from, 0, length, 1));
+        jSTill.setModel(new SpinnerNumberModel(till, 0, length, 1));
+    }
+    
     private void BloadrefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BloadrefActionPerformed
         int returnVal = fc.showOpenDialog(this);
-        Vector refVector = new Vector();
-        File file = null;
+        ArrayList aList = new ArrayList();
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = fc.getSelectedFile();
+            File file = fc.getSelectedFile();
             tFRefFilename.setText(fc.getName(file));
 
             try {
                 Scanner sc = new Scanner(file);
                 while (sc.hasNext()) {
-                    refVector.addElement(sc.nextFloat());
+                    aList.add(sc.nextFloat());
                 }
-            } catch (Exception e) {
-                CoreErrorMessages.fileLoadException("IRF");
+                refArray = arrayListToFloat(aList);
+                plotMeasuredIRF(refArray);
+            } catch (FileNotFoundException e) {
+                CoreErrorMessages.fileLoadException("Measured IRF: " + e.getMessage());
             }
-            int i = 0;
-            float num;
-            XYSeries refSeria = new XYSeries("Reference");
-            length = refVector.size();
-            refArray = new double[length];
-            for (Enumeration e = refVector.elements(); e.hasMoreElements();) {
-                Float temp = (Float) e.nextElement();
-                num = (float) temp;
-                refSeria.add(i, num);
-                if (num > maxInt) {
-                    maxInt = num;
-                }
-                refArray[i] = num;
-                i++;
-            }
-            if (refSerColl.getSeries().size() > 0) {
-                refSerColl.removeAllSeries();
-            }
-            refSerColl.addSeries(refSeria);
-            MakeChart(refSerColl);
-            from = 0;
-            till = length;
-            marker = new IntervalMarker(from, till);
-            marker.setPaint(new Color(222, 222, 255, 128));
-
-            jBSubtrBG.setEnabled(true);
-            jCBEstimateBG.setEnabled(true);
-            jTFBGvalue.setEnabled(true);
-            jCBNegToZer.setEnabled(true);
-
-            jSFrom.setModel(new SpinnerNumberModel(from, 0, length, 1));
-            jSTill.setModel(new SpinnerNumberModel(till, 0, length, 1));
-            //        System.out.println(refVector);
-//            setValue(JPChartArea, refArray);
+            
+            System.out.println(refArray);
+            setValue(JPChartArea, refArray);
         }
     }//GEN-LAST:event_BloadrefActionPerformed
+
+    private void jRBScatterConvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBScatterConvActionPerformed
+        // TODO add your handling code here:
+        setValue(jRBScatterConv, jRBScatterConv.isSelected());
+        //firePropertyChange("modelChanged", null, null);
+    }//GEN-LAST:event_jRBScatterConvActionPerformed
+
+    private void jRBReferenceConvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBReferenceConvActionPerformed
+        // TODO add your handling code here:
+        setValue(jRBReferenceConv, jRBReferenceConv.isSelected());
+        setValue(jTRefLifetime, jTRefLifetime.toString());
+        //firePropertyChange("modelChanged", null, null);
+    }//GEN-LAST:event_jRBReferenceConvActionPerformed
+
+    private void jTRefLifetimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTRefLifetimeActionPerformed
+        // TODO add your handling code here:
+        setValue(jTRefLifetime, jTRefLifetime.toString());
+    }//GEN-LAST:event_jTRefLifetimeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bloadref;
@@ -458,65 +578,72 @@ public class MeasuredIrfparPanel extends JPanel{
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroupConvAlg;
     private javax.swing.JButton jBCalculateBG;
     private javax.swing.JButton jBSubtrBG;
     private javax.swing.JCheckBox jCBEstimateBG;
     private javax.swing.JCheckBox jCBNegToZer;
     private javax.swing.JCheckBox jCBParmuFixedShift;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JRadioButton jRBReferenceConv;
+    private javax.swing.JRadioButton jRBScatterConv;
     private javax.swing.JSpinner jSFrom;
     private javax.swing.JSpinner jSTill;
     private javax.swing.JTextField jTFBGvalue;
     private javax.swing.JTextField jTFIrfShiftParameter;
+    private javax.swing.JTextField jTRefLifetime;
     private javax.swing.JTextField tFRefFilename;
     // End of variables declaration//GEN-END:variables
 
-//    public void setValue(JComponent source, Object value) {
+    public void setValue(JComponent source, Object value) {
 //        if (source == jCBParmuFixedShift) {
 ////            irfparPanelModel.setParmufixed((Boolean) value);
 //        }
 //
-//        if (source == jRBScatterConv) {
-//            if ((Boolean) value) {
-////                irfparPanelModel.setConvalg(2);
-//            }
-//        }
-//        if (source == jRBReferConv) {
-//            if ((Boolean) value) {
-////                irfparPanelModel.setConvalg(3);
-//            }
-//        }
-//        if (source == jTRefLifetime) {
-//            String newValue = (String) value;
-//            if (!newValue.isEmpty()) {
-////                irfparPanelModel.setReftau(Double.valueOf((String) value));
-//            } else {
-////                irfparPanelModel.setReftau(null);
-//            }
-//        }
-//        if (source == JPChartArea) { //measured IRF Changed
-//            StringBuilder result = new StringBuilder(String.valueOf(refArray[0]));
-//            for (int i = 1; i < refArray.length; i++) {
-//                result.append(",").append(refArray[i]);
-//            }
-////            irfparPanelModel.setMeasuredIrf(result.toString());
-//        }
+        if (source == jRBScatterConv) {
+            if ((Boolean) value) {
+                irfparPanelModel.setConvalg(2);
+            }
+        }
+        if (source == jRBReferenceConv) {
+            if ((Boolean) value) {
+                irfparPanelModel.setConvalg(3);
+            }
+        }
+        if (source == jTRefLifetime) {
+            String newValue = (String) value;
+            if (!newValue.isEmpty()) {
+                irfparPanelModel.setReftau(Double.valueOf((String) value));
+            } else {
+                irfparPanelModel.setReftau(null);
+            }
+        }
+        if (source == JPChartArea) { //measured IRF Changed
+            StringBuilder result = new StringBuilder(String.valueOf(refArray[0]));
+            for (int i = 1; i < refArray.length; i++) {
+                result.append(",").append(refArray[i]);
+            }
+            this.irfparPanelModel.setMeasuredIrf(result.toString());
+        }
 //        if (source == jTFIrfShiftParameter) {
 ////            irfparPanelModel.setParmu((String) value);
 //        }
-////        endUIChange();
-//    }
+        endUIChange();
+    }
 
-//    protected void endUIChange() {// signalUIChange() is deprecated{
-//         dObj.setModified(true);
-//    }
+    protected void endUIChange() {// signalUIChange() is deprecated{
+        System.out.println(dObj.getTgm().getDat().getIrfparPanel().getMeasuredIrf());
+         dObj.setModified(true);
+    }
 
 //    public void linkButtonPressed(Object arg0, String arg1) {
 //        throw new UnsupportedOperationException("Not supported yet.");
