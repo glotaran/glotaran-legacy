@@ -4,11 +4,11 @@
 
     <groupId>org.glotaran</groupId>
     <artifactId>glotaran-parent</artifactId>
-    <version>1.5.2-SNAPSHOT</version>    
+    <version>1.5.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>glotaran-parent</name>
-    
+
     <!-- Project Metadata -->
     <url>http://glotaran.org</url>
     <description>GloTarAn - A tool for Global and Target Analysis</description>
@@ -17,7 +17,7 @@
         <url>https://nat.vu.nl/</url>
     </organization>
     <inceptionYear>2007</inceptionYear>
-    
+
     <!-- Licenses -->
     <licenses>
         <license>
@@ -31,29 +31,29 @@
             <comments>GPL v3 License</comments>
         </license>
     </licenses>
-    
+
     <properties>
-        
+
         <!-- NBM Plugin settings -->
         <project.name.capatilized>Glotaran</project.name.capatilized>
         <brandingToken>glotaran</brandingToken>
         <all.clusters>${project.build.directory}/${brandingToken}</all.clusters>
         <glotaran.netbeans.useOSGiDependencies>false</glotaran.netbeans.useOSGiDependencies>
-        <glotaran.app.title>${project.name.capatilized} ${project.version}</glotaran.app.title>                
-        
-        
+        <glotaran.app.title>${project.name.capatilized} ${project.version}</glotaran.app.title>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <glotaran.maven.requiredVersion>3.2.2</glotaran.maven.requiredVersion>
         <netbeans.run.params.ide />
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
         <application.ico>${basedir}/src/main/app-resources/graphics/glotaran.ico</application.ico>
-        
+
         <!-- Netbeans Platfrom version -->
         <netbeans.version>RELEASE802</netbeans.version>
-        
+
         <!-- Modules specification version, overrides project version -->
         <glotaran.modules.specification.version>1.5.1</glotaran.modules.specification.version>
-        
+
         <!-- Java compilation settings -->
         <glotaran.javac.source>1.7</glotaran.javac.source>
         <glotaran.javac.target>1.7</glotaran.javac.target>
@@ -63,25 +63,24 @@
         <glotaran.javac.showDeprecation>true</glotaran.javac.showDeprecation>
         <glotaran.javac.showWarnings>true</glotaran.javac.showWarnings>
         <glotaran.javac.fork>true</glotaran.javac.fork>
-        
+
         <!-- Testing settings -->
         <glotaran.junit.version>4.7</glotaran.junit.version>
         <glotaran.test.maxMemory>768M</glotaran.test.maxMemory>
         <glotaran.test.reportsDirectory>${project.build.directory}/surefire-reports/plain</glotaran.test.reportsDirectory>
         <glotaran.test.failureIgnore>${testFailureIgnore}</glotaran.test.failureIgnore>
-        
 
-        
+
         <!-- Update centers URLs -->
         <!-- Update centers URLs -->
         <glotaran.update.center.official.url>https://glotaran.org/uc/official/${project.version}/catalog.xml</glotaran.update.center.official.url>
         <glotaran.update.center.fallback.url>http://glotaran.org/uc/official/${project.version}/catalog.xml</glotaran.update.center.fallback.url>
         <glotaran.update.center.thirdparty.url>https://glotaran.org/uc/thirdparty/${project.version}/catalog.xml</glotaran.update.center.thirdparty.url>
-        <!-- 
+        <!--
         <glotaran.update.center.testing.url>http://nexus.glotaran.org/nexus/content/repositories/snapshots/external/updates/updates.xml</glotaran.update.center.testing.url>
         -->
-        
-        
+
+
         <!-- Mac OS X bundle settings -->
         <glotaran.appbundle.name>${project.name.capatilized}</glotaran.appbundle.name>
         <glotaran.appbundle.signature>????</glotaran.appbundle.signature>
@@ -90,28 +89,25 @@
 
         <!-- Mac OS X signing identity - must match with a verified Apple developer certificate in the keychain -->
         <glotaran.codesign.identity>Developer ID Application</glotaran.codesign.identity>
-        
+
         <!-- Repository URLs -->
-        
+
         <!-- SCM -->
         <glotaran.scm>git</glotaran.scm>
-        <!-- TODO: get rid of this local dependency -->
-        <github.maven.repository>file:///home/nexus/repository/maven-repository/</github.maven.repository>
-       
-        
+
         <!-- Location of the NBM autoupdate folder -->
         <glotaran.updates.site>${project.build.directory}/netbeans_site</glotaran.updates.site>
-        
+
         <!-- Installers settings -->
         <glotaran.menu.app.name>${project.name.capatilized} ${project.version}</glotaran.menu.app.name>
-        
+
         <!-- Javadoc export path -->
         <glotaran.javadoc.repository.path>external/apidocs</glotaran.javadoc.repository.path>
-        
+
         <!-- NBMs updates export path -->
         <glotaran.updates.repository.path>external/updates</glotaran.updates.repository.path>
-        
-        
+
+
         <!--==== Plugin Versions ==================================================================================-->
 
         <glotaran.maven-antrun-plugin.version>1.7</glotaran.maven-antrun-plugin.version>
@@ -136,7 +132,7 @@
 
         <glotaran.maven-jarsigner-plugin.version>1.2</glotaran.maven-jarsigner-plugin.version>
 
-        <glotaran.maven-javadoc-plugin.version>2.9.1</glotaran.maven-javadoc-plugin.version> 
+        <glotaran.maven-javadoc-plugin.version>2.9.1</glotaran.maven-javadoc-plugin.version>
 
         <glotaran.maven-license-plugin.version>1.9.0</glotaran.maven-license-plugin.version>
 
@@ -153,64 +149,44 @@
         <glotaran.build-helper-maven-plugin.version>1.8</glotaran.build-helper-maven-plugin.version>
 
         <glotaran.nbm-maven-plugin.version>3.14</glotaran.nbm-maven-plugin.version>
-        
+
         <glotaran.maven-reactor-plugin.version>1.0</glotaran.maven-reactor-plugin.version>
-        
-        <glotaran.wagon-maven-plugin.version>1.0-beta-5</glotaran.wagon-maven-plugin.version>    
-           
-    </properties> 
-    
+
+        <glotaran.wagon-maven-plugin.version>1.0-beta-5</glotaran.wagon-maven-plugin.version>
+
+    </properties>
+
     <!-- Maven required version -->
     <prerequisites>
         <maven>${glotaran.maven.requiredVersion}</maven>
     </prerequisites>
-    
+
     <!-- Repositories -->
     <repositories>
-         <!-- https://netbeans.apache.org/about/oracle-transition.html 
-        Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at 
-        http://netbeans.apidesign.org/maven2/. 
-        You can use this repository by adding the following to your pom.xml:
-        <build>
-            <repositories>
-                <repository>
-                    <id>netbeans</id>
-                    <name>NetBeans</name>
-                    <url>http://netbeans.apidesign.org/maven2/</url>
-                </repository>
-            </repositories>
-        <build>
-        -->    
-        <!-- This no longer works:
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        -->
-        
         <!-- This is a local repository for some jar files not on maven central,
-        they are needed for binary backwards compatibility        
+        they are needed for binary backwards compatibility
         It was created as follows:
         mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/Jama-1.0.2.jar -DgroupId=Jama -DartifactId=Jama -Dversion=1.0.2 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
         mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ujmp-complete-0.2.5.jar -DgroupId=org.ujmp -DartifactId=ujmp-complete -Dversion=0.2.5 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
-        mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ojalgo-29.0.jar -DgroupId=org.ojalgo -DartifactId=ojalgo -Dversion=29.0 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/        
+        mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ojalgo-29.0.jar -DgroupId=org.ojalgo -DartifactId=ojalgo -Dversion=29.0 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
         -->
         <repository>
             <id>repo</id>
             <url>file://${basedir}/../repo</url>
         </repository>
+
         <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://netbeans.apidesign.org/maven2/</url>
+            <id>legacy-netbeans-mirror</id>
+            <name>NetBeans (partial mirror)</name>
+            <!-- http repos are no longer supported for newer versions of Maven, see:
+                 https://maven.apache.org/docs/3.8.1/release-notes.html#how-to-fix-when-i-get-a-http-repository-blocked
+   	     <url>http://netbeans.apidesign.org/maven2/</url>
+	     -->
+            <url>https://glotaran.org/nb-mirror/maven2-partial-mirror</url>
         </repository>
-        <!-- https://netbeans.apache.org/about/oracle-transition.html 
-        Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at 
-        http://netbeans.apidesign.org/maven2/. 
+        <!-- https://netbeans.apache.org/about/oracle-transition.html
+        Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at
+        http://netbeans.apidesign.org/maven2/.
         You can use this repository by adding the following to your pom.xml:
         <build>
             <repositories>
@@ -223,7 +199,7 @@
         <build>
         -->
         <!-- Once Glotaran Nexus is in place this might be nice to have. -->
-        <!-- 
+        <!--
         <repository>
             <id>glotaran-thirdparty</id>
             <name>Glotaran 3rd Party</name>
@@ -232,20 +208,19 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository> -->
-    
-    
-    
+
+
     </repositories>
-    
-   
+
+
     <distributionManagement>
         <repository>
             <id>maven-repository</id>
             <url>${github.maven.repository}</url>
         </repository>
-    </distributionManagement>      
-    
-    <!-- List all dependencies with versions so it can be used in child POMs 
+    </distributionManagement>
+
+    <!-- List all dependencies with versions so it can be used in child POMs
     without explicit versions -->
     <!-- This should make it possible to release updated modules periodically -->
     <dependencyManagement>
@@ -259,7 +234,7 @@
             </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
-                <artifactId>org-netbeans-modules-editor-mimelookup</artifactId>            
+                <artifactId>org-netbeans-modules-editor-mimelookup</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
@@ -271,7 +246,7 @@
                 <groupId>org.netbeans.api</groupId>
                 <artifactId>org-netbeans-core-multiview</artifactId>
                 <version>${netbeans.version}</version>
-            </dependency>	
+            </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
                 <artifactId>org-openide-awt</artifactId>
@@ -311,7 +286,7 @@
                 <groupId>org.netbeans.api</groupId>
                 <artifactId>org-netbeans-modules-autoupdate-ui</artifactId>
                 <version>${netbeans.version}</version>
-            </dependency>       
+            </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
                 <artifactId>org-openide-filesystems</artifactId>
@@ -402,12 +377,12 @@
                 <artifactId>org-openide-text</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
-        
-        
+
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>glotaran-branding</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <!-- NbModuleSuite functional in RELEASE70 or later: -->
             <dependency>
@@ -431,7 +406,7 @@
             </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
-                <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId> 
+                <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
             <dependency>
@@ -439,7 +414,7 @@
                 <artifactId>jaxb</artifactId>
                 <version>2.1.9</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.netbeans.modules</groupId>
                 <artifactId>org-netbeans-libs-jaxb</artifactId>
@@ -448,138 +423,138 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreUI</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>jfreechart</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreSimulation</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreAnalysis</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>CoreInterfaces</artifactId>
                 <groupId>${project.groupId}</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>CoreMain</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>CoreMessages</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>CoreModels</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>GtaFileSupport</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>JFreeChartCustom</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>SimSupport</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>TGMFileSupport</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>UJMPwithdep</artifactId>
                 <groupId>org.glotaran</groupId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreVisualModelling</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreAUC</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>AVGDataloader</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>jide-oss</artifactId>
-                <version>${project.version}</version>         
-            </dependency>       
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>TIMPController</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreResultDisplayers</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>imgdataloader_new</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>PQDataloader</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>SDTDataloader</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>RawDataloader</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>ASCIIDataloader</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>csvdataloader</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>JRConnect</artifactId>
-                <version>${project.version}</version>         
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>AnalysisOverviewFileSupport</artifactId>
-                <version>${project.version}</version>         
-            </dependency>            
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>CoreOptions</artifactId>
@@ -601,9 +576,9 @@
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
-            
+
     </dependencyManagement>
-    
+
     <!-- TestNG dependency -->
     <dependencies>
         <dependency>
@@ -614,7 +589,7 @@
         </dependency>
     </dependencies>
 
-    
+
     <build>
         <!-- Plugins installed with versions -->
         <pluginManagement>
@@ -643,7 +618,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${glotaran.maven-deploy-plugin.version}</version>
-                </plugin>                             
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
@@ -671,8 +646,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId> 
-                    <version>${glotaran.maven-resources-plugin.version}</version> 
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${glotaran.maven-resources-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -703,7 +678,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${glotaran.maven-assembly-plugin.version}</version>
-                </plugin>               
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
@@ -711,9 +686,9 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        
+
         <!-- Plugins configuration ===============================================================-->
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -739,10 +714,10 @@
                     <fork>${glotaran.javac.fork}</fork>
                     <compilerArgument>
                         ${glotaran.javac.xlint}
-                    </compilerArgument>
+</compilerArgument>
                 </configuration>
             </plugin>
- 
+
             <!-- JAR Packaging -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -760,7 +735,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- Skip unit tests in non-deployment or release mode -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -769,33 +744,33 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            
+
             <!-- Copy and apply filtering on manifest.mf file -->
-            <plugin> 
-                <artifactId>maven-resources-plugin</artifactId> 
-                <executions> 
-                    <execution> 
-                        <id>generate-modules-xml</id> 
-                        <phase>generate-resources</phase> 
-                        <goals> 
-                            <goal>copy-resources</goal> 
-                        </goals> 
-                        <configuration> 
-                            <outputDirectory>${basedir}/target/</outputDirectory> 
-                            <resources> 
-                                <resource> 
-                                    <directory>src/main/nbm</directory> 
-                                    <includes> 
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-modules-xml</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/nbm</directory>
+                                    <includes>
                                         <include>manifest.mf</include>
-                                    </includes> 
-                                    <filtering>true</filtering> 
-                                </resource> 
-                            </resources> 
-                        </configuration> 
-                    </execution> 
-                </executions> 
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-            
+
             <!-- NBM options -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -807,17 +782,17 @@
                     <brandingToken>${brandingToken}</brandingToken>
                     <cluster>${brandingToken}</cluster>
                     <useOSGiDependencies>${glotaran.netbeans.useOSGiDependencies}</useOSGiDependencies>
-                    
+
                     <!-- Keystore location. Run Maven with '-Dkeystorepassword=' to specify the passphrase -->
                     <keystore>src/keystore/keystore.ks</keystore>
                     <keystorealias>glotaran</keystorealias>
                     <keystorepassword>${keystore.password}</keystorepassword>
-                    
+
                     <!-- NBM settings -->
                     <requiresRestart>true</requiresRestart>
                     <licenseName>CDDL 1.0 and GNU GPL v3</licenseName>
                     <licenseFile>../../COPYING.txt</licenseFile>
-                    
+
                     <!-- Installer settings -->
                     <templateFile>${basedir}/src/main/app-resources/template.xml</templateFile>
                     <userSettings>
@@ -840,10 +815,10 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <!-- Profiles -->
     <profiles>
-                      
+
         <!-- Profile for nighly builds and releases -->
         <profile>
             <id>deployment</id>
@@ -857,19 +832,19 @@
                             <show>private</show>
                             <nohelp>true</nohelp>
                             <detectLinks>true</detectLinks>
-                            <detectOfflineLinks>true</detectOfflineLinks>      
+                            <detectOfflineLinks>true</detectOfflineLinks>
                         </configuration>
                         <executions>
-                            <execution> 
+                            <execution>
                                 <id>attach-javadocs</id>
                                 <phase>deploy</phase>
                                 <goals>
                                     <goal>jar</goal>
-                                </goals> 
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
-            
+
                     <!-- Sources plugin -->
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
@@ -878,14 +853,14 @@
                                 <id>attach-sources</id>
                                 <goals>
                                     <goal>jar</goal>
-                                </goals> 
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- Properties for release -->
         <profile>
             <id>release</id>
@@ -894,9 +869,9 @@
                 <glotaran.default.repository.url>${glotaran.release.repository.url}</glotaran.default.repository.url>
                 <glotaran.javadoc.repository.path>external/apidocs/${project.version}</glotaran.javadoc.repository.path>
                 <glotaran.updates.repository.path>external/updates/${project.version}</glotaran.updates.repository.path>
-            </properties>           
+            </properties>
         </profile>
-        
+
         <!-- Profile activated for windows/macos release only. Should be called alone so it only creates the windows installer/compressed dmg -->
         <profile>
             <id>release-extra</id>
@@ -909,7 +884,7 @@
                             <skip>true</skip>
                         </configuration>
                     </plugin>
-                    
+
                     <!-- Skip the standard install phase -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -921,19 +896,19 @@
                             </execution>
                         </executions>
                     </plugin>
-                    
+
                     <!-- Skip Javadoc creation -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <executions>
-                            <execution> 
+                            <execution>
                                 <id>attach-javadocs</id>
                                 <phase>none</phase>
                             </execution>
                         </executions>
                     </plugin>
-            
+
                     <!-- Skip sources attach -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -941,19 +916,19 @@
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
-                                <phase>none</phase> 
+                                <phase>none</phase>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- Profile activated alone to aggregate and upload javadoc -->
         <profile>
             <id>export-javadoc</id>
             <build>
-                <plugins>                    
+                <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
@@ -967,10 +942,10 @@
                             <subpackages />
                             <nohelp>true</nohelp>
                             <detectLinks>true</detectLinks>
-                            <detectOfflineLinks>true</detectOfflineLinks> 
+                            <detectOfflineLinks>true</detectOfflineLinks>
                         </configuration>
                     </plugin>
-                    
+
                     <!-- Upload the javadoc automatically -->
                     <!--
                     <plugin>
@@ -982,9 +957,9 @@
                             <toDir>${glotaran.javadoc.repository.path}</toDir>
                             <serverId>${glotaran.default.repository.id}</serverId>
                         </configuration>
-                    </plugin> 
+                    </plugin>
                     -->
-                    
+
                     <!-- Assembler to produce final sources and javadoc artifacts -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -999,7 +974,7 @@
                             <attach>false</attach>
                         </configuration>
                     </plugin>
-                    
+
                     <!-- Deploy javadoc and sources artifact -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -1020,12 +995,12 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- Profile activated alone to aggregate and upload sources -->
         <profile>
             <id>export-sources</id>
             <build>
-                <plugins>                    
+                <plugins>
                     <!-- Assembler to produce final sources and javadoc artifacts -->
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId>
@@ -1039,7 +1014,7 @@
                             <attach>false</attach>
                         </configuration>
                     </plugin>
-                    
+
                     <!-- Deploy javadoc and sources artifact -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -1061,9 +1036,7 @@
             </build>
         </profile>
     </profiles>
-    
-    
-   
+
 
     <modules>
         <module>branding</module>
@@ -1085,7 +1058,7 @@
         <module>csvdataloader</module>
         <module>GtaFileSupport</module>
         <module>imgdataloader_new</module>
-	
+
         <module>jfreechart</module>
         <module>JFreeChartCustom</module>
         <module>jide-oss</module>
@@ -1101,5 +1074,5 @@
         <module>ExampleDataloader</module>
         <module>LabmonkeyDataloader</module>
     </modules>
-    
+
 </project>
