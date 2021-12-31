@@ -1,0 +1,12 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Dec 31 03:00:34 CET 2021
+https\://repo.maven.apache.org/maven2/.lastUpdated=1640915987340
+file\://C\:\\src\\glotaran-legacy\\CoreOptions/../repo/.lastUpdated=1640894611159
+file\://C\:\\src\\glotaran-legacy\\CoreAUC/../repo/.lastUpdated=1640916034395
+https\://glotaran.org/nb-mirror/maven2-partial-mirror/.lastUpdated=1640901168722
+file\://C\:\\src\\glotaran-legacy\\CoreInterfaces/../repo/.lastUpdated=1640901168475
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\src\\glotaran-legacy\\CoreInterfaces/../repo/.error=
+file\://C\:\\src\\glotaran-legacy\\CoreOptions/../repo/.error=
+file\://C\:\\src\\glotaran-legacy\\CoreUI/../repo/.lastUpdated=1640899991008
+file\://C\:\\src\\glotaran-legacy\\CoreUI/../repo/.error=

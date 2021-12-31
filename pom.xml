@@ -169,46 +169,34 @@
         mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/Jama-1.0.2.jar -DgroupId=Jama -DartifactId=Jama -Dversion=1.0.2 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
         mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ujmp-complete-0.2.5.jar -DgroupId=org.ujmp -DartifactId=ujmp-complete -Dversion=0.2.5 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
         mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=`pwd`/libs/ojalgo-29.0.jar -DgroupId=org.ojalgo -DartifactId=ojalgo -Dversion=29.0 -Dpackaging=jar -DlocalRepositoryPath=`pwd`/repo/
+        and copying the org.netbeans content from a local .m2 cache
         -->
         <repository>
             <id>repo</id>
             <url>file://${basedir}/../repo</url>
         </repository>
 
-        <repository>
-            <id>legacy-netbeans-mirror</id>
-            <name>NetBeans (partial mirror)</name>
-            <!-- http repos are no longer supported for newer versions of Maven, see:
-                 https://maven.apache.org/docs/3.8.1/release-notes.html#how-to-fix-when-i-get-a-http-repository-blocked
-   	     <url>http://netbeans.apidesign.org/maven2/</url>
-	     -->
-            <url>https://glotaran.org/nb-mirror/maven2-partial-mirror</url>
-        </repository>
-        <!-- https://netbeans.apache.org/about/oracle-transition.html
-        Jaroslav Tulach is hosting a Maven repository with all previous Oracle binaries at
-        http://netbeans.apidesign.org/maven2/.
-        You can use this repository by adding the following to your pom.xml:
-        <build>
-            <repositories>
-                <repository>
-                    <id>netbeans</id>
-                    <name>NetBeans</name>
-                    <url>http://netbeans.apidesign.org/maven2/</url>
-                </repository>
-            </repositories>
-        <build>
-        -->
-        <!-- Once Glotaran Nexus is in place this might be nice to have. -->
+        <!-- IF the legacy-netbeans-mirror repository is added, it may be needed to first add maven-central to avoid timeouts -->
         <!--
         <repository>
-            <id>glotaran-thirdparty</id>
-            <name>Glotaran 3rd Party</name>
-            <url>http://nexus.glotaran.org/nexus/content/repositories/thirdparty/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository> -->
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>maven-central-apache</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        -->
 
+        <!--
+            <repository>
+            <id>legacy-netbeans-mirror</id>
+            <name>NetBeans (partial mirror)</name>
+            <url>https://glotaran.org/nb-mirror/maven2-partial-mirror</url>
+        </repository>
+        -->
+        <!-- legacy-netbeans-mirror is a partial copy from <url>http://netbeans.apidesign.org/maven2/</url> -->
+        <!-- See also: https://netbeans.apache.org/about/oracle-transition.html -->
 
     </repositories>
 
@@ -377,7 +365,6 @@
                 <artifactId>org-openide-text</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
-
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
