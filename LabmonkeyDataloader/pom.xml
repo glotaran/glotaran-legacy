@@ -18,7 +18,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <author>Jörn Weißenborn</author>
-                    <moduleType></moduleType>
+                    <moduleType/>
                     <!--  A list of additional resources to include in the NBM file. -->
                     <!-- For example, to include native libraries: -->
                     <!--
@@ -62,12 +62,12 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.26</version>
+            <version>1.32</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20140107</version>
+            <version>20180130</version>
         </dependency>
 
     </dependencies>
