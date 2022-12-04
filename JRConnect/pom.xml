@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.nuiton.thirdparty</groupId>
             <artifactId>JRI</artifactId>
-            <version>0.8-4</version>
+            <version>0.9-9</version>
         </dependency>       
     </dependencies>
 </project>
