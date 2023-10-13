@@ -44,7 +44,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <glotaran.maven.requiredVersion>3.2.2</glotaran.maven.requiredVersion>
-        <netbeans.run.params.ide />
+        <netbeans.run.params.ide/>
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
         <application.ico>${basedir}/src/main/app-resources/graphics/glotaran.ico</application.ico>
 
@@ -353,7 +353,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-math3</artifactId>
-                <version>3.3</version>
+                <version>3.6.1</version>
             </dependency>
             <dependency>
                 <groupId>org.netbeans.api</groupId>
@@ -926,7 +926,7 @@
                         <configuration>
                             <show>public</show>
                             <doctitle>${project.name.capatilized} ${project.version} API Index</doctitle>
-                            <subpackages />
+                            <subpackages/>
                             <nohelp>true</nohelp>
                             <detectLinks>true</detectLinks>
                             <detectOfflineLinks>true</detectOfflineLinks>
