@@ -49,10 +49,10 @@
         <application.ico>${basedir}/src/main/app-resources/graphics/glotaran.ico</application.ico>
 
         <!-- Netbeans Platfrom version -->
-        <netbeans.version>RELEASE802</netbeans.version>
+        <netbeans.version>RELEASE126</netbeans.version>
 
         <!-- Modules specification version, overrides project version -->
-        <glotaran.modules.specification.version>1.5.1</glotaran.modules.specification.version>
+        <glotaran.modules.specification.version>1.5.2</glotaran.modules.specification.version>
 
         <!-- Java compilation settings -->
         <glotaran.javac.source>1.7</glotaran.javac.source>
