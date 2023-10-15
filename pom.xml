@@ -34,6 +34,10 @@
 
     <properties>
 
+        <!-- SonarCloud settings -->
+        <sonar.organization>glotaran</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
         <!-- NBM Plugin settings -->
         <project.name.capatilized>Glotaran</project.name.capatilized>
         <brandingToken>glotaran</brandingToken>
