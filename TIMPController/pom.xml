@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
-    
+
     <artifactId>TIMPController</artifactId>
     <packaging>nbm</packaging>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -17,9 +19,9 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <publicPackages>                        
+                    <publicPackages>
                         <publicPackage>org.glotaran.timpcontroller</publicPackage>
-                    </publicPackages>    
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
@@ -34,8 +36,8 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId> 
- 
+            <artifactId>org-netbeans-api-annotations-common</artifactId>
+
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -47,15 +49,15 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util</artifactId> 
+            <artifactId>org-openide-util</artifactId>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId> 
+            <artifactId>org-openide-util-lookup</artifactId>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-extexecution</artifactId>            
+            <artifactId>org-netbeans-modules-extexecution</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

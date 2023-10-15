@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
-    
+
     <artifactId>jide-oss</artifactId>
     <packaging>nbm</packaging>
     <name>LibaryWrapper - jide-oss</name>
-     
+
     <build>
         <plugins>
             <plugin>
@@ -18,7 +20,7 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <publicPackages>                        
+                    <publicPackages>
                         <publicPackage>com.jidesoft.comparator</publicPackage>
                         <publicPackage>com.jidesoft.converter</publicPackage>
                         <publicPackage>com.jidesoft.dialog</publicPackage>
@@ -45,7 +47,7 @@
                         <publicPackage>com.jidesoft.tree</publicPackage>
                         <publicPackage>com.jidesoft.utils</publicPackage>
                         <publicPackage>com.jidesoft.validation</publicPackage>
-                    </publicPackages>    
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
