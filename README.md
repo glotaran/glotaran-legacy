@@ -1,6 +1,6 @@
 # Glotaran - A tool for Global and Target Analysis
 
-[Glotaran](http://glotaran.org) is a Glotaran is a free software program developed for global and target analysis of time-resolved spectroscopy and microscopy data.
+[Glotaran](http://glotaran.org) is a free software program developed for global and target analysis of time-resolved spectroscopy and microscopy data.
 
 A publication about Glotaran, with the title "Glotaran: a Java-based graphical user interface for the R-package TIMP" has been published in the Journal of Statistical Software, on July 1st 2012 and can be found here: http://www.jstatsoft.org/v49/i03/
 
@@ -14,17 +14,25 @@ Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screenca
 
 ## Deprecation notice
 
-The 1.0.0 version of Glotaran was released more than 13 years ago, and the creators of Glotaran think it's time for a change. For the past few years they have been working on a successor for Glotaran, re-written from the ground up in Python, called [pyglotaran](https://github.com/glotaran/pyglotaran). Please check it out!
+The 1.0.0 version of Glotaran was released more than 13 years ago (in 2023), and the creators of Glotaran think it's time for a change.
+
+For the past few years they have been working on a (spiritual) successor to  Glotaran, re-written from the ground up in Python, called [pyglotaran](https://github.com/glotaran/pyglotaran). Please check it out!
 
 ## Latest releases
 
-### Stable
+### Stable (1.5.x)
 
-- Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.1.
+Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.2, the code lives on the [1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) branch.
 
-### Developer builds
+### Next release (1.6.x)
 
-Current version is 1.5.2-SNAPSHOT
+Version 1.6.0 will be updating the NetBeans Platform framework to version 12.6 (from 8.0.2), the code lives on the [1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) branch.
+
+### Developer builds (1.7.x)
+
+The goal of 1.7.0 is to release something that works with the latest LTS of Java and NetBeans, which should give it another 5 years or runtime, by which time it is expected to be fully replace with pyglotaran and GUIs implemented for it.
+
+Development of this will take place on the `main` branch.
 
 ## License
 
