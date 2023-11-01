@@ -22,8 +22,7 @@
         <developerConnection>
             scm:git:git@github.com:glotaran/glotaran-legacy.git
         </developerConnection>
-      <tag>v1.5.3</tag>
-  </scm>
+    </scm>
 
     <!-- Licenses -->
     <licenses>
