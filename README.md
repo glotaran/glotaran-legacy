@@ -18,13 +18,17 @@ The 1.0.0 version of Glotaran was released more than 13 years ago, and the creat
 
 ## Latest releases
 
-### Stable
+### Stable (1.5.x)
 
-- Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.1.
+Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.1.
 
-### Developer builds
+### Next release (1.6.x)
 
-Current version is 1.5.2-SNAPSHOT
+Version 1.6.0 will be updating the NetBeans Platform framework to version 12.6 (from 8.0.2).
+
+### Developer builds (1.7.x)
+
+The goal of 1.7.0 is to release something that works with the latest LTS of Java and NetBeans, which should give it another 5 years or runtime, by which time it is expected to be fully replace with pyglotaran and GUIs implemented for it.
 
 ## License
 

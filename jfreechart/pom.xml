@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
-    
+
     <artifactId>jfreechart</artifactId>
     <packaging>nbm</packaging>
     <name>LibaryWrapper - JFreeChart</name>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -19,7 +21,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <!-- exported by jfreechart -->                        
+                        <!-- exported by jfreechart -->
                         <publicPackage>org.jfree.chart</publicPackage>
                         <publicPackage>org.jfree.chart.annotations</publicPackage>
                         <publicPackage>org.jfree.chart.axis</publicPackage>
@@ -75,8 +77,8 @@
                         <publicPackage>org.jfree.ui.about.resources</publicPackage>
                         <publicPackage>org.jfree.ui.action</publicPackage>
                         <publicPackage>org.jfree.ui.tabbedui</publicPackage>
-                        <publicPackage>org.jfree.util</publicPackage>    
-                    </publicPackages>    
+                        <publicPackage>org.jfree.util</publicPackage>
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
@@ -91,8 +93,8 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId> 
-        </dependency>	
+            <artifactId>org-netbeans-api-annotations-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
