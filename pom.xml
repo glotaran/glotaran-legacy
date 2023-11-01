@@ -17,6 +17,12 @@
         <url>https://nat.vu.nl/</url>
     </organization>
     <inceptionYear>2007</inceptionYear>
+    
+    <scm>
+        <developerConnection>
+            scm:git:git@github.com:glotaran/glotaran-legacy.git
+        </developerConnection>
+    </scm>
 
     <!-- Licenses -->
     <licenses>
