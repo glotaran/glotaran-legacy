@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.5.2</version>
     </parent>
     
     <artifactId>LabmonkeyDataloader</artifactId>
@@ -18,7 +18,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <author>Jörn Weißenborn</author>
-                    <moduleType/>
+                    <moduleType />
                     <!--  A list of additional resources to include in the NBM file. -->
                     <!-- For example, to include native libraries: -->
                     <!--

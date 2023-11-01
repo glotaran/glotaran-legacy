@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.5.2</version>
         <!-- for relativePath one level higher is actually the default -->
         <relativePath>..</relativePath> 
     </parent>        
