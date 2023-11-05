@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
-    <!-- Parent POM -->   
+
+    <!-- Parent POM -->
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
         <version>1.5.2</version>
         <!-- for relativePath one level higher is actually the default -->
-        <relativePath>..</relativePath> 
-    </parent>        
+        <relativePath>..</relativePath>
+    </parent>
 
     <artifactId>glotaran-app</artifactId>
     <packaging>nbm-application</packaging>
@@ -118,15 +118,15 @@
                 <exclusion>
                     <artifactId>org-netbeans-modules-spi-actions</artifactId>
                     <groupId>org.netbeans.modules</groupId>
-                </exclusion>                
+                </exclusion>
                 -->
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>glotaran-branding</artifactId>                     
-        </dependency>        
+            <artifactId>glotaran-branding</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-nbjunit</artifactId>
@@ -139,98 +139,98 @@
             <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
-        -->        
+        -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreUI</artifactId>                     
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jfreechart</artifactId>                     
+            <artifactId>CoreUI</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreSimulation</artifactId>                     
+            <artifactId>jfreechart</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreAnalysis</artifactId>                     
+            <artifactId>CoreSimulation</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>CoreInterfaces</artifactId>                 
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreAnalysis</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>CoreMain</artifactId>            
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreInterfaces</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>CoreMessages</artifactId>            
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreMain</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>CoreModels</artifactId>            
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreMessages</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>GtaFileSupport</artifactId>                            
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CoreModels</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
+            <groupId>${project.groupId}</groupId>
+            <artifactId>GtaFileSupport</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>JFreeChartCustom</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>SimSupport</artifactId>            
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>TGMFileSupport</artifactId>            
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>    
-            <artifactId>UJMPwithdep</artifactId>            
-        </dependency>
-        <dependency> 
-            <groupId>${project.groupId}</groupId>                
-            <artifactId>CoreVisualModelling</artifactId>   
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SimSupport</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreAUC</artifactId>                     
+            <artifactId>TGMFileSupport</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>AVGDataloader</artifactId>                     
+            <artifactId>UJMPwithdep</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jide-oss</artifactId>                     
+            <artifactId>CoreVisualModelling</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>TIMPController</artifactId>                     
+            <artifactId>CoreAUC</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreResultDisplayers</artifactId>                     
+            <artifactId>AVGDataloader</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>imgdataloader_new</artifactId>                     
+            <artifactId>jide-oss</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>PQDataloader</artifactId>                     
+            <artifactId>TIMPController</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>SDTDataloader</artifactId>                     
+            <artifactId>CoreResultDisplayers</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>RawDataloader</artifactId>                     
+            <artifactId>imgdataloader_new</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>PQDataloader</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SDTDataloader</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>RawDataloader</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -238,23 +238,23 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>csvdataloader</artifactId>                     
+            <artifactId>csvdataloader</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>JRConnect</artifactId>                     
+            <artifactId>JRConnect</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>AnalysisOverviewFileSupport</artifactId>                     
+            <artifactId>AnalysisOverviewFileSupport</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreOptions</artifactId>            
+            <artifactId>CoreOptions</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CoreDataDisplayers</artifactId>            
+            <artifactId>CoreDataDisplayers</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -264,7 +264,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>LabmonkeyDataloader</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb</artifactId>
@@ -272,7 +272,7 @@
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-libs-jaxb</artifactId>
-        </dependency>    
+        </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-projectapi</artifactId>
@@ -285,7 +285,7 @@
 
     <build>
         <plugins>
-            
+
             <!-- Disable the ZIP goal in the non-deployment or release mode. Also set up the location of the glotaran.conf -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -297,39 +297,39 @@
                 <executions>
                     <execution>
                         <id>default-standalone-zip</id>
-                        <phase>none</phase>       
+                        <phase>none</phase>
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- Copy ressources glotaran.conf and Info.plist with filtering (replacing 'project.version' by the actual version -->
-            <plugin> 
-                <artifactId>maven-resources-plugin</artifactId> 
-                <executions> 
-                    <execution> 
-                        <id>generate-app-conf-file</id> 
-                        <phase>generate-resources</phase> 
-                        <goals> 
-                            <goal>copy-resources</goal> 
-                        </goals> 
-                        <configuration> 
-                            <outputDirectory>${basedir}/target/</outputDirectory> 
-                            <resources> 
-                                <resource> 
-                                    <directory>src/main/resources</directory> 
-                                    <includes> 
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-app-conf-file</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <includes>
                                         <include>${brandingToken}.conf</include>
                                         <include>Info.plist</include>
-                                    </includes> 
-                                    <filtering>true</filtering> 
-                                </resource> 
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
                             </resources>
                             <escapeString>\</escapeString>
-                        </configuration> 
-                    </execution> 
-                </executions> 
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-            
+
             <!-- Permits NbModuleSuite to be run in integration-test phase: -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -356,15 +356,15 @@
     </build>
 
     <profiles>
-        
-        <!-- The deployment profile is built for daily releases. It builds the standalone 
+
+        <!-- The deployment profile is built for daily releases. It builds the standalone
         zip and the autoupdate site. It can be used with deploy-dmg to include the dmg as well. -->
         <profile>
-            <id>deployment</id>                     
-            
+            <id>deployment</id>
+
             <build>
                 <plugins>
-                    
+
                     <!-- NBM Plugin settings. Enable the zip and autoupdate generation -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -372,7 +372,7 @@
                         <executions>
                             <execution>
                                 <id>default-standalone-zip</id>
-                                <phase>package</phase>       
+                                <phase>package</phase>
                             </execution>
                             <execution>
                                 <id>autoupdate</id>
@@ -382,7 +382,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    
+
                     <!-- Permits NbModuleSuite to be run in integration-test phase: -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -394,7 +394,7 @@
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
-                    
+
                     <!-- Avoid jar goal -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -411,13 +411,13 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- Profile used along with deployment to create the dmg archive -->
         <profile>
             <id>create-dmg</id>
             <build>
                 <plugins>
-                    
+
                     <!-- Create the Mac OS X application bundle and dmg file -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -431,59 +431,59 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        
-                                        <echo message="project.build.directory = ${project.build.directory}" /> 
-                                
+
+                                        <echo message="project.build.directory = ${project.build.directory}" />
+
                                         <delete includeEmptyDirs="true" failonerror="false">
                                             <fileset dir="${project.build.directory}/${glotaran.appbundle.name}.app" />
                                             <fileset dir="${project.build.directory}/${glotaran.app.title}" />
                                             <fileset dir="${project.build.directory}/${project.artifactId}-${project.version}.dmg" />
-                                            <fileset dir="${project.build.directory}/${project.artifactId}-${glotaran.branding.version}.dmg" />                                            
+                                            <fileset dir="${project.build.directory}/${project.artifactId}-${glotaran.branding.version}.dmg" />
                                         </delete>
-                                
+
                                         <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app" />
                                         <mkdir dir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS" />
-                                        
+
                                         <copy todir="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}">
                                             <fileset dir="${project.build.directory}/${brandingToken}" />
                                         </copy>
-                                                                                
+
                                         <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}.icns" file="src/main/app-resources/graphics/${brandingToken}.icns" />
                                         <copy tofile="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Info.plist" file="${project.build.directory}/Info.plist" />
-                                
+
                                         <chmod file="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/Resources/${brandingToken}/bin/${brandingToken}" perm="ugo+rx" />
-                                
+
                                         <symlink link="${project.build.directory}/${glotaran.appbundle.name}.app/Contents/MacOS/Glotaran" resource="../Resources/${brandingToken}/bin/${brandingToken}" failonerror="false" />
                                         <!-- No code signing for now -->
                                         <!-- <exec dir="${project.build.directory}" os="Mac OS X" executable="codesign">
-                                            <arg value="-fs" /> 
-                                            <arg value="${glotaran.codesign.identity}" /> 
-                                            <arg value="-v" /> 
-                                            <arg value="${glotaran.appbundle.name}.app" /> 
+                                            <arg value="-fs" />
+                                            <arg value="${glotaran.codesign.identity}" />
+                                            <arg value="-v" />
+                                            <arg value="${glotaran.appbundle.name}.app" />
                                         </exec> -->
-                                        
+
                                         <mkdir dir="${project.build.directory}/${glotaran.app.title}" />
                                         <mkdir dir="${project.build.directory}/${glotaran.app.title}/.background" />
-                                        
+
                                         <!-- Note that .DS_Store is version specific due to the file naming constraint on the dmg file -->
-                                        <echo message="Copy src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store to dmg" /> 
+                                        <echo message="Copy src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store to dmg" />
                                         <copy tofile="${project.build.directory}/${glotaran.app.title}/.DS_Store" file="src/main/app-resources/${project.name.capatilized}-${glotaran.branding.version}.DS_Store.bak" />
                                         <copy tofile="${project.build.directory}/${glotaran.app.title}/.background/Mac_OSX_dmg_background.png" file="src/main/app-resources/graphics/Mac_OSX_dmg_background.png" />
                                         <move file="${project.build.directory}/${glotaran.appbundle.name}.app" todir="${project.build.directory}/${glotaran.app.title}/" />
                                         <symlink link="${project.build.directory}/${glotaran.app.title}/Applications" resource="/Applications" failonerror="false" />
-                                        
+
                                         <exec dir="${project.build.directory}" os="Mac OS X" executable="hdiutil">
-                                            <arg value="create" /> 
-                                            <arg value="-noanyowners" /> 
-                                            <arg value="-imagekey" /> 
-                                            <arg value="zlib-level=9" /> 
-                                            <arg value="-srcfolder" /> 
-                                            <arg value="${project.build.directory}/${glotaran.app.title}" /> 
+                                            <arg value="create" />
+                                            <arg value="-noanyowners" />
+                                            <arg value="-imagekey" />
+                                            <arg value="zlib-level=9" />
+                                            <arg value="-srcfolder" />
+                                            <arg value="${project.build.directory}/${glotaran.app.title}" />
                                             <arg value="${project.name.capatilized}-${glotaran.branding.version}.dmg" />
                                         </exec>
 
                                         <exec dir="${project.build.directory}" os="Linux" executable="mkisofs">
-                                            <arg value="-V" /> 
+                                            <arg value="-V" />
                                             <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}" />
                                             <arg value="-U" />
                                             <arg value="-D" />
@@ -496,9 +496,9 @@
                                             <arg value="-o" />
                                             <arg value="${glotaran.appbundle.name}-${glotaran.branding.version}.dmg" />
                                             <!-- the -root argument creates a folder structure in the dmg, which is unwanted in our case -->
-                                            <!-- 
+                                            <!--
                                             <arg value="-root" />
-                                            <arg value="Glotaran_Installer" /> 
+                                            <arg value="Glotaran_Installer" />
                                             -->
                                             <arg value="${project.build.directory}/${glotaran.app.title}" />
                                         </exec>
@@ -510,7 +510,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- Profile used along with deployment to attach the dmg archive -->
         <profile>
             <id>deploy-dmg</id>
@@ -537,11 +537,11 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>   
+                    </plugin>
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- Profile activated for windows/macos release only. Should be called alone so it only creates the windows installer/compressed dmg -->
         <profile>
             <id>release-extra</id>
@@ -554,7 +554,7 @@
                         <executions>
                             <execution>
                                 <id>default-standalone-zip</id>
-                                <phase>none</phase>       
+                                <phase>none</phase>
                             </execution>
                             <execution>
                                 <id>autoupdate</id>
@@ -564,14 +564,14 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>                        
-        
+        </profile>
+
         <profile>
-            
+
             <id>replace-icon-unix</id>
-            <activation>    
-               
-                <!-- Following activation conditions are disabeled as a workaround for MNG-4565 behavior in Maven < 3.2.2 -->                               
+            <activation>
+
+                <!-- Following activation conditions are disabeled as a workaround for MNG-4565 behavior in Maven < 3.2.2 -->
                 <!--
                 <os>
                     <family>Unix</family>
@@ -582,36 +582,36 @@
                 -->
                 <file>
                     <!-- Unfortuonately this test only works if the path resolves exactly,
-                         which requires us to specify an os specific location in ~/.m2/settings.xml .            -->                    
-                    <exists>${wine.bottle}/drive_c/${resourcehacker.installdir.unix}/ResHacker.exe</exists>
-                </file>                      
+                         which requires us to specify an os specific location in ~/.m2/settings.xml .            -->
+                    <exists>${wine.bottle}/drive_c/${resourcehacker.installdir.unix}/ResourceHacker.exe</exists>
+                </file>
             </activation>
-            <build>                
+            <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId> 
+                        <artifactId>maven-antrun-plugin</artifactId>
                         <version>1.8</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>run</goal>
-                                </goals>                        
+                                </goals>
                                 <configuration>
-                                    <target> 
-                                        <echo message="[OS-Specific] UNIX [/OS-Specific]" /> 
+                                    <target>
+                                        <echo message="[OS-Specific] UNIX [/OS-Specific]" />
                                         <echo message="Replacing icon of Windows launcher executable" />
-                                        <echo message="Using wine bottle: ${wine.bottle}" />  
-                                        <echo message="Running ${resourcehacker.installdir}\ResHacker.exe" />
-                                        <echo message="Replacing ${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe" />                                        
-                                        <echo message="Using applicaion.ico = ${application.ico} " />                                        
-                                        
-                                        <!-- replace executable with ResHacker.exe path on windows -->
+                                        <echo message="Using wine bottle: ${wine.bottle}" />
+                                        <echo message="Running ${resourcehacker.installdir}\ResourceHacker.exe" />
+                                        <echo message="Replacing ${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe" />
+                                        <echo message="Using applicaion.ico = ${application.ico} " />
+
+                                        <!-- replace executable with ResourceHacker.exe path on windows -->
                                         <exec executable="wine" resolveexecutable="true" logerror="true">
                                             <!-- replace value with location of installation bottle, or remove on windows -->
                                             <env key="WINEPREFIX" value="${wine.bottle}" />
                                             <!-- remove this argument when running on windows -->
-                                            <arg value="${resourcehacker.installdir}\ResHacker.exe" />
+                                            <arg value="${resourcehacker.installdir}\ResourceHacker.exe" />
                                             <arg value="-addoverwrite" />
                                             <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
                                             <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
@@ -619,13 +619,13 @@
                                             <arg value="ICONGROUP," />
                                             <arg value="MAINICON," />
                                             <arg value="0" />
-                                        </exec>     
-                                        
+                                        </exec>
+
                                         <exec executable="wine" resolveexecutable="true" logerror="true">
                                             <!-- replace value with location of installation bottle, or remove on windows -->
                                             <env key="WINEPREFIX" value="${wine.bottle}" />
                                             <!-- remove this argument when running on windows -->
-                                            <arg value="${resourcehacker.installdir}\ResHacker.exe" />
+                                            <arg value="${resourcehacker.installdir}\ResourceHacker.exe" />
                                             <arg value="-addoverwrite" />
                                             <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe," />
                                             <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe," />
@@ -633,26 +633,26 @@
                                             <arg value="ICONGROUP," />
                                             <arg value="MAINICON," />
                                             <arg value="0" />
-                                        </exec>   
-                                        
-                                        <echo message="Updated zip file: ${project.build.directory}/${project.artifactId}-${project.version}.zip" />                                        
-             
-                                        <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true"> 
-                                            <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" /> 
-                                        </zip>            
-                                    </target>       
-                                </configuration>                      
+                                        </exec>
+
+                                        <echo message="Updated zip file: ${project.build.directory}/${project.artifactId}-${project.version}.zip" />
+
+                                        <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true">
+                                            <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" />
+                                        </zip>
+                                    </target>
+                                </configuration>
                             </execution>
                         </executions>
-                    </plugin>  
+                    </plugin>
                 </plugins>
             </build>
-        </profile>            
-                
+        </profile>
+
         <profile>
             <id>replace-icon-windows</id>
-            <activation>              
-                <!-- Following activation conditions disabeled as a workaround for MNG-4565 behavior in Maven < 3.2.2 -->                              
+            <activation>
+                <!-- Following activation conditions disabeled as a workaround for MNG-4565 behavior in Maven < 3.2.2 -->
                 <!--
                 <os>
                     <family>Windows</family>
@@ -660,47 +660,48 @@
                 <property>
                     <name>resourcehacker.installdir</name>
                 </property>
-                -->     
+                -->
                 <file>
                     <!-- specifiy the property in specific location in ~/.m2/settings.xml -->
-                    <exists>${resourcehacker.installdir}\ResHacker.exe</exists>
-                </file>                                                    
+                    <exists>${resourcehacker.installdir}\ResourceHacker.exe</exists>
+                </file>
             </activation>
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId> 
+                        <artifactId>maven-antrun-plugin</artifactId>
                         <version>1.7</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>run</goal>
-                                </goals>                        
+                                </goals>
                                 <configuration>
-                                    <target> 
-                                        <echo message="[OS-Specific] WINDOWS [/OS-Specific]" /> 
-                                        <echo message="Replacing icon of Windows launcher executable" /> 
-                                        <!-- replace executable with ResHacker.exe path on windows -->
-                                        <exec executable="${resourcehacker.installdir}\ResHacker.exe" resolveexecutable="true" logerror="true">
-                                            <arg value="-addoverwrite" />
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
-                                            <arg value="${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe," />
-                                            <arg value="${application.ico}," />
-                                            <arg value="ICONGROUP," />
-                                            <arg value="MAINICON," />
-                                            <arg value="0" />
-                                        </exec>      
-             
-                                        <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true"> 
-                                            <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" /> 
-                                        </zip>            
-                                    </target>       
-                                </configuration>                      
+                                <!-- "C:\Program Files (x86)\Resource Hacker\ResourceHacker.exe" -help commandline -->
+                                    <target>
+                                        <echo message="[OS-Specific] WINDOWS [/OS-Specific]" />
+                                        <echo message="Replacing icon of Windows launcher executable" />
+                                        <echo message="Project build directory: ${project.build.directory}" />
+                                        <echo message="Running ${resourcehacker.installdir}/ResourceHacker.exe" />
+                                        <echo message="Replacing ${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe" />
+                                        <echo message="Using application.ico = ${application.ico} " />
+                                        <exec executable="cmd" resolveexecutable="true" logerror="true">
+                                            <arg line="/c &quot;${resourcehacker.installdir}/ResourceHacker.exe&quot; -open &quot;${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe&quot; -save &quot;${project.build.directory}/${brandingToken}/bin/${brandingToken}.exe&quot; -action addskip -res &quot;${application.ico}&quot; -mask ICONGROUP,MAINICON,0" />
+                                        </exec>
+                                        <exec executable="cmd" resolveexecutable="true" logerror="true">
+                                            <arg line="/c &quot;${resourcehacker.installdir}/ResourceHacker.exe&quot; -open &quot;${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe&quot; -save &quot;${project.build.directory}/${brandingToken}/bin/${brandingToken}64.exe&quot; -action addskip -res &quot;${application.ico}&quot; -mask ICONGROUP,MAINICON,0" />
+                                        </exec>
+
+                                        <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" update="true">
+                                            <zipfileset dir="${project.build.directory}/${brandingToken}/bin" includes="*.exe" prefix="${brandingToken}/bin" />
+                                        </zip>
+                                    </target>
+                                </configuration>
                             </execution>
                         </executions>
-                    </plugin>                       
-                </plugins>                  
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>
