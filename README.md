@@ -12,6 +12,10 @@ Download and [Install](http://glotaran.org/wiki/doku.php?id=installation) Glotar
 
 Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screencast](http://glotaran.org/demonstration.html).
 
+## Development
+
+For contributor setup, build, and run instructions, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Deprecation notice
 
 The 1.0.0 version of Glotaran was released more than 13 years ago (in 2023), and the creators of Glotaran think it's time for a change.
