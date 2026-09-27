@@ -5,9 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [main]
+    branches: [main, maintenance/v1.5.x, maintenance/v1.6.x]
   pull_request:
-    branches: [main]
+    branches: [main, maintenance/v1.5.x, maintenance/v1.6.x]
 
 env:
   MAVEN_OPTS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120

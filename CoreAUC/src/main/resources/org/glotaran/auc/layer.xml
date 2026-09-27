@@ -10,13 +10,6 @@
                 <attr name="instanceOf" stringvalue="org.netbeans.spi.autoupdate.UpdateProvider"/>
                 <attr name="url" bundlevalue="org.glotaran.auc.Bundle#org_glotaran_auc_update_center"/>
             </file>
-            <file name="org_glotaran_auc_beta_update_center.instance">
-                <attr name="displayName" bundlevalue="org.glotaran.auc.Bundle#Services/AutoupdateType/org_glotaran_auc_beta_update_center.instance"/>
-                <attr name="enabled" boolvalue="false"/>
-                <attr name="instanceCreate" methodvalue="org.netbeans.modules.autoupdate.updateprovider.AutoupdateCatalogFactory.createUpdateProvider"/>
-                <attr name="instanceOf" stringvalue="org.netbeans.spi.autoupdate.UpdateProvider"/>
-                <attr name="url" bundlevalue="org.glotaran.auc.Bundle#org_glotaran_auc_beta_update_center"/>
-            </file>
         </folder>
     </folder>
 </filesystem>
