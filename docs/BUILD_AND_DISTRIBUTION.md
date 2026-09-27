@@ -171,7 +171,7 @@ cd application
 mvn nbm:cluster-app nbm:run-platform
 ```
 
-The VS Code tasks in `.vscode/tasks.json` run these commands with fixed Windows paths to the JDK and Maven. They work only on a machine with those paths.
+To run these commands from an editor, define local tasks that set `JAVA_HOME` and `PATH` for your JDK 8 and Maven installations. See the VS Code section in [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Portable ZIP and autoupdate site
 

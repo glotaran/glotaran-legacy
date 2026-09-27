@@ -32,7 +32,7 @@ mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress
 
 This is the command CI runs. It does not install the reactor's artifacts into your local Maven repository.
 
-To also install the artifacts locally, as the VS Code build task does, run:
+To also install the artifacts locally, run:
 
 ```sh
 mvn -T 1C clean install
@@ -61,13 +61,13 @@ The 64-bit launcher is `application/target/glotaran/bin/glotaran64.exe`.
 
 ## VS Code
 
-`.vscode/tasks.json` contains tasks to:
+The repository does not include VS Code configuration; `.vscode/` is listed in `.gitignore`. If you want VS Code tasks, create a local `.vscode/tasks.json` with tasks for:
 
-- build the full reactor
-- run the application through Maven
-- run the built Windows launcher
+- `mvn -T 1C clean install` from the repository root
+- `mvn nbm:cluster-app nbm:run-platform` from `application/`
+- `application/target/glotaran/bin/glotaran64.exe`
 
-The tasks contain fixed Windows paths to JDK 8 and Maven.
+Set `JAVA_HOME` and `PATH` in the task `options.env` to your local JDK 8 and Maven installations.
 
 ## Contribution guidelines
 
@@ -80,6 +80,6 @@ The tasks contain fixed Windows paths to JDK 8 and Maven.
 
 The GitHub Actions workflow `.github/workflows/maven.yml` runs on Ubuntu with:
 
-- `actions/setup-java@v4`
+- `actions/setup-java@v6`
 - Temurin JDK 8
 - `mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress`
