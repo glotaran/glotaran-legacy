@@ -30,6 +30,10 @@ Version 1.6.0 will be updating the NetBeans Platform framework to version 12.6 (
 
 The goal of 1.7.0 is to release something that works with the latest LTS of Java and NetBeans, which should give it another 5 years or runtime, by which time it is expected to be fully replace with pyglotaran and GUIs implemented for it.
 
+## Building release artifacts
+
+See [RELEASING.md](RELEASING.md) for building the autoupdate site, the generic zip and the Windows, Linux and macOS installers.
+
 ## License
 
 GPL v2 or later
