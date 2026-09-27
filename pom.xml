@@ -90,7 +90,7 @@
         <glotaran.appbundle.name>${project.name.capatilized}</glotaran.appbundle.name>
         <glotaran.appbundle.signature>????</glotaran.appbundle.signature>
         <glotaran.jarbundler.version>2.2.0</glotaran.jarbundler.version>
-        <glotaran.branding.version>1.5</glotaran.branding.version>
+        <glotaran.branding.version>1.6</glotaran.branding.version>
 
         <!-- Mac OS X signing identity - must match with a verified Apple developer certificate in the keychain -->
         <glotaran.codesign.identity>Developer ID Application</glotaran.codesign.identity>
