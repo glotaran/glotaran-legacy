@@ -8,7 +8,7 @@
                 <attr name="enabled" boolvalue="true"/>
                 <attr name="instanceCreate" methodvalue="org.netbeans.modules.autoupdate.updateprovider.AutoupdateCatalogFactory.createUpdateProvider"/>
                 <attr name="instanceOf" stringvalue="org.netbeans.spi.autoupdate.UpdateProvider"/>
-                <attr name="url" bundlevalue="org.glotaran.auc.Bundle#org_glotaran_auc_secure_update_center"/>
+                <attr name="url" bundlevalue="org.glotaran.auc.Bundle#org_glotaran_auc_update_center"/>
             </file>
         </folder>
     </folder>
