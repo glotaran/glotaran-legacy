@@ -14,7 +14,11 @@ Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screenca
 
 ## Development
 
-For contributor setup, build, and run instructions, see [CONTRIBUTING.md](CONTRIBUTING.md).
+To build, run, and debug the application, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Contributor guidelines are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+The Maven build, packaging, installers, CI, and release process are described in [docs/BUILD_AND_DISTRIBUTION.md](docs/BUILD_AND_DISTRIBUTION.md).
+
+Planned releases (1.5.3, 1.6, 1.7, 2.0) are described in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Deprecation notice
 

@@ -1,16 +1,16 @@
 # Architecture
 
-The codebase is organized around a small set of stable responsibilities rather than a deep framework hierarchy.
+Glotaran is a set of NetBeans modules grouped by responsibility. [BUILD_AND_DISTRIBUTION.md](BUILD_AND_DISTRIBUTION.md) lists every module.
 
-## High-level areas
+## Module groups
 
-- `Core*` modules hold shared APIs, domain models, analysis logic, UI infrastructure, and result presentation.
-- Dataloader modules are format-specific adapters. They should stay narrow and avoid pulling in broad platform dependencies unless required.
-- Support modules handle file formats, controller integration, and third-party library packaging.
-- The application and branding modules assemble the final NetBeans Platform distribution.
+- `Core*` modules hold the shared APIs, data models, analysis and simulation logic, UI infrastructure, and result displays.
+- Dataloader modules each read one file format. Keep their dependencies limited to what the parser needs.
+- Support modules provide file-type integration (`.gta`, `.tgm`, simulation files), the R/TIMP connection (`JRConnect`, `TIMPController`), and wrappers for third-party libraries (`jfreechart`, `jide-oss`, `UJMPwithdep`).
+- `application/` and `branding/` assemble the NetBeans Platform distribution.
 
-## Practical implications
+## Consequences for changes
 
-- Cross-module edits are higher risk than localized fixes because exported APIs and registrations affect multiple modules.
-- Loader behavior changes can affect both Core consumers and UI flows, even when the change looks parser-local.
-- Packaging failures are often downstream symptoms of module metadata, registration, or dependency changes made elsewhere.
+- A change to an exported API or a registration affects every module that uses it; build from the root after such changes.
+- A change in a loader can alter what `Core*` modules and the UI receive, even if the edit is confined to the parser.
+- A failure during application assembly is often caused by module metadata, registration, or dependency changes in another module.

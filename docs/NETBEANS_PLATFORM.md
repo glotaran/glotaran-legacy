@@ -1,25 +1,25 @@
 # NetBeans Platform
 
-This branch stays on NetBeans Platform `RELEASE802` and the legacy NetBeans module model. Do not import assumptions, APIs, or module IDs from newer NetBeans branches.
+This branch uses NetBeans Platform `RELEASE802` (NetBeans 8.0.2). APIs and module IDs from Apache NetBeans releases, and from the 1.6 port, do not apply here.
 
 ## Module boundaries
 
-- Most modules in this repository are NetBeans modules assembled into one desktop application.
-- Keep responsibilities inside the owning module unless the task clearly requires a boundary change.
-- If you widen a module API, update its exported package metadata and build the dependent modules that consume it.
+- Most modules in this repository are NetBeans modules that are assembled into one desktop application.
+- Keep code in the module that owns the responsibility. Move a boundary only when the task requires it.
+- If you add to a module's public API, update its exported packages and build the modules that depend on it.
 
-## Common extension patterns
+## Registration
 
-- Module registration commonly happens through `layer.xml`, `@ServiceProvider`, and `Lookup`-based discovery.
-- UI actions, file support, editors, and window system contributions usually follow NetBeans platform registration patterns instead of ad hoc bootstrapping.
-- Prefer extending the existing registration point over introducing a parallel mechanism.
+- Modules register their contributions through `layer.xml`, `@ServiceProvider`, and `Lookup`.
+- Actions, file types, editors, and windows are registered with the NetBeans registration mechanisms; there is no central startup code that wires them together.
+- Add new contributions through the registration point that already exists for that kind of contribution.
 
 ## Application assembly
 
-- The application module assembles the branded NetBeans application.
-- Branding and packaging are part of the build, so changes in module registration can surface at application assembly time even when a single module compiles.
+- `application/` assembles the branded application.
+- Branding and packaging run as part of the build. A registration error can therefore surface during application assembly even though every module compiles.
 
-## Change discipline
+## Scope of changes
 
-- Keep the legacy platform flow intact unless the task explicitly targets packaging or release behavior.
-- If a change looks like it needs platform modernization, stop and confirm scope first.
+- Leave the platform setup unchanged unless the task is about packaging or release.
+- If a change appears to need a newer platform, confirm the scope first. The platform upgrade is planned for 1.6; see [ROADMAP.md](ROADMAP.md).

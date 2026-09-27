@@ -1,20 +1,20 @@
 # Testing
 
-Testing in this branch is legacy and uneven. Keep expectations explicit instead of assuming a modern, always-on reactor test suite.
+Five modules contain tests (`application`, `ExampleDataloader`, `JFreeChartCustom`, `JRConnect`, `LabmonkeyDataloader`), and the default build does not run them.
 
-## Default behavior
+## Default behaviour
 
-- The root build config skips tests by default, so `clean verify` is primarily a compile and packaging validation step.
-- Use that root verify command as the baseline check unless the task needs test execution.
+- The root POM sets `skipTests=true`, so `clean verify` compiles, packages, and checks module dependencies without running tests.
+- Use the root `clean verify` as the baseline check unless the task requires running tests.
 
-## When you need tests
+## Running tests
 
-- Re-enable tests deliberately with Maven, usually in the module you changed or in the application module.
-- Application-level tests use NetBeans test infrastructure such as `NbModuleSuite`.
-- Some modules use conventional `src/test/java`; others use older layouts such as `test/unit`.
+- Enable tests explicitly on the Maven command line, for the module you changed or for `application/`.
+- Application-level tests use the NetBeans test infrastructure, for example `NbModuleSuite` in `application/src/test/java/org/glotaran/ApplicationTest.java`.
+- Some modules keep tests in `src/test/java`, others in the older `test/unit` layout.
 
-## Practical guidance
+## Guidance
 
-- Prefer targeted test runs over assuming the entire reactor test story is healthy.
-- When changing loader behavior or shared APIs, add or update focused tests where the module already has a test pattern.
-- If a task depends on full functional coverage, confirm the intended scope because the default build does not provide it.
+- Run the tests of the modules you changed. Whether the other modules' tests pass is unknown.
+- When changing loader behaviour or shared APIs, add or update tests in modules that already have tests.
+- The default build does not verify functionality. If a task needs functional coverage, agree on the scope first.

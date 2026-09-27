@@ -1,23 +1,22 @@
 # Contributing
 
-## Project shape
+## Project layout
 
-This repository is a legacy Java application built as a Maven multi-module reactor on top of the NetBeans Platform.
+This repository is a Java desktop application built on the NetBeans Platform as a Maven multi-module reactor.
 
 - The reactor root is `pom.xml`.
-- The runnable application module is `application/`.
-- This is not a single `main`-class project.
+- The runnable application is assembled by `application/`. There is no single `main` class.
+
+For a step-by-step guide to building, running, and debugging the application, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Planned releases are described in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Toolchain
-
-Use the toolchain that matches the current maintenance branch behavior:
 
 - JDK 8
 - Maven 3.x
 
-The current CI workflow uses Temurin 8 and runs from the repository root.
+CI uses Temurin JDK 8 and builds from the repository root.
 
-On Windows, set `JAVA_HOME` to the JDK root directory, not to its `bin` directory, and do not include a trailing backslash. For example:
+On Windows, set `JAVA_HOME` to the JDK root directory, without `bin` and without a trailing backslash. For example:
 
 ```text
 C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot
@@ -25,15 +24,15 @@ C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot
 
 ## Build
 
-From the repository root, the CI-style validation command is:
+To validate a change, run from the repository root:
 
 ```sh
 mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress
 ```
 
-That is the best default command when you want to validate a change without installing this repository's own artifacts into the local Maven cache.
+This is the command CI runs. It does not install the reactor's artifacts into your local Maven repository.
 
-If you want the full local artifact flow used by the current VS Code build task, run:
+To also install the artifacts locally, as the VS Code build task does, run:
 
 ```sh
 mvn -T 1C clean install
@@ -48,43 +47,38 @@ cd application
 mvn nbm:cluster-app nbm:run-platform
 ```
 
-Running `nbm:run-platform` from the repository root is not the right workflow for this repo. The runnable module is `application/`.
+`nbm:run-platform` does not work from the repository root.
 
-If the NetBeans launcher reports an invalid `jdkhome` on Windows, check `JAVA_HOME` first. A trailing backslash or a `...\bin` path can cause the generated launcher config to point at the wrong location.
+If the NetBeans launcher reports an invalid `jdkhome` on Windows, check `JAVA_HOME` first. A trailing backslash or a path ending in `\bin` makes the generated launcher configuration point to the wrong directory.
 
-After a successful build, Windows launchers are generated under:
+After a successful build, the Windows launchers are in:
 
 ```text
 application/target/glotaran/bin/
 ```
 
-The 64-bit launcher is typically:
-
-```text
-application/target/glotaran/bin/glotaran64.exe
-```
+The 64-bit launcher is `application/target/glotaran/bin/glotaran64.exe`.
 
 ## VS Code
 
-This repository includes workspace tasks in `.vscode/tasks.json` for:
+`.vscode/tasks.json` contains tasks to:
 
-- building the full reactor
-- running the application through Maven
-- running the built Windows launcher
+- build the full reactor
+- run the application through Maven
+- run the built Windows launcher
 
-Those tasks currently pin JDK 8 and Maven on Windows.
+The tasks contain fixed Windows paths to JDK 8 and Maven.
 
-## Contribution expectations
+## Contribution guidelines
 
-- Keep changes focused and avoid unrelated refactors.
-- Validate with Maven before opening a pull request.
-- Prefer the CI-style `verify` command for routine validation.
-- Use `install` only when you actually need the locally installed artifacts.
-- Be careful with assumptions that may only apply to other branches such as `main` or `maintenance/v1.6.x`.
+- Keep changes focused and leave unrelated code alone.
+- Run the `verify` command above before opening a pull request.
+- Use `install` only when you need the artifacts in your local Maven repository.
+- Other branches, such as `main` and `maintenance/v1.6.x`, may use different versions and settings; check before applying their conventions here.
 
 ## CI
 
-The current GitHub Actions workflow lives in `.github/workflows/maven.yml` and uses:
+The GitHub Actions workflow `.github/workflows/maven.yml` runs on Ubuntu with:
 
 - `actions/setup-java@v4`
 - Temurin JDK 8
