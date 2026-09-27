@@ -25,6 +25,12 @@ jobs:
           distribution: temurin
           cache: maven
       - name: Build with Maven
-        run: mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress
+        run: mvn -B -T 1C clean verify -Pdeployment --file pom.xml --no-transfer-progress
+      - name: Upload portable ZIP
+        uses: actions/upload-artifact@v7
+        with:
+          name: glotaran-portable-zip
+          path: application/target/glotaran-app-*.zip
+          if-no-files-found: error
 # extra argument taken from:
 # https://github.com/actions/virtual-environments/issues/1499#issuecomment-689467080

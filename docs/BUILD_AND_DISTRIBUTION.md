@@ -329,20 +329,19 @@ The Maven release plugin updates the POM versions only.
 
 ## CI and publication
 
-`.github/workflows/maven.yml` runs on pushes and pull requests for `main`, `maintenance/v1.5.x`, and `maintenance/v1.6.x`. It uses Ubuntu, Temurin 8, the Maven dependency cache, and the root `clean verify` command.
+`.github/workflows/maven.yml` runs on pushes and pull requests for `main`, `maintenance/v1.5.x`, and `maintenance/v1.6.x`. It uses Ubuntu, Temurin 8, the Maven dependency cache, and the root `clean verify -Pdeployment` command, and uploads the portable ZIP as the workflow artifact `glotaran-portable-zip`.
 
-It does not:
+`.github/workflows/release.yml` runs when a `v1.5.*` tag is pushed. It runs the same build, fails if `glotaran-app-<version>.zip` does not match the tag version, and creates a draft GitHub Release for the tag with the ZIP and its `.sha256` file. The release text is read from `docs/release-notes/<version>.md`, which must exist in the tagged commit. Review the draft and publish it by hand.
 
-- enable the `deployment` profile;
-- upload the portable ZIP or the update site as workflow artifacts;
-- run tests (the POM skips them);
-- build NBI installers;
-- use Windows or macOS runners;
-- sign or notarize artifacts;
-- create tags or GitHub releases;
-- deploy Maven artifacts or copy the update site to glotaran.org.
+Neither workflow:
 
-All release steps beyond the ordinary build were done by hand.
+- uploads the update site;
+- runs tests (the POM skips them);
+- builds NBI installers;
+- uses Windows or macOS runners;
+- signs or notarizes artifacts;
+- creates tags;
+- deploys Maven artifacts or copies the update site to glotaran.org.
 
 ## Removed build systems
 
