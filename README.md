@@ -12,9 +12,17 @@ Download and [Install](http://glotaran.org/wiki/doku.php?id=installation) Glotar
 
 Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screencast](http://glotaran.org/demonstration.html).
 
+## Development
+
+To build, run, and debug the application, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Contributor guidelines are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+The Maven build, packaging, installers, CI, and release process are described in [docs/BUILD_AND_DISTRIBUTION.md](docs/BUILD_AND_DISTRIBUTION.md).
+
+Planned releases (1.5.3, 1.6, 1.7, 2.0) are described in [docs/ROADMAP.md](docs/ROADMAP.md).
+
 ## Deprecation notice
 
-The 1.0.0 version of Glotaran was released more than 13 years ago (in 2023), and the creators of Glotaran think it's time for a change.
+The 1.0.0 version of Glotaran was released over a decade ago, and the creators of Glotaran think it's time for a change.
 
 For the past few years they have been working on a (spiritual) successor to  Glotaran, re-written from the ground up in Python, called [pyglotaran](https://github.com/glotaran/pyglotaran). Please check it out!
 
@@ -24,15 +32,17 @@ For the past few years they have been working on a (spiritual) successor to  Glo
 
 Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.2, the code lives on the [1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) branch.
 
-### Next release (1.6.x)
+The next release from this branch, 1.5.3, is the final maintenance release on NetBeans Platform 8.0.2 and Java 8.
 
-Version 1.6.0 will be updating the NetBeans Platform framework to version 12.6 (from 8.0.2), the code lives on the [1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) branch.
+### Planned releases
 
-### Developer builds (1.7.x)
+| Release | Branch | Main change |
+| --- | --- | --- |
+| 1.6.0 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) | Port to Apache NetBeans 31 or later with a bundled Java 21 runtime |
+| 1.7.0 | `maintenance/v1.7.x` | Glotaran installs and manages its own R, TIMP, and Rserve |
+| 2.0.0 | `main` | pyglotaran replaces R and TIMP as the computational core |
 
-The goal of 1.7.0 is to release something that works with the latest LTS of Java and NetBeans, which should give it another 5 years or runtime, by which time it is expected to be fully replace with pyglotaran and GUIs implemented for it.
-
-Development of this will take place on the `main` branch.
+Scope, branch setup, and acceptance criteria for each release are in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## License
 
