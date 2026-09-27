@@ -16,7 +16,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
@@ -209,13 +209,6 @@
                         <publicPackage>org.ujmp.vecmath</publicPackage>
                         <publicPackage>org.ujmp.vecmath.benchmark</publicPackage>
                     </publicPackages>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
         </plugins>

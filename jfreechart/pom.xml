@@ -16,7 +16,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
@@ -79,13 +79,6 @@
                         <publicPackage>org.jfree.ui.tabbedui</publicPackage>
                         <publicPackage>org.jfree.util</publicPackage>
                     </publicPackages>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
         </plugins>

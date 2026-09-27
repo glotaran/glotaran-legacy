@@ -16,7 +16,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
@@ -48,13 +48,6 @@
                         <publicPackage>com.jidesoft.utils</publicPackage>
                         <publicPackage>com.jidesoft.validation</publicPackage>
                     </publicPackages>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
         </plugins>

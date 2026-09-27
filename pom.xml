@@ -55,14 +55,13 @@
         <application.ico>${basedir}/src/main/app-resources/graphics/glotaran.ico</application.ico>
 
         <!-- Netbeans Platfrom version -->
-        <netbeans.version>RELEASE126</netbeans.version>
+        <netbeans.version>RELEASE310</netbeans.version>
 
         <!-- Modules specification version, overrides project version -->
         <glotaran.modules.specification.version>1.5.2</glotaran.modules.specification.version>
 
         <!-- Java compilation settings -->
-        <glotaran.javac.source>1.7</glotaran.javac.source>
-        <glotaran.javac.target>1.7</glotaran.javac.target>
+        <glotaran.javac.release>17</glotaran.javac.release>
         <glotaran.javac.xlint>-Xlint:all</glotaran.javac.xlint>
         <glotaran.javac.debug>true</glotaran.javac.debug>
         <glotaran.javac.optimize>true</glotaran.javac.optimize>
@@ -122,7 +121,7 @@
 
         <glotaran.maven-clean-plugin.version>2.5</glotaran.maven-clean-plugin.version>
 
-        <glotaran.maven-compiler-plugin.version>3.1</glotaran.maven-compiler-plugin.version>
+        <glotaran.maven-compiler-plugin.version>3.16.0</glotaran.maven-compiler-plugin.version>
 
         <glotaran.maven-dependency-plugin.version>2.8</glotaran.maven-dependency-plugin.version>
 
@@ -134,7 +133,7 @@
 
         <glotaran.maven-install-plugin.version>2.4</glotaran.maven-install-plugin.version>
 
-        <glotaran.maven-jar-plugin.version>2.5</glotaran.maven-jar-plugin.version>
+        <glotaran.maven-jar-plugin.version>3.5.1</glotaran.maven-jar-plugin.version>
 
         <glotaran.maven-jarsigner-plugin.version>1.2</glotaran.maven-jarsigner-plugin.version>
 
@@ -144,7 +143,7 @@
 
         <glotaran.maven-release-plugin.version>2.5.1</glotaran.maven-release-plugin.version>
 
-        <glotaran.maven-resources-plugin.version>2.6</glotaran.maven-resources-plugin.version>
+        <glotaran.maven-resources-plugin.version>3.5.0</glotaran.maven-resources-plugin.version>
 
         <glotaran.maven-site-plugin.version>3.3</glotaran.maven-site-plugin.version>
 
@@ -154,7 +153,7 @@
 
         <glotaran.build-helper-maven-plugin.version>1.8</glotaran.build-helper-maven-plugin.version>
 
-        <glotaran.nbm-maven-plugin.version>3.14</glotaran.nbm-maven-plugin.version>
+        <glotaran.nbm-maven-plugin.version>14.5</glotaran.nbm-maven-plugin.version>
 
         <glotaran.maven-reactor-plugin.version>1.0</glotaran.maven-reactor-plugin.version>
 
@@ -588,7 +587,7 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
+                    <groupId>org.apache.netbeans.utilities</groupId>
                     <artifactId>nbm-maven-plugin</artifactId>
                     <version>${glotaran.nbm-maven-plugin.version}</version>
                 </plugin>
@@ -700,14 +699,15 @@
                 <configuration>
                     <debug>${glotaran.javac.debug}</debug>
                     <optimize>${glotaran.javac.optimize}</optimize>
-                    <source>${glotaran.javac.source}</source>
-                    <target>${glotaran.javac.target}</target>
+                    <release>${glotaran.javac.release}</release>
+                    <!-- JDK 23+ no longer runs classpath annotation processors by default; NetBeans @Registration annotations need them -->
+                    <proc>full</proc>
                     <showDeprecation>${glotaran.javac.showDeprecation}</showDeprecation>
                     <showWarnings>${glotaran.javac.showWarnings}</showWarnings>
                     <fork>${glotaran.javac.fork}</fork>
-                    <compilerArgument>
-                        ${glotaran.javac.xlint}
-</compilerArgument>
+                    <compilerArgs>
+                        <arg>${glotaran.javac.xlint}</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 
@@ -716,17 +716,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile> <!-- required since nbm-plugin 3.0-->
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                            <!--<goal>test-jar</goal>-->
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <!-- Skip unit tests in non-deployment or release mode -->
@@ -766,7 +759,7 @@
 
             <!-- NBM options -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
