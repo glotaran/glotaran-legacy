@@ -30,7 +30,7 @@ For the past few years they have been working on a (spiritual) successor to  Glo
 
 ### Stable (1.5.x)
 
-Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.2, the code lives on the [1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) branch.
+Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.1, the code lives on the [1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) branch.
 
 The next release from this branch, 1.5.3, is the final maintenance release on NetBeans Platform 8.0.2 and Java 8.
 

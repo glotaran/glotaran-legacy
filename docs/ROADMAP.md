@@ -40,7 +40,7 @@ See [BUILD_AND_DISTRIBUTION.md](BUILD_AND_DISTRIBUTION.md) for the packaging, in
 
 Goal: a public release of the current application that tells users about pyglotaran and where to find new releases of legacy Glotaran.
 
-Version choice: the source was set to 1.5.2 by the Maven release-prepare commit `ace5cae`, but no `v1.5.2` tag or GitHub release exists, while the README says 1.5.2 is available on glotaran.org. Releasing as 1.5.3 avoids two different artifacts both called 1.5.2. Tagging `ace5cae` as `v1.5.2` is the alternative if no 1.5.2 binary was ever distributed.
+Version choice: the source was set to 1.5.2 by the Maven release-prepare commit `ace5cae`, but 1.5.2 was never officially released; no `v1.5.2` tag or GitHub release exists. Snapshot builds labelled 1.5.2 were handed to some users, so the release is 1.5.3 to avoid two different builds both called 1.5.2. The source is set to 1.5.3, including `glotaran.modules.specification.version`.
 
 Scope:
 

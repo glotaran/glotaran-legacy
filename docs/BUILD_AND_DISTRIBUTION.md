@@ -319,7 +319,7 @@ The version number of a release is set in several places. Check all of them:
 
 - the root version and the parent version in every child POM;
 - the SCM tag in the root POM;
-- `glotaran.modules.specification.version` (currently 1.5.1);
+- `glotaran.modules.specification.version` (currently 1.5.3; the module manifests read their `OpenIDE-Module-Specification-Version` from it);
 - `glotaran.branding.version` (currently 1.5; also used for the user directory and the DMG name);
 - the stable and beta update URLs in `CoreAUC`;
 - the release text in the README;
@@ -368,7 +368,7 @@ Glotaran-1.5.1.OS.independent.Java.zip
 
 GitHub also provides its automatic source archives. The misspelling `Max` is in the original asset name.
 
-Commit `ace5cae` is the Maven "prepare release v1.5.2" commit; it changes every module from `1.5.2-SNAPSHOT` to `1.5.2`. There is no `v1.5.2` tag and no 1.5.2 GitHub release. The README calls 1.5.2 the latest stable release, while the legacy page on glotaran.org and the GitHub releases page list 1.5.1. The 1.5.2 source was prepared but never distributed publicly.
+Commit `ace5cae` is the Maven "prepare release v1.5.2" commit; it changes every module from `1.5.2-SNAPSHOT` to `1.5.2`. There is no `v1.5.2` tag and no 1.5.2 GitHub release. The legacy page on glotaran.org and the GitHub releases page list 1.5.1. 1.5.2 was never officially released, but snapshot builds labelled 1.5.2 were handed to some users. The next release is therefore 1.5.3.
 
 ## Verified state on 2026-07-04
 

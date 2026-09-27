@@ -4,7 +4,7 @@
 
     <groupId>org.glotaran</groupId>
     <artifactId>glotaran-parent</artifactId>
-    <version>1.5.2</version>
+    <version>1.5.3</version>
     <packaging>pom</packaging>
 
     <name>glotaran-parent</name>
@@ -22,7 +22,7 @@
         <developerConnection>
             scm:git:git@github.com:glotaran/glotaran-legacy.git
         </developerConnection>
-      <tag>v1.5.2</tag>
+      <tag>v1.5.3</tag>
   </scm>
 
     <!-- Licenses -->
@@ -59,7 +59,7 @@
         <netbeans.version>RELEASE802</netbeans.version>
 
         <!-- Modules specification version, overrides project version -->
-        <glotaran.modules.specification.version>1.5.1</glotaran.modules.specification.version>
+        <glotaran.modules.specification.version>1.5.3</glotaran.modules.specification.version>
 
         <!-- Java compilation settings -->
         <glotaran.javac.source>1.7</glotaran.javac.source>
