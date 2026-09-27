@@ -22,7 +22,7 @@ Planned releases (1.5.3, 1.6, 1.7, 2.0) are described in [docs/ROADMAP.md](docs/
 
 ## Deprecation notice
 
-The 1.0.0 version of Glotaran was released more than 13 years ago (in 2023), and the creators of Glotaran think it's time for a change.
+The 1.0.0 version of Glotaran was released over a decade ago, and the creators of Glotaran think it's time for a change.
 
 For the past few years they have been working on a (spiritual) successor to  Glotaran, re-written from the ground up in Python, called [pyglotaran](https://github.com/glotaran/pyglotaran). Please check it out!
 
