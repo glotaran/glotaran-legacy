@@ -30,15 +30,17 @@ For the past few years they have been working on a (spiritual) successor to  Glo
 
 ### Stable (1.5.x)
 
-Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.1.
+Latest stable release is version 1.5.3, the final maintenance release on NetBeans Platform 8.0.2 and Java 8. It and all later releases are published on the [GitHub Releases page](https://github.com/glotaran/glotaran-legacy/releases). The code lives on the [1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) branch. Version 1.5.1 and earlier are available on [glotaran.org](http://glotaran.org/downloads). Version 1.5.2 was never officially released; snapshot builds labelled 1.5.2 are superseded by 1.5.3.
 
-### Next release (1.6.x)
+### Planned releases
 
-Version 1.6.0 will be updating the NetBeans Platform framework to version 12.6 (from 8.0.2).
+| Release | Branch | Main change |
+| --- | --- | --- |
+| 1.6.0 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) | Port to Apache NetBeans 31 with a bundled Java 25 runtime |
+| 1.7.0 | `maintenance/v1.7.x` | Glotaran installs and manages its own R, TIMP, and Rserve |
+| 2.0.0 | `main` | pyglotaran replaces R and TIMP as the computational core |
 
-### Developer builds (1.7.x)
-
-The goal of 1.7.0 is to release something that works with the latest LTS of Java and NetBeans, which should give it another 5 years or runtime, by which time it is expected to be fully replace with pyglotaran and GUIs implemented for it.
+Scope, branch setup, and acceptance criteria for each release are in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Building release artifacts
 
