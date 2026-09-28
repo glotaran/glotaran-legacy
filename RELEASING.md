@@ -75,7 +75,7 @@ mvn -B -Pdeployment clean install -DskipTests
 
 Outputs in `application/target/`:
 
-- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/uc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this).
+- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this).
 - `glotaran-app-<version>.zip` — the generic zip. It is also the input for all installers below.
 
 Signing: the NBMs are signed only when `src/keystore/keystore.ks` exists and `-Dkeystore.password=...` is passed (alias `glotaran`, see the `nbm-maven-plugin` configuration in the root pom). The keystore is not in the repository; without it the build warns and produces unsigned NBMs.
