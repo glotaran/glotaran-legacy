@@ -27,8 +27,8 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       pkg_version: ${{ steps.version.outputs.pkg_version }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
@@ -53,7 +53,7 @@ jobs:
           mkdir dist
           cp application/target/glotaran-app-*.zip "dist/Glotaran-$VERSION-generic.zip"
           (cd application/target && zip -qr "$GITHUB_WORKSPACE/dist/Glotaran-$VERSION-autoupdate-site.zip" netbeans_site)
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-common
           path: dist/
@@ -68,13 +68,13 @@ jobs:
       VERSION: ${{ needs.build.outputs.version }}
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: actions/download-artifact@v4
         with:
           name: release-common
           path: dist
       # The JRE is bundled in the installer and also runs nbpackage
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         id: jre
         with:
           distribution: temurin
@@ -114,7 +114,7 @@ jobs:
             "-Pinnosetup.license=$ws\license\gpl-3.0.txt"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Move-Item "$out\Glotaran-$env:PKG_VERSION.exe" "$ws\installers\Glotaran-$env:VERSION-windows-x64-setup.exe"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-windows
           path: installers/
@@ -129,13 +129,13 @@ jobs:
       VERSION: ${{ needs.build.outputs.version }}
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: actions/download-artifact@v4
         with:
           name: release-common
           path: dist
       # The JRE is bundled in the packages and also runs nbpackage
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         id: jre
         with:
           distribution: temurin
@@ -172,7 +172,7 @@ jobs:
             "-Prpm.license=CDDL-1.0 AND GPL-3.0" -Prpm.group=Applications/Engineering
           mv "$OUT/glotaran_${PKG_VERSION}-1_amd64.deb" "installers/Glotaran-$VERSION-linux-amd64.deb"
           mv "$OUT/glotaran-${PKG_VERSION}-0.x86_64.rpm" "installers/Glotaran-$VERSION-linux-x86_64.rpm"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-linux
           path: installers/
@@ -192,12 +192,12 @@ jobs:
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
       ARCH: ${{ matrix.arch }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: actions/download-artifact@v4
         with:
           name: release-common
           path: dist
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         id: jre
         with:
           distribution: temurin
@@ -235,7 +235,7 @@ jobs:
             sleep 10
           done
           test -f "$DMG"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-macos-${{ matrix.arch }}
           path: installers/
@@ -250,6 +250,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: docs/release-notes
       - uses: actions/download-artifact@v4
         with:
           pattern: release-*
@@ -264,7 +267,9 @@ jobs:
         run: |
           (cd release && sha256sum -- * > SHA256SUMS)
           if ! gh release view "$TAG" > /dev/null 2>&1; then
-            FLAGS=(--draft --verify-tag --title "Glotaran $VERSION" --generate-notes)
+            NOTES="docs/release-notes/$VERSION.md"
+            if [ -f "$NOTES" ]; then NOTES_FLAG=(--notes-file "$NOTES"); else NOTES_FLAG=(--generate-notes); fi
+            FLAGS=(--draft --verify-tag --title "Glotaran $VERSION" "${NOTES_FLAG[@]}")
             if [[ "$VERSION" == *-* ]]; then FLAGS+=(--prerelease); fi
             gh release create "$TAG" "${FLAGS[@]}"
           fi
