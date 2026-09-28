@@ -58,7 +58,7 @@
         <netbeans.version>RELEASE310</netbeans.version>
 
         <!-- Modules specification version, overrides project version -->
-        <glotaran.modules.specification.version>1.5.2</glotaran.modules.specification.version>
+        <glotaran.modules.specification.version>1.6.0</glotaran.modules.specification.version>
 
         <!-- Java compilation settings -->
         <glotaran.javac.release>17</glotaran.javac.release>
