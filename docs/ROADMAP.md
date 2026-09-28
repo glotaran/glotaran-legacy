@@ -5,9 +5,9 @@ Glotaran 1.x has been superseded by [pyglotaran](https://github.com/glotaran/pyg
 | Release | Branch | NetBeans Platform | Java runtime | Computational core |
 | --- | --- | --- | --- | --- |
 | 1.5.3 | `maintenance/v1.5.x` | 8.0.2 (`RELEASE802`) | 8 | R + TIMP via Rserve, user-installed |
-| 1.6.0 | `maintenance/v1.6.x` | Apache NetBeans 31 (`RELEASE310`) or later | 21 | R + TIMP via Rserve, user-installed |
-| 1.7.0 | `maintenance/v1.7.x` | as 1.6 | 21 | R + TIMP via Rserve, provisioned by Glotaran |
-| 2.0.0 | `main` | as 1.6 or later | 21 | pyglotaran, provisioned by Glotaran with bundled `uv` |
+| 1.6.0 | `maintenance/v1.6.x` | Apache NetBeans 31 (`RELEASE310`) | 25 | R + TIMP via Rserve, user-installed |
+| 1.7.0 | `maintenance/v1.7.x` | as 1.6 | 25 | R + TIMP via Rserve, provisioned by Glotaran |
+| 2.0.0 | `main` | as 1.6 or later | 25 | pyglotaran, provisioned by Glotaran with bundled `uv` |
 
 Each release builds on the previous one. The 1.x releases stay available for reproducing analyses made with TIMP; 2.0 uses a different engine, so its numerical results will differ from 1.x.
 
@@ -58,17 +58,17 @@ Non-goals: dependency upgrades, Java or NetBeans upgrades, bundling Java or R.
 
 ## 1.6.0 — port to current Apache NetBeans Platform
 
-Goal: the same feature set as 1.5.3 on Apache NetBeans 31 (or the latest release when the work starts) and a Java 21 runtime.
+Goal: the same feature set as 1.5.3 on Apache NetBeans 31 and a Java 25 runtime.
 
 Approach:
 
 1. Create `maintenance/v1.6.x` from the `v1.5.3` tag. Replace the existing remote branch of that name, which contains no 1.6 work, after confirming nothing on it is needed.
 2. Port the relevant changes from `maintenance/v1.6.x-draft` (RELEASE126) forward, then move to `RELEASE310`.
-3. Switch to `org.apache.netbeans.utilities:nbm-maven-plugin` 14.x and current Maven plugin versions; compile with `--release 21`.
+3. Switch to `org.apache.netbeans.utilities:nbm-maven-plugin` 14.x and current Maven plugin versions; build with JDK 25.
 4. Add JAXB as a library dependency (`javax.xml.bind` 2.3.x keeps the existing imports; Jakarta XML Binding 4 requires renaming packages in 65 files).
 5. Resolve NetBeans artifacts from Maven Central and remove the RELEASE802 content from `repo/`. Keep `repo/` only for libraries that are not available from a public repository, and list them in `docs/MAVEN.md`.
 6. Re-check the application module's cluster selection and exclusions against the current platform; module names and clusters changed between 8.0.2 and Apache NetBeans.
-7. Bundle a Java 21 runtime per OS (set `jdkhome` in `glotaran.conf`) so users do not need a JDK. Use a different user directory (`.glotaran/1.6`).
+7. Bundle a Java 25 runtime per OS (set `jdkhome` in `glotaran.conf`) so users do not need a JDK. Use a different user directory (`.glotaran/1.6`).
 8. Enable the `NbModuleSuite` smoke test in `application/` and run it in CI.
 
 Acceptance: CI builds on Linux, Windows, and macOS; the app starts on all three; the example analysis produces the same results as 1.5.3 against the same R/TIMP installation.
