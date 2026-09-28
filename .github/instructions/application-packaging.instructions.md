@@ -26,5 +26,6 @@ mvn nbm:cluster-app nbm:run-platform
 
 ## Editing rules
 
-- Keep NetBeans application packaging aligned with this branch's legacy setup.
-- Do not introduce packaging conventions from newer NetBeans branches without explicit request.
+- Keep NetBeans application packaging aligned with this branch's setup, described in [RELEASING.md](../../RELEASING.md).
+- `application/src/main/resources/glotaran.conf` must keep LF line endings; it is sourced by `/bin/sh` on Linux and macOS.
+- Do not introduce packaging conventions from other branches without explicit request.

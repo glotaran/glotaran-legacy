@@ -16,7 +16,7 @@ Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screenca
 
 To build, run, and debug the application, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Contributor guidelines are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The Maven build, packaging, installers, CI, and release process are described in [docs/BUILD_AND_DISTRIBUTION.md](docs/BUILD_AND_DISTRIBUTION.md).
+Packaging, installers, and the release process are described in [RELEASING.md](RELEASING.md). [docs/BUILD_AND_DISTRIBUTION.md](docs/BUILD_AND_DISTRIBUTION.md) describes the Maven build and the 1.5.x distribution setup.
 
 Planned releases (1.5.3, 1.6, 1.7, 2.0) are described in [docs/ROADMAP.md](docs/ROADMAP.md).
 

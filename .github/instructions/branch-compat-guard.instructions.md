@@ -1,25 +1,24 @@
 ---
 applyTo: "**"
 ---
-# Branch Compatibility Guard (1.5.x)
+# Branch Compatibility Guard (1.6.x)
 
-Treat this workspace as legacy branch behavior, not `main` or `maintenance/v1.6.x`.
+Treat this workspace as the 1.6.x branch, not `main` or `maintenance/v1.5.x`.
 
 ## Hard invariants
 
-- Keep NetBeans Platform pinned to `RELEASE802` (NetBeans 8.0.2).
-- Do not introduce NetBeans 12.x APIs, module IDs, or migration assumptions.
-- Do not perform Java/runtime modernization unless the user explicitly asks for it in this branch.
-- Preserve Maven/JDK compatibility expected by this branch (JDK 8 toolchain).
+- Keep NetBeans Platform pinned to `RELEASE310` (Apache NetBeans 31).
+- Build with JDK 25; sources compile with `--release 17`. Do not use language features or APIs newer than Java 17.
+- Do not upgrade the platform or the Java runtime unless the user explicitly asks for it in this branch.
 
 ## Required checks before proposing changes
 
 - Verify version-sensitive assumptions against [pom.xml](../../pom.xml) and [application/pom.xml](../../application/pom.xml).
-- Prefer branch-local docs and config over generic NetBeans guidance from newer branches.
-- If a requested change appears to require platform modernization, pause and confirm scope before editing.
+- Prefer branch-local docs and config over NetBeans guidance written for other versions.
+- If a requested change appears to require a platform upgrade, pause and confirm scope before editing.
 
 ## Prohibited assumptions
 
-- Assuming NetBeans 12.6+ module behavior.
-- Assuming Java 11/17+ baseline.
-- Replacing legacy packaging/run flow with modernization defaults.
+- Assuming NetBeans 8.0.2 module names, clusters, or `org.codehaus.mojo:nbm-maven-plugin` behavior.
+- Assuming a Java 8 toolchain.
+- Replacing the packaging and run flow described in [RELEASING.md](../../RELEASING.md) without explicit request.

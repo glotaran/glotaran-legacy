@@ -2,6 +2,8 @@
 
 This document describes the build, packaging, and release setup of the Glotaran 1.5.x line: what the POMs are configured to do, and which parts were verified to work on 2026-07-04. The normal application build works. Parts of the release setup are outdated or produce incomplete output without reporting an error.
 
+On the 1.6.x branch the toolchain, platform, and installer build differ: JDK 25, Apache NetBeans 31 (`RELEASE310`), `org.apache.netbeans.utilities:nbm-maven-plugin` 14.5, and installers built with nbpackage. See [RELEASING.md](../RELEASING.md) and [MAVEN.md](MAVEN.md) for 1.6.x. The module list, the profiles, and the list of places where the version number is set still apply; the values quoted below are those of 1.5.3.
+
 ## Summary
 
 - The repository is a Maven reactor of 34 projects: one parent, 32 NetBeans modules, and one `nbm-application` assembler.

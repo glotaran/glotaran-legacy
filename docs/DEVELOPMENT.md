@@ -1,6 +1,6 @@
 # Development quick start
 
-Glotaran 1.5.x is a NetBeans Platform application built as a Maven multi-module reactor. It requires JDK 8 and Maven 3.x.
+Glotaran 1.6.x is a NetBeans Platform application built as a Maven multi-module reactor. It requires JDK 25 and Maven 3.9+.
 
 ## 1. Check the toolchain
 
@@ -9,10 +9,10 @@ java -version
 mvn -version
 ```
 
-Both commands must report JDK 8. On Windows, set `JAVA_HOME` to the JDK root directory, without `bin` and without a trailing backslash:
+Both commands must report JDK 25. On Windows, set `JAVA_HOME` to the JDK root directory, without `bin` and without a trailing backslash:
 
 ```text
-C:\Program Files\Eclipse Adoptium\jdk-8.x-hotspot
+C:\Program Files\Eclipse Adoptium\jdk-25.x-hotspot
 ```
 
 See [Local development](LOCAL_DEVELOPMENT.md) and [Maven conventions](MAVEN.md) for more detail.
@@ -73,4 +73,4 @@ To start with a fresh runtime state, stop Glotaran and run a clean build; this r
 - **Changes do not appear in the running application:** rebuild and install from the root before running the application module again.
 - **Analysis cannot connect to R:** check R, TIMP, and Rserve separately from Glotaran, for example by running `library(TIMP); library(Rserve)` in R.
 
-For modules, clusters, packaging, installers, CI, and releases, see [Build and distribution](BUILD_AND_DISTRIBUTION.md). For NetBeans module registration and architecture, see [NetBeans Platform](NETBEANS_PLATFORM.md) and [Architecture](ARCHITECTURE.md).
+For packaging, installers, CI, and releases, see [RELEASING.md](../RELEASING.md). [Build and distribution](BUILD_AND_DISTRIBUTION.md) lists the modules and describes the 1.5.x build setup. For NetBeans module registration and architecture, see [NetBeans Platform](NETBEANS_PLATFORM.md) and [Architecture](ARCHITECTURE.md).

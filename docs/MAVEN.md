@@ -10,9 +10,10 @@ This repository is a Maven multi-module reactor. The root `pom.xml` defines vers
 
 ## Branch-specific facts
 
-- The build uses Maven 3.x and `org.codehaus.mojo:nbm-maven-plugin` 3.14.
-- The build runs on JDK 8; the compiler settings produce Java 7 bytecode.
-- `repo/` is a checked-in Maven repository with the NetBeans `RELEASE802` artifacts and libraries that are not available from Maven Central. Change it only as part of dependency maintenance.
+- The build uses Maven 3.9+ and `org.apache.netbeans.utilities:nbm-maven-plugin` 14.5.
+- The build runs on JDK 25; the compiler uses `--release 17` (`glotaran.javac.release`).
+- NetBeans Platform artifacts (`RELEASE310`) are resolved from Maven Central.
+- `repo/` is a checked-in Maven repository with the libraries that are not available from a public repository: Jama 1.0.2, ojalgo, and UJMP (`ujmp-complete`). Change it only as part of dependency maintenance.
 
 ## Multi-module work
 
