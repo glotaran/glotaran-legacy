@@ -8,15 +8,15 @@ build/
 .project
 .settings/
 target/
- 
+
 #netbeans specific
 nbproject/*
 !nbproject/project.properties
 !nbproject/project.xml
- 
+pom.xml.releaseBackup
 #java specific
 *.class
- 
+
 #general swap/backup files
 *.so
 *.log
@@ -266,3 +266,5 @@ nbproject/*
 .idea/
 
 .vscode/
+
+release.properties

@@ -5,9 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [main]
+    branches: [main, maintenance/v1.5.x, maintenance/v1.6.x]
   pull_request:
-    branches: [main]
+    branches: [main, maintenance/v1.5.x, maintenance/v1.6.x]
 
 env:
   MAVEN_OPTS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120
@@ -17,14 +17,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up JDK 8
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v6
         with:
           java-version: "8"
-          distribution: "adopt"
+          distribution: temurin
           cache: maven
       - name: Build with Maven
-        run: mvn -B package --file pom.xml # add -X -V for debugging
+        run: mvn -B -T 1C clean verify -Pdeployment --file pom.xml --no-transfer-progress
+      - name: Upload portable ZIP
+        uses: actions/upload-artifact@v7
+        with:
+          name: glotaran-portable-zip
+          path: application/target/glotaran-app-*.zip
+          if-no-files-found: error
 # extra argument taken from:
 # https://github.com/actions/virtual-environments/issues/1499#issuecomment-689467080

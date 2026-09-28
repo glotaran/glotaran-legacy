@@ -61,7 +61,7 @@
     </target>
 
     <target name="-build-zip-maven" depends="-init-zip" if="do.load.maven.props">
-        <condition property="mvn.executable" value="mvn.bat" else="mvn">
+        <condition property="mvn.executable" value="mvn.cmd" else="mvn">
             <os family="windows"/>
         </condition>
 

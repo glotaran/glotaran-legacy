@@ -4,7 +4,7 @@
 
     <groupId>org.glotaran</groupId>
     <artifactId>glotaran-parent</artifactId>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>1.5.3</version>
     <packaging>pom</packaging>
 
     <name>glotaran-parent</name>
@@ -17,6 +17,13 @@
         <url>https://nat.vu.nl/</url>
     </organization>
     <inceptionYear>2007</inceptionYear>
+    
+    <scm>
+        <developerConnection>
+            scm:git:git@github.com:glotaran/glotaran-legacy.git
+        </developerConnection>
+      <tag>v1.5.3</tag>
+  </scm>
 
     <!-- Licenses -->
     <licenses>
@@ -44,7 +51,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <glotaran.maven.requiredVersion>3.2.2</glotaran.maven.requiredVersion>
-        <netbeans.run.params.ide/>
+        <netbeans.run.params.ide />
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
         <application.ico>${basedir}/src/main/app-resources/graphics/glotaran.ico</application.ico>
 
@@ -52,7 +59,7 @@
         <netbeans.version>RELEASE802</netbeans.version>
 
         <!-- Modules specification version, overrides project version -->
-        <glotaran.modules.specification.version>1.5.1</glotaran.modules.specification.version>
+        <glotaran.modules.specification.version>1.5.3</glotaran.modules.specification.version>
 
         <!-- Java compilation settings -->
         <glotaran.javac.source>1.7</glotaran.javac.source>
@@ -926,7 +933,7 @@
                         <configuration>
                             <show>public</show>
                             <doctitle>${project.name.capatilized} ${project.version} API Index</doctitle>
-                            <subpackages/>
+                            <subpackages />
                             <nohelp>true</nohelp>
                             <detectLinks>true</detectLinks>
                             <detectOfflineLinks>true</detectOfflineLinks>
