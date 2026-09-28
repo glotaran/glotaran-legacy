@@ -194,14 +194,15 @@ application/target/netbeans_site/*.nbm
 
 The ZIP was about 49 MB. The update site contained 117 NBMs: the Glotaran modules and the RELEASE802 modules selected by the application. The site is only written to the local build directory; nothing uploads it.
 
-The update-center URLs registered in the application are defined in `CoreAUC`, not by the similarly named properties in the parent and branding POMs:
+The update center registered in the application is defined in `CoreAUC`, not by the similarly named properties in the parent and branding POMs. It is "Glotaran Secure Update Center" (`org_glotaran_auc_secure_update_center`), enabled, at:
 
 ```text
-https://glotaran.org/uc/1.5/stable/updates.xml   (enabled)
-http://glotaran.org/uc/1.5/beta/updates.xml     (disabled)
+https://glotaran.org/suc/1.5/stable/updates.xml
 ```
 
-Publishing an update therefore means copying the generated site to that web location, and deciding whether to keep the HTTP beta URL. No script or workflow in this repository does the copy.
+Glotaran 1.5.1 and earlier register "Glotaran Update Center" (`org_glotaran_auc_update_center`) at `http://glotaran.org/uc/1.5/stable/updates.xml`, plus a disabled BETA center. The NetBeans update client does not follow a redirect from HTTP to HTTPS, so glotaran.org must serve `/uc/1.5/stable/` over plain HTTP without redirecting. That folder holds only the 1.5.3 site. Installing it removes the old update centers and adds the secure one. The secure center uses a new name because NetBeans keeps a URL the user edited (the `url` key under `config/Preferences/org/netbeans/modules/autoupdate/` in the user directory) in preference to the module's URL. Put later updates only in `/suc/`. Put the 1.5.3 site in `/suc/1.5/stable/` as well, so updated installations find a valid catalog.
+
+Publishing an update means copying the generated site to that web location. No script or workflow in this repository does the copy.
 
 ## Windows and Linux installers (NetBeans Installer/NBI)
 
