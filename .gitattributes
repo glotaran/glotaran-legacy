@@ -1,0 +1,2 @@
+# NetBeans launcher configs are sourced by /bin/sh on Linux and macOS
+*.conf text eol=lf

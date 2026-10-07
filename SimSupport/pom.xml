@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.glotaran</groupId>
         <artifactId>glotaran-parent</artifactId>
-        <version>1.5.3</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
-    
+
     <artifactId>SimSupport</artifactId>
     <packaging>nbm</packaging>
-     
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <publicPackages>                        
+                    <publicPackages>
                         <publicPackage>org.glotaran.simfilesupport.simulation</publicPackage>
                         <publicPackage>org.glotaran.simfilesupport.spec</publicPackage>
-                    </publicPackages>    
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                    </publicPackages>
                 </configuration>
             </plugin>
         </plugins>
@@ -35,7 +30,7 @@
     <dependencies>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId>  
+            <artifactId>org-netbeans-api-annotations-common</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -63,7 +58,7 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-dialogs</artifactId> 
+            <artifactId>org-openide-dialogs</artifactId>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -83,11 +78,17 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util</artifactId> 
+            <artifactId>org-openide-util</artifactId>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId> 
+            <artifactId>org-openide-util-lookup</artifactId>
+        </dependency>
+        <!-- Direct dependency for org-openide-util-ui -->
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-ui</artifactId>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -95,11 +96,11 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId>               
+            <artifactId>org-netbeans-modules-xml-jaxb-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-core-multiview</artifactId>            
+            <artifactId>org-netbeans-core-multiview</artifactId>
         </dependency>
     </dependencies>
 </project>

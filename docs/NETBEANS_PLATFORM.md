@@ -1,6 +1,6 @@
 # NetBeans Platform
 
-This branch uses NetBeans Platform `RELEASE802` (NetBeans 8.0.2). APIs and module IDs from Apache NetBeans releases, and from the 1.6 port, do not apply here.
+This branch uses Apache NetBeans Platform 31 (`RELEASE310`). Module names and clusters differ from NetBeans 8.0.2, which the 1.5.x branch uses.
 
 ## Module boundaries
 
@@ -22,4 +22,4 @@ This branch uses NetBeans Platform `RELEASE802` (NetBeans 8.0.2). APIs and modul
 ## Scope of changes
 
 - Leave the platform setup unchanged unless the task is about packaging or release.
-- If a change appears to need a newer platform, confirm the scope first. The platform upgrade is planned for 1.6; see [ROADMAP.md](ROADMAP.md).
+- If a change appears to need a different platform version, confirm the scope first; see [ROADMAP.md](ROADMAP.md).

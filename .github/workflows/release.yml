@@ -1,49 +1,276 @@
-# Builds the portable ZIP for a v1.5.x tag and attaches it, with its SHA-256,
-# to a draft GitHub Release. Review the notes and publish the draft by hand.
+# Builds the autoupdate site, the generic zip and the Windows, Linux and macOS
+# installers. On a v* tag the results are attached to a draft GitHub release.
+# See RELEASING.md for the manual equivalent of each step.
 
-name: Release
+name: Release installers
 
 on:
   push:
-    tags: ["v1.5.*"]
+    tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 env:
+  JAVA_VERSION: "25"
+  NBPACKAGE_VERSION: "1.0"
+  NBPACKAGE_SHA1: 4d6a12b60a6cd02a918a67729b34be5004d0045e
   MAVEN_OPTS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120
 
 jobs:
-  release:
+  build:
+    name: Autoupdate site and generic zip
     runs-on: ubuntu-latest
-
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      pkg_version: ${{ steps.version.outputs.pkg_version }}
     steps:
       - uses: actions/checkout@v7
-      - name: Set up JDK 8
-        uses: actions/setup-java@v6
+      - uses: actions/setup-java@v6
         with:
-          java-version: "8"
           distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
           cache: maven
-      - name: Build with Maven
-        run: mvn -B -T 1C clean verify -Pdeployment --file pom.xml --no-transfer-progress
-      - name: Checksum portable ZIP
+      - name: Determine version
+        id: version
         run: |
-          version="${GITHUB_REF_NAME#v}"
-          zip="glotaran-app-${version}.zip"
-          test -s "application/target/${zip}" || { echo "::error::${zip} not found; does the POM version match the tag?"; exit 1; }
-          cd application/target
-          sha256sum "${zip}" > "${zip}.sha256"
-          cat "${zip}.sha256"
-      - name: Create draft release
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION=$(mvn -B -q help:evaluate -Dexpression=project.version -DforceStdout)
+          fi
+          # Installer metadata (Inno Setup, deb, rpm, Info.plist) gets the numeric part only
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "pkg_version=${VERSION%%-*}" >> "$GITHUB_OUTPUT"
+      - name: Build
+        run: mvn -B -Pdeployment clean install -DskipTests
+      - name: Collect generic zip and autoupdate site
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          mkdir dist
+          cp application/target/glotaran-app-*.zip "dist/Glotaran-$VERSION-generic.zip"
+          (cd application/target && zip -qr "$GITHUB_WORKSPACE/dist/Glotaran-$VERSION-autoupdate-site.zip" netbeans_site)
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-common
+          path: dist/
+          if-no-files-found: error
+
+  windows:
+    name: Windows installer
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      VERSION: ${{ needs.build.outputs.version }}
+      PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-common
+          path: dist
+      # The JRE is bundled in the installer and also runs nbpackage
+      - uses: actions/setup-java@v6
+        id: jre
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          java-package: jre
+      - name: Download nbpackage
+        shell: pwsh
+        run: |
+          $zip = "$env:RUNNER_TEMP\nbpackage.zip"
+          Invoke-WebRequest "https://repo1.maven.org/maven2/org/apache/netbeans/nbpackage/$env:NBPACKAGE_VERSION/nbpackage-$env:NBPACKAGE_VERSION-bin.zip" -OutFile $zip
+          if ((Get-FileHash $zip -Algorithm SHA1).Hash -ne $env:NBPACKAGE_SHA1) { throw "nbpackage checksum mismatch" }
+          Expand-Archive $zip -DestinationPath $env:RUNNER_TEMP
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --no-progress -y
+      - name: Build installer
+        shell: pwsh
+        env:
+          JRE: ${{ steps.jre.outputs.path }}
+        run: |
+          $iscc = @("${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe", "$env:ProgramFiles\Inno Setup 6\ISCC.exe") |
+            Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $iscc) { throw "ISCC.exe not found" }
+          $ws = $env:GITHUB_WORKSPACE
+          $out = "$env:RUNNER_TEMP\out"
+          New-Item -ItemType Directory -Force $out, "$ws\installers" | Out-Null
+          # Arguments are quoted because PowerShell splits unquoted -X.y=z arguments at the dot
+          java -p "$env:RUNNER_TEMP\nbpackage-$env:NBPACKAGE_VERSION\mods" `
+            -m org.apache.netbeans.nbpackage/org.apache.netbeans.nbpackage.Main `
+            -t windows-innosetup -i "$ws\dist\Glotaran-$env:VERSION-generic.zip" -o "$out" `
+            "-Pname=Glotaran" "-Pversion=$env:PKG_VERSION" "-Pruntime=$env:JRE" `
+            "-Ppublisher=Vrije Universiteit Amsterdam" "-Purl=https://glotaran.org" `
+            "-Pdescription=Glotaran - global and target analysis of time-resolved spectroscopy data" `
+            "-Pinnosetup.tool=$iscc" `
+            "-Pinnosetup.appid=Glotaran-$($env:PKG_VERSION -replace '\.\d+$', '')" `
+            "-Pinnosetup.icon=$ws\application\src\main\app-resources\graphics\glotaran.ico" `
+            "-Pinnosetup.license=$ws\license\gpl-3.0.txt"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Move-Item "$out\Glotaran-$env:PKG_VERSION.exe" "$ws\installers\Glotaran-$env:VERSION-windows-x64-setup.exe"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-windows
+          path: installers/
+          if-no-files-found: error
+
+  linux:
+    name: Linux packages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERSION: ${{ needs.build.outputs.version }}
+      PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-common
+          path: dist
+      # The JRE is bundled in the packages and also runs nbpackage
+      - uses: actions/setup-java@v6
+        id: jre
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          java-package: jre
+      - name: Install packaging tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fakeroot rpm
+      - name: Download nbpackage
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/nbpackage.zip" \
+            "https://repo1.maven.org/maven2/org/apache/netbeans/nbpackage/$NBPACKAGE_VERSION/nbpackage-$NBPACKAGE_VERSION-bin.zip"
+          echo "$NBPACKAGE_SHA1  $RUNNER_TEMP/nbpackage.zip" | sha1sum -c -
+          unzip -q "$RUNNER_TEMP/nbpackage.zip" -d "$RUNNER_TEMP"
+      - name: Build .deb and .rpm
+        env:
+          JRE: ${{ steps.jre.outputs.path }}
+          MAINTAINER: ${{ vars.PACKAGE_MAINTAINER }}
+        run: |
+          G="$PWD/application/src/main/app-resources/graphics"
+          OUT="$RUNNER_TEMP/out"
+          mkdir -p "$OUT" installers
+          NBPACKAGE=(java -p "$RUNNER_TEMP/nbpackage-$NBPACKAGE_VERSION/mods"
+                     -m org.apache.netbeans.nbpackage/org.apache.netbeans.nbpackage.Main)
+          COMMON=(-i "$PWD/dist/Glotaran-$VERSION-generic.zip" -o "$OUT"
+                  -Pname=Glotaran "-Pversion=$PKG_VERSION" "-Pruntime=$JRE"
+                  "-Ppublisher=Vrije Universiteit Amsterdam" -Purl=https://glotaran.org
+                  "-Pdescription=Glotaran - global and target analysis of time-resolved spectroscopy data")
+          "${NBPACKAGE[@]}" -t linux-deb "${COMMON[@]}" -Parch=amd64 \
+            "-Pdeb.icon=$G/glotaran_icon256.png" "-Pdeb.svg-icon=$G/glotaran_icon.svg" \
+            "-Pdeb.category=Science;Education;" "-Pdeb.maintainer=$MAINTAINER"
+          "${NBPACKAGE[@]}" -t linux-rpm "${COMMON[@]}" -Parch=x86_64 \
+            "-Prpm.icon=$G/glotaran_icon256.png" "-Prpm.svg-icon=$G/glotaran_icon.svg" \
+            "-Prpm.category=Science;Education;" "-Prpm.maintainer=$MAINTAINER" \
+            "-Prpm.license=CDDL-1.0 AND GPL-3.0" -Prpm.group=Applications/Engineering
+          mv "$OUT/glotaran_${PKG_VERSION}-1_amd64.deb" "installers/Glotaran-$VERSION-linux-amd64.deb"
+          mv "$OUT/glotaran-${PKG_VERSION}-0.x86_64.rpm" "installers/Glotaran-$VERSION-linux-x86_64.rpm"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-linux
+          path: installers/
+          if-no-files-found: error
+
+  macos:
+    name: macOS app (${{ matrix.arch }})
+    needs: build
+    runs-on: macos-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        # Both are built on the Apple silicon runner; the x64 JRE is only copied, not run
+        arch: [aarch64, x64]
+    env:
+      VERSION: ${{ needs.build.outputs.version }}
+      PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
+      ARCH: ${{ matrix.arch }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-common
+          path: dist
+      - uses: actions/setup-java@v6
+        id: jre
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          java-package: jre
+          architecture: ${{ matrix.arch }}
+      - name: Build Glotaran.app and DMG
+        env:
+          JRE: ${{ steps.jre.outputs.path }}
+        run: |
+          JRE_HOME="$JRE"
+          if [ -d "$JRE_HOME/Contents/Home" ]; then JRE_HOME="$JRE_HOME/Contents/Home"; fi
+          STAGE="$RUNNER_TEMP/dmg"
+          APP="$STAGE/Glotaran.app/Contents"
+          mkdir -p "$APP/MacOS" "$APP/Resources"
+          unzip -q "dist/Glotaran-$VERSION-generic.zip" -d "$APP/Resources"
+          ditto "$JRE_HOME" "$APP/Resources/glotaran/jre"
+          cp application/src/main/resources/Info.plist "$APP/Info.plist"
+          plutil -replace CFBundleVersion -string "$PKG_VERSION" "$APP/Info.plist"
+          plutil -replace CFBundleShortVersionString -string "$PKG_VERSION" "$APP/Info.plist"
+          plutil -lint "$APP/Info.plist"
+          cp application/src/main/app-resources/graphics/glotaran.icns "$APP/Resources/"
+          cat > "$APP/MacOS/glotaran" <<'EOF'
+          #!/bin/sh
+          CONTENTS="$(cd "$(dirname "$0")/.." && pwd)"
+          exec "$CONTENTS/Resources/glotaran/bin/glotaran" --jdkhome "$CONTENTS/Resources/glotaran/jre" "$@"
+          EOF
+          chmod 755 "$APP/MacOS/glotaran" "$APP/Resources/glotaran/bin/glotaran"
+          ln -s /Applications "$STAGE/Applications"
+          mkdir -p installers
+          DMG="installers/Glotaran-$VERSION-macos-$ARCH.dmg"
+          # hdiutil on hosted runners intermittently fails with "Resource busy"
+          for attempt in 1 2 3; do
+            hdiutil create -volname "Glotaran $VERSION" -srcfolder "$STAGE" -format UDZO -ov "$DMG" && break
+            sleep 10
+          done
+          test -f "$DMG"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-macos-${{ matrix.arch }}
+          path: installers/
+          if-no-files-found: error
+
+  release:
+    name: Draft GitHub release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build, windows, linux, macos]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: docs/release-notes
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: release
+      - name: Create draft release and upload files
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+          VERSION: ${{ needs.build.outputs.version }}
         run: |
-          version="${GITHUB_REF_NAME#v}"
-          gh release create "${GITHUB_REF_NAME}" \
-            --draft \
-            --verify-tag \
-            --title "Glotaran ${version}" \
-            --notes-file docs/release-notes/${version}.md \
-            "application/target/glotaran-app-${version}.zip" \
-            "application/target/glotaran-app-${version}.zip.sha256"
+          (cd release && sha256sum -- * > SHA256SUMS)
+          if ! gh release view "$TAG" > /dev/null 2>&1; then
+            NOTES="docs/release-notes/$VERSION.md"
+            if [ -f "$NOTES" ]; then NOTES_FLAG=(--notes-file "$NOTES"); else NOTES_FLAG=(--generate-notes); fi
+            FLAGS=(--draft --verify-tag --title "Glotaran $VERSION" "${NOTES_FLAG[@]}")
+            if [[ "$VERSION" == *-* ]]; then FLAGS+=(--prerelease); fi
+            gh release create "$TAG" "${FLAGS[@]}"
+          fi
+          gh release upload "$TAG" release/* --clobber

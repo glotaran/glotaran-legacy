@@ -11,15 +11,15 @@ For a step-by-step guide to building, running, and debugging the application, se
 
 ## Toolchain
 
-- JDK 8
-- Maven 3.x
+- JDK 25
+- Maven 3.9+
 
-CI uses Temurin JDK 8 and builds from the repository root.
+CI uses Temurin JDK 25 and builds from the repository root.
 
 On Windows, set `JAVA_HOME` to the JDK root directory, without `bin` and without a trailing backslash. For example:
 
 ```text
-C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot
+C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot
 ```
 
 ## Build
@@ -67,19 +67,21 @@ The repository does not include VS Code configuration; `.vscode/` is listed in `
 - `mvn nbm:cluster-app nbm:run-platform` from `application/`
 - `application/target/glotaran/bin/glotaran64.exe`
 
-Set `JAVA_HOME` and `PATH` in the task `options.env` to your local JDK 8 and Maven installations.
+Set `JAVA_HOME` and `PATH` in the task `options.env` to your local JDK 25 and Maven installations.
 
 ## Contribution guidelines
 
 - Keep changes focused and leave unrelated code alone.
 - Run the `verify` command above before opening a pull request.
 - Use `install` only when you need the artifacts in your local Maven repository.
-- Other branches, such as `main` and `maintenance/v1.6.x`, may use different versions and settings; check before applying their conventions here.
+- Other branches, such as `main` and `maintenance/v1.5.x`, may use different versions and settings; check before applying their conventions here.
 
 ## CI
 
 The GitHub Actions workflow `.github/workflows/maven.yml` runs on Ubuntu with:
 
 - `actions/setup-java@v6`
-- Temurin JDK 8
-- `mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress`
+- Temurin JDK 25
+- `mvn -B -T 1C clean verify -Pdeployment --file pom.xml --no-transfer-progress`
+
+It uploads the portable ZIP as a workflow artifact. The `Release installers` workflow (`.github/workflows/release.yml`) builds the release artifacts described in [RELEASING.md](RELEASING.md).
