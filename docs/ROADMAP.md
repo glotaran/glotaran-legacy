@@ -56,7 +56,7 @@ Release artifacts: the portable ZIP is required. Native installers are optional:
 
 Non-goals: dependency upgrades, Java or NetBeans upgrades, bundling Java or R.
 
-## 1.6.0 — port to current Apache NetBeans Platform
+## 1.6.0 — port to current Apache NetBeans Platform (released)
 
 Goal: the same feature set as 1.5.3 on Apache NetBeans 31 and a Java 25 runtime.
 
@@ -74,6 +74,8 @@ Approach:
 Acceptance: CI builds on Linux, Windows, and macOS; the app starts on all three; the example analysis produces the same results as 1.5.3 against the same R/TIMP installation.
 
 Non-goals: UI redesign, refactoring beyond what the API changes require, new analysis features.
+
+Result: [1.6.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.6.0) was released on 2026-10-11 with a Windows installer, `.deb` and `.rpm` packages, and DMGs for Apple silicon and Intel Macs, each with a bundled Java 25 runtime, plus the generic zip. CI builds on Linux, Windows, and macOS and runs `ApplicationTest`. The release workflow installs and starts the Windows installer, the `.deb`, and both DMGs. The example analysis gave the same results as 1.5.3 on Windows 11 with R 4.6.1, TIMP 1.13.6, and Rserve 1.8-19.1.
 
 ## 1.7.0 — self-provisioned R and TIMP
 
@@ -117,7 +119,6 @@ Non-goals: reimplementing pyglotaran features in Java; supporting TIMP and pyglo
 
 ## Open decisions
 
-- Whether glotaran.org can host the 1.5 update center again.
 - Whether 1.7 is worth its cost when 2.0 removes R; if 2.0 is the priority, build the provisioning service directly for `uv` and skip 1.7.
 - Code signing for Windows and macOS installers (certificates, notarization).
-- Supported platforms for bundled runtimes (Windows x64, macOS arm64 and x64, Linux x64).
+- Supported platforms for bundled runtimes beyond those of 1.6.0 (Windows x64, macOS arm64 and x64, Linux x64).

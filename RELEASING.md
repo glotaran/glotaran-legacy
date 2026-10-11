@@ -1,6 +1,6 @@
 # Building Glotaran release artifacts
 
-This describes how the 1.6.x release artifacts are produced: the autoupdate site, the generic zip, and the Windows, Linux and macOS installers. It was first done for 1.6.0 (September 2026) on Windows 11 with WSL2 Ubuntu; the Linux steps run on any Linux machine as well.
+This describes how the 1.6.x release artifacts are produced: the autoupdate site, the generic zip, and the Windows, Linux and macOS installers. The 1.6.0 release was built by the `Release installers` workflow described below. The manual steps were worked out in September 2026 on Windows 11 with WSL2 Ubuntu; the Linux steps run on any Linux machine as well.
 
 ## Overview
 
@@ -188,7 +188,7 @@ zip -qry Glotaran-1.6.0-macos-<arch>.zip Glotaran.app
 
 The CI workflow builds the same bundle on a macOS runner, with two differences: it copies only the JRE's `Contents/Home` to `glotaran/jre` (so the launcher passes `--jdkhome .../glotaran/jre`), and it packs the bundle plus an `Applications` link into a DMG with `hdiutil create -format UDZO`.
 
-The bundle is not signed or notarized. After downloading, users must run `xattr -dr com.apple.quarantine /Applications/Glotaran.app` (or right-click > Open) before macOS lets it start. These zips have not been tested on a Mac as of 1.6.0. On a Mac, `nbpackage -t macos-pkg` with `-Pmacos.codesign-id` / `-Pmacos.pkgbuild-id` produces a signed `.pkg` instead; the `create-dmg` profile in `application/pom.xml` is the older route to a `.dmg`.
+The bundle is not signed or notarized. After downloading, users must run `xattr -dr com.apple.quarantine /Applications/Glotaran.app` (or right-click > Open) before macOS lets it start. These manually built zips have not been tested on a Mac; the DMGs built by the workflow are started on GitHub's macOS runners. On a Mac, `nbpackage -t macos-pkg` with `-Pmacos.codesign-id` / `-Pmacos.pkgbuild-id` produces a signed `.pkg` instead; the `create-dmg` profile in `application/pom.xml` is the older route to a `.dmg`.
 
 ## Checksums
 

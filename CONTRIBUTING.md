@@ -74,7 +74,7 @@ Set `JAVA_HOME` and `PATH` in the task `options.env` to your local JDK 25 and Ma
 - Keep changes focused and leave unrelated code alone.
 - Run the `verify` command above before opening a pull request.
 - Use `install` only when you need the artifacts in your local Maven repository.
-- Other branches, such as `main` and `maintenance/v1.5.x`, may use different versions and settings; check before applying their conventions here.
+- Other branches, such as `maintenance/v1.5.x`, may use different versions and settings; check before applying their conventions here.
 
 ## CI
 
