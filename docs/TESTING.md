@@ -13,7 +13,7 @@ Five modules contain tests (`application`, `ExampleDataloader`, `JFreeChartCusto
   ```
 
   `ApplicationTest` starts the assembled platform with all clusters through `NbModuleSuite` and fails if anything is logged at WARNING level or above. On Linux without a display, run it under `xvfb-run -a`.
-- The release workflow (`.github/workflows/release.yml`) installs each installer and starts Glotaran from it with `.github/scripts/smoke-test.sh`, which checks `messages.log` for the bundled runtime and the enabled Glotaran modules.
+- The release workflow (`.github/workflows/release.yml`) installs the Windows installer, the `.deb` and both DMGs (not the `.rpm`) and starts Glotaran from each with `.github/scripts/smoke-test.sh`, which checks `messages.log` for the bundled runtime and the enabled Glotaran modules.
 
 ## Running tests
 

@@ -74,7 +74,7 @@ case "$(printf '%s' "$java_home" | norm)" in
     ;;
 esac
 
-expected_modules=$(grep -l '"enabled">true' "$INSTALL_DIR"/glotaran/config/Modules/org-glotaran-*.xml | wc -l)
+expected_modules=$(grep -l '"enabled">true' "$INSTALL_DIR"/glotaran/config/Modules/org-glotaran-*.xml | wc -l | tr -d ' ')
 enabled_modules=$(grep -c -E '^[[:space:]]+org\.glotaran\.' "$LOG" 2> /dev/null)
 echo "Glotaran modules turned on: ${enabled_modules:-0} of $expected_modules"
 if [ "$expected_modules" -eq 0 ] || [ "${enabled_modules:-0}" -ne "$expected_modules" ]; then
