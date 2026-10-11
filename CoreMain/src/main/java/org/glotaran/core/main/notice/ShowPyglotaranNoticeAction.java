@@ -12,7 +12,7 @@ import org.openide.util.NbBundle.Messages;
         id = "org.glotaran.core.main.notice.ShowPyglotaranNoticeAction")
 @ActionRegistration(
         displayName = "#CTL_ShowPyglotaranNoticeAction")
-@ActionReference(path = "Menu/Help", position = 1500)
+@ActionReference(path = "Menu/Help", position = 1450)
 @Messages("CTL_ShowPyglotaranNoticeAction=pyglotaran and Glotaran Releases")
 public final class ShowPyglotaranNoticeAction implements ActionListener {
 

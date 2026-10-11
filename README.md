@@ -8,7 +8,7 @@ Glotaran is open-source software and therefore free to download and free to use.
 
 ## Install and use Glotaran
 
-Download and [Install](http://glotaran.org/wiki/doku.php?id=installation) Glotaran on your computer.
+Download the installer for your system from the [GitHub Releases page](https://github.com/glotaran/glotaran-legacy/releases). The release notes describe how to install it and how to set up R, TIMP and Rserve for analyses.
 
 Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screencast](http://glotaran.org/demonstration.html).
 
@@ -16,9 +16,9 @@ Get started with the [Wiki](http://glotaran.org/wiki.html) and watch a [Screenca
 
 To build, run, and debug the application, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Contributor guidelines are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The Maven build, packaging, installers, CI, and release process are described in [docs/BUILD_AND_DISTRIBUTION.md](docs/BUILD_AND_DISTRIBUTION.md).
+Packaging, installers, and the release process are described in [RELEASING.md](RELEASING.md).
 
-Planned releases (1.5.3, 1.6, 1.7, 2.0) are described in [docs/ROADMAP.md](docs/ROADMAP.md).
+Releases 1.5.3 to 2.0 are described in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Deprecation notice
 
@@ -28,21 +28,29 @@ For the past few years they have been working on a (spiritual) successor to  Glo
 
 ## Latest releases
 
-### Stable (1.5.x)
+Latest stable release is version 1.6.0: the features of 1.5.3 on Apache NetBeans Platform 31 and Java 25, with installers for Windows, Linux and macOS that include Java. Download it from the [GitHub Releases page](https://github.com/glotaran/glotaran-legacy/releases).
 
-Latest stable release on [glotaran.org](http://glotaran.org/downloads) is version 1.5.1, the code lives on the [1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) branch.
+`main` contains the latest release. The code and documentation of each release line live on their own branch:
 
-The next release from this branch, 1.5.3, is the final maintenance release on NetBeans Platform 8.0.2 and Java 8. It and all later releases are published on the [GitHub Releases page](https://github.com/glotaran/glotaran-legacy/releases). Version 1.5.2 was never officially released; snapshot builds labelled 1.5.2 are superseded by 1.5.3.
+| Release line | Platform | Branch |
+| --- | --- | --- |
+| 1.6.x (latest: 1.6.0) | Apache NetBeans 31, Java 25 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) |
+| 1.5.x (final: 1.5.3) | NetBeans 8.0.2, Java 8 | [maintenance/v1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) |
+
+Version 1.5.3 was delivered as an update to 1.5.1 installations through Tools | Plugins. Version 1.5.1 and earlier are available on [glotaran.org](http://glotaran.org/downloads). Version 1.5.2 was never officially released; snapshot builds labelled 1.5.2 are superseded by 1.5.3.
 
 ### Planned releases
 
 | Release | Branch | Main change |
 | --- | --- | --- |
-| 1.6.0 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) | Port to Apache NetBeans 31 or later with a bundled Java 21 runtime |
 | 1.7.0 | `maintenance/v1.7.x` | Glotaran installs and manages its own R, TIMP, and Rserve |
 | 2.0.0 | `main` | pyglotaran replaces R and TIMP as the computational core |
 
 Scope, branch setup, and acceptance criteria for each release are in [docs/ROADMAP.md](docs/ROADMAP.md).
+
+## Building release artifacts
+
+See [RELEASING.md](RELEASING.md) for building the autoupdate site, the generic zip and the Windows, Linux and macOS installers.
 
 ## License
 

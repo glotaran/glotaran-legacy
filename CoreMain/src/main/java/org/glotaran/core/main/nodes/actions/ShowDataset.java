@@ -45,6 +45,10 @@ public final class ShowDataset extends CookieAction {
         } else { //try the orginal location
             tgdFile = new File(dataObject.getTgd().getPath());
         }
+        if (!tgdFile.exists()) {
+            CoreErrorMessages.datasetFileMissing(tgdFile.getAbsolutePath());
+            return;
+        }
 
 //        setName(NbBundle.getMessage(SpecEditorTopCompNew.class, "CTL_StreakLoaderTopComponent"));
 //        setToolTipText(NbBundle.getMessage(SpecEditorTopCompNew.class, "HINT_StreakLoaderTopComponent"));
@@ -70,11 +74,11 @@ public final class ShowDataset extends CookieAction {
                     if (service.Validator(tgdFile)) {
                         if (!service.getType(tgdFile).equalsIgnoreCase("FLIM")) {
                             data = service.loadFile(tgdFile);
-                            filetype = data.getType();
                             if (data == null) {
                                 CoreErrorMessages.fileLoadException(tgdFile.getName());
                                 return;
                             }
+                            filetype = data.getType();
                             break;
                         } else {
                             filetype = service.getType(tgdFile);

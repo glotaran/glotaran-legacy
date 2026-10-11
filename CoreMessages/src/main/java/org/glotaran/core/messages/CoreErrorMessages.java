@@ -36,6 +36,13 @@ public class CoreErrorMessages {
         DialogDisplayer.getDefault().notify(errorMessage);
     }
     
+    public static void datasetFileMissing(String path) {
+        NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
+                NbBundle.getMessage(CoreErrorMessages.class, "datasetFileMissing", path),
+                NotifyDescriptor.ERROR_MESSAGE);
+        DialogDisplayer.getDefault().notify(errorMessage);
+    }
+
     public static void noSVDCalculated() {
         NotifyDescriptor.Message errorMessage = new NotifyDescriptor.Message(
                 NbBundle.getBundle("org/glotaran/core/messages/Bundle").getString("noSVDCalculated"), 

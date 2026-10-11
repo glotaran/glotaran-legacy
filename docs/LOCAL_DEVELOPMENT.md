@@ -4,7 +4,7 @@ For a step-by-step guide, see [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## Toolchain
 
-- Use JDK 8 and Maven 3.x for this branch.
+- Use JDK 25 and Maven 3.9+ for this branch. If another JDK is first on `PATH`, set `JAVA_HOME` explicitly.
 
 ## Running locally
 

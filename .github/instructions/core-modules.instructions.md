@@ -23,5 +23,5 @@ mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress
 
 ## NetBeans specifics
 
-- Maintain compatibility with NetBeans 8 module conventions.
-- Avoid introducing APIs that are only available in newer NetBeans branches.
+- Use the module conventions and APIs of Apache NetBeans 31 (`RELEASE310`).
+- Avoid introducing APIs that are only available in newer NetBeans releases.
