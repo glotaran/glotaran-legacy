@@ -77,7 +77,7 @@ Non-goals: UI redesign, refactoring beyond what the API changes require, new ana
 
 Result: [1.6.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.6.0) was released on 2026-10-11 with a Windows installer, `.deb` and `.rpm` packages, and DMGs for Apple silicon and Intel Macs, each with a bundled Java 25 runtime, plus the generic zip. CI builds on Linux, Windows, and macOS and runs `ApplicationTest`. The release workflow installs and starts the Windows installer, the `.deb`, and both DMGs. The example analysis gave the same results as 1.5.3 on Windows 11 with R 4.6.1, TIMP 1.13.6, and Rserve 1.8-19.1.
 
-## 1.7.0 — self-provisioned R and TIMP
+## 1.7.0 — self-provisioned R and TIMP (in development)
 
 Goal: Glotaran installs and manages its own R, TIMP, and Rserve, without administrator rights and without the user running R.
 

@@ -1,6 +1,6 @@
 # Building Glotaran release artifacts
 
-This describes how the 1.6.x release artifacts are produced: the autoupdate site, the generic zip, and the Windows, Linux and macOS installers. The 1.6.0 release was built by the `Release installers` workflow described below. The manual steps were worked out in September 2026 on Windows 11 with WSL2 Ubuntu; the Linux steps run on any Linux machine as well.
+This describes how the release artifacts of Glotaran 1.6 and later are produced: the autoupdate site, the generic zip, and the Windows, Linux and macOS installers. The 1.6.0 release was built by the `Release installers` workflow described below. The manual steps were worked out in September 2026 on Windows 11 with WSL2 Ubuntu; the Linux steps run on any Linux machine as well.
 
 ## Overview
 
@@ -76,7 +76,7 @@ The version of a release is set in several places:
 
 - the root version and the parent version in every child POM (`release.yml` does not change them; set them before tagging);
 - `glotaran.modules.specification.version` in the root POM: the `OpenIDE-Module-Specification-Version` of every Glotaran module (see the autoupdate notes below);
-- `glotaran.branding.version` in the root POM (`1.6`): the user directory `.glotaran/<branding version>` (`Library/Application Support/glotaran/<branding version>` on macOS) set in `application/src/main/resources/glotaran.conf`;
+- `glotaran.branding.version` in the root POM (`1.7`): the user directory `.glotaran/<branding version>` (`Library/Application Support/glotaran/<branding version>` on macOS) set in `application/src/main/resources/glotaran.conf`;
 - the update center URL in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties` (`/suc/<branding version>/stable/`);
 - `docs/release-notes/<version>.md`, which `release.yml` uses as the release text;
 - the README.
@@ -93,7 +93,7 @@ mvn -B -Pdeployment clean install -DskipTests
 
 Outputs in `application/target/`:
 
-- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this). For a release, take the site from `Glotaran-<version>-autoupdate-site.zip` on the GitHub release (the files are in its `netbeans_site/` folder) so the modules match the installers. Without a catalog at that URL, every 1.6 installation logs a failed update check at startup. Never put 1.6 modules in `/suc/1.5/` or `/uc/1.5/`: 1.5 installations run on Java 8 and NetBeans Platform 8.0.2 and would install modules they cannot load.
+- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.7/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this). For a release, take the site from `Glotaran-<version>-autoupdate-site.zip` on the GitHub release (the files are in its `netbeans_site/` folder) so the modules match the installers. Without a catalog at that URL, every installation of that release line logs a failed update check at startup. Put each release line only in its own folder (`/suc/1.6/`, `/suc/1.7/`, …). Never put modules of 1.6 or later in `/suc/1.5/` or `/uc/1.5/`: 1.5 installations run on Java 8 and NetBeans Platform 8.0.2 and would install modules they cannot load.
 - `glotaran-app-<version>.zip` — the generic zip. It is also the input for all installers below.
 
 Signing: the NBMs are signed only when `src/keystore/keystore.ks` exists and `-Dkeystore.password=...` is passed (alias `glotaran`, see the `nbm-maven-plugin` configuration in the root pom). The keystore is not in the repository; without it the build warns and produces unsigned NBMs.
