@@ -14,7 +14,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.ui.Layer;
+import org.jfree.chart.ui.Layer;
 
 /**
  *

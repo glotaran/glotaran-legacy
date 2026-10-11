@@ -1,7 +1,7 @@
 package org.glotaran.core.resultdisplayers.spec;
 
 import javax.swing.JFileChooser;
-import org.jfree.ui.ExtensionFileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.BufferedWriter;
@@ -61,10 +61,10 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.ui.Layer;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.Exceptions;
@@ -1447,7 +1447,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         JFileChooser fileChooser = new JFileChooser();
         //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
         //TODO: add in filechooser delimiter for file
-        ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Comma separated file (*.csv)", "csv");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
         
@@ -1523,7 +1523,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         JFileChooser fileChooser = new JFileChooser();
         //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
         //TODO: add in filechooser delimiter for file
-        ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Comma separated file (*.csv)", "csv");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
         
@@ -1659,7 +1659,7 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
         //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
         //TODO: add in filechooser delimiter for file
         //add possibility to select t0 correction
-        ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Comma separated file (*.csv)", "csv");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
         
@@ -2521,10 +2521,10 @@ public final class SpecResultsTopComponent extends TopComponent implements Chart
 //        tracechart.getXYPlot().getRangeAxis().setRange(colSV.getSeries(0).getDataItem(Math.min(index, 10)).getYValue(), colSV.getSeries(0).getDataItem(0).getYValue());
 //        tracechart.getXYPlot().getDomainAxis().setRange(colSV.getSeries(0).getDataItem(0).getXValue(), colSV.getSeries(0).getDataItem(Math.min(index, 10)).getXValue());
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) tracechart.getXYPlot().getRenderer();
-        renderer.setBaseShapesVisible(true);
+        renderer.setDefaultShapesVisible(true);
         renderer.setDrawOutlines(true);
         renderer.setUseFillPaint(true);
-        renderer.setBaseFillPaint(Color.white);
+        renderer.setDefaultFillPaint(Color.white);
         renderer.setSeriesStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesShape(0, new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));

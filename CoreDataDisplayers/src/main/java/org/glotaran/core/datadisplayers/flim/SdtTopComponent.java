@@ -26,8 +26,8 @@ import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -1134,10 +1134,10 @@ final public class SdtTopComponent extends CloneableTopComponent implements Char
 
         tracechart.getXYPlot().setRangeAxis(logAxe);
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) tracechart.getXYPlot().getRenderer();
-        renderer.setBaseShapesVisible(true);
+        renderer.setDefaultShapesVisible(true);
         renderer.setDrawOutlines(true);
         renderer.setUseFillPaint(true);
-        renderer.setBaseFillPaint(Color.white);
+        renderer.setDefaultFillPaint(Color.white);
         renderer.setSeriesStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesShape(0, new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));

@@ -366,10 +366,10 @@ public final class AnalysisResultFileViewerTopComponent extends CloneableTopComp
         plot.setRangeAxis(rangeAxis);
         domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) rssChart.getXYPlot().getRenderer();
-        renderer.setBaseShapesVisible(true);
+        renderer.setDefaultShapesVisible(true);
         renderer.setDrawOutlines(true);
         renderer.setUseFillPaint(true);
-        renderer.setBaseFillPaint(Color.white);
+        renderer.setDefaultFillPaint(Color.white);
         renderer.setSeriesStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesShape(0, new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));
