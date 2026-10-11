@@ -20,7 +20,7 @@ import java.awt.BasicStroke;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LinLogAxis;
 import org.jfree.chart.axis.LogAxis;
@@ -31,8 +31,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
+import org.jfree.chart.ui.ApplicationFrame;
+import org.jfree.chart.ui.UIUtils;
 
 /**
  * A simple demo showing the use of the {@link LogAxis} class.
@@ -82,7 +82,7 @@ public class LinLogAxisDemo1 extends ApplicationFrame {
         plot.setDomainAxis(xAxis);
         plot.setRangeAxis(yAxis);
         // make sure the current theme is applied to the axes just added
-        ChartUtilities.applyCurrentTheme(chart);
+        ChartUtils.applyCurrentTheme(chart);
         return chart;
     }
 
@@ -172,7 +172,7 @@ public class LinLogAxisDemo1 extends ApplicationFrame {
         LinLogAxisDemo1 demo = new LinLogAxisDemo1(
                 "JFreeChart: LinLogAxisDemo1.java");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        UIUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
 
     }

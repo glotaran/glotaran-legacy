@@ -9,13 +9,13 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.SeriesRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.RendererUtilities;
+import org.jfree.chart.renderer.RendererUtils;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRendererState;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.general.DatasetUtilities;
+import org.jfree.data.general.DatasetUtils;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 
 /**
  * Performs fast rendering of large datasets in nearly constant time.
@@ -65,7 +65,7 @@ public class FastXYPlot extends XYPlot {
 
         XYDataset dataset = getDataset(index);
 
-        if (!DatasetUtilities.isEmptyOrNull(dataset)) {
+        if (!DatasetUtils.isEmptyOrNull(dataset)) {
             foundData = true;
             ValueAxis xAxis = getDomainAxisForDataset(index);
             ValueAxis yAxis = getRangeAxisForDataset(index);
@@ -101,7 +101,7 @@ public class FastXYPlot extends XYPlot {
                             continue;
                         }
                         if (state.getProcessVisibleItemsOnly()) {
-                            int[] itemBounds = RendererUtilities.findLiveItems(
+                            int[] itemBounds = RendererUtils.findLiveItems(
                                     dataset, series, xAxis.getLowerBound(),
                                     xAxis.getUpperBound());
                             firstItem = itemBounds[0];
@@ -125,7 +125,7 @@ public class FastXYPlot extends XYPlot {
                         int firstItem = 0;
                         int lastItem = dataset.getItemCount(series) - 1;
                         if (state.getProcessVisibleItemsOnly()) {
-                            int[] itemBounds = RendererUtilities.findLiveItems(
+                            int[] itemBounds = RendererUtils.findLiveItems(
                                     dataset, series, xAxis.getLowerBound(),
                                     xAxis.getUpperBound());
                             firstItem = itemBounds[0];

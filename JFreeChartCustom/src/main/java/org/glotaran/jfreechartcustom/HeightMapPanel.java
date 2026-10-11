@@ -32,7 +32,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
-import org.jfree.ui.ExtensionFileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.openide.windows.TopComponent;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -196,7 +196,7 @@ public class HeightMapPanel extends ChartPanel {
     private void doSaveTracesToAscii() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
-        ExtensionFileFilter filter = new ExtensionFileFilter("Tab Separated ASCII files", ".ascii");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Tab Separated ASCII files", "ascii");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
         ArrayList<XYPlot> xyList;
@@ -261,7 +261,7 @@ public class HeightMapPanel extends ChartPanel {
     private void doSaveChartToSVG() throws FileNotFoundException, IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
-        ExtensionFileFilter filter = new ExtensionFileFilter("SVG graphics files", ".svg");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("SVG graphics files", "svg");
         fileChooser.addChoosableFileFilter(filter);
 
         int option = fileChooser.showSaveDialog(this);

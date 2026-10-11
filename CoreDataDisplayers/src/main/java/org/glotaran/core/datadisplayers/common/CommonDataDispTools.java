@@ -1,11 +1,11 @@
 package org.glotaran.core.datadisplayers.common;
 
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.title.PaintScaleLegend;
 import java.awt.Color;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.ui.Layer;
+import org.jfree.chart.ui.Layer;
 import org.jfree.chart.annotations.XYDataImageAnnotation;
 import java.awt.image.BufferedImage;
 import org.jfree.chart.renderer.PaintScale;

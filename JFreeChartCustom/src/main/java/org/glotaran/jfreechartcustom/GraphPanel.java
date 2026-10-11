@@ -43,9 +43,9 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.YIntervalSeriesCollection;
-import org.jfree.ui.ExtensionFileFilter;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
 import org.openide.windows.TopComponent;
 
 /**
@@ -223,7 +223,7 @@ public class GraphPanel extends ChartPanel implements ChartProgressListener {
     private void doSaveTracesToAscii() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
-        ExtensionFileFilter filter = new ExtensionFileFilter("Tab Separated ASCII files", ".ascii");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Tab Separated ASCII files", "ascii");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
         ArrayList<XYPlot> xyList;
@@ -290,7 +290,7 @@ public class GraphPanel extends ChartPanel implements ChartProgressListener {
     private void doSaveChartToSVG() throws FileNotFoundException, IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
-        ExtensionFileFilter filter = new ExtensionFileFilter("SVG graphics files", ".svg");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("SVG graphics files", "svg");
         fileChooser.addChoosableFileFilter(filter);
 
         int option = fileChooser.showSaveDialog(this);
@@ -326,8 +326,8 @@ public class GraphPanel extends ChartPanel implements ChartProgressListener {
     private void doShowErrorBars() {
         if (!errorBarsVisible) {
             XYErrorRenderer renderer = new XYErrorRenderer();
-            renderer.setBaseLinesVisible(true);
-            renderer.setBaseShapesVisible(false);
+            renderer.setDefaultLinesVisible(true);
+            renderer.setDefaultShapesVisible(false);
             this.getChart().setBackgroundPaint(JFreeChart.DEFAULT_BACKGROUND_PAINT);
             XYPlot plot = new XYPlot(this.getChart().getXYPlot().getDataset(),
                     this.getChart().getXYPlot().getDomainAxis(),
@@ -337,8 +337,8 @@ public class GraphPanel extends ChartPanel implements ChartProgressListener {
             this.setChart(chart);
         } else {
             XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-            renderer.setBaseLinesVisible(true);
-            renderer.setBaseShapesVisible(false);
+            renderer.setDefaultLinesVisible(true);
+            renderer.setDefaultShapesVisible(false);
             XYPlot plot = new XYPlot(this.getChart().getXYPlot().getDataset(),
                     this.getChart().getXYPlot().getDomainAxis(),
                     this.getChart().getXYPlot().getRangeAxis(), renderer);

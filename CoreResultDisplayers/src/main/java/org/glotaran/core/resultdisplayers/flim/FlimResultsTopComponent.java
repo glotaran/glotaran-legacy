@@ -8,7 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import javax.swing.JFileChooser;
-import org.jfree.ui.ExtensionFileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import org.ujmp.jama.JamaDenseDoubleMatrix2D;
 import org.ujmp.core.Matrix;
@@ -56,9 +56,9 @@ import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.ui.Layer;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.Exceptions;
@@ -874,7 +874,7 @@ final public class FlimResultsTopComponent extends TopComponent implements Chart
 
         JFileChooser fileChooser = new JFileChooser();
         //TODO: implement fileChooser.setCurrentDirectory(this.getDefaultDirectoryForSaveAs());
-        ExtensionFileFilter filter = new ExtensionFileFilter("Comma separated file (*.csv)", ".csv");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Comma separated file (*.csv)", "csv");
         fileChooser.addChoosableFileFilter(filter);
         int option = fileChooser.showSaveDialog(this);
 
@@ -1236,10 +1236,10 @@ final public class FlimResultsTopComponent extends TopComponent implements Chart
         domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         //tracechart.getTitle().setFont(new Font(tracechart.getTitle().getFont().getFontName(), Font.PLAIN, 12));
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) tracechart.getXYPlot().getRenderer();
-        renderer.setBaseShapesVisible(true);
+        renderer.setDefaultShapesVisible(true);
         renderer.setDrawOutlines(true);
         renderer.setUseFillPaint(true);
-        renderer.setBaseFillPaint(Color.white);
+        renderer.setDefaultFillPaint(Color.white);
         renderer.setSeriesStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesShape(0, new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0));

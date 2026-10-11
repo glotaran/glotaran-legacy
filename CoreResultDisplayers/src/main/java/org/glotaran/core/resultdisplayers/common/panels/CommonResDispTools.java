@@ -26,10 +26,10 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 import static java.lang.Math.ceil;
 import static java.lang.Math.pow;
-import org.jfree.ui.HorizontalAlignment;
+import org.jfree.chart.ui.HorizontalAlignment;
 
 /**
  *

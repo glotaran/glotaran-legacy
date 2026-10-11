@@ -33,9 +33,9 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.ui.Layer;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  *
