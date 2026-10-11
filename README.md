@@ -34,6 +34,7 @@ Latest stable release is version 1.6.0: the features of 1.5.3 on Apache NetBeans
 
 | Release line | Platform | Branch |
 | --- | --- | --- |
+| 1.7.x (in development) | Apache NetBeans 31, Java 25 | [maintenance/v1.7.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.7.x) |
 | 1.6.x (latest: 1.6.0) | Apache NetBeans 31, Java 25 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) |
 | 1.5.x (final: 1.5.3) | NetBeans 8.0.2, Java 8 | [maintenance/v1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) |
 
@@ -43,7 +44,7 @@ Version 1.5.3 was delivered as an update to 1.5.1 installations through Tools | 
 
 | Release | Branch | Main change |
 | --- | --- | --- |
-| 1.7.0 | `maintenance/v1.7.x` | Glotaran installs and manages its own R, TIMP, and Rserve |
+| 1.7.0 | [maintenance/v1.7.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.7.x) | Glotaran installs and manages its own R, TIMP, and Rserve |
 | 2.0.0 | `main` | pyglotaran replaces R and TIMP as the computational core |
 
 Scope, branch setup, and acceptance criteria for each release are in [docs/ROADMAP.md](docs/ROADMAP.md).

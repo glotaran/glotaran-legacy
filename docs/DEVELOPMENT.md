@@ -1,6 +1,6 @@
 # Development quick start
 
-Glotaran 1.6.x is a NetBeans Platform application built as a Maven multi-module reactor. It requires JDK 25 and Maven 3.9+.
+Glotaran 1.7.x is a NetBeans Platform application built as a Maven multi-module reactor. It requires JDK 25 and Maven 3.9+.
 
 ## 1. Check the toolchain
 

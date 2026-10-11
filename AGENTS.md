@@ -1,6 +1,6 @@
 # AGENTS
 
-Glotaran 1.6.x is a legacy Java desktop application built as a Maven multi-module reactor on Apache NetBeans Platform 31 (`RELEASE310`).
+Glotaran 1.7.x is a legacy Java desktop application built as a Maven multi-module reactor on Apache NetBeans Platform 31 (`RELEASE310`).
 
 - Build with JDK 25 and Maven 3.9+. Sources compile with `--release 17` (`glotaran.javac.release` in the root POM); do not use language features or APIs newer than Java 17.
 - Default validation from the repository root: `mvn -B -T 1C clean verify --file pom.xml --no-transfer-progress`. The root POM sets `skipTests=true`, so this checks compilation, packaging, and module dependencies only.
