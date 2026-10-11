@@ -319,6 +319,15 @@
                 </executions>
             </plugin>
 
+            <!-- Without the ZIP there is no artifact to install; the deployment profile re-enables it -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
             <!-- Copy ressources glotaran.conf and Info.plist with filtering (replacing 'project.version' by the actual version -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -397,6 +406,15 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+
+                    <!-- Install the ZIP built above -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
                     </plugin>
 
                     <!-- Permits NbModuleSuite to be run in integration-test phase: -->
