@@ -22,6 +22,7 @@ Triggers:
 
 - Pushing a tag matching `v*` (for example `v1.6.0` or `v1.6.0-rc.1`). Creating a release in the GitHub web UI with a new `v*` tag also pushes the tag and starts the workflow. A release created for a tag that already exists does not.
 - Manually (Actions > Release installers > Run workflow). GitHub only offers this once the workflow file is on the default branch. Manual runs keep the files as workflow artifacts on the run page and create no release.
+- Pull requests that change `.github/workflows/release.yml` or `.github/scripts/smoke-test.sh`. These runs build and test everything and create no release.
 
 Jobs:
 
@@ -30,8 +31,10 @@ Jobs:
 | `build` | `ubuntu-latest` | `Glotaran-<version>-generic.zip`, `Glotaran-<version>-autoupdate-site.zip` |
 | `windows` | `windows-latest` | `Glotaran-<version>-windows-x64-setup.exe` |
 | `linux` | `ubuntu-latest` | `Glotaran-<version>-linux-amd64.deb`, `Glotaran-<version>-linux-x86_64.rpm` |
-| `macos` | `macos-latest` (Apple silicon), once per architecture | `Glotaran-<version>-macos-aarch64.dmg`, `Glotaran-<version>-macos-x64.dmg` |
+| `macos` | `macos-latest` (Apple silicon) for aarch64, `macos-26-intel` for x64 | `Glotaran-<version>-macos-aarch64.dmg`, `Glotaran-<version>-macos-x64.dmg` |
 | `release` | `ubuntu-latest`, tags only | `SHA256SUMS`; uploads everything to a draft release for the tag |
+
+Smoke tests: the `windows` job installs the setup `.exe` silently, the `linux` job installs the `.deb` (and starts it under `xvfb-run`), and each `macos` job mounts its DMG. Each then starts Glotaran the way a user would and runs [`.github/scripts/smoke-test.sh`](.github/scripts/smoke-test.sh). The script waits until the main window is up, stops the application, prints `messages.log`, and fails the job if the bundled runtime was not used, if not all Glotaran modules that are enabled by default were turned on, or if anything was logged at SEVERE level. The `.rpm` is not installed; it contains the same files as the `.deb`.
 
 The `release` job creates the draft release if none exists for the tag, marks it as a pre-release when the version has a suffix (`-rc.1`), and otherwise replaces the files on the existing release. Review the draft and publish it by hand.
 
@@ -75,7 +78,7 @@ mvn -B -Pdeployment clean install -DskipTests
 
 Outputs in `application/target/`:
 
-- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this).
+- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this). For a release, take the site from `Glotaran-<version>-autoupdate-site.zip` on the GitHub release (the files are in its `netbeans_site/` folder) so the modules match the installers. Without a catalog at that URL, every 1.6 installation logs a failed update check at startup. Never put 1.6 modules in `/suc/1.5/` or `/uc/1.5/`: 1.5 installations run on Java 8 and NetBeans Platform 8.0.2 and would install modules they cannot load.
 - `glotaran-app-<version>.zip` — the generic zip. It is also the input for all installers below.
 
 Signing: the NBMs are signed only when `src/keystore/keystore.ks` exists and `-Dkeystore.password=...` is passed (alias `glotaran`, see the `nbm-maven-plugin` configuration in the root pom). The keystore is not in the repository; without it the build warns and produces unsigned NBMs.
