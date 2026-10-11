@@ -73,4 +73,4 @@ To start with a fresh runtime state, stop Glotaran and run a clean build; this r
 - **Changes do not appear in the running application:** rebuild and install from the root before running the application module again.
 - **Analysis cannot connect to R:** check R, TIMP, and Rserve separately from Glotaran, for example by running `library(TIMP); library(Rserve)` in R.
 
-For packaging, installers, CI, and releases, see [RELEASING.md](../RELEASING.md). [Build and distribution](BUILD_AND_DISTRIBUTION.md) lists the modules and describes the 1.5.x build setup. For NetBeans module registration and architecture, see [NetBeans Platform](NETBEANS_PLATFORM.md) and [Architecture](ARCHITECTURE.md).
+For packaging, installers, CI, and releases, see [RELEASING.md](../RELEASING.md). [Architecture](ARCHITECTURE.md) lists the modules. For NetBeans module registration and architecture, see [NetBeans Platform](NETBEANS_PLATFORM.md) and [Architecture](ARCHITECTURE.md).

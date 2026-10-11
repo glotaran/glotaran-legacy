@@ -22,6 +22,7 @@ Triggers:
 
 - Pushing a tag matching `v*` (for example `v1.6.0` or `v1.6.0-rc.1`). Creating a release in the GitHub web UI with a new `v*` tag also pushes the tag and starts the workflow. A release created for a tag that already exists does not.
 - Manually (Actions > Release installers > Run workflow). GitHub only offers this once the workflow file is on the default branch. Manual runs keep the files as workflow artifacts on the run page and create no release.
+- Pull requests that change `.github/workflows/release.yml` or `.github/scripts/smoke-test.sh`. These runs build and test everything and create no release.
 
 Jobs:
 
@@ -30,8 +31,10 @@ Jobs:
 | `build` | `ubuntu-latest` | `Glotaran-<version>-generic.zip`, `Glotaran-<version>-autoupdate-site.zip` |
 | `windows` | `windows-latest` | `Glotaran-<version>-windows-x64-setup.exe` |
 | `linux` | `ubuntu-latest` | `Glotaran-<version>-linux-amd64.deb`, `Glotaran-<version>-linux-x86_64.rpm` |
-| `macos` | `macos-latest` (Apple silicon), once per architecture | `Glotaran-<version>-macos-aarch64.dmg`, `Glotaran-<version>-macos-x64.dmg` |
+| `macos` | `macos-latest` (Apple silicon) for aarch64, `macos-26-intel` for x64 | `Glotaran-<version>-macos-aarch64.dmg`, `Glotaran-<version>-macos-x64.dmg` |
 | `release` | `ubuntu-latest`, tags only | `SHA256SUMS`; uploads everything to a draft release for the tag |
+
+Smoke tests: the `windows` job installs the setup `.exe` silently, the `linux` job installs the `.deb` (and starts it under `xvfb-run`), and each `macos` job mounts its DMG. Each then starts Glotaran the way a user would and runs [`.github/scripts/smoke-test.sh`](.github/scripts/smoke-test.sh). The script waits until the main window is up, stops the application, prints `messages.log`, and fails the job if the bundled runtime was not used, if not all Glotaran modules that are enabled by default were turned on, or if anything was logged at SEVERE level. The `.rpm` is not installed; it contains the same files as the `.deb`.
 
 The `release` job creates the draft release if none exists for the tag, marks it as a pre-release when the version has a suffix (`-rc.1`), and otherwise replaces the files on the existing release. Review the draft and publish it by hand.
 
@@ -67,6 +70,21 @@ git checkout -- application/src/main/resources/glotaran.conf
 
 Verify after the build: `unzip -p application/target/glotaran-app-*.zip glotaran/etc/glotaran.conf | file -` must not report CRLF.
 
+## Version numbers
+
+The version of a release is set in several places:
+
+- the root version and the parent version in every child POM (`release.yml` does not change them; set them before tagging);
+- `glotaran.modules.specification.version` in the root POM: the `OpenIDE-Module-Specification-Version` of every Glotaran module (see the autoupdate notes below);
+- `glotaran.branding.version` in the root POM (`1.6`): the user directory `.glotaran/<branding version>` (`Library/Application Support/glotaran/<branding version>` on macOS) set in `application/src/main/resources/glotaran.conf`;
+- the update center URL in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties` (`/suc/<branding version>/stable/`);
+- `docs/release-notes/<version>.md`, which `release.yml` uses as the release text;
+- the README.
+
+Branding sources in `branding/src/main/resources` are filtered into `branding/src/main/nbm-branding` and set the splash screen, main-window title and application name from the project version. The Inno Setup app ID (`Glotaran-<major>.<minor>`) and the installer metadata versions are derived from the tag in `release.yml`.
+
+For a new release line (for example 1.7), change `glotaran.branding.version` and the update center URL as well, so that the new line uses its own user directory and update center and can be installed next to the previous one.
+
 ## 1. Autoupdate site and generic zip
 
 ```sh
@@ -75,12 +93,17 @@ mvn -B -Pdeployment clean install -DskipTests
 
 Outputs in `application/target/`:
 
-- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this).
+- `netbeans_site/` — `updates.xml`, `updates.xml.gz` and all NBMs. Upload the contents to the update center URL the application reads, currently `https://glotaran.org/suc/1.6/stable/updates.xml` (set in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties`; the `glotaran.update.center.*` properties in the root pom are not used for this). For a release, take the site from `Glotaran-<version>-autoupdate-site.zip` on the GitHub release (the files are in its `netbeans_site/` folder) so the modules match the installers. Without a catalog at that URL, every 1.6 installation logs a failed update check at startup. Never put 1.6 modules in `/suc/1.5/` or `/uc/1.5/`: 1.5 installations run on Java 8 and NetBeans Platform 8.0.2 and would install modules they cannot load.
 - `glotaran-app-<version>.zip` — the generic zip. It is also the input for all installers below.
 
 Signing: the NBMs are signed only when `src/keystore/keystore.ks` exists and `-Dkeystore.password=...` is passed (alias `glotaran`, see the `nbm-maven-plugin` configuration in the root pom). The keystore is not in the repository; without it the build warns and produces unsigned NBMs.
 
 Autoupdate only offers modules whose specification version is higher than the installed one. The Glotaran modules take theirs from `glotaran.modules.specification.version` in the root pom, not from the project version; raise it for every release that should reach existing installs through autoupdate.
+
+Moving the update center to another URL:
+
+- The NetBeans update client does not follow a redirect from HTTP to HTTPS. A URL that installations already use must keep being served as it is.
+- NetBeans keeps a URL the user edited (the `url` key under `config/Preferences/org/netbeans/modules/autoupdate/` in the user directory) in preference to the one the module registers. A new URL therefore needs a new update-center key in `CoreAUC`. This is why 1.5.3 replaced `org_glotaran_auc_update_center` (`http://glotaran.org/uc/`) with `org_glotaran_auc_secure_update_center` (`https://glotaran.org/suc/`). glotaran.org still serves the 1.5.3 site at `/uc/1.5/stable/` over plain HTTP, for 1.5.1 installations that have not updated yet.
 
 ## 2. Windows installer
 

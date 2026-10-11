@@ -1,5 +1,6 @@
 # Builds the autoupdate site, the generic zip and the Windows, Linux and macOS
-# installers. On a v* tag the results are attached to a draft GitHub release.
+# installers, then installs each installer and starts Glotaran from it.
+# On a v* tag the results are attached to a draft GitHub release.
 # See RELEASING.md for the manual equivalent of each step.
 
 name: Release installers
@@ -7,6 +8,12 @@ name: Release installers
 on:
   push:
     tags: ["v*"]
+  # workflow_dispatch is only offered for workflows on the default branch;
+  # pull requests that change the release tooling get a full run instead
+  pull_request:
+    paths:
+      - .github/workflows/release.yml
+      - .github/scripts/smoke-test.sh
   workflow_dispatch:
 
 permissions:
@@ -114,6 +121,18 @@ jobs:
             "-Pinnosetup.license=$ws\license\gpl-3.0.txt"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Move-Item "$out\Glotaran-$env:PKG_VERSION.exe" "$ws\installers\Glotaran-$env:VERSION-windows-x64-setup.exe"
+      - name: Install
+        shell: pwsh
+        run: |
+          $p = Start-Process -Wait -PassThru "installers\Glotaran-$env:VERSION-windows-x64-setup.exe" `
+            -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-'
+          if ($p.ExitCode -ne 0) { throw "Installer exited with $($p.ExitCode)" }
+      # Same arguments as the Start menu shortcut
+      - name: Start installed Glotaran
+        shell: bash
+        run: |
+          APP="C:/Program Files/Glotaran"
+          bash .github/scripts/smoke-test.sh "$APP" "$APP/bin/glotaran64.exe" --jdkhome "$APP/jdk"
       - uses: actions/upload-artifact@v7
         with:
           name: release-windows
@@ -172,6 +191,12 @@ jobs:
             "-Prpm.license=CDDL-1.0 AND GPL-3.0" -Prpm.group=Applications/Engineering
           mv "$OUT/glotaran_${PKG_VERSION}-1_amd64.deb" "installers/Glotaran-$VERSION-linux-amd64.deb"
           mv "$OUT/glotaran-${PKG_VERSION}-0.x86_64.rpm" "installers/Glotaran-$VERSION-linux-x86_64.rpm"
+      - name: Install .deb
+        run: |
+          sudo apt-get install -y -qq xvfb
+          sudo apt-get install -y -qq "./installers/Glotaran-$VERSION-linux-amd64.deb"
+      - name: Start installed Glotaran
+        run: bash .github/scripts/smoke-test.sh /usr/lib/glotaran xvfb-run -a /usr/bin/glotaran
       - uses: actions/upload-artifact@v7
         with:
           name: release-linux
@@ -181,12 +206,16 @@ jobs:
   macos:
     name: macOS app (${{ matrix.arch }})
     needs: build
-    runs-on: macos-latest
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     strategy:
       matrix:
-        # Both are built on the Apple silicon runner; the x64 JRE is only copied, not run
-        arch: [aarch64, x64]
+        # Each architecture is built on a runner of that architecture so the app can be started
+        include:
+          - arch: aarch64
+            runner: macos-latest
+          - arch: x64
+            runner: macos-26-intel
     env:
       VERSION: ${{ needs.build.outputs.version }}
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
@@ -235,6 +264,15 @@ jobs:
             sleep 10
           done
           test -f "$DMG"
+      - name: Start Glotaran from the DMG
+        run: |
+          MNT="$RUNNER_TEMP/mnt"
+          hdiutil attach "installers/Glotaran-$VERSION-macos-$ARCH.dmg" -nobrowse -readonly -mountpoint "$MNT"
+          status=0
+          bash .github/scripts/smoke-test.sh "$MNT/Glotaran.app/Contents/Resources/glotaran" \
+            "$MNT/Glotaran.app/Contents/MacOS/glotaran" || status=$?
+          hdiutil detach "$MNT" || hdiutil detach -force "$MNT"
+          exit $status
       - uses: actions/upload-artifact@v7
         with:
           name: release-macos-${{ matrix.arch }}

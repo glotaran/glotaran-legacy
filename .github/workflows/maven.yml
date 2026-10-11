@@ -14,7 +14,11 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v7
@@ -24,9 +28,15 @@ jobs:
           java-version: "25"
           distribution: temurin
           cache: maven
-      - name: Build with Maven
-        run: mvn -B -T 1C clean verify -Pdeployment --file pom.xml --no-transfer-progress
+      # ApplicationTest starts the platform with all clusters (NbModuleSuite) and fails on warnings
+      - name: Build with Maven and run the application smoke test
+        shell: bash
+        run: >
+          ${{ runner.os == 'Linux' && 'xvfb-run -a' || '' }}
+          mvn -B -T 1C clean verify -Pdeployment --file pom.xml --no-transfer-progress
+          -DskipTests=false -Dtest=ApplicationTest -DfailIfNoTests=false
       - name: Upload portable ZIP
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v7
         with:
           name: glotaran-portable-zip
