@@ -47,6 +47,9 @@
         <glotaran.netbeans.useOSGiDependencies>false</glotaran.netbeans.useOSGiDependencies>
         <glotaran.app.title>${project.name.capatilized} ${project.version}</glotaran.app.title>
 
+        <!-- Tests are skipped by default; run them with -DskipTests=false -->
+        <skipTests>true</skipTests>
+
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <glotaran.maven.requiredVersion>3.2.2</glotaran.maven.requiredVersion>
@@ -722,12 +725,12 @@
                 </configuration>
             </plugin>
 
-            <!-- Skip unit tests in non-deployment or release mode -->
+            <!-- Skip unit tests unless -DskipTests=false is passed -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>${skipTests}</skipTests>
                 </configuration>
             </plugin>
 
