@@ -70,6 +70,21 @@ git checkout -- application/src/main/resources/glotaran.conf
 
 Verify after the build: `unzip -p application/target/glotaran-app-*.zip glotaran/etc/glotaran.conf | file -` must not report CRLF.
 
+## Version numbers
+
+The version of a release is set in several places:
+
+- the root version and the parent version in every child POM (`release.yml` does not change them; set them before tagging);
+- `glotaran.modules.specification.version` in the root POM: the `OpenIDE-Module-Specification-Version` of every Glotaran module (see the autoupdate notes below);
+- `glotaran.branding.version` in the root POM (`1.6`): the user directory `.glotaran/<branding version>` (`Library/Application Support/glotaran/<branding version>` on macOS) set in `application/src/main/resources/glotaran.conf`;
+- the update center URL in `CoreAUC/src/main/resources/org/glotaran/auc/Bundle.properties` (`/suc/<branding version>/stable/`);
+- `docs/release-notes/<version>.md`, which `release.yml` uses as the release text;
+- the README.
+
+Branding sources in `branding/src/main/resources` are filtered into `branding/src/main/nbm-branding` and set the splash screen, main-window title and application name from the project version. The Inno Setup app ID (`Glotaran-<major>.<minor>`) and the installer metadata versions are derived from the tag in `release.yml`.
+
+For a new release line (for example 1.7), change `glotaran.branding.version` and the update center URL as well, so that the new line uses its own user directory and update center and can be installed next to the previous one.
+
 ## 1. Autoupdate site and generic zip
 
 ```sh
@@ -84,6 +99,11 @@ Outputs in `application/target/`:
 Signing: the NBMs are signed only when `src/keystore/keystore.ks` exists and `-Dkeystore.password=...` is passed (alias `glotaran`, see the `nbm-maven-plugin` configuration in the root pom). The keystore is not in the repository; without it the build warns and produces unsigned NBMs.
 
 Autoupdate only offers modules whose specification version is higher than the installed one. The Glotaran modules take theirs from `glotaran.modules.specification.version` in the root pom, not from the project version; raise it for every release that should reach existing installs through autoupdate.
+
+Moving the update center to another URL:
+
+- The NetBeans update client does not follow a redirect from HTTP to HTTPS. A URL that installations already use must keep being served as it is.
+- NetBeans keeps a URL the user edited (the `url` key under `config/Preferences/org/netbeans/modules/autoupdate/` in the user directory) in preference to the one the module registers. A new URL therefore needs a new update-center key in `CoreAUC`. This is why 1.5.3 replaced `org_glotaran_auc_update_center` (`http://glotaran.org/uc/`) with `org_glotaran_auc_secure_update_center` (`https://glotaran.org/suc/`). glotaran.org still serves the 1.5.3 site at `/uc/1.5/stable/` over plain HTTP, for 1.5.1 installations that have not updated yet.
 
 ## 2. Windows installer
 

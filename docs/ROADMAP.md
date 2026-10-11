@@ -34,7 +34,7 @@ Relevant facts about the current code and ecosystem:
 - TIMP 1.13.6 (2022-12-12) is on CRAN. conda-forge has `r-base` 4.6.1 and `r-rserve`, but no `r-timp`.
 - pyglotaran 0.7.4 is on PyPI and requires Python `>=3.10,<3.15`.
 
-See [BUILD_AND_DISTRIBUTION.md](BUILD_AND_DISTRIBUTION.md) for the packaging, installer, and release setup these releases use.
+The packaging, installer, and release setup is described in [RELEASING.md](../RELEASING.md) for 1.6 and later, and in [BUILD_AND_DISTRIBUTION.md](https://github.com/glotaran/glotaran-legacy/blob/maintenance/v1.5.x/docs/BUILD_AND_DISTRIBUTION.md) on the 1.5.x branch for 1.5.3.
 
 ## 1.5.3 — final RELEASE802 maintenance release (released)
 
@@ -45,7 +45,7 @@ Version choice: the source was set to 1.5.2 by the Maven release-prepare commit 
 Scope:
 
 1. Add a notice, shown at startup until dismissed, pointing to pyglotaran and to the GitHub Releases page of this repository. Store the dismissal in `NbPreferences` and add a Help menu entry that shows it again. Put it in an existing module (for example the `CoreMain` module installer); no new module.
-2. Update every place where the version is set, as listed under "Branding and version numbers" in [BUILD_AND_DISTRIBUTION.md](BUILD_AND_DISTRIBUTION.md), including `glotaran.modules.specification.version` (still 1.5.1).
+2. Update every place where the version is set, as listed under "Branding and version numbers" in [BUILD_AND_DISTRIBUTION.md](https://github.com/glotaran/glotaran-legacy/blob/maintenance/v1.5.x/docs/BUILD_AND_DISTRIBUTION.md), including `glotaran.modules.specification.version` (still 1.5.1).
 3. Decide what happens to the update center URL registered in `CoreAUC`. Publishing a 1.5.3 update site at `https://glotaran.org/uc/1.5/stable/` delivers the notice to existing 1.5.x installations. If glotaran.org cannot host it, leave the URL unchanged and rely on the website and README.
 4. Rewrite the README "Latest releases" section to match this roadmap.
 5. Document a tested R setup in the release notes: R 4.6.x, `install.packages(c("TIMP", "Rserve"))`.

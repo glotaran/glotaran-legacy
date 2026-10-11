@@ -1,6 +1,6 @@
 # Packaging And Release
 
-[RELEASING.md](../RELEASING.md) describes how the 1.6.x release artifacts are built: the autoupdate site, the generic ZIP, and the Windows, Linux, and macOS installers with a bundled Java runtime. The `Release installers` workflow (`.github/workflows/release.yml`) runs the same steps in CI. [BUILD_AND_DISTRIBUTION.md](BUILD_AND_DISTRIBUTION.md) describes the 1.5.x setup.
+[RELEASING.md](../RELEASING.md) describes how the 1.6.x release artifacts are built: the autoupdate site, the generic ZIP, and the Windows, Linux, and macOS installers with a bundled Java runtime. The `Release installers` workflow (`.github/workflows/release.yml`) runs the same steps in CI.
 
 ## Everyday packaging
 

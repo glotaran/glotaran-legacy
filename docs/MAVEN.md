@@ -26,3 +26,13 @@ This repository is a Maven multi-module reactor. The root `pom.xml` defines vers
 - `deployment` builds the portable ZIP and the autoupdate site, and attaches sources and Javadoc for `deploy`.
 - `release`, `release-extra`, `export-javadoc`, and `export-sources` are for publishing and are not needed during development.
 - The application module's packaging profiles are described in [PACKAGING_AND_RELEASE.md](PACKAGING_AND_RELEASE.md).
+
+## Known defects in the publishing configuration
+
+None of these affects `verify`, `install`, or the `deployment` profile.
+
+- The release plugin requests a profile named `releases`; the profile is named `release`.
+- Distribution management needs `${github.maven.repository}`, which is not defined in the repository, so `deploy` fails.
+- `export-javadoc` and `export-sources` refer to `src/assemble/javadoc.xml` and `src/assemble/sources.xml`, which do not exist.
+- NBM signing refers to `src/keystore/keystore.ks`, which is not in the repository; the build warns and produces unsigned NBMs.
+- The NBM license is configured as `../../COPYING.txt`, which resolves outside the checkout, so every build warns that it is missing. The license files are in `license/`.
