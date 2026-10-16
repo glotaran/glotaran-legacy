@@ -3,3 +3,6 @@
 
 # Shell scripts run on Linux and macOS runners and in Git Bash on Windows
 *.sh text eol=lf
+
+# The SHA-256 of the R runtime explicit files is the runtime ID; keep the bytes the same on every build machine
+TIMPController/src/main/resources/org/glotaran/timpcontroller/runtime/*.txt text eol=lf
