@@ -15,7 +15,7 @@ import org.openide.windows.InputOutput;
 public final class ManagedR {
 
     /** Where the user changes the mode and reinstalls the runtime. */
-    public static final String OPTIONS_LOCATION = "Tools > Options > Options > R runtime";
+    public static final String OPTIONS_LOCATION = "Tools > Options > Glotaran > R runtime";
     private static final String USE_OWN_R = "Use my own R installation";
     private static final String INSTALL_R = "Download and install R for Glotaran";
 
