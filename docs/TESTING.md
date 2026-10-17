@@ -1,6 +1,6 @@
 # Testing
 
-Five modules contain tests (`application`, `ExampleDataloader`, `JFreeChartCustom`, `JRConnect`, `LabmonkeyDataloader`), and the default build does not run them.
+Six modules contain tests (`application`, `ExampleDataloader`, `JFreeChartCustom`, `JRConnect`, `LabmonkeyDataloader`, `TIMPController`), and the default build does not run them.
 
 ## Default behaviour
 
@@ -13,7 +13,21 @@ Five modules contain tests (`application`, `ExampleDataloader`, `JFreeChartCusto
   ```
 
   `ApplicationTest` starts the assembled platform with all clusters through `NbModuleSuite` and fails if anything is logged at WARNING level or above. On Linux without a display, run it under `xvfb-run -a`.
-- The release workflow (`.github/workflows/release.yml`) installs the Windows installer, the `.deb` and both DMGs (not the `.rpm`) and starts Glotaran from each with `.github/scripts/smoke-test.sh`, which checks `messages.log` for the bundled runtime and the enabled Glotaran modules.
+- The release workflow (`.github/workflows/release.yml`) installs the Windows installer, the `.deb` and both DMGs (not the `.rpm`) and starts Glotaran from each with `.github/scripts/smoke-test.sh`, which checks `messages.log` for the bundled runtime and the enabled Glotaran modules, and runs the bundled micromamba.
+- The `r-runtime` job in `maven.yml` runs `ManagedRuntimeIT` (see below) on Ubuntu, Windows, macOS arm64 and macOS x64.
+
+## Managed R runtime (TIMPController)
+
+- Unit tests, no network or R needed:
+
+  ```sh
+  mvn -B -T 1C verify -pl TIMPController -am -DskipTests=false -Dtest=MicromambaTest,RRuntimeTest,RserveProcessTest,ExistingRTest -DfailIfNoTests=false
+  ```
+
+- `ManagedRuntimeIT` installs the bundled explicit file of the current platform into a temporary folder with `RRuntime.ensureReady()` (downloads micromamba and about 300 MB of packages), starts Rserve through `RserveProcess`, connects twice with the Java client, fits TIMP's two-decay example and compares the rates with the known result, and checks that stopping Rserve ends R. Surefire does not pick it up by default because the class name does not end in `Test`; run it with `-DskipTests=false -Dtest=ManagedRuntimeIT -DfailIfNoTests=false`. Add `-Dglotaran.rruntime.spec=<file>` to test another explicit file.
+- The `r-timp packages` workflow (`r-timp.yml`) builds `r-timp` on each platform and runs the recipe's test (`library('TIMP')`); it runs on pull requests that change the recipe.
+- `TIMPController/pom.xml` pins the Surefire JUnit 4 provider, because TestNG is on its test classpath as well.
+- Manual test in the application: run from `application/` (see [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md)), start an analysis, and check the first-run question (shown only when an R installation or an Rserve on `localhost:6311` is found), the installation progress, the "R runtime" and "Rserve" output tabs, *Tools > Options > Options > R runtime*, and that no `Rscript` or `micromamba` process is left after closing Glotaran. Use a fresh user directory (`mvn clean` in `application/`) to see the first-run behaviour again.
 
 ## Running tests
 
