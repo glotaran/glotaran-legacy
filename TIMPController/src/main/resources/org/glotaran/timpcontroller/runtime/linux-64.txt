@@ -113,4 +113,5 @@ https://conda.anaconda.org/conda-forge/linux-64/r-maps-3.4.3-r44h54b55ab_1.conda
 https://conda.anaconda.org/conda-forge/linux-64/r-fields-17.3-r44heaba542_0.conda#e8d9c6fe3380e9b7a5e263f98c80839b
 https://conda.anaconda.org/conda-forge/linux-64/r-desolve-1.42-r44h11cdb10_0.conda#c065a614e3263ed87e6f9ffbb37e80f1
 https://conda.anaconda.org/conda-forge/linux-64/r-colorspace-2.1_3-r44h54b55ab_0.conda#c163d0ec145b9291fc76251c111bdf6b
+https://conda.anaconda.org/conda-forge/linux-64/libopenblas-0.3.34-pthreads_hf13c14d_2.conda#7e19fcd73d7f0997d3cb3326d2586a86
 https://github.com/glotaran/TIMP/releases/download/v1.13.6/r-timp-1.13.6-r44hfb7882a_0.conda#12f6083f8d92d1ff62914a2484e0e691
