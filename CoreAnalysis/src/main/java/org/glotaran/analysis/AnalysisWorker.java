@@ -163,8 +163,6 @@ public class AnalysisWorker implements Runnable {
                         }
                         timpcontroller.cleanup();
 
-                    } else {
-                        CoreErrorMessages.noRServeFoundException();
                     }
                 } else {
                     CoreErrorMessages.notAValidModelException();

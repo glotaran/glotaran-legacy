@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.extexecution.ExecutionService;
+import org.glotaran.timpcontroller.runtime.ManagedR;
 import org.openide.modules.ModuleInstall;
 import org.rosuda.REngine.Rserve.RConnection;
 
@@ -45,6 +46,7 @@ public class Installer extends ModuleInstall {
 
     @Override
     public void close() {
+        ManagedR.stop();
         if (exitCode != null) {
             exitCode.cancel(true);
         }

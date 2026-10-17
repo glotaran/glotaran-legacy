@@ -15,7 +15,7 @@ Acceptance:
 
 Non-goals:
 
-- No change to `TimpControllerInterface` or its callers (`AnalysisWorker`, `SimulationWorker`).
+- No change to `TimpControllerInterface` or its callers (`AnalysisWorker`, `SimulationWorker`), except that `AnalysisWorker` no longer shows `CoreErrorMessages.noRServeFoundException()` itself (decision 7).
 - No R 4.5 or later (see ROADMAP.md).
 - No offline installer that contains the R runtime.
 - No configuration of a remote Rserve host in the GUI.
@@ -135,9 +135,10 @@ The dialog runs through `DialogDisplayer.notify()` from the worker thread.
 
 - Remove the connection attempt from the constructor.
 - Add `ensureConnection()`: resolve the mode; in managed mode call `RRuntime.ensureReady()` and `RserveProcess.ensureStarted()`, then connect with `Properties` `HOST=127.0.0.1`, `PORT=<port>`; in own-R mode connect as today.
-- `isConnected()`, `runAnalysis()` and `runSimulation()` call `ensureConnection()` (the simulation path does not call `isConnected()` today).
+- `isConnected()`, `runAnalysis()` and `runSimulation()` call `ensureConnection()` (the simulation path does not call `isConnected()` today). `runSimulation()` also runs `verifyRserve()` like `runAnalysis()`, because a new managed Rserve has not loaded TIMP.
+- `verifyRserve()` flushes the "Rserve" output writer instead of closing it, because the managed Rserve writes to it for the whole session.
 - Managed mode: if TIMP is missing or too old, report a broken runtime (with "Reinstall in Options") instead of the `install.packages("TIMP")` advice, which stays for own-R mode.
-- Managed-mode failures show a message that names the step that failed and the log file; `CoreErrorMessages.noRServeFoundException()` stays for own-R mode.
+- The controller shows all connection messages. Managed-mode failures show a message that names the step that failed and the log file; a cancelled installation shows a status-bar message. In own-R mode the controller calls `CoreErrorMessages.noRServeFoundException()`, which `AnalysisWorker` used to call when `isConnected()` returned false.
 
 `Installer.close()` calls `RserveProcess.stop()`. `Installer.restored()` does not start R, so start-up time is unchanged.
 
@@ -198,3 +199,4 @@ Each step is a commit on `auto_deploy_r_timp_rserve`, reviewed before the next:
 4. "Use my own R installation" stays available with the 1.6 behaviour, for users who have R and want to keep using it.
 5. The 1.7 release waits until `r-timp` is published on conda-forge. If the implementation is finished earlier, a CI build of `r-timp` published as a GitHub release file may be used for testing in the meantime, not for the release.
 6. Testing on an Intel Mac and on Linux happens last in the development pipeline. Until then, Linux is tested in WSL (Ubuntu) where relevant.
+7. (2026-10-17) `TimpController` shows every connection message itself, and `AnalysisWorker` no longer shows the "are you sure you started Rserve?" message when `isConnected()` returns false. Otherwise a managed-mode failure, a cancelled installation or a cancelled first-run question would be followed by that message.

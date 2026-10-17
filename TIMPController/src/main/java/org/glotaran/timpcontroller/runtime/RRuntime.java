@@ -51,6 +51,8 @@ public final class RRuntime {
     static final String SPEC_PROPERTY = "glotaran.rruntime.spec";
     static final String MARKER = "glotaran-runtime.properties";
     private static final long MIN_FREE_SPACE = 2L * 1024 * 1024 * 1024;
+    /** First download with an empty package cache, measured for the current lock. */
+    private static final Map<String, Integer> DOWNLOAD_MB = Map.of("win-64", 264, "linux-64", 305, "osx-64", 272, "osx-arm64", 262);
     private static final Pattern VERSION_LINE = Pattern.compile("^(R|Rserve|TIMP)=(\\S+)$");
     /** Prints the versions in the format of {@link #VERSION_LINE}; single quotes because Windows passes the argument through cmd.exe. */
     static final String CHECK_EXPRESSION = "suppressPackageStartupMessages({library(Rserve); library(TIMP)}); "
@@ -89,6 +91,11 @@ public final class RRuntime {
 
     public String getPlatform() {
         return platform;
+    }
+
+    /** @return the approximate size of the first download in MB */
+    public int getDownloadSize() {
+        return DOWNLOAD_MB.getOrDefault(platform, 300);
     }
 
     public Path getDirectory() {
@@ -250,7 +257,7 @@ public final class RRuntime {
         deleteTree(env);
         Path spec = directory.resolve("spec.txt");
         Files.write(spec, readSpec());
-        progress.progress("Downloading and installing R (about 265 MB)");
+        progress.progress("Downloading and installing R (about " + getDownloadSize() + " MB)");
         run(createCommand(micromamba, spec), out, "Installing R");
         progress.progress("Checking R");
         List<String> lines = run(runCommand(micromamba, "Rscript", "--vanilla", "-e", CHECK_EXPRESSION), out, "Checking R");

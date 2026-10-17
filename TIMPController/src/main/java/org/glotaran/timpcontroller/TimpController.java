@@ -5,19 +5,26 @@
 package org.glotaran.timpcontroller;
 
 import org.ujmp.core.Matrix;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.CancellationException;
 import org.glotaran.core.interfaces.TimpControllerInterface;
 import org.glotaran.core.models.structures.DatasetTimp;
 import org.glotaran.core.models.structures.TimpResultDataset;
 import org.glotaran.core.messages.CoreErrorMessages;
 import org.glotaran.core.models.tgm.Tgm;
+import org.glotaran.timpcontroller.runtime.ManagedR;
+import org.glotaran.timpcontroller.runtime.RMode;
 import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 import org.openide.windows.OutputWriter;
+import org.rosuda.irconnect.IConnectionFactory;
 import org.rosuda.irconnect.IREXP;
 import org.rosuda.irconnect.IRList;
 import org.rosuda.irconnect.IRMap;
@@ -36,39 +43,97 @@ public class TimpController implements TimpControllerInterface {
     private boolean isRserveRunning = false;
     private boolean isTIMPLoaded = false;
     private InputOutput io;
+    /** Mode of the current connection; {@code null} when not connected. */
+    private RMode connectedMode;
+    /** Host and port of the managed Rserve; {@code null} connects to localhost:6311. */
+    private Properties connectionProperties;
 
     public TimpController() {
         io = IOProvider.getDefault().getIO("Rserve", true);
-        if (connection == null) {
-            connection = MakeNewConnection();
-        }
     }
 
     @Override
     public boolean isConnected() {
-        if (connection != null) {
-            return connection.isConnected();
-        } else {
-            connection = MakeNewConnection();
-            if (connection != null) {
-                return connection.isConnected();
-            } else {
-                return false;
-            }
-        }
+        return ensureConnection();
     }
 
     @Override
     public void cleanup() {
-        connection.voidEval("try(rm(list=ls()))");
-        connection.voidEval("try(gc())");
+        if (connection != null && connection.isConnected()) {
+            connection.voidEval("try(rm(list=ls()))");
+            connection.voidEval("try(gc())");
+        }
         System.gc();
+    }
+
+    /**
+     * Connects to R in the mode the user chose, installing and starting the managed R if needed. Shows a message
+     * when that fails.
+     *
+     * @return {@code true} if there is a connection
+     */
+    private synchronized boolean ensureConnection() {
+        RMode mode = ManagedR.resolveMode();
+        if (mode == null) {
+            return false;
+        }
+        boolean rserveAlive = mode == RMode.OWN_R || ManagedR.isRunning();
+        if (mode == connectedMode && connection != null && connection.isConnected() && rserveAlive) {
+            return true;
+        }
+        closeConnection();
+        if (mode == RMode.OWN_R) {
+            if (ManagedR.isRunning()) {
+                ManagedR.stop();
+            }
+            connectionProperties = null;
+            MakeNewConnection();
+            if (connection == null || !connection.isConnected()) {
+                CoreErrorMessages.noRServeFoundException();
+                return false;
+            }
+        } else {
+            try {
+                int port = ManagedR.start(io.getOut());
+                connectionProperties = new Properties();
+                connectionProperties.setProperty(IConnectionFactory.HOST, "127.0.0.1");
+                connectionProperties.setProperty(IConnectionFactory.PORT, String.valueOf(port));
+                MakeNewConnection();
+                if (connection == null || !connection.isConnected()) {
+                    throw new IOException("Connecting to R on port " + port + " failed. "
+                            + "The output of R is in the Rserve output window.");
+                }
+            } catch (CancellationException e) {
+                StatusDisplayer.getDefault().setStatusText("Installation of R cancelled", 1).clear(15000);
+                return false;
+            } catch (IOException e) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(
+                        "Glotaran could not start R.\n" + e.getMessage(), NotifyDescriptor.ERROR_MESSAGE));
+                return false;
+            }
+        }
+        connectedMode = mode;
+        return true;
+    }
+
+    private void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                // The connection is replaced anyway.
+            }
+            connection = null;
+        }
+        connectedMode = null;
+        isRserveRunning = false;
+        isTIMPLoaded = false;
     }
 
     private ITwoWayConnection MakeNewConnection() {
         // if (connection == null) {
         try {
-            connection = new REngineConnectionFactory().createTwoWayConnection(null);
+            connection = new REngineConnectionFactory().createTwoWayConnection(connectionProperties);
             if (connection.isConnected()) {
                 connection.voidEval("");
                 connection.assign("isGlotaranConnection", "TRUE");
@@ -154,7 +219,11 @@ public class TimpController implements TimpControllerInterface {
             } else {
                 writer.append(" FAIL.").flush();
                 writer.println();
-                io.getErr().println("ERROR: please install TIMP. Run R and run install.packages(\"TIMP\")");
+                if (connectedMode == RMode.MANAGED) {
+                    io.getErr().println("ERROR: TIMP is missing from R for Glotaran. Reinstall it in " + ManagedR.OPTIONS_LOCATION + ".");
+                } else {
+                    io.getErr().println("ERROR: please install TIMP. Run R and run install.packages(\"TIMP\")");
+                }
                 io.select();
                 StatusDisplayer.getDefault().setStatusText("The R-package TIMP is not installed. Please install.", 1).clear(30000);
                 return;
@@ -181,7 +250,8 @@ public class TimpController implements TimpControllerInterface {
             writer.println();
 
             // check if a TIMP function can be called
-            writer.close();
+            // flush, not close: the managed Rserve keeps writing to this tab
+            writer.flush();
         }
 
     }
@@ -193,6 +263,9 @@ public class TimpController implements TimpControllerInterface {
 
     @Override
     public TimpResultDataset[] runAnalysis(DatasetTimp[] datasets, ArrayList<String> initModelCalls, String fitModelCall) {
+        if (!ensureConnection()) {
+            return null;
+        }
         if (!isRserveRunning || !isTIMPLoaded) {
             verifyRserve();
         }
@@ -741,6 +814,15 @@ public class TimpController implements TimpControllerInterface {
     }
 
     public DatasetTimp[] runSimulation(ArrayList<String> initModelCalls, String simModel) {
+        if (!ensureConnection()) {
+            return null;
+        }
+        if (!isRserveRunning || !isTIMPLoaded) {
+            verifyRserve();
+        }
+        if (!isRserveRunning || !isTIMPLoaded) {
+            return null;
+        }
 
         DatasetTimp[] results = null;
 
