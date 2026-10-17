@@ -81,7 +81,7 @@ Layout under the user directory (`<runtime>` = `<userdir>/r-runtime`):
 <runtime>/
   micromamba/            downloaded micromamba (only in case 3 above)
   root/                  micromamba root prefix; package cache, emptied after install
-  env-<runtime ID>/      the environment (about 1.2 GB on Windows)
+  env-<runtime ID>/      the environment (about 1.2 GB on Windows); the folder name uses the first 12 characters of the ID
   work/                  working directory for Rserve
   install.log            output of the last install
 ```
@@ -93,12 +93,14 @@ States: `NOT_INSTALLED`, `INSTALLING`, `READY`, `FAILED` (with message). `READY`
 1. If `READY`, return. Otherwise show a notification that R is being installed, with the download size (about 265 MB) and disk space (about 1.2 GB on Windows). Before downloading, check that the disk with the user directory has at least 2 GB free; otherwise stop with a message.
 2. Create the environment: `micromamba create -y --no-rc -r <runtime>/root -p <env> -f <explicit file>`. `--no-rc` keeps the user's own conda configuration out; proxy environment variables still apply.
 3. Check it: `micromamba run -r <root> -p <env> Rscript --vanilla -e "<print R, TIMP and Rserve versions>"` with the environment from section 4.
-4. Write the marker; `micromamba clean -y --all -r <root>` (frees the package cache, 279 MB in the Windows test); remove environments with another runtime ID.
+4. Write the marker; delete `<root>/pkgs` (the package cache, 279 MB in the Windows test; `micromamba clean` does not accept `-r`); remove environments with another runtime ID.
 5. On failure or cancel: stop the process tree, delete the partial environment, state `FAILED`, keep `install.log`.
 
 Output goes to an "R runtime" output tab and to `install.log`. The `ProgressHandle` is cancellable and shows the phase ("Downloading and installing R (about 265 MB)", "Checking R"). micromamba's output is not parsed for progress.
 
 `remove()` deletes `env-*`, `root` and `work` (used by the options panel).
+
+`micromamba create -p` also adds the environment to the user's `~/.conda/environments.txt`, so it appears in `conda env list` of users who have conda. micromamba 2.9 has no setting to turn this off; conda ignores entries whose folder no longer exists.
 
 ### 4. `RserveProcess`
 
@@ -162,6 +164,12 @@ Windows 11, 2026-10-11 and 2026-10-16:
 - With a locally built `r-timp`, Glotaran's Java client (REngine 2.1.0, Rserve 1.8.1) ran TIMP's `fitModel` example over Rserve; rate constants equal CRAN R 4.5.3 and 4.6.1 to about 9 significant digits.
 - From Java 25: Rserve started through `micromamba run` answered on a free port after 0.5 s. The process tree is `micromamba.exe` → `cmd.exe` → `Scripts\Rscript.exe` → `lib\R\bin\x64\Rscript.exe`; destroying the descendants and the process left no process running and closed the port.
 - First download, from a dry run with an empty cache: 264 MB (Windows), 262 MB (macOS arm64), 272 MB (macOS x64), 305 MB (Linux).
+
+Windows 11, 2026-10-17, with the step 2 classes (`RRuntime`, `RserveProcess`) from a small Java program, in a runtime folder whose path contains a space and with a spec file that adds the locally built `r-timp`:
+
+- micromamba 2.9.0-0 was downloaded and passed the SHA-256 check; `ensureReady` installed and checked the runtime in 58 s (R 4.4.3, Rserve 1.8.14, TIMP 1.13.6) and left no package cache.
+- `ensureStarted` had Rserve answering after 0.6 s; two REngine connections in a row ran TIMP's `fitModel` example; `.libPaths()` was only the environment's library. After `stop()` the R process was gone and the port closed.
+- A user-set `R_HOME` (pointing to a CRAN R) does not affect the managed R; `micromamba run` sets its own.
 
 Not verified yet: installation and Rserve on macOS and Linux; behaviour behind a proxy; install time on a slow connection.
 
