@@ -90,6 +90,25 @@ public final class ManagedR {
         return rserve.ensureStarted();
     }
 
+    /**
+     * Stops the managed Rserve, deletes the runtime and installs it again, with a notification and a cancellable
+     * progress bar. Used by the options panel. Call from a background thread.
+     *
+     * @throws CancellationException if the user cancelled the installation
+     */
+    public static synchronized void install() throws IOException {
+        RRuntime runtime = RRuntime.getDefault();
+        stopRserve();
+        runtime.remove();
+        install(runtime);
+    }
+
+    /** Stops the managed Rserve and deletes the runtime. Call from a background thread. */
+    public static synchronized void remove() throws IOException {
+        stopRserve();
+        RRuntime.getDefault().remove();
+    }
+
     private static void install(RRuntime runtime) throws IOException {
         NotificationDisplayer.getDefault().notify("Installing R for Glotaran",
                 ImageUtilities.loadImageIcon("org/netbeans/modules/dialogs/info.png", false),
@@ -117,6 +136,10 @@ public final class ManagedR {
     /** Cancels a running installation and stops the Rserve started by {@link #start}. Does not wait for {@link #start}. */
     public static void stop() {
         RRuntime.getDefault().cancel();
+        stopRserve();
+    }
+
+    private static void stopRserve() {
         RserveProcess process = rserve;
         if (process != null) {
             process.stop();
