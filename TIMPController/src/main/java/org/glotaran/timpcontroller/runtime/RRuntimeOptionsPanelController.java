@@ -12,7 +12,8 @@ import org.openide.util.NbBundle;
         location = "Options",
         displayName = "#OptionsPanel_DisplayName_RRuntime",
         keywords = "#OptionsPanel_Keywords_RRuntime",
-        keywordsCategory = "Options/RRuntime"
+        keywordsCategory = "Options/RRuntime",
+        position = 100
 )
 @NbBundle.Messages({"OptionsPanel_DisplayName_RRuntime=R runtime", "OptionsPanel_Keywords_RRuntime=R TIMP Rserve"})
 public final class RRuntimeOptionsPanelController extends OptionsPanelController {
