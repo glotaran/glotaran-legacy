@@ -1,0 +1,88 @@
+# Builds the r-timp conda package for R 4.4 on each platform of Glotaran's R runtime.
+# Until r-timp is on conda-forge (conda-forge/staged-recipes#35140), these packages are attached to the
+# glotaran/TIMP v1.13.6 release and listed in TIMPController/src/main/r-runtime/r-timp.txt.
+# The recipe is a copy of the staged-recipes one; see RELEASING.md, "R runtime and micromamba".
+
+name: r-timp packages
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/r-timp.yml
+      - TIMPController/src/main/r-runtime/r-timp/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  RATTLER_BUILD_VERSION: "0.76.1"
+  # conda-forge/conda-forge-pinning-feedstock, recipe/conda_build_config.yaml
+  CONDA_FORGE_PINNING_COMMIT: e71ff1c4fe96d44f6ffd8edb217dd36c0ae6325f
+
+jobs:
+  build:
+    name: r-timp (${{ matrix.platform }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux-64
+            runner: ubuntu-latest
+            asset: rattler-build-x86_64-unknown-linux-musl
+            sha256: 38359a75f4a880442432923d6e984d349bb4134d330edd712eb1cfb2fa80581a
+          - platform: win-64
+            runner: windows-latest
+            asset: rattler-build-x86_64-pc-windows-msvc.exe
+            sha256: 131e3d9e6d67e7b5e873627567e74708e1722a40e78bcd3619dc4b20906fbb64
+          - platform: osx-arm64
+            runner: macos-latest
+            asset: rattler-build-aarch64-apple-darwin
+            sha256: 3809453e95380d598f2c4264480396029781fc64a9b940f3e19f84485fad75bf
+          - platform: osx-64
+            runner: macos-26-intel
+            asset: rattler-build-x86_64-apple-darwin
+            sha256: 4b0183a60e8d2a93ddaf34d0def0f3a27effcf973d097c016250dfbdb7f15c1b
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+      - name: Download rattler-build and conda-forge pinning
+        env:
+          ASSET: ${{ matrix.asset }}
+          SHA256: ${{ matrix.sha256 }}
+        run: |
+          mkdir -p tools
+          curl -fsSL --retry 3 -o tools/rattler-build \
+            "https://github.com/prefix-dev/rattler-build/releases/download/v$RATTLER_BUILD_VERSION/$ASSET"
+          if command -v sha256sum > /dev/null; then
+            echo "$SHA256  tools/rattler-build" | sha256sum -c -
+          else
+            echo "$SHA256  tools/rattler-build" | shasum -a 256 -c -
+          fi
+          chmod 755 tools/rattler-build
+          curl -fsSL --retry 3 -o tools/conda_build_config.yaml \
+            "https://raw.githubusercontent.com/conda-forge/conda-forge-pinning-feedstock/$CONDA_FORGE_PINNING_COMMIT/recipe/conda_build_config.yaml"
+      # Builds and runs the recipe's test (library('TIMP')) in a fresh environment
+      - name: Build r-timp
+        run: |
+          R=TIMPController/src/main/r-runtime/r-timp
+          tools/rattler-build build --recipe "$R/recipe.yaml" \
+            -m tools/conda_build_config.yaml -m "$R/variants.yaml" \
+            --target-platform "${{ matrix.platform }}" --output-dir output
+      - name: Checksums
+        run: |
+          cd "output/${{ matrix.platform }}"
+          for f in r-timp-*.conda; do
+            if command -v md5sum > /dev/null; then md5=$(md5sum "$f" | cut -d' ' -f1); else md5=$(md5 -q "$f"); fi
+            if command -v sha256sum > /dev/null; then sha=$(sha256sum "$f" | cut -d' ' -f1); else sha=$(shasum -a 256 "$f" | cut -d' ' -f1); fi
+            echo "$f md5=$md5 sha256=$sha" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - uses: actions/upload-artifact@v7
+        with:
+          name: r-timp-${{ matrix.platform }}
+          path: output/${{ matrix.platform }}/r-timp-*.conda
+          if-no-files-found: error
