@@ -14,6 +14,7 @@ on:
     paths:
       - .github/workflows/release.yml
       - .github/scripts/smoke-test.sh
+      - .github/scripts/fetch-micromamba.sh
   workflow_dispatch:
 
 permissions:
@@ -97,6 +98,14 @@ jobs:
       - name: Install Inno Setup
         shell: pwsh
         run: choco install innosetup --no-progress -y
+      # The installer bundles micromamba, which installs the managed R runtime; the generic zip stays platform-neutral
+      - name: Add micromamba to the zip
+        shell: bash
+        run: |
+          TEMP_DIR=$(cygpath -u "$RUNNER_TEMP")
+          bash .github/scripts/fetch-micromamba.sh win-64 "$TEMP_DIR/stage/glotaran/micromamba/micromamba.exe"
+          cp "dist/Glotaran-$VERSION-generic.zip" "$TEMP_DIR/Glotaran-windows.zip"
+          cd "$TEMP_DIR/stage" && 7z a -tzip -bso0 "$TEMP_DIR/Glotaran-windows.zip" glotaran/micromamba/micromamba.exe
       - name: Build installer
         shell: pwsh
         env:
@@ -111,7 +120,7 @@ jobs:
           # Arguments are quoted because PowerShell splits unquoted -X.y=z arguments at the dot
           java -p "$env:RUNNER_TEMP\nbpackage-$env:NBPACKAGE_VERSION\mods" `
             -m org.apache.netbeans.nbpackage/org.apache.netbeans.nbpackage.Main `
-            -t windows-innosetup -i "$ws\dist\Glotaran-$env:VERSION-generic.zip" -o "$out" `
+            -t windows-innosetup -i "$env:RUNNER_TEMP\Glotaran-windows.zip" -o "$out" `
             "-Pname=Glotaran" "-Pversion=$env:PKG_VERSION" "-Pruntime=$env:JRE" `
             "-Ppublisher=Vrije Universiteit Amsterdam" "-Purl=https://glotaran.org" `
             "-Pdescription=Glotaran - global and target analysis of time-resolved spectroscopy data" `
@@ -168,6 +177,12 @@ jobs:
             "https://repo1.maven.org/maven2/org/apache/netbeans/nbpackage/$NBPACKAGE_VERSION/nbpackage-$NBPACKAGE_VERSION-bin.zip"
           echo "$NBPACKAGE_SHA1  $RUNNER_TEMP/nbpackage.zip" | sha1sum -c -
           unzip -q "$RUNNER_TEMP/nbpackage.zip" -d "$RUNNER_TEMP"
+      # The packages bundle micromamba, which installs the managed R runtime; the generic zip stays platform-neutral
+      - name: Add micromamba to the zip
+        run: |
+          bash .github/scripts/fetch-micromamba.sh linux-64 "$RUNNER_TEMP/stage/glotaran/micromamba/micromamba"
+          cp "dist/Glotaran-$VERSION-generic.zip" "$RUNNER_TEMP/Glotaran-linux.zip"
+          (cd "$RUNNER_TEMP/stage" && zip -q "$RUNNER_TEMP/Glotaran-linux.zip" glotaran/micromamba/micromamba)
       - name: Build .deb and .rpm
         env:
           JRE: ${{ steps.jre.outputs.path }}
@@ -178,7 +193,7 @@ jobs:
           mkdir -p "$OUT" installers
           NBPACKAGE=(java -p "$RUNNER_TEMP/nbpackage-$NBPACKAGE_VERSION/mods"
                      -m org.apache.netbeans.nbpackage/org.apache.netbeans.nbpackage.Main)
-          COMMON=(-i "$PWD/dist/Glotaran-$VERSION-generic.zip" -o "$OUT"
+          COMMON=(-i "$RUNNER_TEMP/Glotaran-linux.zip" -o "$OUT"
                   -Pname=Glotaran "-Pversion=$PKG_VERSION" "-Pruntime=$JRE"
                   "-Ppublisher=Vrije Universiteit Amsterdam" -Purl=https://glotaran.org
                   "-Pdescription=Glotaran - global and target analysis of time-resolved spectroscopy data")
@@ -214,12 +229,15 @@ jobs:
         include:
           - arch: aarch64
             runner: macos-latest
+            micromamba: osx-arm64
           - arch: x64
             runner: macos-26-intel
+            micromamba: osx-64
     env:
       VERSION: ${{ needs.build.outputs.version }}
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
       ARCH: ${{ matrix.arch }}
+      MICROMAMBA_PLATFORM: ${{ matrix.micromamba }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/download-artifact@v4
@@ -244,6 +262,7 @@ jobs:
           mkdir -p "$APP/MacOS" "$APP/Resources"
           unzip -q "dist/Glotaran-$VERSION-generic.zip" -d "$APP/Resources"
           ditto "$JRE_HOME" "$APP/Resources/glotaran/jre"
+          bash .github/scripts/fetch-micromamba.sh "$MICROMAMBA_PLATFORM" "$APP/Resources/glotaran/micromamba/micromamba"
           cp application/src/main/resources/Info.plist "$APP/Info.plist"
           plutil -replace CFBundleVersion -string "$PKG_VERSION" "$APP/Info.plist"
           plutil -replace CFBundleShortVersionString -string "$PKG_VERSION" "$APP/Info.plist"

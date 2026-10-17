@@ -177,7 +177,8 @@ Not verified yet: installation and Rserve on macOS and Linux; behaviour behind a
 ## Testing
 
 - Unit tests (JUnit, `TIMPController`): platform mapping, presence of the four explicit files, runtime ID, command lines and process environment, state from the marker file, port selection.
-- CI job per OS (Windows, Ubuntu, macOS arm64 and x64): create the environment from the explicit file with micromamba, start Rserve, connect with the Java client and run a small TIMP fit. This checks the lock on every platform without the GUI.
+- CI job per OS (Windows, Ubuntu, macOS arm64 and x64), `r-runtime` in `maven.yml`, running `ManagedRuntimeIT`: download micromamba, create the environment from the explicit file, start Rserve and connect twice with the Java client. This checks the lock on every platform without the GUI. Until `r-timp` is on conda-forge it checks R and Rserve only; then it should use `ensureReady()` and run a small TIMP fit. Verified locally on Windows 11 and WSL Ubuntu (2026-10-17).
+- The installer smoke test (`smoke-test.sh`) runs `micromamba --version` from the installation.
 - Manual acceptance on clean user accounts, as listed under Acceptance, including the example project compared with 1.6.0.
 
 ## Implementation order
