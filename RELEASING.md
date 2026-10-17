@@ -22,7 +22,7 @@ Triggers:
 
 - Pushing a tag matching `v*` (for example `v1.6.0` or `v1.6.0-rc.1`). Creating a release in the GitHub web UI with a new `v*` tag also pushes the tag and starts the workflow. A release created for a tag that already exists does not.
 - Manually (Actions > Release installers > Run workflow). GitHub only offers this once the workflow file is on the default branch. Manual runs keep the files as workflow artifacts on the run page and create no release.
-- Pull requests that change `.github/workflows/release.yml` or `.github/scripts/smoke-test.sh`. These runs build and test everything and create no release.
+- Pull requests that change `.github/workflows/release.yml`, `.github/scripts/smoke-test.sh` or `.github/scripts/fetch-micromamba.sh`. These runs build and test everything and create no release.
 
 Jobs:
 
@@ -34,13 +34,15 @@ Jobs:
 | `macos` | `macos-latest` (Apple silicon) for aarch64, `macos-26-intel` for x64 | `Glotaran-<version>-macos-aarch64.dmg`, `Glotaran-<version>-macos-x64.dmg` |
 | `release` | `ubuntu-latest`, tags only | `SHA256SUMS`; uploads everything to a draft release for the tag |
 
-Smoke tests: the `windows` job installs the setup `.exe` silently, the `linux` job installs the `.deb` (and starts it under `xvfb-run`), and each `macos` job mounts its DMG. Each then starts Glotaran the way a user would and runs [`.github/scripts/smoke-test.sh`](.github/scripts/smoke-test.sh). The script waits until the main window is up, stops the application, prints `messages.log`, and fails the job if the bundled runtime was not used, if not all Glotaran modules that are enabled by default were turned on, or if anything was logged at SEVERE level. The `.rpm` is not installed; it contains the same files as the `.deb`.
+Smoke tests: the `windows` job installs the setup `.exe` silently, the `linux` job installs the `.deb` (and starts it under `xvfb-run`), and each `macos` job mounts its DMG. Each then starts Glotaran the way a user would and runs [`.github/scripts/smoke-test.sh`](.github/scripts/smoke-test.sh). The script waits until the main window is up, stops the application, prints `messages.log`, and fails the job if the bundled runtime was not used, if not all Glotaran modules that are enabled by default were turned on, if anything was logged at SEVERE level, or if the bundled micromamba does not run. The `.rpm` is not installed; it contains the same files as the `.deb`.
 
 The `release` job creates the draft release if none exists for the tag, marks it as a pre-release when the version has a suffix (`-rc.1`), and otherwise replaces the files on the existing release. Review the draft and publish it by hand.
 
 Versions: `<version>` is the tag without the leading `v`; manual runs use the Maven project version. Installer metadata (Inno Setup, deb, rpm, `Info.plist`) gets only the numeric part, so `v1.6.0-rc.1` produces packages that report 1.6.0. The workflow does not change the Maven project version; set it in the poms before tagging.
 
 Runtime: every installer bundles the latest Temurin 25 JRE installed by `actions/setup-java`. The same JRE runs nbpackage.
+
+micromamba: every installer also bundles the micromamba for its platform at `<installation>/micromamba/micromamba[.exe]`, which Glotaran uses to install its R (see [R runtime and micromamba](#r-runtime-and-micromamba)). `.github/scripts/fetch-micromamba.sh` downloads it and checks the SHA-256 pinned in `Micromamba.java`; the `windows` and `linux` jobs add it to a copy of the generic zip before running nbpackage, and the `macos` jobs copy it into `Glotaran.app`. The generic zip has no micromamba; Glotaran downloads the pinned version itself when it is not bundled.
 
 Configuration: set the repository variable `PACKAGE_MAINTAINER` (Settings > Secrets and variables > Actions > Variables) to `Name <email>`. It fills the deb and rpm maintainer fields; without it the `.deb` lacks the mandatory `Maintainer` field.
 
@@ -85,6 +87,15 @@ Branding sources in `branding/src/main/resources` are filtered into `branding/sr
 
 For a new release line (for example 1.7), change `glotaran.branding.version` and the update center URL as well, so that the new line uses its own user directory and update center and can be installed next to the previous one.
 
+## R runtime and micromamba
+
+Glotaran 1.7 installs R, TIMP and Rserve from conda-forge with micromamba; see [docs/R_RUNTIME_DESIGN.md](docs/R_RUNTIME_DESIGN.md).
+
+- The R runtime is locked in `TIMPController/src/main/r-runtime/pixi.toml` and `pixi.lock`. `export-specs.ps1` in that folder writes one conda explicit file per platform to `TIMPController/src/main/resources/org/glotaran/timpcontroller/runtime/<platform>.txt`, which the build packs into the module. Run `pwsh export-specs.ps1 -Update` after changing `pixi.toml` (needs [pixi](https://pixi.sh)) and commit `pixi.toml`, `pixi.lock` and the four explicit files together. The SHA-256 of an explicit file is the runtime ID: a release with a changed file makes every installation download and install the runtime again on its next analysis, so change the lock only when needed.
+- Before a release, the lock must contain `r-timp`. Without it the installation check (`library(TIMP)`) fails for every user. Until `r-timp` is on conda-forge, the lock lists TIMP's dependencies instead.
+- The `r-runtime` job in `maven.yml` installs each platform's explicit file and starts Rserve; it must pass before a release.
+- micromamba is pinned in `TIMPController/src/main/java/org/glotaran/timpcontroller/runtime/Micromamba.java`: `VERSION` (a tag of [mamba-org/micromamba-releases](https://github.com/mamba-org/micromamba-releases/releases)) and one SHA-256 per platform, taken from the `.sha256` file next to each release asset. `fetch-micromamba.sh` reads the pin from that file, so the installers and the download in Glotaran always use the same binary.
+
 ## 1. Autoupdate site and generic zip
 
 ```sh
@@ -116,11 +127,19 @@ MODS=$("$JAVA_HOME/bin/java" --list-modules | sed 's/@.*//' \
 "$JAVA_HOME/bin/jlink" --add-modules "$MODS" --strip-debug --no-man-pages --no-header-files --output rt-win
 ```
 
-Then (paths passed to nbpackage must be Windows paths when run on Windows):
+Add micromamba to a copy of the generic zip (Git Bash; `7z` from 7-Zip):
+
+```sh
+bash .github/scripts/fetch-micromamba.sh win-64 stage/glotaran/micromamba/micromamba.exe
+cp application/target/glotaran-app-<version>.zip glotaran-windows.zip
+(cd stage && 7z a -tzip ../glotaran-windows.zip glotaran/micromamba/micromamba.exe)
+```
+
+Then pass `glotaran-windows.zip` instead of the generic zip to nbpackage (paths passed to nbpackage must be Windows paths when run on Windows):
 
 ```sh
 nbpackage-1.0/bin/nbpackage -t windows-innosetup \
-  -i application/target/glotaran-app-<version>.zip -o out \
+  -i glotaran-windows.zip -o out \
   -Pname=Glotaran -Pversion=1.6.0 -Pruntime=rt-win \
   -Ppublisher="Vrije Universiteit Amsterdam" -Purl=https://glotaran.org \
   -Pdescription="Glotaran - global and target analysis of time-resolved spectroscopy data" \
@@ -136,12 +155,20 @@ The `glotaran.exe` / `glotaran64.exe` launchers keep the NetBeans icon unless Re
 
 ## 3. Linux .deb and .rpm
 
-Run on Linux (or in WSL, working in the Linux file system so permissions are preserved), with the Temurin Linux x64 JRE extracted to `jre/` and nbpackage run with that JRE:
+Run on Linux (or in WSL, working in the Linux file system so permissions are preserved), with the Temurin Linux x64 JRE extracted to `jre/` and nbpackage run with that JRE. First add micromamba to a copy of the generic zip:
+
+```sh
+bash .github/scripts/fetch-micromamba.sh linux-64 stage/glotaran/micromamba/micromamba
+cp glotaran-app-<version>.zip glotaran-linux.zip
+(cd stage && zip -q ../glotaran-linux.zip glotaran/micromamba/micromamba)
+```
+
+Then build both packages from `glotaran-linux.zip`:
 
 ```sh
 export JAVA_HOME=$PWD/jre
 G=application/src/main/app-resources/graphics   # adjust to the repository location
-COMMON=(-i glotaran-app-<version>.zip -o out -Pname=Glotaran -Pversion=1.6.0 -Pruntime=$PWD/jre
+COMMON=(-i glotaran-linux.zip -o out -Pname=Glotaran -Pversion=1.6.0 -Pruntime=$PWD/jre
         -Ppublisher="Vrije Universiteit Amsterdam" -Purl=https://glotaran.org
         -Pdescription="Glotaran - global and target analysis of time-resolved spectroscopy data")
 
@@ -172,6 +199,8 @@ APP=Glotaran.app/Contents
 mkdir -p "$APP/MacOS" "$APP/Resources/glotaran/jre"
 unzip -q glotaran-app-<version>.zip -d "$APP/Resources"
 tar xzf OpenJDK25U-jre_<arch>_mac_hotspot_<ver>.tar.gz -C "$APP/Resources/glotaran/jre" --strip-components=1
+# osx-arm64 for aarch64, osx-64 for x64
+bash .github/scripts/fetch-micromamba.sh osx-arm64 "$APP/Resources/glotaran/micromamba/micromamba"
 # Info.plist is generated by the Maven build; set the release version
 sed -e 's/1\.6\.0-SNAPSHOT/1.6.0/' application/target/Info.plist > "$APP/Info.plist"
 cp application/src/main/app-resources/graphics/glotaran.icns "$APP/Resources/"
