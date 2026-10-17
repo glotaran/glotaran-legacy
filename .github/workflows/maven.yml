@@ -43,8 +43,8 @@ jobs:
           path: application/target/glotaran-app-*.zip
           if-no-files-found: error
 
-  # Installs the locked R runtime of each platform with micromamba, starts Rserve and connects with the Java client
-  # (ManagedRuntimeIT). Add a TIMP fit once r-timp is on conda-forge and in the lock.
+  # Installs the locked R runtime of each platform as Glotaran does, starts Rserve and fits a small model with TIMP
+  # over the Java client (ManagedRuntimeIT)
   r-runtime:
     name: Managed R runtime (${{ matrix.os }})
     strategy:

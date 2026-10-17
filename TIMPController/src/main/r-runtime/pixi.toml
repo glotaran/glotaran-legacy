@@ -14,8 +14,9 @@ r-base = "4.4.3.*"
 libblas = { version = "*", build = "*netlib" }
 liblapack = { version = "*", build = "*netlib" }
 r-rserve = "*"
-# TIMP's dependencies. Replace them with r-timp = "1.13.6.*" once r-timp is on
-# conda-forge (conda-forge/staged-recipes#35140).
+# TIMP's dependencies. r-timp itself is not on conda-forge yet (conda-forge/staged-recipes#35140);
+# export-specs.ps1 appends the build listed in r-timp.txt. Once it is on conda-forge, replace these
+# lines with r-timp = "1.13.6.*" and delete r-timp.txt.
 r-fields = "*"
 r-colorspace = "*"
 r-desolve = "*"

@@ -8,6 +8,7 @@
 #   pwsh export-specs.ps1 -Update   re-solve the lock first (pixi update --no-install)
 #
 # A changed explicit file changes the runtime ID, so users get a new environment.
+# Until r-timp is on conda-forge, the r-timp package listed in r-timp.txt is appended to each file.
 
 param(
     [switch] $Update,
@@ -34,6 +35,13 @@ try {
         $spec = Join-Path $staging "default_${platform}_conda_spec.txt"
         if (-not (Test-Path $spec)) { throw "pixi did not export $platform" }
         Copy-Item $spec (Join-Path $target "$platform.txt") -Force
+        # r-timp is not on conda-forge yet; append the package that r-timp.txt lists for this platform
+        $rTimp = Join-Path $PSScriptRoot 'r-timp.txt'
+        if (Test-Path $rTimp) {
+            $line = Get-Content $rTimp | Where-Object { $_ -match "^$([regex]::Escape($platform))\s+(\S+)$" } | ForEach-Object { $Matches[1] }
+            if (-not $line) { throw "r-timp.txt has no package for $platform" }
+            [IO.File]::AppendAllText((Join-Path $target "$platform.txt"), "$line`n", [Text.Encoding]::ASCII)
+        }
     }
 }
 finally {

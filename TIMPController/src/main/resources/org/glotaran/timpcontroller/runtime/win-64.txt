@@ -89,3 +89,4 @@ https://conda.anaconda.org/conda-forge/win-64/r-maps-3.4.3-r44heceb674_1.conda#6
 https://conda.anaconda.org/conda-forge/win-64/r-fields-17.3-r44h814e693_0.conda#9eb36fd999ca967c1fa48373c309055a
 https://conda.anaconda.org/conda-forge/win-64/r-desolve-1.42-r44heaba8af_0.conda#b586191bab91e368526578b64d79a42f
 https://conda.anaconda.org/conda-forge/win-64/r-colorspace-2.1_3-r44heceb674_0.conda#73a17496cc0499cdbe7bb57766c29a2e
+https://github.com/glotaran/TIMP/releases/download/v1.13.6/r-timp-1.13.6-r44h1cdbda2_0.conda#fe4b2fb3bb9e2a95fb529926557dfce3

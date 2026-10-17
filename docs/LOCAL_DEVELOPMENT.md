@@ -15,7 +15,7 @@ For a step-by-step guide, see [DEVELOPMENT.md](DEVELOPMENT.md).
 
 On the first analysis Glotaran installs its own R into `<userdir>/r-runtime` (in development runs `application/target/userdir/r-runtime`) or uses the user's own Rserve on `localhost:6311`; see [R_RUNTIME_DESIGN.md](R_RUNTIME_DESIGN.md). Two system properties help in development:
 
-- `glotaran.rruntime.spec=<file>`: a conda explicit file that replaces the bundled one for this platform. Until `r-timp` is on conda-forge the bundled files have no TIMP, so the installation check fails without this property. Copy `TIMPController/src/main/resources/org/glotaran/timpcontroller/runtime/<platform>.txt` and append a line with a `file:///` URL to a locally built `r-timp` package and its MD5, for example `file:///C:/build/win-64/r-timp-1.13.6-r44h1cdbda2_0.conda#<md5>`.
+- `glotaran.rruntime.spec=<file>`: a conda explicit file that replaces the bundled one for this platform, for example to try a locally built `r-timp`. Copy `TIMPController/src/main/resources/org/glotaran/timpcontroller/runtime/<platform>.txt` and replace its last line (the `r-timp` package) with a `file:///` URL to the local package and its MD5, for example `file:///C:/build/win-64/r-timp-1.13.6-r44h1cdbda2_0.conda#<md5>`.
 - `glotaran.micromamba=<file>`: a micromamba executable to use instead of the bundled or downloaded one.
 
 Pass them to `nbm:run-platform` through `netbeans.run.params`:

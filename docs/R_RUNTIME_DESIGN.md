@@ -61,7 +61,7 @@ All new code goes into `TIMPController`, package `org.glotaran.timpcontroller.ru
 - `pixi workspace export conda-explicit-spec` writes one explicit file per platform (`@EXPLICIT`, one URL with MD5 per line, 10–14 KB, 88–120 packages). These are committed as resources `org/glotaran/timpcontroller/runtime/<platform>.txt`. A small script in the same folder regenerates them; Maven does not need pixi.
 - micromamba installs an explicit file without solving, so every user gets exactly the locked packages.
 - The SHA-256 of the platform's explicit file is the runtime ID. A changed lock (new Glotaran build) means a new environment.
-- `r-timp`: releases need it on conda-forge ([staged-recipes#35140](https://github.com/conda-forge/staged-recipes/pull/35140)). For development, the system property `glotaran.rruntime.spec=<path>` replaces the bundled explicit file, so a file with a `file:///` URL to a locally built `r-timp` package can be used.
+- `r-timp`: not on conda-forge yet ([staged-recipes#35140](https://github.com/conda-forge/staged-recipes/pull/35140)). Until it is (decision 8), `.github/workflows/r-timp.yml` builds the same recipe (copy in `TIMPController/src/main/r-runtime/r-timp/`, R 4.4) on native runners for the four platforms; the packages are attached to the glotaran/TIMP v1.13.6 release, and `export-specs.ps1` appends the URL and MD5 of each platform's package from `r-timp.txt` to its explicit file. micromamba installs these URLs like any other line of an explicit file (verified with a release-shaped URL on Windows 11). For development, the system property `glotaran.rruntime.spec=<path>` replaces the bundled explicit file, so a file with a `file:///` URL to a locally built `r-timp` package can be used.
 
 ### 2. Finding micromamba
 
@@ -177,7 +177,7 @@ Not verified yet: installation and Rserve on macOS and Linux; behaviour behind a
 ## Testing
 
 - Unit tests (JUnit, `TIMPController`): platform mapping, presence of the four explicit files, runtime ID, command lines and process environment, state from the marker file, port selection.
-- CI job per OS (Windows, Ubuntu, macOS arm64 and x64), `r-runtime` in `maven.yml`, running `ManagedRuntimeIT`: download micromamba, create the environment from the explicit file, start Rserve and connect twice with the Java client. This checks the lock on every platform without the GUI. Until `r-timp` is on conda-forge it checks R and Rserve only; then it should use `ensureReady()` and run a small TIMP fit. Verified locally on Windows 11 and WSL Ubuntu (2026-10-17).
+- CI job per OS (Windows, Ubuntu, macOS arm64 and x64), `r-runtime` in `maven.yml`, running `ManagedRuntimeIT`: install the bundled explicit file with `ensureReady()` (including the micromamba download), start Rserve, connect twice with the Java client and run a small TIMP fit with known rates. This checks the lock on every platform without the GUI.
 - The installer smoke test (`smoke-test.sh`) runs `micromamba --version` from the installation.
 - Manual acceptance on clean user accounts, as listed under Acceptance, including the example project compared with 1.6.0.
 
@@ -201,3 +201,4 @@ Each step is a commit on `auto_deploy_r_timp_rserve`, reviewed before the next:
 5. The 1.7 release waits until `r-timp` is published on conda-forge. If the implementation is finished earlier, a CI build of `r-timp` published as a GitHub release file may be used for testing in the meantime, not for the release.
 6. Testing on an Intel Mac and on Linux happens last in the development pipeline. Until then, Linux is tested in WSL (Ubuntu) where relevant.
 7. (2026-10-17) `TimpController` shows every connection message itself, and `AnalysisWorker` no longer shows the "are you sure you started Rserve?" message when `isConnected()` returns false. Otherwise a managed-mode failure, a cancelled installation or a cancelled first-run question would be followed by that message.
+8. (2026-10-17, replaces decision 5) It is unclear when `r-timp` passes the conda-forge review, so Glotaran builds `r-timp` itself and distributes it from the glotaran/TIMP v1.13.6 release until it is on conda-forge. The bundled explicit files point to these packages.
