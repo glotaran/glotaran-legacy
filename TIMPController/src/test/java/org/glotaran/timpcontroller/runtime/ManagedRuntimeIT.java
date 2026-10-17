@@ -41,7 +41,10 @@ public class ManagedRuntimeIT {
     public void installsRuntimeAndFitsWithTimp() throws Exception {
         String platform = Micromamba.condaPlatform(System.getProperty("os.name"), System.getProperty("os.arch"));
         assumeNotNull(platform);
-        RRuntime runtime = new RRuntime(temp.getRoot().toPath().resolve("r-runtime"), platform);
+        // A user directory with a space, as on macOS: Windows installs there, Linux and macOS move the runtime
+        Path userDirectory = temp.getRoot().toPath().resolve("Application Support").resolve("1.7");
+        RRuntime runtime = new RRuntime(RRuntime.runtimeDirectory(userDirectory, temp.getRoot().toString(), platform), platform);
+        System.out.println("Runtime directory: " + runtime.getDirectory());
 
         StringWriter installOutput = new StringWriter();
         ProgressHandle progress = ProgressHandle.createHandle("Installing R");

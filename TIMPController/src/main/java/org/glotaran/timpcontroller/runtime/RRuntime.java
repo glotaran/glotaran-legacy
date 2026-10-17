@@ -75,13 +75,32 @@ public final class RRuntime {
         this.platform = platform;
     }
 
-    /** The runtime in the user directory for this machine's platform. */
+    /** The runtime for this machine's platform, see {@link #runtimeDirectory}. */
     public static synchronized RRuntime getDefault() {
         if (defaultRuntime == null) {
-            defaultRuntime = new RRuntime(Places.getUserDirectory().toPath().resolve("r-runtime"),
-                    Micromamba.condaPlatform(System.getProperty("os.name"), System.getProperty("os.arch")));
+            String platform = Micromamba.condaPlatform(System.getProperty("os.name"), System.getProperty("os.arch"));
+            defaultRuntime = new RRuntime(runtimeDirectory(Places.getUserDirectory().toPath(),
+                    System.getProperty("user.home"), platform), platform);
         }
         return defaultRuntime;
+    }
+
+    /**
+     * {@code <userdir>/r-runtime}, except on Linux and macOS when that path contains whitespace: conda-forge's R
+     * start script ({@code lib/R/bin/R}) then fails, because its installation path is written into it unquoted. On
+     * macOS the user directory is always under {@code Library/Application Support}, so there the runtime goes to
+     * {@code ~/.glotaran/<release line>/r-runtime}, where the release line is the name of the user directory.
+     */
+    static Path runtimeDirectory(Path userDirectory, String userHome, String platform) {
+        Path directory = userDirectory.resolve("r-runtime");
+        if (platform == null || platform.startsWith("win-") || !containsWhitespace(directory)) {
+            return directory;
+        }
+        return Paths.get(userHome, ".glotaran", userDirectory.getFileName().toString(), "r-runtime");
+    }
+
+    private static boolean containsWhitespace(Path path) {
+        return path.toAbsolutePath().toString().chars().anyMatch(Character::isWhitespace);
     }
 
     /** @return {@code false} when there is no managed runtime for this operating system and processor */
@@ -207,6 +226,10 @@ public final class RRuntime {
             throw new IOException("Glotaran cannot install R on " + System.getProperty("os.name") + " ("
                     + System.getProperty("os.arch") + "). Use your own R installation.");
         }
+        if (!platform.startsWith("win-") && containsWhitespace(directory)) {
+            throw new IOException("Glotaran cannot install R in " + directory + ": on Linux and macOS the path must "
+                    + "not contain spaces. Use your own R installation.");
+        }
         Path micromamba = findMicromamba();
         if (micromamba != null && isReady()) {
             return;
@@ -317,11 +340,22 @@ public final class RRuntime {
                 "-p", getEnvironment().toString(), "-f", spec.toString());
     }
 
-    /** {@code micromamba run}, which activates the environment; conda R on Windows does not start without it. */
+    /**
+     * Runs a program of the environment. On Windows through {@code micromamba run}, which activates the environment;
+     * conda R on Windows does not start without its DLL folders on {@code PATH}. On Linux and macOS the program in
+     * {@code <env>/bin} is started directly: R finds its libraries without activation, and activation would run the
+     * activation scripts of the compiler packages that r-base depends on, which call {@code xcrun} on macOS and make
+     * macOS ask users without the Command Line Tools to install them.
+     */
     List<String> runCommand(Path micromamba, String... command) throws IOException {
-        List<String> line = new ArrayList<>(List.of(micromamba.toString(), "run", "-r", getRoot().toString(),
-                "-p", getEnvironment().toString()));
-        line.addAll(List.of(command));
+        List<String> line = new ArrayList<>();
+        if (platform.startsWith("win-")) {
+            line.addAll(List.of(micromamba.toString(), "run", "-r", getRoot().toString(), "-p", getEnvironment().toString(),
+                    command[0]));
+        } else {
+            line.add(getEnvironment().resolve("bin").resolve(command[0]).toString());
+        }
+        line.addAll(List.of(command).subList(1, command.length));
         return line;
     }
 

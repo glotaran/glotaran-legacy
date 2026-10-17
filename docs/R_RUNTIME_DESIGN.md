@@ -75,7 +75,7 @@ Platform mapping from `os.name`/`os.arch`: Windows + amd64 → `win-64`, Linux +
 
 ### 3. `RRuntime` (install, check, remove)
 
-Layout under the user directory (`<runtime>` = `<userdir>/r-runtime`):
+Layout under the user directory (`<runtime>` = `<userdir>/r-runtime`; on Linux and macOS, when that path contains whitespace, `~/.glotaran/<release line>/r-runtime`, because conda-forge's `lib/R/bin/R` start script contains its installation path unquoted and fails in a path with spaces. On macOS the user directory is always under `Library/Application Support`, so there the runtime is always in `~/.glotaran/1.7/r-runtime`. If that path contains whitespace too, the installation stops with a message):
 
 ```
 <runtime>/
@@ -106,7 +106,7 @@ Output goes to an "R runtime" output tab and to `install.log`. The `ProgressHand
 
 - One per Glotaran session. `ensureStarted()` starts it if it is not running (or has died) and returns the port.
 - Port: bind `new ServerSocket(0, 1, loopback)`, read the port, close the socket, pass the port to Rserve. If Rserve fails to start on it, retry once with a new port.
-- Command: `micromamba run -r <root> -p <env> Rscript --vanilla -e "Rserve::run.Rserve(port=<port>L, remote=FALSE, auth=FALSE)"`, working directory `<runtime>/work`.
+- Command: `micromamba run -r <root> -p <env> Rscript --vanilla -e "Rserve::run.Rserve(port=<port>L, remote=FALSE, auth=FALSE)"` on Windows, where conda R needs the activated environment (DLL folders on `PATH`); `<env>/bin/Rscript --vanilla -e "..."` without activation on Linux and macOS. Activation there would run the activation scripts of the compiler packages that conda-forge's `r-base` depends on; on macOS `sdkroot_env_osx-*` calls `xcrun --show-sdk-path`, and macOS then asks users without the Command Line Tools to install them (found in the first test on a Mac). The check in section 3 uses the same command form. Working directory `<runtime>/work`.
 - Environment of the process: remove `R_LIBS` and `R_LIBS_SITE`, set `R_LIBS_USER=<runtime>/no-user-library` (a path that does not exist). `--vanilla` skips the user's `.Rprofile` and `.Renviron`.
 - Readiness: connect to `127.0.0.1:<port>` until the 12-byte Rserve ID string (`Rsrv0103QAP1`) arrives, timeout 60 s.
 - Output (stdout and stderr together) goes to the existing "Rserve" output tab.
@@ -196,7 +196,7 @@ Each step is a commit on `auto_deploy_r_timp_rserve`, reviewed before the next:
 
 1. micromamba is downloaded (pinned version, SHA-256 check) when it is not bundled, so the generic zip, update-center installations and development runs can use the managed runtime.
 2. Glotaran asks only when an existing R or Rserve is found; otherwise it installs the runtime with a notification and a cancellable progress bar (section 5).
-3. The runtime lives per release line in the user directory, `~/.glotaran/1.7/r-runtime`.
+3. The runtime lives per release line in the user directory, `~/.glotaran/1.7/r-runtime` (on macOS also there, outside the user directory, see section 3).
 4. "Use my own R installation" stays available with the 1.6 behaviour, for users who have R and want to keep using it.
 5. The 1.7 release waits until `r-timp` is published on conda-forge. If the implementation is finished earlier, a CI build of `r-timp` published as a GitHub release file may be used for testing in the meantime, not for the release.
 6. Testing on an Intel Mac and on Linux happens last in the development pipeline. Until then, Linux is tested in WSL (Ubuntu) where relevant.

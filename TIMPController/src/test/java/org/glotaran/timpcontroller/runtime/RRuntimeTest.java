@@ -83,6 +83,35 @@ public class RRuntimeTest {
     }
 
     @Test
+    public void runsREnvironmentProgramsDirectlyOnLinuxAndMacOS() throws IOException {
+        for (String platform : new String[]{"linux-64", "osx-64", "osx-arm64"}) {
+            RRuntime unix = new RRuntime(dir, platform);
+            assertEquals(platform, List.of(unix.getEnvironment().resolve("bin").resolve("Rscript").toString(), "--vanilla", "-e", "1"),
+                    unix.runCommand(Path.of("micromamba"), "Rscript", "--vanilla", "-e", "1"));
+        }
+    }
+
+    @Test
+    public void keepsRuntimeOutOfPathsWithSpacesOnLinuxAndMacOS() {
+        Path home = Path.of("/Users/user");
+        Path macUserDir = home.resolve("Library").resolve("Application Support").resolve("glotaran").resolve("1.7");
+        assertEquals(home.resolve(".glotaran").resolve("1.7").resolve("r-runtime"),
+                RRuntime.runtimeDirectory(macUserDir, home.toString(), "osx-arm64"));
+        Path linuxUserDir = home.resolve(".glotaran").resolve("1.7");
+        assertEquals(linuxUserDir.resolve("r-runtime"), RRuntime.runtimeDirectory(linuxUserDir, home.toString(), "linux-64"));
+        Path windowsUserDir = Path.of("C:/Users/John Doe/.glotaran/1.7");
+        assertEquals("spaces work on Windows", windowsUserDir.resolve("r-runtime"),
+                RRuntime.runtimeDirectory(windowsUserDir, "C:/Users/John Doe", "win-64"));
+    }
+
+    @Test
+    public void refusesInstallInPathWithSpacesOnLinuxAndMacOS() throws IOException {
+        RRuntime runtime = new RRuntime(temp.newFolder("home with space").toPath().resolve("r-runtime"), "linux-64");
+        IOException e = assertThrows(IOException.class, () -> runtime.ensureReady(null, null));
+        assertTrue(e.getMessage(), e.getMessage().contains("must not contain spaces"));
+    }
+
+    @Test
     public void keepsOtherRLibrariesOut() {
         Map<String, String> environment = new HashMap<>(Map.of("R_LIBS", "a", "R_LIBS_SITE", "b", "R_LIBS_USER", "c", "PATH", "p"));
         runtime.configureEnvironment(environment);
