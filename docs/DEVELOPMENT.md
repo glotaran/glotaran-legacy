@@ -71,6 +71,6 @@ To start with a fresh runtime state, stop Glotaran and run a clean build; this r
 - **Artifacts cannot be resolved when running `application/`:** run `mvn -T 1C clean install` once from the repository root.
 - **Invalid `jdkhome`, or the launcher exits immediately:** correct `JAVA_HOME`, then rebuild the application.
 - **Changes do not appear in the running application:** rebuild and install from the root before running the application module again.
-- **Analysis cannot connect to R:** with the R installed by Glotaran, read `install.log` and the "R runtime" and "Rserve" output tabs (*Tools > Options > Options > R runtime* shows the folder). With your own R, check R, TIMP, and Rserve separately from Glotaran, for example by running `library(TIMP); library(Rserve)` in R.
+- **Analysis cannot connect to R:** with the R installed by Glotaran, read `install.log` and the "R runtime" and "Rserve" output tabs (*Tools > Options > Glotaran > R runtime* shows the folder). With your own R, check R, TIMP, and Rserve separately from Glotaran, for example by running `library(TIMP); library(Rserve)` in R.
 
 For packaging, installers, CI, and releases, see [RELEASING.md](../RELEASING.md). [Architecture](ARCHITECTURE.md) lists the modules. For NetBeans module registration and architecture, see [NetBeans Platform](NETBEANS_PLATFORM.md) and [Architecture](ARCHITECTURE.md).
