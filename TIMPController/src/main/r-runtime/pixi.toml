@@ -1,0 +1,31 @@
+# R runtime that Glotaran installs with micromamba (managed R mode).
+# The lock is exported to one conda explicit file per platform, see export-specs.ps1.
+# R stays on 4.4: conda-forge's win-64 R 4.5 builds of r-spam, r-minpack.lm and
+# r-kernsmooth fail to load (conda-forge/r-base-feedstock#428), see docs/ROADMAP.md.
+
+[workspace]
+name = "glotaran-r-runtime"
+channels = ["conda-forge"]
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
+
+[dependencies]
+r-base = "4.4.3.*"
+# Reference BLAS; without this pin the solver picks MKL on Windows (1.7 GB environment).
+libblas = { version = "*", build = "*netlib" }
+liblapack = { version = "*", build = "*netlib" }
+r-rserve = "*"
+# TIMP's dependencies. r-timp itself is not on conda-forge yet (conda-forge/staged-recipes#35140);
+# export-specs.ps1 appends the build listed in r-timp.txt. Once it is on conda-forge, replace these
+# lines with r-timp = "1.13.6.*" and delete r-timp.txt.
+r-fields = "*"
+r-colorspace = "*"
+r-desolve = "*"
+r-gclus = "*"
+r-gplots = "*"
+"r-minpack.lm" = "*"
+r-nnls = "*"
+
+[target.unix.dependencies]
+# conda-forge's r-fields 17.3 for Linux and macOS links libopenblas directly without depending on it.
+# R itself keeps the reference BLAS above; libopenblas only provides the library fields.so loads.
+libopenblas = "*"

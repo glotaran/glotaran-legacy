@@ -1,0 +1,8 @@
+# r-timp packages for the R runtime, used until r-timp is on conda-forge (conda-forge/staged-recipes#35140).
+# Built by .github/workflows/r-timp.yml (R 4.4) and attached to https://github.com/glotaran/TIMP/releases/tag/v1.13.6.
+# export-specs.ps1 appends the line of each platform to that platform's explicit file.
+# Format: <platform> <URL>#<MD5>
+linux-64 https://github.com/glotaran/TIMP/releases/download/v1.13.6/r-timp-1.13.6-r44hfb7882a_0.conda#12f6083f8d92d1ff62914a2484e0e691
+osx-64 https://github.com/glotaran/TIMP/releases/download/v1.13.6/r-timp-1.13.6-r44h1dbf228_0.conda#3a36b8990133ef730bac0cbf97ea1ad6
+osx-arm64 https://github.com/glotaran/TIMP/releases/download/v1.13.6/r-timp-1.13.6-r44h3df6109_0.conda#3d5ab95605de3c45fd23f799e306f631
+win-64 https://github.com/glotaran/TIMP/releases/download/v1.13.6/r-timp-1.13.6-r44h1cdbda2_0.conda#fe4b2fb3bb9e2a95fb529926557dfce3

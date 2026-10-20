@@ -77,29 +77,43 @@ Non-goals: UI redesign, refactoring beyond what the API changes require, new ana
 
 Result: [1.6.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.6.0) was released on 2026-10-11 with a Windows installer, `.deb` and `.rpm` packages, and DMGs for Apple silicon and Intel Macs, each with a bundled Java 25 runtime, plus the generic zip. CI builds on Linux, Windows, and macOS and runs `ApplicationTest`. The release workflow installs and starts the Windows installer, the `.deb`, and both DMGs. The example analysis gave the same results as 1.5.3 on Windows 11 with R 4.6.1, TIMP 1.13.6, and Rserve 1.8-19.1.
 
-## 1.7.0 — self-provisioned R and TIMP
+[1.6.1](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.6.1) was released on 2026-10-19. It sets the default cache directory in `glotaran.conf`; on Linux and macOS, 1.6.0 put the cache in the working directory, and NetBeans' Janitor module logged a `NullPointerException` at startup when Glotaran was started from Finder or a desktop menu. A module in CoreMain (`CacheDirectoryFix`) brings the setting to 1.6.0 installations that update through the 1.6 update center. 1.7.0 has the setting in `glotaran.conf` from the start and does not contain that module.
+
+## 1.7.0 — self-provisioned R and TIMP (released)
 
 Goal: Glotaran installs and manages its own R, TIMP, and Rserve, without administrator rights and without the user running R.
 
 Design:
 
 - Add a runtime-provisioning service in `TIMPController` (or a new module if the code does not fit) with three states: not installed, installing, ready. An options panel shows the state, the R and package versions, and a "use my own R installation" override that keeps today's behaviour.
-- Install into the Glotaran user directory, pinned to tested versions of R, TIMP, and Rserve. Install TIMP and Rserve from CRAN binaries into a private library and pass it to R via `R_LIBS`, so any existing user R library is not touched.
+- Install conda-forge packages with [micromamba](https://github.com/mamba-org/micromamba-releases), which ships inside the installers (5–7 MB per platform). The environment goes into the Glotaran user directory and is created from a lock file per platform with pinned versions of `r-base`, `r-rserve`, `r-timp` and their dependencies.
+- Use R 4.4.3 with the reference BLAS (`libblas=*=*netlib`), which matches CRAN R. Without that pin, the solver picks MKL on Windows and the environment grows to 1.7 GB.
+- Install TIMP from the conda-forge package `r-timp` ([conda-forge/staged-recipes#35140](https://github.com/conda-forge/staged-recipes/pull/35140), in review). Until it is available, Glotaran builds the same recipe in its own CI and distributes the packages from the [glotaran/TIMP v1.13.6 release](https://github.com/glotaran/TIMP/releases/tag/v1.13.6) (decided 2026-10-17, because it is unclear when the conda-forge review finishes).
+- Start R with `R_LIBS_USER` set to a path that does not exist. Otherwise R also loads packages from the user's personal library for the same R version, and CRAN-built packages crash conda-forge R.
+- On Windows, start R through `micromamba run -p <environment>`: conda-forge R on Windows only starts with the environment's DLL directories on `PATH`. On Linux and macOS, start `<environment>/bin/Rscript` directly; activation there runs compiler activation scripts, which on macOS call `xcrun`.
+- Run Rserve as a child process owned by Glotaran: `Rscript --vanilla -e "Rserve::run.Rserve(port=<free port>, remote=FALSE, auth=FALSE)"`. It runs in the foreground, accepts connections from the local machine only, writes to the "Rserve" output tab and is stopped when Glotaran closes. A free port avoids a user's own Rserve on 6311.
+- If R with TIMP and Rserve is already installed, ask the user the first time which R to use.
 - Replace the registry and fixed-path lookup in `RserveProcessHelper` with the provisioned R path, falling back to the lookup only when the user selects their own R.
 
-Provisioning options to evaluate before implementation:
+Provisioning options (evaluated 2026-10-11):
 
-| Option | Windows | macOS | Linux | Notes |
+| Option | Windows | macOS | Linux | Result |
 | --- | --- | --- | --- | --- |
-| CRAN R installer, silent per-user install | yes | `.pkg` needs admin | no official binary | Different mechanism per OS |
-| [rig](https://github.com/r-lib/rig) | yes | yes | yes | Installs system-wide; admin on macOS/Linux |
-| conda-forge via `pixi` or `micromamba` | yes | yes | yes | User space, lock file; `r-base` and `r-rserve` available, TIMP installed from CRAN afterwards |
+| CRAN R builds per OS, packages from Posit Package Manager | silent per-user install | `.pkg` only: needs admin, or patching R to move it | Posit portable build, glibc 2.34 or newer | Works, but three mechanisms; no movable R on macOS |
+| [rig](https://github.com/r-lib/rig) 0.11 user mode | yes | yes | yes | No admin rights, but on Windows changes the user's default R in the registry, `PATH` and PowerShell profile |
+| conda-forge with micromamba | yes | yes | yes | Chosen: one mechanism, no admin rights, nothing written outside the environment |
 
-conda-forge is the likely choice because one mechanism covers all three platforms without admin rights. It must be verified that CRAN's TIMP dependencies (`fields`, `deSolve`, `minpack.lm`, `nnls`, and others) install into a conda-forge R on each OS.
+Measured with conda-forge R 4.4.3 and the reference BLAS: the first download is 262–305 MB depending on platform; on Windows the environment takes 1.2 GB on disk, because conda-forge's `r-base` for Windows depends on the GCC and gfortran toolchains. On Windows 11, the Java Rserve client used by Glotaran (REngine 2.1.0, Rserve 1.8.1) connected to `run.Rserve` in such an environment, and TIMP's `fitModel` example gave rate constants equal to CRAN R 4.5.3 and 4.6.1 to about 9 significant digits.
+
+Why R 4.4 and not 4.5: on Windows, conda-forge's R 4.5 builds of `r-spam`, `r-minpack.lm` and `r-kernsmooth` (all TIMP dependencies) fail to load with `32 bit pseudo relocation ... out of range`, depending on where Windows places the BLAS and LAPACK DLLs ([conda-forge/r-base-feedstock#428](https://github.com/conda-forge/r-base-feedstock/issues/428)). `r-base` 4.5.3 build 4 and 4.6.1 build 2 fix this for packages built against them ([#431](https://github.com/conda-forge/r-base-feedstock/pull/431), [#432](https://github.com/conda-forge/r-base-feedstock/pull/432)). Moving Glotaran to R 4.5 or later waits until those three packages are rebuilt. The `r-timp` recipe skips Windows with R 4.5 for the same reason.
 
 This provisioning service is also the basis for 2.0, where the managed runtime becomes Python via `uv`.
 
 Acceptance: on a clean Windows, macOS, and Linux user account with no R installed, the first analysis triggers provisioning and completes.
+
+Result: [1.7.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.7.0) was released on 2026-10-19. It ships the same installers as 1.6.0, each with micromamba bundled; the generic zip downloads the pinned micromamba itself. On the first analysis Glotaran installs R 4.4.3, Rserve 1.8-14 and TIMP 1.13.6 into the user directory and runs Rserve as a child process; users who choose their own R keep the 1.6 behaviour. The options panel is *Tools > Options > Glotaran > R runtime*. CI installs each platform's runtime and runs a TIMP fit on Windows, Linux, and macOS on Apple silicon and Intel, and the release workflow runs the bundled micromamba in every installer smoke test. The managed install and an analysis were tested by hand on Windows 11, Debian, an Apple silicon Mac and an Intel Mac. TIMP still comes from the glotaran/TIMP release until `r-timp` is on conda-forge.
+
+`maintenance/v1.7.x` stays maintained after 1.7.0 and may receive fixes and further 1.7.x releases, for example the move to R 4.5 or to the conda-forge `r-timp` package.
 
 ## 2.0.0 — pyglotaran as the computational core
 
@@ -119,6 +133,5 @@ Non-goals: reimplementing pyglotaran features in Java; supporting TIMP and pyglo
 
 ## Open decisions
 
-- Whether 1.7 is worth its cost when 2.0 removes R; if 2.0 is the priority, build the provisioning service directly for `uv` and skip 1.7.
 - Code signing for Windows and macOS installers (certificates, notarization).
 - Supported platforms for bundled runtimes beyond those of 1.6.0 (Windows x64, macOS arm64 and x64, Linux x64).
