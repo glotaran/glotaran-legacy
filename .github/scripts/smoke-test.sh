@@ -3,7 +3,8 @@
 # - the main window came up (the NetBeans warm-up tasks ran),
 # - the bundled runtime under INSTALL_DIR was used,
 # - every Glotaran module that is enabled by default was turned on,
-# - nothing was logged at SEVERE level.
+# - nothing was logged at SEVERE level,
+# - the bundled micromamba (INSTALL_DIR/micromamba) runs.
 #
 # Usage: smoke-test.sh INSTALL_DIR COMMAND [ARGS...]
 #   INSTALL_DIR  installation root; contains glotaran/config/Modules and the runtime
@@ -84,6 +85,16 @@ fi
 
 if grep -q '^SEVERE' "$LOG" 2> /dev/null; then
   echo "::error::messages.log contains SEVERE entries"
+  failed=true
+fi
+
+# Glotaran installs its managed R runtime with this micromamba (Micromamba.find)
+MICROMAMBA="$INSTALL_DIR/micromamba/micromamba"
+if [ -f "$MICROMAMBA.exe" ]; then MICROMAMBA="$MICROMAMBA.exe"; fi
+if version=$("$MICROMAMBA" --version 2>&1); then
+  echo "Bundled micromamba: $version"
+else
+  echo "::error::Bundled micromamba $MICROMAMBA does not run: $version"
   failed=true
 fi
 

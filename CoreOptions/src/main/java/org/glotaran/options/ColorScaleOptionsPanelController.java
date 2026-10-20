@@ -17,7 +17,8 @@ import org.openide.util.Lookup;
         location = "Options",
         displayName = "#AdvancedOption_DisplayName_ColorScale",
         keywords = "#AdvancedOption_Keywords_ColorScale",
-        keywordsCategory = "Options/ColorScale"
+        keywordsCategory = "Options/ColorScale",
+        position = 200
 )
 @org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_ColorScale=Color scale", "AdvancedOption_Keywords_ColorScale=color"})
 public final class ColorScaleOptionsPanelController extends OptionsPanelController {

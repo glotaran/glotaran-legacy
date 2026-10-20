@@ -1,0 +1,4 @@
+# Build r-timp for the R of Glotaran's runtime lock (pixi.toml pins r-base 4.4.3).
+# Used together with conda-forge's pinning (conda_build_config.yaml), see .github/workflows/r-timp.yml.
+r_base:
+  - "4.4"

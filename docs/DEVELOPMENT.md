@@ -1,6 +1,6 @@
 # Development quick start
 
-Glotaran 1.6.x is a NetBeans Platform application built as a Maven multi-module reactor. It requires JDK 25 and Maven 3.9+.
+Glotaran 1.7.x is a NetBeans Platform application built as a Maven multi-module reactor. It requires JDK 25 and Maven 3.9+.
 
 ## 1. Check the toolchain
 
@@ -52,7 +52,7 @@ On Windows, you can also start the built application directly:
 .\application\target\glotaran\bin\glotaran64.exe
 ```
 
-The UI starts with Java alone. Running an analysis also requires R with the TIMP and Rserve packages.
+The UI starts with Java alone. On the first analysis Glotaran installs its own R with TIMP and Rserve, or uses an Rserve you start on `localhost:6311`; see [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md#r-in-development-runs) for the properties that development runs need.
 
 ## 4. Debug the running application
 
@@ -71,6 +71,6 @@ To start with a fresh runtime state, stop Glotaran and run a clean build; this r
 - **Artifacts cannot be resolved when running `application/`:** run `mvn -T 1C clean install` once from the repository root.
 - **Invalid `jdkhome`, or the launcher exits immediately:** correct `JAVA_HOME`, then rebuild the application.
 - **Changes do not appear in the running application:** rebuild and install from the root before running the application module again.
-- **Analysis cannot connect to R:** check R, TIMP, and Rserve separately from Glotaran, for example by running `library(TIMP); library(Rserve)` in R.
+- **Analysis cannot connect to R:** with the R installed by Glotaran, read `install.log` and the "R runtime" and "Rserve" output tabs (*Tools > Options > Glotaran > R runtime* shows the folder). With your own R, check R, TIMP, and Rserve separately from Glotaran, for example by running `library(TIMP); library(Rserve)` in R.
 
 For packaging, installers, CI, and releases, see [RELEASING.md](../RELEASING.md). [Architecture](ARCHITECTURE.md) lists the modules. For NetBeans module registration and architecture, see [NetBeans Platform](NETBEANS_PLATFORM.md) and [Architecture](ARCHITECTURE.md).
