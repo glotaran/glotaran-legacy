@@ -77,6 +77,8 @@ Non-goals: UI redesign, refactoring beyond what the API changes require, new ana
 
 Result: [1.6.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.6.0) was released on 2026-10-11 with a Windows installer, `.deb` and `.rpm` packages, and DMGs for Apple silicon and Intel Macs, each with a bundled Java 25 runtime, plus the generic zip. CI builds on Linux, Windows, and macOS and runs `ApplicationTest`. The release workflow installs and starts the Windows installer, the `.deb`, and both DMGs. The example analysis gave the same results as 1.5.3 on Windows 11 with R 4.6.1, TIMP 1.13.6, and Rserve 1.8-19.1.
 
+[1.6.1](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.6.1) was released on 2026-10-19. It sets the default cache directory in `glotaran.conf`; on Linux and macOS, 1.6.0 put the cache in the working directory, and NetBeans' Janitor module logged a `NullPointerException` at startup when Glotaran was started from Finder or a desktop menu. A module in CoreMain (`CacheDirectoryFix`) brings the setting to 1.6.0 installations that update through the 1.6 update center. 1.7.0 has the setting in `glotaran.conf` from the start and does not contain that module.
+
 ## 1.7.0 — self-provisioned R and TIMP (released)
 
 Goal: Glotaran installs and manages its own R, TIMP, and Rserve, without administrator rights and without the user running R.
@@ -109,7 +111,7 @@ This provisioning service is also the basis for 2.0, where the managed runtime b
 
 Acceptance: on a clean Windows, macOS, and Linux user account with no R installed, the first analysis triggers provisioning and completes.
 
-Result: [1.7.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.7.0) ships the same installers as 1.6.0, each with micromamba bundled; the generic zip downloads the pinned micromamba itself. On the first analysis Glotaran installs R 4.4.3, Rserve 1.8-14 and TIMP 1.13.6 into the user directory and runs Rserve as a child process; users who choose their own R keep the 1.6 behaviour. The options panel is *Tools > Options > Glotaran > R runtime*. CI installs each platform's runtime and runs a TIMP fit on Windows, Linux, and macOS on Apple silicon and Intel, and the release workflow runs the bundled micromamba in every installer smoke test. The managed install and an analysis were tested by hand on Windows 11, Debian, an Apple silicon Mac and an Intel Mac. TIMP still comes from the glotaran/TIMP release until `r-timp` is on conda-forge.
+Result: [1.7.0](https://github.com/glotaran/glotaran-legacy/releases/tag/v1.7.0) was released on 2026-10-19. It ships the same installers as 1.6.0, each with micromamba bundled; the generic zip downloads the pinned micromamba itself. On the first analysis Glotaran installs R 4.4.3, Rserve 1.8-14 and TIMP 1.13.6 into the user directory and runs Rserve as a child process; users who choose their own R keep the 1.6 behaviour. The options panel is *Tools > Options > Glotaran > R runtime*. CI installs each platform's runtime and runs a TIMP fit on Windows, Linux, and macOS on Apple silicon and Intel, and the release workflow runs the bundled micromamba in every installer smoke test. The managed install and an analysis were tested by hand on Windows 11, Debian, an Apple silicon Mac and an Intel Mac. TIMP still comes from the glotaran/TIMP release until `r-timp` is on conda-forge.
 
 `maintenance/v1.7.x` stays maintained after 1.7.0 and may receive fixes and further 1.7.x releases, for example the move to R 4.5 or to the conda-forge `r-timp` package.
 

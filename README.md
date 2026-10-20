@@ -35,7 +35,7 @@ Latest stable release is version 1.7.0: Glotaran downloads and installs R, TIMP 
 | Release line | Platform | Branch |
 | --- | --- | --- |
 | 1.7.x (latest: 1.7.0) | Apache NetBeans 31, Java 25 | [maintenance/v1.7.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.7.x) |
-| 1.6.x (latest: 1.6.0) | Apache NetBeans 31, Java 25 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) |
+| 1.6.x (latest: 1.6.1) | Apache NetBeans 31, Java 25 | [maintenance/v1.6.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.6.x) |
 | 1.5.x (final: 1.5.3) | NetBeans 8.0.2, Java 8 | [maintenance/v1.5.x](https://github.com/glotaran/glotaran-legacy/tree/maintenance/v1.5.x) |
 
 Version 1.5.3 was delivered as an update to 1.5.1 installations through Tools | Plugins. Version 1.5.1 and earlier are available on [glotaran.org](http://glotaran.org/downloads). Version 1.5.2 was never officially released; snapshot builds labelled 1.5.2 are superseded by 1.5.3.
